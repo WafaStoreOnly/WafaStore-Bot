@@ -1,84 +1,105 @@
 require('dotenv').config();
+const { Client, GatewayIntentBits, Events, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, ModalBuilder, TextInputBuilder, TextInputStyle, PermissionsBitField } = require('discord.js');
 const express = require('express');
 const path = require('path');
-const cors = require('cors');
-const { Client, GatewayIntentBits, EmbedBuilder, SlashCommandBuilder, REST, Routes, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
-const axios = require('axios');
+const db = require('./db');
+const { createTransaction } = require('./pakasir');
 
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers] });
 const app = express();
-app.use(cors());
 app.use(express.json());
-// Biar Vercel bisa serve index.html web lu
-app.use(express.static(__dirname));
+app.get('/', (req,res)=> res.sendFile(path.join(__dirname,'index.html')));
 
-const TOKEN = process.env.DISCORD_TOKEN;
-const SLUG = process.env.PAKASIR_SLUG || 'wafastoreonly';
-const API_KEY = process.env.PAKASIR_API_KEY;
+const LOGS_CHANNEL_ID = process.env.LOGS_CHANNEL_ID;
+const TICKET_CATEGORY_ID = process.env.TICKET_CATEGORY_ID;
 
-async function getProducts() {
-    try {
-        const res = await axios.get(`https://pakasir.com/api/public/${SLUG}/products`, { headers: { 'x-api-key': API_KEY } });
-        return res.data.data || res.data;
-    } catch (e) { console.log('Pakasir Error:', e.message); return []; }
+function getFee(n){ if(n<=50000)return 3000; if(n<=100000)return 6000; if(n<=150000)return 9000; if(n<=200000)return 12000; if(n<=300000)return 15000; if(n<=500000)return 20000; return Math.floor(n*0.05); }
+async function autoCloseTicket(channel,ref,delay=10*60*1000){
+  await channel.send(`⏰ Ticket tutup otomatis 10 menit!\nBuyer & Seller wajib screenshot bukti!`).catch(()=>{});
+  setTimeout(async()=>{ try{ await channel.send(`🔒 Ticket ${ref} ditutup.`); setTimeout(()=>channel.delete().catch(()=>{}),3000);}catch(e){} },delay);
 }
+async function sendLog(embed){ try{ const ch=await client.channels.fetch(LOGS_CHANNEL_ID); if(ch) ch.send({embeds:[embed]});}catch(e){} }
 
-// --- API UNTUK WEB LU ---
-// Web lu nanti bisa ambil stok asli dari Pakasir biar sinkron
-app.get('/api/produk', async (req, res) => {
-    const products = await getProducts();
-    res.json(products);
-});
-
-// Biar kalo buka / tetep keluarin index.html
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-// --- DISCORD BOT LU YANG LAMA (GUA GAK UBAH LOGIC) ---
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
-
-client.on('ready', async () => {
-    console.log(`Bot ${client.user.tag} online! Web + Bot Gabung!`);
-    const commands = [
-        new SlashCommandBuilder().setName('stok').setDescription('Lihat stok produk WafaStoreOnly'),
-        new SlashCommandBuilder().setName('order').setDescription('Cara order di WafaStoreOnly'),
-        new SlashCommandBuilder().setName('cek').setDescription('Cek transaksi').addStringOption(o => o.setName('kode').setDescription('Kode transaksi / email').setRequired(true)),
-        new SlashCommandBuilder().setName('produk').setDescription('List semua produk dengan harga'),
-    ].map(c => c.toJSON());
-    const rest = new REST({ version: '10' }).setToken(TOKEN);
-    await rest.put(Routes.applicationCommands(client.user.id), { body: commands });
-    console.log('Slash commands registered');
-});
-
-client.on('interactionCreate', async interaction => {
-    if (!interaction.isChatInputCommand()) return;
-    if (interaction.commandName === 'stok' || interaction.commandName === 'produk') {
-        await interaction.deferReply();
-        const products = await getProducts();
-        if (!products.length) return interaction.editReply('❌ Stok kosong / cek API Key PakaSir di Environment.');
-        const embed = new EmbedBuilder().setTitle('🛒 WafaStoreOnly - Stok').setColor(0x00FF88).setDescription(`Total ${products.length} produk | Web: https://wafastoreonly.cloud`).setTimestamp();
-        products.slice(0, 10).forEach(p => {
-            embed.addFields({ name: `${p.name} - Rp${Number(p.price).toLocaleString('id-ID')}`, value: `Stok: ${p.stock||0} | [Beli di Web](https://wafastoreonly.cloud) atau [Beli di Pakasir](https://pakasir.com/${SLUG}/${p.slug||p.id})`, inline: false });
-        });
-        const row = new ActionRowBuilder().addComponents(
-            new ButtonBuilder().setLabel('Buka Web Toko').setStyle(ButtonStyle.Link).setURL(`https://wafastoreonly.cloud`),
-            new ButtonBuilder().setLabel('Buka Pakasir').setStyle(ButtonStyle.Link).setURL(`https://pakasir.com/${SLUG}`)
-        );
-        return interaction.editReply({ embeds: [embed], components: [row] });
+client.on(Events.MessageCreate, async(msg)=>{
+  if(msg.author.bot) return;
+  if(msg.content==='!setuprekber' && msg.member.permissions.has(PermissionsBitField.Flags.Administrator)){
+    const embed=new EmbedBuilder().setTitle('🔒 REKBER WafaStoreOnly | AUTO & AMAN').setDescription('**Transaksi Aman 100%**\n\nGamepass 14K/100 | Username 16K/100\nDANA 083862776790\n\nKlik tombol buat ticket rekber.').setColor(0x00BFFF);
+    const row=new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('create_ticket').setLabel('🎫 CREATE TICKET').setStyle(ButtonStyle.Success));
+    return msg.channel.send({embeds:[embed],components:[row]});
+  }
+  const ref=Object.keys(db.data.transactions).find(r=>db.data.transactions[r].channelId===msg.channel.id);
+  if(!ref) return; const trx=db.data.transactions[ref];
+  if(msg.content.toLowerCase()==='done'){
+    if(trx.status==='WAITING_PAYMENT') return msg.reply(`❌ Belum bayar! Total Rp ${trx.total.toLocaleString('id-ID')}`);
+    if(trx.status==='PAID_HELD'){
+      if(msg.author.id===trx.buyer) trx.doneBuyer=true;
+      if(msg.author.id===trx.seller) trx.doneSeller=true;
+      await db.write();
+      if(trx.doneBuyer && trx.doneSeller){
+        trx.status='WAITING_PAYOUT_INFO'; await db.write();
+        return msg.channel.send(`✅ KEDUA PIHAK DONE!\n\nSeller <@${trx.seller}> ketik metode cair:\n\`DANA 081234567890 A/N Wafa\` atau \`BCA 1234567890 A/N Wafa\``);
+      }else return msg.channel.send(`📝 ${msg.author.id===trx.buyer?'Buyer ✅':'Buyer ❌'} | ${msg.author.id===trx.seller?'Seller ✅':'Seller ❌'} Menunggu pihak lain.`);
     }
-    if (interaction.commandName === 'order') {
-        const embed = new EmbedBuilder().setTitle('📦 Cara Order WafaStoreOnly').setColor(0x5865F2).setDescription(`1. Buka https://wafastoreonly.cloud\n2. Pilih nominal (Username 16K / Gamepass 14K / Gift 95/robux)\n3. Bayar via DANA/GoPay 083862776790 atau QRIS\n4. Silahkan ditunggu, Robux masuk 5 menit!\n\nAtau bisa juga via Pakasir: https://pakasir.com/${SLUG}\n\nCek transaksi: /cek KODE`);
-        return interaction.reply({ embeds: [embed] });
-    }
-    if (interaction.commandName === 'cek') {
-        return interaction.reply(`Cek transaksi kamu di sini ya kak:\nhttps://pakasir.com/${SLUG}/check?code=${interaction.options.getString('kode')}\n\nJika sudah bayar, **silahkan ditunggu ya**, sistem akan proses otomatis!`);
-    }
+  }
+  if(trx.status==='WAITING_PAYOUT_INFO' && msg.author.id===trx.seller && msg.content.length>5 && msg.content.toLowerCase()!=='done'){
+    trx.payoutMethod=msg.content; trx.status='WAITING_SELLER_CONFIRM'; await db.write();
+    const row=new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId(`confirm_payout_${ref}`).setLabel('✅ KONFIRMASI KIRIM DANA').setStyle(ButtonStyle.Success));
+    return msg.channel.send({content:`💳 Payout: ${msg.content}\nSeller terima Rp ${trx.amount.toLocaleString('id-ID')}`,components:[row]});
+  }
+  if(trx.status==='WAITING_REFUND_INFO' && msg.author.id===trx.buyer && msg.content.length>5){
+    trx.refundMethod=msg.content; trx.status='REFUNDED'; await db.write();
+    const log=new EmbedBuilder().setTitle('🔴 REFUND').setDescription(`Ref:${ref} Refund Rp ${trx.amount} ke ${msg.content}`).setColor(0xFF0000);
+    await sendLog(log); await msg.channel.send(`✅ REFUND ke ${msg.content}`); return autoCloseTicket(msg.channel,ref);
+  }
 });
 
-if(TOKEN) client.login(TOKEN);
+client.on(Events.InteractionCreate, async(i)=>{
+  if(i.customId==='create_ticket'){
+    const modal=new ModalBuilder().setCustomId('modal_rekber').setTitle('Buat Ticket Rekber');
+    modal.addComponents(
+      new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('lawan').setLabel('Username lawan (@tag)').setStyle(TextInputStyle.Short).setRequired(true)),
+      new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('nominal').setLabel('Jumlah (50000)').setStyle(TextInputStyle.Short).setRequired(true))
+    );
+    return i.showModal(modal);
+  }
+  if(i.isModalSubmit() && i.customId==='modal_rekber'){
+    await i.deferReply({ephemeral:true});
+    const lawanRaw=i.fields.getTextInputValue('lawan'); const nominal=parseInt(i.fields.getTextInputValue('nominal').replace(/[^0-9]/g,''));
+    const sellerId=lawanRaw.replace(/[^0-9]/g,''); const seller=await client.users.fetch(sellerId).catch(()=>null);
+    if(!seller) return i.editReply('❌ Tag lawan yang bener!');
+    const fee=getFee(nominal); const total=nominal+fee; const ref=`WAFA-${Date.now()}`;
+    const payment=await createTransaction(total,ref,i.user.username);
+    const channel=await i.guild.channels.create({name:`ticket-${nominal/1000}k-${ref.slice(-4)}`,type:ChannelType.GuildText,parent:TICKET_CATEGORY_ID||null,permissionOverwrites:[{id:i.guild.id,deny:[PermissionsBitField.Flags.ViewChannel]},{id:i.user.id,allow:[PermissionsBitField.Flags.ViewChannel,PermissionsBitField.Flags.SendMessages]},{id:seller.id,allow:[PermissionsBitField.Flags.ViewChannel,PermissionsBitField.Flags.SendMessages]}]});
+    db.data.transactions[ref]={ref,buyer:i.user.id,seller:seller.id,amount:nominal,fee,total,status:'WAITING_PAYMENT',channelId:channel.id,qr_url:payment.qr_url,doneBuyer:false,doneSeller:false}; await db.write();
+    const embed=new EmbedBuilder().setTitle(`🔒 TICKET REKBER ${ref}`).setDescription(`Buyer:<@${i.user.id}>\nSeller:<@${seller.id}>\n\nHarga:Rp ${nominal.toLocaleString('id-ID')}\nFee:Rp ${fee.toLocaleString('id-ID')}\nTOTAL:Rp ${total.toLocaleString('id-ID')}\n\nScan QRIS 15 menit.`).setImage(payment.qr_url).setColor(0x00FF00);
+    const row=new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId(`cancel_${ref}`).setLabel('❌ Batalkan').setStyle(ButtonStyle.Danger));
+    await channel.send({content:`<@${i.user.id}> <@${seller.id}>`,embeds:[embed],components:[row]}); await i.editReply(`✅ Ticket ${channel}`);
+    setTimeout(async()=>{const t=db.data.transactions[ref]; if(t&&t.status==='WAITING_PAYMENT'){t.status='EXPIRED'; await db.write(); channel.send(`❌ Expired`).catch(()=>{}); autoCloseTicket(channel,ref,2*60*1000);}},15*60*1000);
+  }
+  if(i.isButton()){
+    const ref=i.customId.split('_').slice(1).join('_').replace('payout_',''); const trx=db.data.transactions[ref]; if(!trx) return;
+    if(i.customId.startsWith('cancel_')){
+      if(i.user.id!==trx.buyer) return i.reply({content:'❌ Hanya buyer!',ephemeral:true});
+      trx.status='WAITING_REFUND_INFO'; await db.write(); return i.reply(`❌ Dibatalkan\n<@${trx.buyer}> isi metode refund: DANA 0812...`);
+    }
+    if(i.customId.startsWith('confirm_payout_')){
+      if(i.user.id!==trx.seller) return i.reply({content:'❌ Hanya seller!',ephemeral:true});
+      trx.status='COMPLETED'; await db.write();
+      const log=new EmbedBuilder().setTitle('✅ DONE').setDescription(`Ref:${ref}\nBuyer:<@${trx.buyer}>\nSeller:<@${trx.seller}>\nPayout:${trx.payoutMethod}`).setColor(0x00FF00);
+      await sendLog(log); await i.reply(`✅ DANA Rp ${trx.amount.toLocaleString('id-ID')} dikirim ke ${trx.payoutMethod}`); return autoCloseTicket(i.channel,ref);
+    }
+  }
+});
 
-// --- JALANIN WEB SERVER ---
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Web + Bot jalan di port ${PORT}`));
+app.post('/webhook/pakasir', async(req,res)=>{
+  const {merchant_ref,ref,status}=req.body; const key=merchant_ref||ref; const trx=db.data.transactions[key]; if(!trx) return res.send('OK');
+  if((status==='PAID'||status==='paid'||status==='success')&&trx.status==='WAITING_PAYMENT'){
+    trx.status='PAID_HELD'; await db.write();
+    const ch=await client.channels.fetch(trx.channelId).catch(()=>null);
+    if(ch) ch.send(`✅ DANA MASUK Rp ${trx.total.toLocaleString('id-ID')} PAKASIR! Lanjut, ketik done!`);
+  }
+  res.send('OK');
+});
 
-module.exports = app;
+app.listen(process.env.PORT||3000,()=>console.log('Web ON'));
+client.login(process.env.BOT_TOKEN);
