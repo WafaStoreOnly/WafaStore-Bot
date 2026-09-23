@@ -2,49 +2,58 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WafaStoreOnly - Top Up Game Termurah</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>WafaStoreOnly - Top Up Termurah</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Outfit',sans-serif}
-body{background:#070a12;color:#fff;min-height:100vh;padding-bottom:90px}
-header{padding:12px 4%;display:flex;justify-content:space-between;align-items:center;background:#0c1020;border-bottom:1px solid #1a2340;position:sticky;top:0;z-index:99}
-.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px}
-.logo img{width:44px;height:44px;border-radius:50%;border:2px solid #2a3a6a;object-fit:cover;background:#000}
-.logo span{background:linear-gradient(90deg,#00d4ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.banner{margin:12px 4%;padding:22px 18px;border-radius:18px;background:radial-gradient(600px at 70% -20%, #7c3aed55, transparent), linear-gradient(135deg,#151a4a,#0c1020);border:1px solid #2a2a6a}
-.banner h1{font-size:24px;line-height:1.1;font-weight:800} .banner h1 span{color:#a855f7}
-.banner p{font-size:11px;color:#8b9ac0;margin-top:8px}
-.btn-banner{background:linear-gradient(90deg,#00d4ff,#7c3aed);color:#fff;padding:12px 22px;border-radius:30px;border:none;font-weight:700;margin-top:14px;display:inline-flex;gap:8px;font-size:14px}
-.search{margin:12px 4%;background:#11182e;border:1px solid #1e2a4a;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;color:#5a6a8a;font-size:14px}
-.title{padding:18px 4% 12px;display:flex;justify-content:space-between;align-items:center}
-.title h2{font-size:18px} .title a{color:#00d4ff;font-size:13px;text-decoration:none}
-.cards{padding:0 4%;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media(min-width:768px){.cards{grid-template-columns:repeat(6,1fr)}}
-.card{background:linear-gradient(180deg,#151c32,#0e1428);border:1px solid #1e2a4a;border-radius:16px;padding:10px;text-align:left;position:relative;overflow:hidden;transition:.2s}
-.card:hover{border-color:#00d4ff;transform:translateY(-3px)}
-.card .badge{position:absolute;top:8px;right:8px;background:#7c3aed;color:#fff;font-size:9px;padding:3px 7px;border-radius:20px;font-weight:700;z-index:2}
-.card img{width:100%;aspect-ratio:1;object-fit:contain;border-radius:12px;background:#fff;padding:12px;display:block}
-.card h4{font-size:12px;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card p{font-size:10px;color:#8b9ac0;margin-top:2px}
-.promo{margin:24px 4%;background:linear-gradient(90deg,#0e7490,#5b21b6);border-radius:16px;padding:18px}
-.promo h3{font-size:16px} .promo p{font-size:11px;color:#cbd5e1;margin-top:4px}
-.bot{position:fixed;bottom:0;left:0;right:0;background:#0c1020f0;backdrop-filter:blur(12px);border-top:1px solid #1a2340;display:flex;justify-content:space-around;padding:10px 0;z-index:99}
-.bot a{color:#5a6a8a;text-decoration:none;font-size:10px;text-align:center;line-height:1.2} .bot a.active{color:#00d4ff}
-footer{text-align:center;color:#3a4a6a;font-size:10px;padding:20px 4% 100px;line-height:1.6}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
+body{background:#060a18;color:#fff;min-height:100vh;padding-bottom:90px}
+header{padding:10px 4%;display:flex;justify-content:space-between;align-items:center;background:#0b1020;border-bottom:1px solid #1c2648;position:sticky;top:0;z-index:99}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px}
+.logo img{width:42px;height:42px;border-radius:50%;border:2px solid #333;background:#000;object-fit:cover}
+.logo-text{background:linear-gradient(90deg,#00e5ff,#b24cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.banner{margin:12px 4%;padding:26px 20px;border-radius:18px;background:radial-gradient(500px at 80% -20%, #7c3aed66, transparent), linear-gradient(100deg,#0f1230 0%, #1a103e 50%, #0c1020 100%);border:1px solid #2a2a6a;position:relative;overflow:hidden}
+.banner::before{content:"";position:absolute;top:-50%;left:-20%;width:80%;height:200%;background:linear-gradient(90deg,transparent, #ffffff0a, transparent);transform:rotate(15deg)}
+.banner h1{font-size:26px;font-weight:900;line-height:1.1;letter-spacing:-0.5px;position:relative}
+.banner h1 i{font-style:italic}
+.banner p{font-size:11px;color:#8ea0c0;margin-top:10px;position:relative}
+.banner .btn{margin-top:16px;background:linear-gradient(90deg,#00d4ff,#7c3aed);color:#fff;padding:12px 24px;border-radius:30px;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;position:relative;box-shadow:0 4px 20px #00d4ff44}
+.search{margin:14px 4%;background:#10192f;border:1px solid #1e2a4a;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;color:#5e7196;font-size:13px}
+.title{padding:10px 4%;display:flex;justify-content:space-between;align-items:center}
+.title h2{font-size:16px;font-weight:700}
+.title a{color:#00d4ff;font-size:12px;text-decoration:none}
+.cards{padding:0 4%;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.card{background:linear-gradient(180deg,#111a33 0%, #0d142a 100%);border:1px solid #25325a;border-radius:14px;padding:8px;position:relative;overflow:hidden;box-shadow:0 0 0 1px #7c3aed20, inset 0 1px 0 #ffffff0a}
+.card::after{content:"";position:absolute;inset:0;border-radius:14px;padding:1px;background:linear-gradient(135deg,#00d4ff33,#7c3aed66);-webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.card .off{position:absolute;top:7px;right:7px;background:#7c3aed;color:#fff;font-size:8px;font-weight:800;padding:3px 6px;border-radius:8px;z-index:2}
+.card .imgbox{width:100%;aspect-ratio:1;background:#000;border-radius:10px;display:flex;align-items:center;justify-content:center;position:relative}
+.card .imgbox span{font-weight:900;text-align:center;line-height:1}
+.card h4{font-size:11px;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card p{display:none}
+.promo{margin:22px 4%;background:linear-gradient(90deg,#1e1b5a,#2a1a6a);border:1px solid #3a2a8a;border-radius:12px;padding:14px 16px;position:relative;overflow:hidden}
+.promo h3{font-size:14px;font-weight:800}
+.promo p{font-size:11px;color:#aab4d0;margin-top:4px}
+.promo .klaim{position:absolute;right:10px;bottom:10px;background:#0a1020;color:#00d4ff;font-size:11px;padding:6px 10px;border-radius:20px;border:1px solid #1e2a4a}
+.bot{position:fixed;bottom:0;left:0;right:0;background:#0a1020f2;backdrop-filter:blur(12px);border-top:1px solid #1c2648;display:flex;justify-content:space-around;padding:8px 0 10px;z-index:99}
+.bot a{color:#4a5a7a;text-decoration:none;font-size:10px;text-align:center;line-height:1.2;display:flex;flex-direction:column;align-items:center;gap:3px}
+.bot a.active{color:#00d4ff}
+.bot a span{font-size:18px}
+footer{text-align:center;color:#3a4a6a;font-size:9px;padding:16px 4% 90px;line-height:1.6}
 </style>
 </head>
 <body>
 
 <header>
-<div class="logo"><img src="logo.png" alt="awafans"><span>WafaStoreOnly</span></div>
-<div style="display:flex;gap:16px;color:#5a6a8a">🔍 🔔 👤</div>
+<div class="logo">
+<img src="logo.png" alt="awafans" onerror="this.src='https://via.placeholder.com/42'">
+<div class="logo-text">WafaStoreOnly</div>
+</div>
+<div style="display:flex;gap:14px;font-size:18px;color:#5a6a8a">🔍 🔔 👤</div>
 </header>
 
 <div class="banner">
-<h1>TOP UP GAME FAVORIT KAMU<br><span>DI WAFASTOREONLY</span></h1>
+<h1><i>TOP UP GAME FAVORIT KAMU</i><br>DI WAFASTOREONLY</h1>
 <p>Top Up Game Instan • Aman • 24/7 • Harga Termurah • Bonus Rewards</p>
-<div class="btn-banner">⚡ Mulai Top Up Sekarang</div>
+<div class="btn">⚡ Mulai Top Up Sekarang</div>
 </div>
 
 <div class="search">🔍 Cari game atau produk...</div>
@@ -52,54 +61,33 @@ footer{text-align:center;color:#3a4a6a;font-size:10px;padding:20px 4% 100px;line
 <div class="title"><h2>Pilih Game Populer</h2><a>Lihat Semua ></a></div>
 
 <div class="cards">
-<div class="card">
-<span class="badge">-10% OFF</span>
-<img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Roblox_logo_2022.png" alt="Roblox">
-<h4>Roblox</h4><p>Mulai Rp15.000</p>
-</div>
-<div class="card">
-<span class="badge">-10% OFF</span>
-<img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Mobile_Legends_Bang_Bang_logo.png" alt="MLBB">
-<h4>Mobile Legends</h4><p>Mulai Rp10.000</p>
-</div>
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/PUBG_logo.png" alt="PUBG">
-<h4>PUBG Mobile</h4><p>Mulai Rp12.000</p>
-</div>
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_black_color_version.svg" alt="Valorant">
-<h4>Valorant</h4><p>Mulai Rp25.000</p>
-</div>
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Free_Fire_Logo.png" alt="FF">
-<h4>Free Fire</h4><p>Mulai Rp8.000</p>
-</div>
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Genshin_Impact_logo.png" alt="Genshin" style="background:#000">
-<h4>Genshin Impact</h4><p>Mulai Rp20.000</p>
-</div>
+<div class="card"><span class="off">-10% OFF</span><div class="imgbox"><span style="color:#fff;font-size:22px">R<br><span style="font-size:10px;letter-spacing:2px">ROBLOX</span></span></div><h4>Roblox</h4></div>
+<div class="card"><span class="off">-10% OFF</span><div class="imgbox"><span style="color:#ffae00;font-size:11px;line-height:1.2">MOBILE<br>LEGENDS<br><span style="font-size:7px;color:#fff">BANG BANG</span></span></div><h4>Mobile Legends</h4></div>
+<div class="card"><div class="imgbox" style="border:1px solid #00d4ff55"><span style="color:#00d4ff;font-size:13px;letter-spacing:1px">PUBG<br><span style="font-size:9px">MOBILE</span></span></div><h4>PUBG Mobile</h4></div>
+<div class="card"><div class="imgbox"><span style="color:#ff4655;font-size:12px">VALORANT</span></div><h4>Valorant</h4></div>
+<div class="card"><div class="imgbox"><span style="color:#fff;font-size:11px">FREE F<span style="color:#ffae00">I</span>RE</span></div><h4>Free Fire</h4></div>
+<div class="card"><div class="imgbox"><span style="color:#fff;font-size:10px">GENSHIN<br>IMPACT</span></div><h4>Genshin Impact</h4></div>
 </div>
 
 <div class="promo">
 <h3>Diskon 15% Untuk Top Up Pertama!</h3>
-<p>Pakai kode: WAFA15 • Berlaku hingga 30 Okt 2026</p>
+<p>Pakai kode: WAFA15 • Berlaku hingga 30 Okt 2024</p>
+<div class="klaim">Klaim Sekarang →</div>
 </div>
 
 <footer>
 <b style="color:#fff">WafaStoreOnly / awafans</b><br>
-UMKM Digital Citayam, Jawa Barat - WA 083862776790 - wafastoreonly@gmail.com<br>
-Top Up Robux Gamepass 14K & Username 16K & Rekber Aman. Proses 24/7.<br><br>
-Syarat: Barang digital tidak dapat dikembalikan. Refund 100% jika gagal 2x24 jam.<br>
-Payment gateway resmi Pakasir.com - QRIS DANA OVO Gopay ShopeePay BCA BNI aman & terenkripsi.<br>
-© 2024-2026 WafaStoreOnly - Citayam, West Java, Indonesia
+UMKM Digital Citayam • WA 083862776790 • wafastoreonly@gmail.com<br>
+Top Up Robux Gamepass 14K & Username 16K • Rekber Aman 24/7<br>
+© 2024-2026 WafaStoreOnly - Citayam, West Java
 </footer>
 
 <div class="bot">
-<a class="active">🏠<br>Beranda</a>
-<a>⚡<br>Top Up</a>
-<a>≡<br>Pesanan</a>
-<a>👛<br>Dompet</a>
-<a>👤<br>Profil</a>
+<a class="active"><span>🏠</span>Beranda</a>
+<a><span>⚡</span>Top Up</a>
+<a><span>☰</span>Pesanan</a>
+<a><span>👛</span>Dompet</a>
+<a><span>👤</span>Profil</a>
 </div>
 
 </body>
