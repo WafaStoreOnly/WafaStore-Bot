@@ -7,29 +7,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Outfit',sans-serif}
-body{background:#070a12;color:#fff;min-height:100vh;padding-bottom:80px}
-header{padding:12px 4%;display:flex;justify-content:space-between;align-items:center;background:#0c1020;border-bottom:1px solid #1a2340;position:sticky;top:0;z-index:10}
+body{background:#070a12;color:#fff;min-height:100vh;padding-bottom:90px}
+header{padding:12px 4%;display:flex;justify-content:space-between;align-items:center;background:#0c1020;border-bottom:1px solid #1a2340;position:sticky;top:0;z-index:99}
 .logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px}
-.logo img{width:44px;height:44px;border-radius:50%;border:2px solid #1e2a4a;object-fit:cover;background:#000}
+.logo img{width:44px;height:44px;border-radius:50%;border:2px solid #2a3a6a;object-fit:cover;background:#000}
 .logo span{background:linear-gradient(90deg,#00d4ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.icon-right{display:flex;gap:16px;font-size:20px;color:#5a6a8a}
-.banner{margin:12px 4%;padding:22px 18px;border-radius:18px;background:radial-gradient(600px at 70% -20%, #7c3aed55, transparent), linear-gradient(135deg,#151a4a,#0c1020);border:1px solid #2a2a6a;position:relative;overflow:hidden}
-.banner h1{font-size:24px;line-height:1.1;font-weight:800;letter-spacing:-0.5px}
-.banner h1 span{color:#a855f7}
+.banner{margin:12px 4%;padding:22px 18px;border-radius:18px;background:radial-gradient(600px at 70% -20%, #7c3aed55, transparent), linear-gradient(135deg,#151a4a,#0c1020);border:1px solid #2a2a6a}
+.banner h1{font-size:24px;line-height:1.1;font-weight:800} .banner h1 span{color:#a855f7}
 .banner p{font-size:11px;color:#8b9ac0;margin-top:8px}
-.btn-banner{background:linear-gradient(90deg,#00d4ff,#7c3aed);color:#fff;padding:12px 22px;border-radius:30px;border:none;font-weight:700;margin-top:14px;display:inline-flex;align-items:center;gap:8px;font-size:14px}
+.btn-banner{background:linear-gradient(90deg,#00d4ff,#7c3aed);color:#fff;padding:12px 22px;border-radius:30px;border:none;font-weight:700;margin-top:14px;display:inline-flex;gap:8px;font-size:14px}
 .search{margin:12px 4%;background:#11182e;border:1px solid #1e2a4a;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;color:#5a6a8a;font-size:14px}
 .title{padding:18px 4% 12px;display:flex;justify-content:space-between;align-items:center}
 .title h2{font-size:18px} .title a{color:#00d4ff;font-size:13px;text-decoration:none}
 .cards{padding:0 4%;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 @media(min-width:768px){.cards{grid-template-columns:repeat(6,1fr)}}
 .card{background:linear-gradient(180deg,#151c32,#0e1428);border:1px solid #1e2a4a;border-radius:16px;padding:10px;text-align:left;position:relative;overflow:hidden;transition:.2s}
-.card:hover{border-color:#00d4ff;transform:translateY(-3px);box-shadow:0 8px 20px #00d4ff22}
+.card:hover{border-color:#00d4ff;transform:translateY(-3px)}
 .card .badge{position:absolute;top:8px;right:8px;background:#7c3aed;color:#fff;font-size:9px;padding:3px 7px;border-radius:20px;font-weight:700;z-index:2}
-.card img{width:100%;aspect-ratio:1;object-fit:contain;border-radius:12px;background:#000;padding:10px;display:block}
+.card img{width:100%;aspect-ratio:1;object-fit:contain;border-radius:12px;background:#fff;padding:12px;display:block}
 .card h4{font-size:12px;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card p{font-size:10px;color:#8b9ac0;margin-top:2px}
-.promo{margin:24px 4%;background:linear-gradient(90deg,#0e7490,#5b21b6);border-radius:16px;padding:18px;position:relative}
+.promo{margin:24px 4%;background:linear-gradient(90deg,#0e7490,#5b21b6);border-radius:16px;padding:18px}
 .promo h3{font-size:16px} .promo p{font-size:11px;color:#cbd5e1;margin-top:4px}
 .bot{position:fixed;bottom:0;left:0;right:0;background:#0c1020f0;backdrop-filter:blur(12px);border-top:1px solid #1a2340;display:flex;justify-content:space-around;padding:10px 0;z-index:99}
 .bot a{color:#5a6a8a;text-decoration:none;font-size:10px;text-align:center;line-height:1.2} .bot a.active{color:#00d4ff}
@@ -40,7 +38,7 @@ footer{text-align:center;color:#3a4a6a;font-size:10px;padding:20px 4% 100px;line
 
 <header>
 <div class="logo"><img src="logo.png" alt="awafans"><span>WafaStoreOnly</span></div>
-<div class="icon-right"><span>🔍</span><span>🔔</span><span>👤</span></div>
+<div style="display:flex;gap:16px;color:#5a6a8a">🔍 🔔 👤</div>
 </header>
 
 <div class="banner">
@@ -56,31 +54,26 @@ footer{text-align:center;color:#3a4a6a;font-size:10px;padding:20px 4% 100px;line
 <div class="cards">
 <div class="card">
 <span class="badge">-10% OFF</span>
-<img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Roblox_logo_2022.png" alt="Roblox" style="background:#ffffff;">
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Roblox_logo_2022.png" alt="Roblox">
 <h4>Roblox</h4><p>Mulai Rp15.000</p>
 </div>
-
 <div class="card">
 <span class="badge">-10% OFF</span>
-<img src="https://images.seeklogo.com/logo-png/51/1/mobile-legends-bang-bang-logo-png_seeklogo-515870.png" alt="MLBB">
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/90/Mobile_Legends_Bang_Bang_logo.png" alt="MLBB">
 <h4>Mobile Legends</h4><p>Mulai Rp10.000</p>
 </div>
-
 <div class="card">
-<img src="https://images.seeklogo.com/logo-png/31/1/pubg-logo-png_seeklogo-318403.png" alt="PUBG">
+<img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/PUBG_logo.png" alt="PUBG">
 <h4>PUBG Mobile</h4><p>Mulai Rp12.000</p>
 </div>
-
 <div class="card">
-<img src="https://images.seeklogo.com/logo-png/44/1/valorant-logo-png_seeklogo-446887.png" alt="Valorant" style="background:#000">
+<img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_black_color_version.svg" alt="Valorant">
 <h4>Valorant</h4><p>Mulai Rp25.000</p>
 </div>
-
 <div class="card">
-<img src="https://images.seeklogo.com/logo-png/27/1/free-fire-logo-png_seeklogo-273335.png" alt="FF">
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Free_Fire_Logo.png" alt="FF">
 <h4>Free Fire</h4><p>Mulai Rp8.000</p>
 </div>
-
 <div class="card">
 <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Genshin_Impact_logo.png" alt="Genshin" style="background:#000">
 <h4>Genshin Impact</h4><p>Mulai Rp20.000</p>
@@ -89,12 +82,12 @@ footer{text-align:center;color:#3a4a6a;font-size:10px;padding:20px 4% 100px;line
 
 <div class="promo">
 <h3>Diskon 15% Untuk Top Up Pertama!</h3>
-<p>Pakai kode: WAFA15 • Berlaku hingga 30 Okt 2024</p>
+<p>Pakai kode: WAFA15 • Berlaku hingga 30 Okt 2026</p>
 </div>
 
 <footer>
 <b style="color:#fff">WafaStoreOnly / awafans</b><br>
-UMKM Digital Citayam, Jawa Barat - WA 083862776790 - Email wafastoreonly@gmail.com<br>
+UMKM Digital Citayam, Jawa Barat - WA 083862776790 - wafastoreonly@gmail.com<br>
 Top Up Robux Gamepass 14K & Username 16K & Rekber Aman. Proses 24/7.<br><br>
 Syarat: Barang digital tidak dapat dikembalikan. Refund 100% jika gagal 2x24 jam.<br>
 Payment gateway resmi Pakasir.com - QRIS DANA OVO Gopay ShopeePay BCA BNI aman & terenkripsi.<br>
