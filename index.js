@@ -17,14 +17,13 @@ const client = new Client({
 const app = express();
 app.use(express.json());
 
-// === WEB WafaStoreOnly.cloud - Buat ACC Pakasir ===
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 app.get('/api/harga', (req, res) => res.json({
   toko: "WafaStoreOnly.cloud",
   gamepass: "14K/100 Robux",
   username: "16K/100 Robux",
   payment: "DANA 083862776790 | QRIS Pakasir",
-  status: "READY"
+  status: "READY - PREMIUM"
 }));
 
 const LOGS_CHANNEL_ID = process.env.LOGS_CHANNEL_ID;
@@ -41,7 +40,7 @@ function getFee(n){
 }
 
 async function autoCloseTicket(channel, ref, delay=10*60*1000){
-  await channel.send(`⏰ **Ticket ${ref} akan tertutup otomatis dalam 10 menit!**\n📌 Buyer & Seller wajib screenshot bukti transaksi untuk jaga-jaga.\n\nTerimakasih pakai REKBER WafaStoreOnly! 🙏`).catch(()=>{});
+  await channel.send(`⏰ **Ticket ${ref} akan tertutup otomatis dalam 10 menit!**\n📌 Buyer & Seller wajib screenshot bukti.\n\nTerimakasih pakai REKBER WafaStoreOnly! 🙏`).catch(()=>{});
   setTimeout(async()=>{
     try{
       await channel.send(`🔒 Ticket ${ref} ditutup permanen. Menghapus channel...`);
@@ -57,20 +56,85 @@ async function sendLog(embed){
   }catch(e){ console.log('Log channel error', e.message) }
 }
 
-// === MESSAGE CREATE:!setuprekber + done + payout ===
+// === MESSAGE CREATE ===
 client.on(Events.MessageCreate, async(msg)=>{
   if(msg.author.bot) return;
 
+  // === PANEL PREMIUM REALISTIS - INI YANG DI UPGRADE ===
   if(msg.content === '!setuprekber' && msg.member.permissions.has(PermissionsBitField.Flags.Administrator)){
     const embed = new EmbedBuilder()
-     .setTitle('🔒 REKBER WafaStoreOnly | AUTO & AMAN 100%')
-     .setDescription('**Transaksi Aman Otomatis Pakasir**\n\n🎮 Gamepass: 14K/100 Robux\n👤 Username: 16K/100 Robux\n💳 DANA: 083862776790\n🔗 QRIS: Pakasir Otomatis\n\nKlik tombol di bawah untuk buat ticket rekber!')
-     .setColor(0x00BFFF)
-     .setFooter({ text: 'WafaStoreOnly.cloud - Anti Scam' });
+   .setColor('#5865F2')
+   .setAuthor({
+       name: 'WafaStoreOnly • Trusted Midman Service',
+       iconURL: msg.guild.iconURL(),
+       url: 'https://wafastoreonly.cloud'
+     })
+   .setTitle('🤝 REKBER / MIDMAN SERVICES')
+   .setDescription(
+        `> **Transaksi Aman, Nyaman, dan 100% Terpercaya di WafaStoreOnly.**\n` +
+        `> Kami siap menjadi penengah transaksi Anda agar terhindar dari penipuan.\n\n` +
+        `**━━━━━━━━━━━━━━━━━━━━**\n\n` +
+        `🔹 **Layanan :** Rekber All Game / Akun / Jasa\n` +
+        `🔹 **Jam Operasional :** 08.00 - 23.00 WIB\n` +
+        `🔹 **Estimasi Proses :** 5 - 15 Menit\n\n` +
+        `**━━━━━━━━━━━━━━━━━━━━**\n`
+      )
+   .addFields(
+       {
+         name: '⚠️ Tata Cara Penggunaan',
+         value:
+          '`1.` **Tekan Tombol** di bawah ini\n' +
+          '`2.` **Isi Username** / Mention lawan transaksi\n' +
+          '`3.` **Masukkan Nominal** dengan benar\n' +
+          '`4.` **Pilih Buyer** di dropdown dalam ticket',
+         inline: false
+       },
+       {
+         name: '💎 Kenapa WafaStoreOnly?',
+         value:
+          '✅ Admin Fast Respon\n' +
+          '✅ Fee Murah Mulai 3K\n' +
+          '✅ QRIS Otomatis Pakasir\n' +
+          '✅ Garansi 100% Anti Scam',
+         inline: true
+       },
+       {
+         name: '💳 Pembayaran',
+         value:
+          'DANA: `083862776790`\n' +
+          'QRIS: Otomatis\n' +
+          'All E-Wallet',
+         inline: true
+       }
+     )
+   .setFooter({
+       text: 'WafaStoreOnly.cloud • Midman Terpercaya Sejak 2023',
+       iconURL: msg.guild.iconURL()
+     })
+   .setTimestamp();
+
     const row = new ActionRowBuilder().addComponents(
-      new ButtonBuilder().setCustomId('create_ticket').setLabel('🎫 CREATE TICKET').setStyle(ButtonStyle.Success)
+      new ButtonBuilder()
+     .setCustomId('create_ticket')
+     .setLabel('Rekber? Klik Disini')
+     .setStyle(ButtonStyle.Primary)
+     .setEmoji('🛡️')
     );
-    return msg.channel.send({ embeds: [embed], components: [row] });
+
+    const row2 = new ActionRowBuilder().addComponents(
+      new ButtonBuilder()
+     .setLabel('Cek Reputasi')
+     .setStyle(ButtonStyle.Link)
+     .setURL('https://wafastoreonly.cloud')
+     .setEmoji('⭐'),
+      new ButtonBuilder()
+     .setLabel('Kontak Admin')
+     .setStyle(ButtonStyle.Link)
+     .setURL('https://wa.me/6283862776790')
+     .setEmoji('💬')
+    );
+
+    return msg.channel.send({ embeds: [embed], components: [row, row2] });
   }
 
   const ref = Object.keys(db.data.transactions).find(r => db.data.transactions[r].channelId === msg.channel.id);
@@ -110,13 +174,13 @@ client.on(Events.MessageCreate, async(msg)=>{
   }
 });
 
-// === INTERACTION: Modal + Button ===
+// === INTERACTION ===
 client.on(Events.InteractionCreate, async(i)=>{
   if(i.customId === 'create_ticket'){
     const modal = new ModalBuilder().setCustomId('modal_rekber').setTitle('Buat Ticket Rekber - WafaStoreOnly');
     modal.addComponents(
-      new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('lawan').setLabel('Username lawan (@tag)').setStyle(TextInputStyle.Short).setRequired(true)),
-      new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('nominal').setLabel('Jumlah (contoh: 50000)').setStyle(TextInputStyle.Short).setRequired(true))
+      new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('lawan').setLabel('Tag lawan transaksi (@username)').setStyle(TextInputStyle.Short).setPlaceholder('@Budi atau 123456789...').setRequired(true)),
+      new ActionRowBuilder().addComponents(new TextInputBuilder().setCustomId('nominal').setLabel('Nominal Transaksi (angka saja)').setStyle(TextInputStyle.Short).setPlaceholder('50000').setRequired(true))
     );
     return i.showModal(modal);
   }
@@ -125,10 +189,16 @@ client.on(Events.InteractionCreate, async(i)=>{
     await i.deferReply({ ephemeral: true });
     const lawanRaw = i.fields.getTextInputValue('lawan');
     const nominal = parseInt(i.fields.getTextInputValue('nominal').replace(/[^0-9]/g,''));
-    const sellerId = lawanRaw.replace(/[^0-9]/g,'');
+
+    // FIX: BISA TAG ATAU ID - ANTI ERROR
+    let sellerId = lawanRaw.replace(/[<@!>]/g,'').trim();
+    if(isNaN(parseInt(sellerId))){
+      return i.editReply('❌ **Gagal!** Tag lawan dengan @ ya cok, jangan ketik manual! Contoh: ketik @Budi terus klik namanya!');
+    }
     const seller = await client.users.fetch(sellerId).catch(()=>null);
-    if(!seller) return i.editReply('❌ Tag lawan transaksi yang bener @ dia!');
-    if(isNaN(nominal)) return i.editReply('❌ Nominal harus angka!');
+    if(!seller) return i.editReply('❌ User tidak ditemukan! Pastikan dia ada di server ini!');
+    if(seller.id === i.user.id) return i.editReply('❌ Tidak bisa rekber dengan diri sendiri!');
+    if(isNaN(nominal) || nominal < 1000) return i.editReply('❌ Nominal minimal Rp 1.000!');
 
     const fee = getFee(nominal); const total = nominal + fee; const ref = `WAFA-${Date.now()}`;
     const payment = await createTransaction(total, ref, i.user.username);
@@ -148,9 +218,9 @@ client.on(Events.InteractionCreate, async(i)=>{
     await db.write();
 
     const embed = new EmbedBuilder()
-     .setTitle(`🔒 TICKET REKBER ${ref} | WafaStoreOnly`)
-     .setDescription(`🔒 **SELAMAT DATANG DI REKBER WafaStoreOnly - PAKASIR OTOMATIS**\n\nBuyer: <@${i.user.id}>\nSeller: <@${seller.id}>\n\n**Harga:** Rp ${nominal.toLocaleString('id-ID')}\n**Fee:** Rp ${fee.toLocaleString('id-ID')}\n**TOTAL TRANSFER:** Rp ${total.toLocaleString('id-ID')}\n\nSilahkan scan QRIS di bawah. Berlaku 15 menit.\nSetelah bayar ketik done jika barang sudah diterima/dikirim.`)
-     .setImage(payment.qr_url).setColor(0x00FF00).setFooter({ text: `WafaStoreOnly | Ref: ${ref}` });
+    .setTitle(`🔒 TICKET REKBER ${ref} | WafaStoreOnly`)
+    .setDescription(`🔒 **SELAMAT DATANG DI REKBER WafaStoreOnly - PAKASIR OTOMATIS**\n\nBuyer: <@${i.user.id}>\nSeller: <@${seller.id}>\n\n**Harga:** Rp ${nominal.toLocaleString('id-ID')}\n**Fee:** Rp ${fee.toLocaleString('id-ID')}\n**TOTAL TRANSFER:** Rp ${total.toLocaleString('id-ID')}\n\n💳 **DANA:** 083862776790\nSilahkan scan QRIS di bawah. Berlaku 15 menit.\nSetelah bayar ketik done jika barang sudah diterima/dikirim.`)
+    .setImage(payment.qr_url).setColor(0x5865F2).setFooter({ text: `WafaStoreOnly | Ref: ${ref}` });
 
     const row = new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId(`cancel_${ref}`).setLabel('❌ Batalkan (Buyer Only)').setStyle(ButtonStyle.Danger));
     await channel.send({ content: `<@${i.user.id}> <@${seller.id}>`, embeds: [embed], components: [row] });
@@ -181,7 +251,6 @@ client.on(Events.InteractionCreate, async(i)=>{
   }
 });
 
-// === WEBHOOK PAKASIR ===
 app.post('/webhook/pakasir', async(req,res)=>{
   const { merchant_ref, ref, status } = req.body;
   const key = merchant_ref || ref;
@@ -195,12 +264,9 @@ app.post('/webhook/pakasir', async(req,res)=>{
   res.send('OK');
 });
 
-// === FIX VERCEL - INI YANG BIKIN ERROR TADI ===
 if(process.env.VERCEL){
-  // Di Vercel cuma jalanin WEB aja
   module.exports = app;
 } else {
-  // Di Railway / Lokal jalanin WEB + BOT
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, ()=> console.log(`Web WafaStoreOnly jalan di ${PORT}`));
   client.login(process.env.BOT_TOKEN || process.env.DISCORD_TOKEN);
