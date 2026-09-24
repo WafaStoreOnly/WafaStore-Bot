@@ -3,84 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WafaStoreOnly - Top Up Game Favorit</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<title>WafaStoreOnly</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-body{background:#070b1f;color:white;min-height:100vh;padding-bottom:90px}
-.header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#070b1f;position:sticky;top:0;z-index:20}
-.logo-wrap{display:flex;align-items:center;gap:10px}
-.logo-img{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#111,#333);border:2px solid #2a2d4a;object-fit:cover}
-.logo-text{font-weight:800;font-size:22px;background:linear-gradient(90deg,#00d4ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.header-icons{display:flex;gap:14px;align-items:center;font-size:20px;color:#8890b5}
-.banner{margin:0;position:relative;background:linear-gradient(135deg,#0f102e 0%,#1a1040 50%,#0f102e 100%);overflow:hidden;padding:28px 20px 28px;border-bottom:1px solid #1e2250}
-.banner::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 20% 50%,rgba(120,50,255,0.15) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(0,212,255,0.12) 0%,transparent 50%)}
-.banner h1{position:relative;font-size:30px;font-weight:900;line-height:0.95;letter-spacing:-0.5px;font-style:italic;text-transform:uppercase}
-.banner p{position:relative;font-size:11px;color:#b8bdd6;margin-top:12px}
-.btn-banner{position:relative;margin-top:18px;background:linear-gradient(90deg,#00c6ff,#7c3aed);border:none;padding:12px 26px;border-radius:28px;color:white;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 0 20px rgba(0,198,255,0.4);cursor:pointer}
-.section{padding:18px 16px}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.section-head h2{font-size:17px;font-weight:700}
-.link-all{color:#00d4ff;font-size:13px;font-weight:600}
-.game-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.game-card{position:relative;background:linear-gradient(180deg,#13162f 0%,#0d1025 100%);border-radius:14px;padding:2px;cursor:pointer}
-.game-card-inner{background:radial-gradient(120% 120% at 50% 0%,#1e2250 0%,#0e1229 100%);border-radius:12px;padding:14px 8px 10px;text-align:center;height:110px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
-.game-card::before{content:'';position:absolute;inset:0;border-radius:14px;padding:1.5px;background:linear-gradient(135deg,#00d4ff,#a855f7);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
-.badge{position:absolute;top:6px;right:6px;background:linear-gradient(90deg,#6366f1,#8b5cf6);font-size:8px;padding:3px 6px;border-radius:10px;font-weight:700;z-index:2}
-.game-logo{font-weight:900;font-size:18px;line-height:1}
-.game-name{font-size:11px;font-weight:600;color:#e2e6f5;margin-top:8px}
-.promo-sec{padding:0 16px 16px}
-.promo-head{font-size:17px;font-weight:700;margin-bottom:12px}
-.promo-card{background:linear-gradient(135deg,#5b4cf2 0%,#7c3aed 50%,#6d28d9 100%);border-radius:14px;padding:16px;position:relative;overflow:hidden}
-.promo-card h3{font-size:16px;font-weight:800}
-.promo-card p{font-size:11px;color:#d9d4ff;margin-top:4px}
-.btn-klaim{position:absolute;bottom:-10px;right:12px;background:#0f1229;border:1px solid #2a2d4a;padding:8px 14px;border-radius:20px;font-size:12px;color:#60a5fa;font-weight:600}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#0a0e28;border-top:1px solid #1e2250;display:flex;justify-content:space-around;padding:10px 0 14px;z-index:30}
-.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:#5a638a;font-size:10px;font-weight:600;cursor:pointer}
-.nav-item.active{color:#00d4ff}
-.topup-page{display:none;padding:16px}
-.topup-page.active{display:block}
-.back-btn{color:#00d4ff;font-size:14px;margin-bottom:16px;display:inline-block;cursor:pointer}
-.input-box{margin-bottom:14px}
-.input-box label{font-size:12px;color:#8890b5;display:block;margin-bottom:6px}
-.input-box input{width:100%;padding:13px;border-radius:10px;border:1px solid #1e2250;background:#13162f;color:white}
-.total-box{background:#13162f;border:1px dashed #00d4ff;padding:12px;border-radius:10px;text-align:center;margin-top:12px;font-weight:700}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.item{background:#13162f;border:1px solid #1e2250;border-radius:12px;padding:12px;text-align:center;cursor:pointer}
-.item .price{color:#00ff88;font-weight:700;margin-top:4px;font-size:13px}
-.wa-btn{display:block;background:#25D366;color:white;text-align:center;padding:14px;border-radius:12px;font-weight:700;margin-top:16px;text-decoration:none}
+body{background:#070b1f;color:white;padding-bottom:90px}
+.header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;position:sticky;top:0;background:#070b1f;z-index:20;border-bottom:1px solid #1a1f3d}
+.logo{font-weight:900;font-size:22px;background:linear-gradient(90deg,#00d4ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.banner{background:linear-gradient(135deg,#0f1030,#1a1040);padding:24px 20px}
+.banner h1{font-size:26px;font-weight:900;font-style:italic;line-height:1.05}
+.banner p{font-size:11px;color:#aab2d0;margin-top:8px}
+.btn-banner{margin-top:16px;background:linear-gradient(90deg,#00c6ff,#7c3aed);border:none;padding:11px 22px;border-radius:24px;color:white;font-weight:700;font-size:13px}
+.section{padding:16px}.head{display:flex;justify-content:space-between;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.card{position:relative;background:#13162f;border:1px solid #2a2e5a;border-radius:14px;padding:8px;text-align:center;cursor:pointer}
+.card img{width:48px;height:48px;object-fit:contain;margin:6px auto;display:block;border-radius:8px;background:#0e1229}
+.badge{position:absolute;top:5px;right:5px;background:#6366f1;font-size:8px;padding:2px 5px;border-radius:8px;font-weight:700}
+.name{font-size:11px;margin-top:6px;font-weight:600}
+.promo{margin:0 16px 16px;background:linear-gradient(135deg,#5b4cf2,#7c3aed);border-radius:14px;padding:14px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#0a0e28;border-top:1px solid #1e2250;display:flex;justify-content:space-around;padding:8px 0 12px;z-index:30}
+.nav{font-size:10px;color:#5a638a;text-align:center}.nav.active{color:#00d4ff}
+.page{display:none;padding:16px}.page.active{display:block}
+.back{color:#00d4ff;font-size:13px;margin-bottom:12px;cursor:pointer;display:inline-block}
+.subtabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:12px}
+.subtab{padding:8px 16px;border-radius:20px;background:#1a1f3d;border:1px solid #2a2e5a;color:#8890b5;font-size:12px;white-space:nowrap;cursor:pointer}
+.subtab.active{background:#2a5bd7;color:white;border-color:#2a5bd7}
+.input label{font-size:11px;color:#8890b5;display:block;margin-bottom:5px;margin-top:10px}
+.input input{width:100%;padding:12px;border-radius:10px;border:1px solid #1e2250;background:#13162f;color:white}
+.total{background:#0f1229;border:1px dashed #00d4ff;padding:10px;border-radius:10px;text-align:center;margin-top:10px;font-weight:700;font-size:13px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.item2{background:#13162f;border:1px solid #1e2250;border-radius:10px;padding:10px;text-align:center;cursor:pointer}
+.item2 .pr{color:#00ff88;font-weight:700;font-size:12px;margin-top:2px}
+.wa{display:block;background:#25D366;color:white;text-align:center;padding:13px;border-radius:12px;font-weight:700;margin-top:14px;text-decoration:none}
 </style>
 </head>
 <body>
-<div class="header"><div class="logo-wrap"><div class="logo-img"></div><div class="logo-text">WafaStoreOnly</div></div><div class="header-icons"><div>🔍</div><div>🔔</div><div>👤</div></div></div>
-<div id="homePage">
-<div class="banner"><h1>TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1><p>Top Up Game Instan • Aman • 24/7 • Harga Termurah • Bonus Rewards</p><button class="btn-banner" onclick="document.getElementById('games').scrollIntoView({behavior:'smooth'})">⚡ Mulai Top Up Sekarang</button></div>
-<div class="section" id="games"><div class="section-head"><h2>Pilih Game Populer</h2><a class="link-all">Lihat Semua ></a></div>
-<div class="game-grid">
-<div class="game-card" onclick="openGame('roblox')"><span class="badge">-10% OFF</span><div class="game-card-inner"><div class="game-logo">R ROBLOX</div><div class="game-name">Roblox</div></div></div>
-<div class="game-card" onclick="openGame('ml')"><span class="badge">-10% OFF</span><div class="game-card-inner"><div class="game-logo" style="color:#ffcc00">MOBILE LEGENDS</div><div class="game-name">Mobile Legends</div></div></div>
-<div class="game-card" onclick="openGame('pubg')"><div class="game-card-inner"><div class="game-logo" style="color:#7dd3fc">PUBG MOBILE</div><div class="game-name">PUBG Mobile</div></div></div>
-<div class="game-card" onclick="openGame('valorant')"><div class="game-card-inner"><div class="game-logo" style="color:#ff6b6b">VALORANT</div><div class="game-name">Valorant</div></div></div>
-<div class="game-card" onclick="openGame('ff')"><div class="game-card-inner"><div class="game-logo">FREE FIRE</div><div class="game-name">Free Fire</div></div></div>
-<div class="game-card" onclick="openGame('genshin')"><div class="game-card-inner"><div class="game-logo" style="color:#c4b5fd">GENSHIN IMPACT</div><div class="game-name">Genshin Impact</div></div></div>
-<div class="game-card" onclick="openGame('redfinger')"><span class="badge">HOT</span><div class="game-card-inner"><div class="game-logo">REDFINGER</div><div class="game-name">Redfinger</div></div></div>
+<div class="header"><div class="logo">WafaStoreOnly</div><div>🔍 🔔 👤</div></div>
+<div id="home">
+<div class="banner"><h1>TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1><p>Top Up Game Instan • Aman • 24/7 • Harga Termurah • Bonus Rewards</p><button class="btn-banner">⚡ Mulai Top Up Sekarang</button></div>
+<div class="section"><div class="head"><h2>Pilih Game Populer</h2><span style="color:#00d4ff;font-size:12px">Lihat Semua ></span></div>
+<div class="grid">
+<div class="card" onclick="openGame('roblox')"><span class="badge">-10% OFF</span><img src="https://upload.wikimedia.org/wikipedia/commons/c/e5/Roblox_logo_2022.png"><div class="name">Roblox</div></div>
+<div class="card" onclick="openGame('ml')"><span class="badge">-10% OFF</span><img src="https://upload.wikimedia.org/wikipedia/id/7/76/Mobile_Legends_logo.png"><div class="name">Mobile Legends</div></div>
+<div class="card" onclick="openGame('pubg')"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7d/PUBG_Mobile_Logo.png" style="background:white;padding:4px"><div class="name">PUBG Mobile</div></div>
+<div class="card" onclick="openGame('valorant')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Valorant_logo_-_pink_color_version.png"><div class="name">Valorant</div></div>
+<div class="card" onclick="openGame('ff')"><img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Free_fire_logo.png"><div class="name">Free Fire</div></div>
+<div class="card" onclick="openGame('genshin')"><img src="https://upload.wikimedia.org/wikipedia/en/5/5d/Genshin_Impact_logo.png"><div class="name">Genshin Impact</div></div>
+<div class="card" onclick="openGame('redfinger')"><span class="badge">HOT</span><img src="https://cdn-icons-png.flaticon.com/512/1087/1087815.png" style="background:#222;padding:6px"><div class="name">Redfinger</div></div>
 </div></div>
-<div class="promo-sec"><div class="promo-head">Promo Spesial Hari Ini</div><div class="promo-card"><h3>Diskon 15% Untuk Top Up Pertama!</h3><p>Pakai kode: WAFA15 • Berlaku hingga 30 Okt 2024</p><button class="btn-klaim">Klaim Sekarang →</button></div></div>
+<div class="promo"><h3>Diskon 15% Untuk Top Up Pertama!</h3><p>Pakai kode: WAFA15 • Berlaku hingga 30 Okt 2024</p></div>
 </div>
-<div id="roblox" class="topup-page"><div class="back-btn" onclick="goHome()">← Kembali</div><div style="font-weight:800;font-size:20px">Roblox - Via Username 16k/100R$</div><div class="input-box" style="margin-top:12px"><label>Username Roblox:</label><input id="uRoblox" placeholder="wafa123"></div><div class="input-box"><label>Mau Berapa R$? Ketik Bebas:</label><input id="cRoblox" type="number" placeholder="contoh: 750" oninput="calc('roblox')"></div><div class="total-box" id="tRoblox">Total: Rp0</div><div class="grid2"><div class="item" onclick="setVal('roblox',100)"><div>100 R$</div><div class="price">Rp16.000</div></div><div class="item" onclick="setVal('roblox',1000)"><div>1000 R$</div><div class="price">Rp160.000</div></div></div><a class="wa-btn" onclick="orderWA('roblox')">Order Via WhatsApp</a></div>
-<div id="ml" class="topup-page"><div class="back-btn" onclick="goHome()">← Kembali</div><div style="font-weight:800;font-size:20px">Mobile Legends</div><div class="input-box" style="margin-top:12px"><label>ID & Server:</label><input id="uML" placeholder="12345678 (1234)"></div><div class="input-box"><label>Jumlah Diamond:</label><input id="cML" type="number" placeholder="500" oninput="calc('ml')"></div><div class="total-box" id="tML">Total: Rp0</div><a class="wa-btn" onclick="orderWA('ml')">Order MLBB Via WA</a></div>
-<div id="ff" class="topup-page"><div class="back-btn" onclick="goHome()">← Kembali</div><div style="font-weight:800;font-size:20px">Free Fire</div><div class="input-box" style="margin-top:12px"><label>ID FF:</label><input id="uFF" placeholder="ID"></div><div class="input-box"><label>Jumlah DM:</label><input id="cFF" type="number" placeholder="720" oninput="calc('ff')"></div><div class="total-box" id="tFF">Total: Rp0</div><a class="wa-btn" onclick="orderWA('ff')">Order FF Via WA</a></div>
-<div id="pubg" class="topup-page"><div class="back-btn" onclick="goHome()">← Kembali</div><div style="font-weight:800;font-size:20px">PUBG Mobile</div><div class="input-box" style="margin-top:12px"><label>ID PUBG:</label><input id="uPUBG" placeholder="ID"></div><div class="input-box"><label>Jumlah UC:</label><input id="cPUBG" type="number" placeholder="500" oninput="calc('pubg')"></div><div class="total-box" id="tPUBG">Total: Rp0</div><a class="wa-btn" onclick="orderWA('pubg')">Order PUBG Via WA</a></div>
-<div id="redfinger" class="topup-page"><div class="back-btn" onclick="goHome()">← Kembali</div><div style="font-weight:800;font-size:20px">Redfinger</div><div class="input-box" style="margin-top:12px"><label>Email:</label><input id="uRed" placeholder="email"></div><div class="input-box"><label>Berapa Hari:</label><input id="cRed" type="number" placeholder="30" oninput="calc('redfinger')"></div><div class="total-box" id="tRed">Total: Rp0</div><a class="wa-btn" onclick="orderWA('redfinger')">Order Redfinger Via WA</a></div>
-<div id="valorant" class="topup-page"><div class="back-btn" onclick="goHome()">← Kembali</div><div style="font-weight:800;font-size:20px">Valorant</div><div class="total-box">Chat Admin untuk Valorant</div><a class="wa-btn" href="https://wa.me/6283862776790">Order Via WA</a></div>
-<div id="genshin" class="topup-page"><div class="back-btn" onclick="goHome()">← Kembali</div><div style="font-weight:800;font-size:20px">Genshin Impact</div><div class="total-box">Chat Admin untuk Genshin</div><a class="wa-btn" href="https://wa.me/6283862776790">Order Via WA</a></div>
-<div class="bottom-nav"><div class="nav-item active" onclick="goHome()"><span>🏠</span>Beranda</div><div class="nav-item"><span>⚡</span>Top Up</div><div class="nav-item"><span>📋</span>Pesanan</div><div class="nav-item"><span>👛</span>Dompet</div><div class="nav-item"><span>👤</span>Profil</div></div>
+<div id="roblox" class="page">
+<div class="back" onclick="goHome()">← Kembali</div>
+<div style="font-weight:800;font-size:18px">Roblox - Top Up Robux</div>
+<div class="subtabs" style="margin-top:12px">
+<button class="subtab active" id="t1" onclick="setMethod('username')">Username 16k/100</button>
+<button class="subtab" id="t2" onclick="setMethod('gamepass')">Gamepass 14k/100</button>
+<button class="subtab" id="t3" onclick="setMethod('gift')">Gift In Game 95%</button>
+</div>
+<div class="input"><label>Username Roblox:</label><input id="uRbx" placeholder="contoh: wafa123"></div>
+<div class="input" id="gpInput" style="display:none"><label>Link Gamepass:</label><input id="uGP" placeholder="https://www.roblox.com/game-pass/..."></div>
+<div class="input"><label>Mau Berapa R$? (Ketik Bebas):</label><input id="cRbx" type="number" placeholder="contoh: 750" oninput="calcRbx()"></div>
+<div class="total" id="tRbx">Total: Rp0 - Pilih jumlah dulu</div>
+<div style="font-size:11px;color:#888;margin-top:10px" id="rateInfo">Rate: 16.000 / 100R$ (Username)</div>
+<div class="grid2">
+<div class="item2" onclick="setRbx(100)"><div>100 R$</div><div class="pr">Rp16.000</div></div>
+<div class="item2" onclick="setRbx(200)"><div>200 R$</div><div class="pr">Rp32.000</div></div>
+<div class="item2" onclick="setRbx(400)"><div>400 R$</div><div class="pr">Rp64.000</div></div>
+<div class="item2" onclick="setRbx(800)"><div>800 R$</div><div class="pr">Rp128.000</div></div>
+<div class="item2" onclick="setRbx(1000)"><div>1000 R$</div><div class="pr">Rp160.000</div></div>
+<div class="item2" onclick="setRbx(5000)"><div>5000 R$</div><div class="pr">Rp800.000</div></div>
+</div>
+<a class="wa" onclick="orderRbx()">Order Via WhatsApp</a>
+</div>
+<div id="ml" class="page"><div class="back" onclick="goHome()">← Kembali</div><div style="font-weight:800;font-size:18px">Mobile Legends</div><div class="input"><label>ID & Server:</label><input id="uML" placeholder="12345678 (1234)"></div><div class="input"><label>Jumlah Diamond:</label><input id="cML" type="number" placeholder="500" oninput="calcML()"></div><div class="total" id="tML">Total: Rp0</div><a class="wa" onclick="orderML()">Order Via WA</a></div>
+<div id="ff" class="page"><div class="back" onclick="goHome()">← Kembali</div><div style="font-weight:800;font-size:18px">Free Fire</div><div class="input"><label>ID:</label><input id="uFF"></div><div class="input"><label>Jumlah DM:</label><input id="cFF" type="number"></div><div class="total" id="tFF">Total: Rp0</div><a class="wa" onclick="orderFF()">Order Via WA</a></div>
+<div id="pubg" class="page"><div class="back" onclick="goHome()">← Kembali</div><div style="font-weight:800;font-size:18px">PUBG Mobile</div><div class="input"><label>ID:</label><input id="uPUBG"></div><div class="input"><label>Jumlah UC:</label><input id="cPUBG" type="number"></div><div class="total" id="tPUBG">Total: Rp0</div><a class="wa" onclick="orderPUBG()">Order Via WA</a></div>
+<div id="redfinger" class="page"><div class="back" onclick="goHome()">← Kembali</div><div style="font-weight:800;font-size:18px">Redfinger</div><div class="input"><label>Email:</label><input id="uRed"></div><div class="input"><label>Hari:</label><input id="cRed" type="number"></div><div class="total" id="tRed">Total: Rp0</div><a class="wa" onclick="orderRed()">Order Via WA</a></div>
+<div id="valorant" class="page"><div class="back" onclick="goHome()">← Kembali</div><div>Valorant - Chat Admin</div><a class="wa" href="https://wa.me/6283862776790">Order Via WA</a></div>
+<div id="genshin" class="page"><div class="back" onclick="goHome()">← Kembali</div><div>Genshin - Chat Admin</div><a class="wa" href="https://wa.me/6283862776790">Order Via WA</a></div>
+<div class="bottom"><div class="nav active" onclick="goHome()">🏠<br>Beranda</div><div class="nav">⚡<br>Top Up</div><div class="nav">📋<br>Pesanan</div><div class="nav">👛<br>Dompet</div><div class="nav">👤<br>Profil</div></div>
 <script>
-function openGame(id){document.getElementById('homePage').style.display='none';document.querySelectorAll('.topup-page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
-function goHome(){document.getElementById('homePage').style.display='block';document.querySelectorAll('.topup-page').forEach(p=>p.classList.remove('active'));}
-function setVal(g,v){if(g=='roblox')document.getElementById('cRoblox').value=v;if(g=='ml')document.getElementById('cML').value=v;calc(g);}
-function calc(g){let v=0,h=0;if(g=='roblox'){v=document.getElementById('cRoblox').value;h=v*160;document.getElementById('tRoblox').innerText='Total: '+v+' R$ = Rp'+h.toLocaleString('id-ID');}if(g=='ml'){v=document.getElementById('cML').value;h=v*256;document.getElementById('tML').innerText='Total: '+v+' DM = Rp'+h.toLocaleString('id-ID');}if(g=='ff'){v=document.getElementById('cFF').value;h=v*130;document.getElementById('tFF').innerText='Total: '+v+' DM = Rp'+h.toLocaleString('id-ID');}if(g=='pubg'){v=document.getElementById('cPUBG').value;h=v*220;document.getElementById('tPUBG').innerText='Total: '+v+' UC = Rp'+h.toLocaleString('id-ID');}if(g=='redfinger'){v=document.getElementById('cRed').value;h=v*2666;document.getElementById('tRed').innerText='Total: '+v+' Hari = Rp'+h.toLocaleString('id-ID');}}
-function orderWA(g){let j='',u='';if(g=='roblox'){j=document.getElementById('cRoblox').value;u=document.getElementById('uRoblox').value;}if(g=='ml'){j=document.getElementById('cML').value;u=document.getElementById('uML').value;}if(g=='ff'){j=document.getElementById('cFF').value;u=document.getElementById('uFF').value;}if(g=='pubg'){j=document.getElementById('cPUBG').value;u=document.getElementById('uPUBG').value;}if(g=='redfinger'){j=document.getElementById('cRed').value;u=document.getElementById('uRed').value;}if(!j){alert('Isi jumlah dulu bos!');return;}window.open('https://wa.me/6283862776790?text=Halo%20WafaStore%20mau%20order%20'+g+'%20'+j+'%20ID:'+u,'_blank');}
+let method='username';
+function openGame(id){document.getElementById('home').style.display='none';document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function goHome(){document.getElementById('home').style.display='block';document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));}
+function setMethod(m){method=m;document.querySelectorAll('.subtab').forEach(s=>s.classList.remove('active'));if(m=='username'){document.getElementById('t1').classList.add('active');document.getElementById('rateInfo').innerText='Rate: 16.000 / 100R$ (Username)';document.getElementById('gpInput').style.display='none';}if(m=='gamepass'){document.getElementById('t2').classList.add('active');document.getElementById('rateInfo').innerText='Rate: 14.000 / 100R$ (Gamepass)';document.getElementById('gpInput').style.display='block';}if(m=='gift'){document.getElementById('t3').classList.add('active');document.getElementById('rateInfo').innerText='Rate: Gift 95%';document.getElementById('gpInput').style.display='none';}calcRbx();}
+function setRbx(v){document.getElementById('cRbx').value=v;calcRbx();}
+function calcRbx(){let j=document.getElementById('cRbx').value;if(!j){document.getElementById('tRbx').innerText='Total: Rp0';return;}let rate=method=='username'?160:method=='gamepass'?140:150;let total=j*rate;document.getElementById('tRbx').innerText='Total: '+j+' R$ = Rp'+total.toLocaleString('id-ID')+' ('+method+')';}
+function orderRbx(){let j=document.getElementById('cRbx').value,u=document.getElementById('uRbx').value,gp=document.getElementById('uGP').value;if(!j||!u){alert('Isi username & jumlah dulu bos!');return;}let msg=`Halo WafaStore mau order Roblox ${j} R$ via ${method} Username:${u} ${gp?'Gamepass:'+gp:''}`;window.open('https://wa.me/6283862776790?text='+encodeURIComponent(msg),'_blank');}
+function calcML(){let v=document.getElementById('cML').value;document.getElementById('tML').innerText='Total: '+v+' DM = Rp'+(v*256).toLocaleString('id-ID');}
+function calcFF(){let v=document.getElementById('cFF').value;document.getElementById('tFF').innerText='Total: '+v+' DM = Rp'+(v*130).toLocaleString('id-ID');}
+function calcPUBG(){let v=document.getElementById('cPUBG').value;document.getElementById('tPUBG').innerText='Total: '+v+' UC = Rp'+(v*220).toLocaleString('id-ID');}
+function calcRed(){let v=document.getElementById('cRed').value;document.getElementById('tRed').innerText='Total: '+v+' Hari = Rp'+(v*2666).toLocaleString('id-ID');}
+function orderML(){let j=document.getElementById('cML').value,u=document.getElementById('uML').value;window.open('https://wa.me/6283862776790?text='+encodeURIComponent('Order ML '+j+' ID:'+u),'_blank');}
+function orderFF(){let j=document.getElementById('cFF').value,u=document.getElementById('uFF').value;window.open('https://wa.me/6283862776790?text='+encodeURIComponent('Order FF '+j+' ID:'+u),'_blank');}
+function orderPUBG(){let j=document.getElementById('cPUBG').value,u=document.getElementById('uPUBG').value;window.open('https://wa.me/6283862776790?text='+encodeURIComponent('Order PUBG '+j+' ID:'+u),'_blank');}
+function orderRed(){let j=document.getElementById('cRed').value,u=document.getElementById('uRed').value;window.open('https://wa.me/6283862776790?text='+encodeURIComponent('Order Redfinger '+j+' hari Email:'+u),'_blank');}
 </script>
 </body>
 </html>
