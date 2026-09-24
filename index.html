@@ -1,126 +1,73 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>WafaStoreOnly - Top Up & Rekber Aman</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WafaStoreOnly - Top Up & Rekber QRIS Auto</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
-body{background:#060a18;color:#fff;min-height:100vh;padding-bottom:90px}
-header{padding:10px 4%;display:flex;justify-content:space-between;align-items:center;background:#0b1020;border-bottom:1px solid #1c2648;position:sticky;top:0;z-index:99}
-.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px}
-.logo img{width:42px;height:42px;border-radius:50%;border:2px solid #333;background:#000;object-fit:cover}
-.logo-text{background:linear-gradient(90deg,#00e5ff,#b24cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.banner{margin:12px 4%;padding:26px 20px;border-radius:18px;background:radial-gradient(500px at 80% -20%, #7c3aed66, transparent), linear-gradient(100deg,#0f1230 0%, #1a103e 50%, #0c1020 100%);border:1px solid #2a2a6a;position:relative;overflow:hidden}
-.banner h1{font-size:26px;font-weight:900;line-height:1.1}
-.banner p{font-size:11px;color:#8ea0c0;margin-top:10px}
-.banner .btn{margin-top:16px;background:linear-gradient(90deg,#00d4ff,#7c3aed);color:#fff;padding:12px 24px;border-radius:30px;display:inline-flex;gap:8px;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 4px 20px #00d4ff44}
-.title{padding:14px 4% 10px;display:flex;justify-content:space-between;align-items:center}
-.title h2{font-size:16px;font-weight:700}
-.cards{padding:0 4%;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.card{background:linear-gradient(180deg,#111a33 0%, #0d142a 100%);border:1px solid #25325a;border-radius:14px;padding:8px;position:relative}
-.card .off{position:absolute;top:7px;right:7px;background:#7c3aed;color:#fff;font-size:8px;font-weight:800;padding:3px 6px;border-radius:8px}
-.card .imgbox{width:100%;aspect-ratio:1;background:#000;border-radius:10px;display:flex;align-items:center;justify-content:center}
-.card h4{font-size:11px;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-/* REKBER STYLE BARU */
-.rekber-box{margin:18px 4%;background:linear-gradient(135deg,#0f1a33,#1a103e);border:1px solid #7c3aed55;border-radius:16px;padding:16px}
-.rekber-box h2{font-size:16px;font-weight:800;display:flex;align-items:center;gap:8px}
-.rekber-box p{font-size:11px;color:#8ea0c0;margin:6px 0 12px}
-.rekber-form{display:flex;flex-direction:column;gap:10px}
-.rekber-form input{background:#060a18;border:1px solid #25325a;color:#fff;padding:12px;border-radius:10px;font-size:13px}
-.rekber-form button{background:linear-gradient(90deg,#00d4ff,#7c3aed);color:#fff;border:none;padding:12px;border-radius:10px;font-weight:800;cursor:pointer}
-.pay-options{margin-top:12px;display:none;background:#060a18;border-radius:12px;padding:12px;border:1px solid #25325a}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
+body{background:#060a18;color:#fff;padding-bottom:90px}
+header{padding:10px 4%;display:flex;justify-content:space-between;background:#0b1020;border-bottom:1px solid #1c2648;position:sticky;top:0;z-index:99}
+.logo{font-weight:800;background:linear-gradient(90deg,#00e5ff,#b24cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.banner{margin:12px 4%;padding:22px 18px;border-radius:18px;background:linear-gradient(100deg,#0f1230,#1a103e);border:1px solid #2a2a6a}
+.tabs{margin:12px 4%;display:flex;gap:8px;overflow-x:auto}
+.tab{white-space:nowrap;padding:10px 16px;background:#111a33;border:1px solid #25325a;border-radius:30px;font-weight:700;font-size:13px;cursor:pointer}
+.tab.active{background:linear-gradient(90deg,#00d4ff,#7c3aed)}
+.sec{display:none;padding:0 4%}.sec.active{display:block}
+.card{background:#111a33;border:1px solid #25325a;border-radius:14px;padding:12px;margin-top:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.prod{background:#0a0f25;border:1px solid #25325a;border-radius:10px;padding:8px;text-align:center;cursor:pointer;font-size:11px}
+.prod.active{border-color:#00ff88;background:#0a2a1a}
+.old{color:#ff4757;text-decoration:line-through;font-size:10px}.price{color:#00ff88;font-weight:900}
+.input{width:100%;padding:11px;background:#060a18;border:1px solid #25325a;border-radius:10px;color:#fff;margin-top:8px}
+.btn{width:100%;padding:13px;background:linear-gradient(90deg,#00d4ff,#7c3aed);border:none;border-radius:12px;color:#fff;font-weight:800;margin-top:10px}
+.total{background:#1e1e3e;padding:10px;border-radius:10px;margin-top:10px;display:flex;justify-content:space-between;font-weight:800}
+#qrisModal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:99;padding:20px}
+.modalBox{background:#1a1a2e;border:2px solid #5865F2;border-radius:20px;padding:20px;max-width:380px;width:100%;text-align:center}
 .bot{position:fixed;bottom:0;left:0;right:0;background:#0a1020f2;backdrop-filter:blur(12px);border-top:1px solid #1c2648;display:flex;justify-content:space-around;padding:8px 0 10px;z-index:99}
-.bot a{color:#4a5a7a;text-decoration:none;font-size:10px;text-align:center;display:flex;flex-direction:column;gap:3px;cursor:pointer}
-.bot a.active{color:#00d4ff}
-.bot a span{font-size:18px}
-footer{text-align:center;color:#3a4a6a;font-size:9px;padding:16px 4% 90px}
+.bot a{color:#4a5a7a;text-decoration:none;font-size:10px;text-align:center;display:flex;flex-direction:column;gap:3px}
+.bot a.active{color:#00d4ff}.bot a span{font-size:18px}
 </style>
 </head>
 <body>
-<header>
-<div class="logo"><img src="logo.png" onerror="this.src='https://via.placeholder.com/42'"><div class="logo-text">WafaStoreOnly</div></div>
-<div style="display:flex;gap:14px;font-size:18px;color:#5a6a8a">🔍 🔔 👤</div>
-</header>
-
-<div class="banner">
-<h1><i>TOP UP GAME FAVORIT KAMU</i><br>DI WAFASTOREONLY</h1>
-<p>Top Up Instan • Rekber Aman • Pakasir QRIS Auto • 24/7</p>
-<div class="btn" onclick="document.getElementById('rekber').scrollIntoView({behavior:'smooth'})">⚡ Rekber Aman Sekarang</div>
+<header><div class="logo">WafaStoreOnly.cloud</div><div style="font-size:11px;color:#5a6a8a">QRIS AUTO • WA 083862776790</div></header>
+<div class="banner"><h1>TOP UP & REKBER AMAN #1</h1><p>Username 16K/100 • Gamepass 14K/100 • Gift 95 • Rekber Fee 3K • QRIS Auto</p></div>
+<div class="tabs">
+<div class="tab active" onclick="switchTab('topup',this)">⚡ Top Up Robux</div>
+<div class="tab" onclick="switchTab('rekber',this)">🛡️ Rekber Aman</div>
+<div class="tab" onclick="switchTab('info',this)">📜 Info KYC</div>
 </div>
 
-<div class="title"><h2>Pilih Game Populer</h2><a>Lihat Semua ></a></div>
-<div class="cards">
-<div class="card"><span class="off">-10% OFF</span><div class="imgbox"><span style="color:#fff;font-size:22px">R<br><span style="font-size:10px">ROBLOX</span></span></div><h4>Roblox</h4></div>
-<div class="card"><span class="off">-10% OFF</span><div class="imgbox"><span style="color:#ffae00;font-size:11px">MOBILE LEGENDS</span></div><h4>Mobile Legends</h4></div>
-<div class="card"><div class="imgbox"><span style="color:#00d4ff;font-size:13px">PUBG MOBILE</span></div><h4>PUBG Mobile</h4></div>
+<div id="sec-topup" class="sec active">
+<div style="display:flex;gap:6px;margin-bottom:8px">
+<div class="tab active" onclick="switchTop('username',this)" style="font-size:11px">Username 16k</div>
+<div class="tab" onclick="switchTop('gamepass',this)" style="font-size:11px">Gamepass 14k</div>
+<div class="tab" onclick="switchTop('gift',this)" style="font-size:11px">Gift 95</div>
+</div>
+<div id="top-username"><div class="card"><h4>Via Username - 16k/100R$ (diskon 18k)</h4><div class="grid" id="grid-username"></div><input type="number" id="customUser" class="input" placeholder="Custom: 10000 = 1.6jt" oninput="calcUser()"><div class="total"><span>Total:</span><span id="totalUser">Rp 0</span></div><input id="uUser" class="input" placeholder="Username Roblox"><button class="btn" onclick="bayarQRIS('username')">BAYAR QRIS AUTO</button></div></div>
+<div id="top-gamepass" style="display:none"><div class="card"><h4>Via Gamepass - 14k/100R$ PALING MURAH</h4><div class="grid" id="grid-gamepass"></div><input type="number" id="customGp" class="input" placeholder="Mau dapat 744?" oninput="calcGp()"><div id="gpInfo" style="font-size:11px;background:#1a1a35;padding:8px;border-radius:8px;margin-top:8px;display:none"></div><div class="total"><span>Total:</span><span id="totalGp">Rp 0</span></div><input id="uGpUser" class="input" placeholder="Username"><input id="uGpLink" class="input" placeholder="Link Gamepass"><button class="btn" onclick="bayarQRIS('gamepass')">BAYAR QRIS AUTO</button></div></div>
+<div id="top-gift" style="display:none"><div class="card"><h4>Gift - 95/robux</h4><input id="gUser" class="input" placeholder="Username"><input id="gMap" class="input" placeholder="Map: Adopt Me"><input id="gItem" class="input" placeholder="Item: Fly Potion"><input type="number" id="gRobux" class="input" placeholder="Harga Robux: 199" oninput="calcGift()"><div class="total"><span>Total:</span><span id="totalGift">Rp 0</span></div><button class="btn" onclick="bayarQRIS('gift')">BAYAR QRIS AUTO</button></div></div>
 </div>
 
-<!-- REKBER SECTION BARU - GABUNGAN BOT DISCORD -->
-<div class="rekber-box" id="rekber">
-<h2>🛡️ REKBER WafaStoreOnly x Pakasir</h2>
-<p>Aman 100% - QRIS Otomatis + DANA 083862776790 + GOPAY 083862776790<br>Fee mulai 3K • Auto ticket di Discord</p>
-<div class="rekber-form">
-<input id="buyer" placeholder="Username Discord Buyer (contoh: wafa123)">
-<input id="seller" placeholder="Username Discord Seller (@tag)">
-<input id="nominal" type="number" placeholder="Nominal Barang (contoh: 50000)">
-<button onclick="buatRekber()">🎫 Buat Ticket Rekber + QRIS Pakasir</button>
-</div>
-<div id="payBox" class="pay-options">
-<h3 style="font-size:14px">✅ Ticket Dibuat!</h3>
-<p id="payInfo" style="font-size:12px;color:#fff;margin-top:8px"></p>
-<img id="qrImg" style="width:200px;height:200px;background:#fff;border-radius:10px;margin:10px auto;display:block">
-<p style="font-size:10px;color:#8ea0c0">Scan QRIS Pakasir diatas atau TF manual ke DANA/GOPAY 083862776790<br>Setelah bayar, cek ticket di Discord Server WafaStoreOnly</p>
-</div>
-</div>
+<div id="sec-rekber" class="sec"><div class="card"><h3>🛡️ REKBER WafaStoreOnly x Pakasir</h3><p style="font-size:11px;color:#8ea0c0;margin:6px 0">Fee 3K-15K • DANA/GOPAY 083862776790 • QRIS Auto • Discord Ticket</p><input id="buyer" class="input" placeholder="Discord Buyer"><input id="seller" class="input" placeholder="Discord Seller"><input id="nominal" type="number" class="input" placeholder="Nominal 50000"><button class="btn" onclick="buatRekber()">🎫 Buat Ticket Rekber</button><div id="payBox" style="display:none;margin-top:12px;background:#060a18;padding:12px;border-radius:12px;border:1px solid #25325a"><p id="payInfo" style="font-size:12px"></p><img id="qrImg" style="width:200px;height:200px;background:#fff;border-radius:10px;margin:10px auto;display:block"></div></div></div>
 
-<footer>
-<b style="color:#fff">WafaStoreOnly / awafans</b><br>
-UMKM Digital Citayam • WA 083862776790 • Pakasir Payment Gateway<br>
-Top Up Robux 14K & Rekber Fee 3K • Aman 24/7<br>
-© 2024-2026 WafaStoreOnly
-</footer>
+<div id="sec-info" class="sec"><div class="card"><h4>Untuk KYC Pakasir/Tripay/Duitku</h4><p style="font-size:11px;margin-top:6px;line-height:1.6">Website: wafastoreonly.cloud<br>Produk: Top Up Roblox Via Username (16k/100), Gamepass (14k/100), Gift (95), Rekber Fee 3K<br>Metode: QRIS Pakasir Auto, Tripay, DANA 083862776790, GOPAY 083862776790<br>Alamat: Citayam, Tajurhalang, Bogor 16920<br>WA: 083862776790<br>Jam: 08.00-23.00 WIB<br>Proses: 5 menit - 7 hari (pending Roblox)</p></div></div>
 
-<div class="bot">
-<a class="active"><span>🏠</span>Beranda</a>
-<a onclick="document.getElementById('rekber').scrollIntoView({behavior:'smooth'})"><span>🛡️</span>Rekber</a>
-<a><span>⚡</span>Top Up</a>
-<a><span>☰</span>Pesanan</a>
-<a><span>👤</span>Profil</a>
-</div>
+<div id="qrisModal"><div class="modalBox"><h3>Scan QRIS</h3><p id="mDesc" style="font-size:13px;margin:8px 0"></p><img id="mQrisImg" style="width:260px;height:260px;background:#fff;border-radius:12px;display:none;margin:10px auto"><div id="mLoader">Membuat QRIS...</div><p id="mTotal" style="font-size:20px;font-weight:900;color:#00ff88"></p><button class="btn" onclick="closeModal()" style="background:#2a2a4a">Tutup</button></div></div>
+
+<div class="bot"><a class="active"><span>🏠</span>Beranda</a><a onclick="switchTab('rekber',document.querySelectorAll('.tabs.tab')[1])"><span>🛡️</span>Rekber</a><a onclick="switchTab('topup',document.querySelectorAll('.tabs.tab')[0])"><span>⚡</span>Top Up</a><a><span>☰</span>Info</a><a><span>👤</span>Profil</a></div>
 
 <script>
-async function buatRekber(){
-  const buyer = document.getElementById('buyer').value;
-  const seller = document.getElementById('seller').value;
-  const nominal = parseInt(document.getElementById('nominal').value);
-  if(!nominal){ alert('Isi nominal!'); return; }
-  
-  let fee = 3000;
-  if(nominal>50000) fee=6000;
-  if(nominal>100000) fee=9000;
-  if(nominal>150000) fee=12000;
-  if(nominal>200000) fee=15000;
-  let total = nominal + fee;
-
-  // Panggil API Vercel -> Nanti nyambung ke Bot Discord
-  try {
-    const res = await fetch('/api/create-ticket', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({buyer, seller, nominal, fee, total})
-    });
-    const data = await res.json();
-    document.getElementById('payBox').style.display='block';
-    document.getElementById('payInfo').innerHTML = `Ref: <b>${data.ref}</b><br>Nominal: Rp ${nominal.toLocaleString('id-ID')} + Fee Rp ${fee.toLocaleString('id-ID')} = <b>Rp ${total.toLocaleString('id-ID')}</b><br><br>💳 OPSI BAYAR:<br>1. QRIS Pakasir (Auto)<br>2. DANA 083862776790<br>3. GOPAY 083862776790`;
-    document.getElementById('qrImg').src = data.qr_url || `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=PAKASIR-${data.ref}-${total}`;
-  } catch(e){
-    // Fallback kalo API belum ada - tetap tampil QR dummy
-    document.getElementById('payBox').style.display='block';
-    document.getElementById('payInfo').innerHTML = `Ref: WAFA-${Date.now()}<br>Total: Rp ${total.toLocaleString('id-ID')} (Fee ${fee})<br><br>Scan QRIS atau TF DANA/GOPAY 083862776790`;
-    document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=PAKASIR-${Date.now()}-${total}`;
-  }
-}
+let sel={};function switchTab(m,el){document.querySelectorAll('.sec').forEach(x=>x.classList.remove('active'));document.getElementById('sec-'+m).classList.add('active');document.querySelectorAll('.tabs.tab').forEach(x=>x.classList.remove('active'));el.classList.add('active')}
+function switchTop(m,el){document.getElementById('top-username').style.display=m=='username'?'block':'none';document.getElementById('top-gamepass').style.display=m=='gamepass'?'block':'none';document.getElementById('top-gift').style.display=m=='gift'?'block':'none';el.parentElement.querySelectorAll('.tab').forEach(x=>x.style.background='#111a33');el.style.background='linear-gradient(90deg,#00d4ff,#7c3aed)'}
+function genGrid(){let gU=document.getElementById('grid-username');[100,200,400,800,1000,1700,2200,3000,4000,5000].forEach(r=>{let p=Math.ceil(r/100)*16000;let d=document.createElement('div');d.className='prod';d.innerHTML=`${r} R$<br><span class=price>Rp${p.toLocaleString('id-ID')}</span>`;d.onclick=()=>{document.querySelectorAll('#grid-username.prod').forEach(x=>x.classList.remove('active'));d.classList.add('active');sel.username={r,price:p};document.getElementById('totalUser').innerText='Rp'+p.toLocaleString('id-ID');document.getElementById('customUser').value=r};gU.appendChild(d)});let gG=document.getElementById('grid-gamepass');[100,200,400,744,800,1000,1200,1700,2200,5000].forEach(r=>{let need=Math.ceil(r/0.7/100)*100;if(r==744)need=1000;let p=Math.ceil(need/100)*14000;let d=document.createElement('div');d.className='prod';d.innerHTML=`${r} R$<br><small>GP ${need}</small><br><span class=price>Rp${p.toLocaleString('id-ID')}</span>`;d.onclick=()=>{document.querySelectorAll('#grid-gamepass.prod').forEach(x=>x.classList.remove('active'));d.classList.add('active');calcGpFrom(r)};gG.appendChild(d)})}
+function calcUser(){let r=parseInt(document.getElementById('customUser').value)||0;let p=Math.ceil(r/100)*16000;document.getElementById('totalUser').innerText='Rp'+p.toLocaleString('id-ID');sel.username={r,price:p}}
+function calcGpFrom(w){let need=Math.ceil(w/0.7/100)*100;if(w==744)need=1000;let p=Math.ceil(need/100)*14000;document.getElementById('totalGp').innerText='Rp'+p.toLocaleString('id-ID');let i=document.getElementById('gpInfo');i.style.display='block';i.innerHTML=`Mau ${w}R$ → Buat GP ${need}R$ = Rp${p.toLocaleString('id-ID')}`;sel.gamepass={r:w,need,price:p}}
+function calcGp(){let w=parseInt(document.getElementById('customGp').value)||0;if(!w)return;calcGpFrom(w)}
+function calcGift(){let r=parseInt(document.getElementById('gRobux').value)||0;let p=r*95;document.getElementById('totalGift').innerText='Rp'+p.toLocaleString('id-ID');sel.gift={r,price:p}}
+async function bayarQRIS(type){let payload,total,robux,user;if(type=='username'){robux=sel.username?.r||parseInt(document.getElementById('customUser').value);user=document.getElementById('uUser').value;total=sel.username?.price||Math.ceil(robux/100)*16000;if(!robux||!user)return alert('Isi lengkap');payload={method:'username',robux,username:user,total}}else if(type=='gamepass'){robux=sel.gamepass?.r||parseInt(document.getElementById('customGp').value);user=document.getElementById('uGpUser').value;let link=document.getElementById('uGpLink').value;total=sel.gamepass?.price;if(!robux||!user||!link)return alert('Isi lengkap');payload={method:'gamepass',robux,username:user,link,total}}else{user=document.getElementById('gUser').value;let map=document.getElementById('gMap').value,item=document.getElementById('gItem').value;robux=parseInt(document.getElementById('gRobux').value);total=robux*95;if(!user||!map)return alert('Isi lengkap');payload={method:'gift',robux,username:user,map,item,total}}document.getElementById('qrisModal').style.display='flex';document.getElementById('mLoader').style.display='block';document.getElementById('mQrisImg').style.display='none';document.getElementById('mDesc').innerText=`${type} ${robux} R$ - ${user}`;document.getElementById('mTotal').innerText='Rp'+total.toLocaleString('id-ID');try{const res=await fetch('/api/create-pakasir',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const data=await res.json();document.getElementById('mLoader').style.display='none';let img=document.getElementById('mQrisImg');img.style.display='block';img.src=data.qr_image||`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(data.qr_string||'PAKASIR-'+total)}`}catch(e){document.getElementById('mLoader').style.display='none';let img=document.getElementById('mQrisImg');img.style.display='block';img.src=`https://via.placeholder.com/300?text=QRIS+${total}`}}
+function closeModal(){document.getElementById('qrisModal').style.display='none'}
+async function buatRekber(){let buyer=document.getElementById('buyer').value,seller=document.getElementById('seller').value,nominal=parseInt(document.getElementById('nominal').value);if(!nominal)return alert('Isi nominal');let fee=3000;if(nominal>50000)fee=6000;if(nominal>100000)fee=9000;if(nominal>150000)fee=12000;if(nominal>200000)fee=15000;let total=nominal+fee;document.getElementById('payBox').style.display='block';document.getElementById('payInfo').innerHTML=`Ref: WAFA-${Date.now()}<br>Total: Rp ${total.toLocaleString('id-ID')} (Fee ${fee})<br>TF DANA/GOPAY 083862776790`;document.getElementById('qrImg').src=`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=PAKASIR-${total}`;try{await fetch('/api/create-ticket',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({buyer,seller,nominal,fee,total})})}catch(e){}}
+genGrid();
 </script>
 </body>
 </html>
