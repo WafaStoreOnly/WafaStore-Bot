@@ -3,182 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WafaStoreOnly</title>
+<title>WafaStoreOnly - PRO</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-body{background:#070b1f;color:white;padding-bottom:90px}
-.header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#070b1f;position:sticky;top:0;z-index:20;border-bottom:1px solid #1e2250}
-.logo{font-weight:900;font-size:22px;background:linear-gradient(90deg,#00d4ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.banner{background:linear-gradient(135deg,#0f1030 0%,#1a1040 100%);padding:26px 20px;border-bottom:1px solid #1e2250}
-.banner h1{font-size:26px;font-weight:900;font-style:italic;line-height:1.1}
-.banner p{font-size:11px;color:#aab2d0;margin-top:8px}
-.btn-banner{margin-top:14px;background:linear-gradient(90deg,#00c6ff,#7c3aed);border:none;padding:11px 22px;border-radius:22px;color:white;font-weight:700}
+body{background:#070a1f;color:white;padding-bottom:90px}
+.header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#070a1f;position:sticky;top:0;z-index:20;border-bottom:1px solid #1a1f3d}
+.logo-wrap{display:flex;align-items:center;gap:10px}
+.logo-circle{width:42px;height:42px;border-radius:50%;background:#111 url('https://i.imgur.com/8Km9tLL.png') center/cover;border:2px solid #2a2e6a}
+.logo-text{font-weight:900;font-size:22px;background:linear-gradient(90deg,#00d4ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.banner{position:relative;padding:28px 20px 32px;overflow:hidden;background:#0a0d2a url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1200') center/cover no-repeat;border-bottom:1px solid #1e2250}
+.banner::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,10,31,0.92) 0%,rgba(7,10,31,0.4) 100%)}
+.banner-content{position:relative;z-index:2}
+.banner h1{font-size:28px;font-weight:900;font-style:italic;line-height:1.05;text-transform:uppercase}
+.banner p{font-size:11px;color:#aab2d0;margin-top:10px}
+.btn-banner{margin-top:18px;background:linear-gradient(90deg,#00c6ff,#7c3aed);border:none;padding:12px 26px;border-radius:24px;color:white;font-weight:800;font-size:13px;box-shadow:0 0 20px rgba(0,198,255,0.5);display:inline-flex;gap:8px;align-items:center}
 .section{padding:16px}
+.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.head h2{font-size:17px;font-weight:700}
+.link{color:#00d4ff;font-size:13px;font-weight:600}
 .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.card{position:relative;background:linear-gradient(180deg,#1a1f3d,#13162f);border:1.5px solid #2a2e6a;border-radius:14px;padding:14px 6px;text-align:center;cursor:pointer}
-.card:active{border-color:#00d4ff;transform:scale(0.97)}
-.icon{font-size:28px;margin-bottom:6px;display:block}
-.badge{position:absolute;top:6px;right:6px;background:#6366f1;font-size:8px;padding:2px 6px;border-radius:8px;font-weight:700}
-.name{font-size:11px;font-weight:600}
-.promo{margin:12px 16px;background:linear-gradient(135deg,#5b4cf2,#7c3aed);border-radius:14px;padding:14px}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#0a0e28;border-top:1px solid #1e2250;display:flex;justify-content:space-around;padding:8px 0 14px;z-index:30}
-.nav{font-size:10px;color:#5a638a;text-align:center;cursor:pointer}.nav.active{color:#00d4ff}
+.card{position:relative;background:linear-gradient(180deg,#1a1f3d,#11142d);border-radius:14px;overflow:hidden;cursor:pointer;height:130px;display:flex;flex-direction:column}
+.card::before{content:'';position:absolute;inset:0;border-radius:14px;padding:1.5px;background:linear-gradient(135deg,#00d4ff,#a855f7);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.card-top{flex:1;display:flex;align-items:center;justify-content:center;font-weight:900}
+.badge{position:absolute;top:6px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#6366f1,#8b5cf6);font-size:8px;padding:3px 8px;border-radius:10px;font-weight:800;white-space:nowrap;z-index:2}
+.card-bottom{padding:8px;background:#0e1229;text-align:center;font-size:11px;font-weight:600}
+.promo-head{font-size:17px;font-weight:700;margin:20px 16px 12px}
+.promo{margin:0 16px;background:linear-gradient(135deg,#5b4cf2,#7c3aed);border-radius:14px;padding:16px;position:relative}
+.promo h3{font-size:15px;font-weight:800}
+.promo p{font-size:11px;color:#ddd;margin-top:4px}
+.btn-klaim{position:absolute;bottom:10px;right:10px;background:#0f1229;border:1px solid #2a2e6a;padding:6px 12px;border-radius:16px;font-size:11px;color:#60a5fa;font-weight:600}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#070a1f;border-top:1px solid #1e2250;display:flex;justify-content:space-around;padding:10px 0 14px;z-index:30}
+.nav{font-size:10px;color:#5a638a;text-align:center;display:flex;flex-direction:column;align-items:center;gap:3px}.nav.active{color:#00d4ff}.nav span{font-size:20px}
 .page{display:none;padding:16px}.page.active{display:block}
-.back{color:#00d4ff;font-size:13px;margin-bottom:10px;cursor:pointer;display:inline-block}
+.back{color:#00d4ff;font-size:13px;margin-bottom:10px;cursor:pointer}
 .subtabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:10px}
-.subtab{padding:8px 14px;border-radius:20px;background:#1a1f3d;border:1px solid #2a2e5a;color:#8890b5;font-size:11px;white-space:nowrap;cursor:pointer;flex-shrink:0}
-.subtab.active{background:#2a5bd7;color:white;border-color:#2a5bd7}
-.input label{font-size:11px;color:#8890b5;display:block;margin:10px 0 5px}
-.input input{width:100%;padding:11px;border-radius:10px;border:1px solid #1e2250;background:#13162f;color:white}
+.subtab{padding:8px 14px;border-radius:20px;background:#1a1f3d;border:1px solid #2a2e5a;color:#8890b5;font-size:11px;white-space:nowrap;cursor:pointer;flex-shrink:0}.subtab.active{background:#2a5bd7;color:white}
+.input label{font-size:11px;color:#8890b5;display:block;margin:10px 0 5px}.input input{width:100%;padding:11px;border-radius:10px;border:1px solid #1e2250;background:#13162f;color:white}
 .total{background:#0f1229;border:1px dashed #00d4ff;padding:10px;border-radius:10px;text-align:center;margin-top:10px;font-weight:700;font-size:12px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-.item2{background:#13162f;border:1px solid #1e2250;border-radius:10px;padding:10px;text-align:center;cursor:pointer}
-.item2 .pr{color:#00ff88;font-weight:700;font-size:11px;margin-top:2px}
-.wa{display:block;background:#25D366;color:white;text-align:center;padding:12px;border-radius:10px;font-weight:700;margin-top:12px;text-decoration:none;cursor:pointer}
-.tutor{background:#13162f;border:1px solid #2a2e5a;border-radius:12px;padding:12px;margin-top:14px}
-.tutor h4{font-size:12px;font-weight:800;margin-bottom:8px;color:#00d4ff}
-.tutor ol{font-size:11px;color:#ccc;padding-left:16px;line-height:1.7}
-.calc-box{background:#0f1229;border:1px solid #a855f7;border-radius:10px;padding:10px;margin-top:10px}
-.calc-box .res{color:#00ff88;font-weight:800;font-size:14px;margin-top:6px;text-align:center}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.item2{background:#13162f;border:1px solid #1e2250;border-radius:10px;padding:10px;text-align:center}.item2 .pr{color:#00ff88;font-weight:700;font-size:11px;margin-top:2px}
+.wa{display:block;background:#25D366;color:white;text-align:center;padding:12px;border-radius:10px;font-weight:700;margin-top:12px;text-decoration:none}
+.tutor{background:#13162f;border:1px solid #2a2e5a;border-radius:12px;padding:12px;margin-top:14px}.tutor h4{font-size:12px;font-weight:800;margin-bottom:8px;color:#00d4ff}.tutor ol{font-size:11px;color:#ccc;padding-left:16px;line-height:1.7}
+.calc-box{background:#0f1229;border:1px solid #a855f7;border-radius:10px;padding:10px;margin-top:10px}.calc-box .res{color:#00ff88;font-weight:800;font-size:14px;margin-top:6px;text-align:center}
 </style>
 </head>
 <body>
-<div class="header"><div class="logo">WafaStoreOnly</div><div>🔍 🔔 👤</div></div>
-
+<div class="header"><div class="logo-wrap"><div class="logo-circle"></div><div class="logo-text">WafaStoreOnly</div></div><div style="display:flex;gap:12px">🔍 🔔 👤</div></div>
 <div id="home">
-<div class="banner">
-<h1>TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1>
-<p>Top Up Game Instan • Aman • 24/7 • Harga Termurah • Bonus Rewards</p>
-<button class="btn-banner">⚡ Mulai Top Up Sekarang</button>
-</div>
-<div class="section">
-<div style="display:flex;justify-content:space-between;margin-bottom:12px"><h2 style="font-size:16px">Pilih Game Populer</h2><span style="color:#00d4ff;font-size:12px">Lihat Semua ></span></div>
+<div class="banner"><div class="banner-content"><h1>TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1><p>Top Up Game Instan • Aman • 24/7 • Harga Termurah • Bonus Rewards</p><button class="btn-banner" onclick="document.getElementById('games').scrollIntoView({behavior:'smooth'})">⚡ Mulai Top Up Sekarang</button></div></div>
+<div class="section" id="games"><div class="head"><div><h2>Pilih Game Populer</h2><div style="width:40px;height:3px;background:#00d4ff;border-radius:10px;margin-top:4px"></div></div><span class="link">Lihat Semua ></span></div>
 <div class="grid">
-<div class="card" onclick="openGame('roblox')"><span class="badge">-10% OFF</span><span class="icon">🎮</span><div class="name">Roblox</div></div>
-<div class="card" onclick="openGame('ml')"><span class="badge">-10% OFF</span><span class="icon">💎</span><div class="name">Mobile Legends</div></div>
-<div class="card" onclick="openGame('pubg')"><span class="icon">🎯</span><div class="name">PUBG Mobile</div></div>
-<div class="card" onclick="openGame('valorant')"><span class="icon">🔫</span><div class="name">Valorant</div></div>
-<div class="card" onclick="openGame('ff')"><span class="icon">🔥</span><div class="name">Free Fire</div></div>
-<div class="card" onclick="openGame('genshin')"><span class="icon">✨</span><div class="name">Genshin Impact</div></div>
-<div class="card" onclick="openGame('redfinger')"><span class="badge">HOT</span><span class="icon">📱</span><div class="name">Redfinger</div></div>
-<div class="card" onclick="openGame('roblox')"><span class="icon">⚡</span><div class="name">Rekber</div></div>
+<div class="card" onclick="openGame('roblox')"><div class="badge">-10% OFF</div><div class="card-top" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"><div style="text-align:center"><div style="font-size:32px">🧱</div><div style="font-size:9px;letter-spacing:2px">ROBLOX</div></div></div><div class="card-bottom">Roblox</div></div>
+<div class="card" onclick="openGame('ml')"><div class="badge">-10% OFF</div><div class="card-top" style="background:linear-gradient(135deg,#1a1030,#2a1a50)"><div style="color:#ffcc00;font-size:11px;text-align:center">MOBILE<br>LEGENDS</div></div><div class="card-bottom">Mobile Legends</div></div>
+<div class="card" onclick="openGame('pubg')"><div class="card-top" style="background:linear-gradient(135deg,#0a1a2a,#102a4a)"><div style="color:#7dd3fc;border:2px solid #7dd3fc;padding:4px 8px;font-size:11px">PUBG<br>MOBILE</div></div><div class="card-bottom">PUBG Mobile</div></div>
+<div class="card" onclick="openGame('valorant')"><div class="card-top" style="background:linear-gradient(135deg,#1a0a0a,#2a1010)"><div style="color:#ff6b6b;font-size:11px">VALORANT</div></div><div class="card-bottom">Valorant</div></div>
+<div class="card" onclick="openGame('ff')"><div class="card-top" style="background:linear-gradient(135deg,#1a1a0a,#2a2a10)"><div style="font-weight:900;font-size:13px">FREE FIRE</div></div><div class="card-bottom">Free Fire</div></div>
+<div class="card" onclick="openGame('genshin')"><div class="card-top" style="background:linear-gradient(135deg,#0a1a2a,#1a2a4a)"><div style="color:#c4b5fd;font-size:9px;text-align:center">GENSHIN<br>IMPACT</div></div><div class="card-bottom">Genshin Impact</div></div>
+<div class="card" onclick="openGame('redfinger')"><div class="badge">HOT</div><div class="card-top" style="background:linear-gradient(135deg,#0a1a1a,#1a102a)"><div style="font-size:22px">📱</div></div><div class="card-bottom">Redfinger</div></div>
+<div class="card" onclick="openGame('roblox')"><div class="card-top" style="background:linear-gradient(135deg,#0a1a1a,#1a102a)"><div style="font-size:22px">⚡</div></div><div class="card-bottom">Rekber</div></div>
+</div></div>
+<div class="promo-head">Promo Spesial Hari Ini</div>
+<div class="promo"><h3>Diskon 15% Untuk Top Up Pertama!</h3><p>Pakai kode: WAFA15 • Berlaku hingga 30 Okt 2024</p><button class="btn-klaim">Klaim Sekarang →</button></div>
 </div>
-</div>
-<div class="promo"><h3 style="font-size:14px;font-weight:800">Diskon 15% Untuk Top Up Pertama!</h3><p style="font-size:11px;color:#ddd;margin-top:2px">Pakai kode: WAFA15 • Berlaku hingga 30 Okt 2024</p></div>
-</div>
-
-<!-- ROBLOX PAGE -->
-<div id="roblox" class="page">
-<div class="back" onclick="goHome()">← Kembali</div>
-<div style="font-weight:800;font-size:17px">Roblox - Top Up Robux</div>
-<div class="subtabs" style="margin-top:10px">
-<button class="subtab active" id="t1" onclick="setMethod('username')">Username 16k/100</button>
-<button class="subtab" id="t2" onclick="setMethod('gamepass')">Gamepass 14k/100</button>
-<button class="subtab" id="t3" onclick="setMethod('gift')">Gift 95/R$</button>
-</div>
-<div class="input"><label>Username Roblox:</label><input id="uRbx" placeholder="contoh: SANTRI_PRIDE"></div>
-<div class="input" id="gpInput" style="display:none"><label>Link Gamepass:</label><input id="uGP" placeholder="https://www.roblox.com/game-pass/..."></div>
-<div class="input"><label>Mau Berapa R$? (ketik bebas - contoh 774):</label><input id="cRbx" type="number" placeholder="774" oninput="calcRbx()" value="1000"></div>
-<div class="total" id="tRbx">Total: 1000 R$ = Rp160.000 (username)</div>
-<div style="font-size:10px;color:#888;margin-top:6px" id="rateInfo">Rate Username: 160/R$</div>
-<div class="grid2">
-<div class="item2" onclick="setRbx(100)"><div>100 R$</div><div class="pr" id="p100">Rp16.000</div></div>
-<div class="item2" onclick="setRbx(400)"><div>400 R$</div><div class="pr" id="p400">Rp64.000</div></div>
-<div class="item2" onclick="setRbx(774)"><div>774 R$</div><div class="pr" id="p774">Rp123.840</div></div>
-<div class="item2" onclick="setRbx(1000)"><div>1000 R$</div><div class="pr" id="p1000">Rp160.000</div></div>
-</div>
-
-<div class="tutor" id="tutorUsername">
-<h4>✅ TUTOR VIA USERNAME (1-5 MENIT CAIR):</h4>
-<ol>
-<li><b>Pastikan username benar!</b> Contoh: SANTRI_PRIDE - huruf besar kecil harus sama persis!</li>
-<li>Akun jangan private, harus public</li>
-<li>Join map <b>Pls Donate</b> di Roblox kamu</li>
-<li>Admin akan join & donasi Robux langsung</li>
-<li>Diam di game 1-5 menit sampai masuk</li>
-<li>⚠️ Jangan ganti username saat proses!</li>
-</ol>
-</div>
-<div class="tutor" id="tutorGamepass" style="display:none">
-<h4>📚 TUTOR VIA GAMEPASS (14k/100):</h4>
-<div class="calc-box">
-<div style="font-size:11px;font-weight:700">🧮 Kalkulator Gamepass (Roblox potong 30%):</div>
-<div style="font-size:10px;color:#aaa">Mau terima <b id="wantRbx">1000</b> R$, pasang harga di Roblox:</div>
-<div class="res" id="needPrice">1.429 R$</div>
-<div style="font-size:9px;color:#888;text-align:center">Rumus: Jumlah / 0.7 | Contoh 774 / 0.7 = 1106 R$</div>
-</div>
-<ol style="margin-top:10px">
-<li>Buka roblox.com > Create > Manage My Experiences</li>
-<li>Pilih game > Associated Items > Passes > Create a Pass</li>
-<li>Upload gambar, nama "Donasi" > Create</li>
-<li>Klik Pass > Sales > Aktifkan Item for Sale</li>
-<li>Isi harga sesuai kalkulator di atas!</li>
-<li>Copy link Gamepass, paste di atas</li>
-<li>Order, tunggu 7 hari cair!</li>
-</ol>
-</div>
-<div class="tutor" id="tutorGift" style="display:none">
-<h4>🎁 TUTOR VIA GIFT IN GAME (95/R$ TERMURAH):</h4>
-<ol>
-<li><b>Termurah 95 perak/R$!</b> 100R$ cuma Rp9.500!</li>
-<li>Pastikan username benar</li>
-<li>Add friend akun bot WafaStore (nanti admin info)</li>
-<li>Admin kirim gift Limited / Gamepass gift langsung</li>
-<li>Gak perlu bikin Gamepass! Gak perlu join game!</li>
-<li>5-30 menit masuk full tanpa potongan!</li>
-<li>Akun harus umur >3 hari & tidak private</li>
-</ol>
-</div>
-<a class="wa" onclick="orderRbx()">Order Via WhatsApp</a>
-</div>
-
-<div id="ml" class="page"><div class="back" onclick="goHome()">← Kembali</div><div style="font-weight:800">MLBB</div><div class="input"><label>ID & Server:</label><input id="uML" placeholder="12345678 (1234)"></div><a class="wa" href="https://wa.me/6283862776790">Order Via WA</a></div>
-<div id="ff" class="page"><div class="back" onclick="goHome()">← Kembali</div><div style="font-weight:800">Free Fire</div><a class="wa" href="https://wa.me/6283862776790">Order Via WA</a></div>
-<div id="pubg" class="page"><div class="back" onclick="goHome()">← Kembali</div><div style="font-weight:800">PUBG Mobile</div><a class="wa" href="https://wa.me/6283862776790">Order Via WA</a></div>
-<div id="redfinger" class="page"><div class="back" onclick="goHome()">← Kembali</div><div style="font-weight:800">Redfinger</div><a class="wa" href="https://wa.me/6283862776790">Order Via WA</a></div>
-<div id="valorant" class="page"><div class="back" onclick="goHome()">← Kembali</div><div>Valorant - Chat Admin</div><a class="wa" href="https://wa.me/6283862776790">Order Via WA</a></div>
-<div id="genshin" class="page"><div class="back" onclick="goHome()">← Kembali</div><div>Genshin - Chat Admin</div><a class="wa" href="https://wa.me/6283862776790">Order Via WA</a></div>
-
-<div class="bottom"><div class="nav active" onclick="goHome()">🏠<br>Beranda</div><div class="nav">⚡<br>Top Up</div><div class="nav">📋<br>Pesanan</div><div class="nav">👛<br>Dompet</div><div class="nav">👤<br>Profil</div></div>
-
+<div id="roblox" class="page"><div class="back" onclick="goHome()">← Kembali</div><div style="font-weight:800;font-size:17px">Roblox - Top Up Robux</div><div class="subtabs" style="margin-top:10px"><button class="subtab active" id="t1" onclick="setMethod('username')">Username 16k/100</button><button class="subtab" id="t2" onclick="setMethod('gamepass')">Gamepass 14k/100</button><button class="subtab" id="t3" onclick="setMethod('gift')">Gift 95/R$</button></div><div class="input"><label>Username Roblox:</label><input id="uRbx" placeholder="SANTRI_PRIDE"></div><div class="input" id="gpInput" style="display:none"><label>Link Gamepass:</label><input id="uGP" placeholder="https://www.roblox.com/game-pass/..."></div><div class="input"><label>Mau Berapa R$? (contoh 774):</label><input id="cRbx" type="number" placeholder="774" oninput="calcRbx()" value="1000"></div><div class="total" id="tRbx">Total: 1000 R$ = Rp160.000</div><div style="font-size:10px;color:#888;margin-top:6px" id="rateInfo">Rate: 160/R$ - Username</div><div class="grid2"><div class="item2" onclick="setRbx(100)"><div>100 R$</div><div class="pr" id="p100">Rp16.000</div></div><div class="item2" onclick="setRbx(774)"><div>774 R$</div><div class="pr" id="p774">Rp123.840</div></div><div class="item2" onclick="setRbx(1000)"><div>1000 R$</div><div class="pr" id="p1000">Rp160.000</div></div><div class="item2" onclick="setRbx(5000)"><div>5000 R$</div><div class="pr" id="p5000">Rp800.000</div></div></div><div class="tutor" id="tutorUsername"><h4>✅ TUTOR VIA USERNAME (1-5 MENIT):</h4><ol><li><b>Pastikan username benar!</b> Contoh: SANTRI_PRIDE</li><li>Akun public, jangan private</li><li>Join map Pls Donate</li><li>Admin join & donasi langsung</li><li>Jangan ganti username saat proses!</li></ol></div><div class="tutor" id="tutorGamepass" style="display:none"><h4>📚 TUTOR VIA GAMEPASS (14k/100):</h4><div class="calc-box"><div style="font-size:11px;font-weight:700">🧮 Kalkulator Gamepass (Potongan 30%):</div><div style="font-size:10px;color:#aaa">Mau terima <b id="wantRbx">1000</b> R$, pasang di Roblox:</div><div class="res" id="needPrice">1.429 R$</div><div style="font-size:9px;color:#888;text-align:center">Rumus: Jumlah / 0.7 | 774 / 0.7 = 1106 R$</div></div><ol style="margin-top:10px"><li>Buka roblox.com > Create > Manage My Experiences</li><li>Pilih game > Associated Items > Passes > Create a Pass</li><li>Nama "Donasi" > Sales > Aktifkan Item for Sale</li><li>Isi harga sesuai kalkulator! Contoh 774 R$ isi 1106</li><li>Copy link Gamepass > Paste > Order!</li></ol></div><div class="tutor" id="tutorGift" style="display:none"><h4>🎁 TUTOR VIA GIFT (95/R$ TERMURAH):</h4><ol><li><b>Termurah 95 perak / R$!</b> 1000 R$ cuma Rp95.000!</li><li>Pastikan username benar</li><li>Add friend bot WafaStore</li><li>Admin kirim gift langsung 5-30 menit full</li><li>Akun umur >3 hari & jangan private!</li></ol></div><a class="wa" onclick="orderRbx()">Order Via WhatsApp</a></div>
+<div id="ml" class="page"><div class="back" onclick="goHome()">← Kembali</div><div style="font-weight:800">Mobile Legends</div><a class="wa" href="https://wa.me/6283862776790">Order Via WA</a></div>
+<div id="ff" class="page"><div class="back" onclick="goHome()">← Kembali</div><div>Free Fire</div><a class="wa" href="https://wa.me/6283862776790">Order Via WA</a></div>
+<div id="pubg" class="page"><div class="back" onclick="goHome()">← Kembali</div><div>PUBG Mobile</div><a class="wa" href="https://wa.me/6283862776790">Order Via WA</a></div>
+<div id="redfinger" class="page"><div class="back" onclick="goHome()">← Kembali</div><div>Redfinger</div><a class="wa" href="https://wa.me/6283862776790">Order Via WA</a></div>
+<div id="valorant" class="page"><div class="back" onclick="goHome()">← Kembali</div><div>Valorant</div><a class="wa" href="https://wa.me/6283862776790">Order Via WA</a></div>
+<div id="genshin" class="page"><div class="back" onclick="goHome()">← Kembali</div><div>Genshin Impact</div><a class="wa" href="https://wa.me/6283862776790">Order Via WA</a></div>
+<div class="bottom"><div class="nav active" onclick="goHome()"><span>🏠</span>Beranda</div><div class="nav"><span>⚡</span>Top Up</div><div class="nav"><span>📋</span>Pesanan</div><div class="nav"><span>👛</span>Dompet</div><div class="nav"><span>👤</span>Profil</div></div>
 <script>
 let method='username';
 function openGame(id){document.getElementById('home').style.display='none';document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 function goHome(){document.getElementById('home').style.display='block';document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));}
-function setMethod(m){
-method=m;
-document.querySelectorAll('.subtab').forEach(s=>s.classList.remove('active'));
-document.getElementById('tutorUsername').style.display='none';
-document.getElementById('tutorGamepass').style.display='none';
-document.getElementById('tutorGift').style.display='none';
-if(m=='username'){document.getElementById('t1').classList.add('active');document.getElementById('rateInfo').innerText='Rate Username: 160/R$ (16.000/100R$)';document.getElementById('gpInput').style.display='none';document.getElementById('tutorUsername').style.display='block';updatePrices(160);}
-if(m=='gamepass'){document.getElementById('t2').classList.add('active');document.getElementById('rateInfo').innerText='Rate Gamepass: 140/R$ (14.000/100R$)';document.getElementById('gpInput').style.display='block';document.getElementById('tutorGamepass').style.display='block';updatePrices(140);}
-if(m=='gift'){document.getElementById('t3').classList.add('active');document.getElementById('rateInfo').innerText='Rate Gift: 95/R$ (9.500/100R$) TERMURAH!';document.getElementById('gpInput').style.display='none';document.getElementById('tutorGift').style.display='block';updatePrices(95);}
-calcRbx();
-}
-function updatePrices(rate){
-document.getElementById('p100').innerText='Rp'+(100*rate).toLocaleString('id-ID');
-document.getElementById('p400').innerText='Rp'+(400*rate).toLocaleString('id-ID');
-document.getElementById('p774').innerText='Rp'+(774*rate).toLocaleString('id-ID');
-document.getElementById('p1000').innerText='Rp'+(1000*rate).toLocaleString('id-ID');
-}
+function setMethod(m){method=m;document.querySelectorAll('.subtab').forEach(s=>s.classList.remove('active'));document.getElementById('tutorUsername').style.display='none';document.getElementById('tutorGamepass').style.display='none';document.getElementById('tutorGift').style.display='none';if(m=='username'){document.getElementById('t1').classList.add('active');document.getElementById('rateInfo').innerText='Rate: 160/R$ (16.000/100) - 1-5 menit';document.getElementById('gpInput').style.display='none';document.getElementById('tutorUsername').style.display='block';updatePrices(160);}if(m=='gamepass'){document.getElementById('t2').classList.add('active');document.getElementById('rateInfo').innerText='Rate: 140/R$ (14.000/100) - 7 hari';document.getElementById('gpInput').style.display='block';document.getElementById('tutorGamepass').style.display='block';updatePrices(140);}if(m=='gift'){document.getElementById('t3').classList.add('active');document.getElementById('rateInfo').innerText='Rate: 95/R$ (9.500/100) TERMURAH!';document.getElementById('gpInput').style.display='none';document.getElementById('tutorGift').style.display='block';updatePrices(95);}calcRbx();}
+function updatePrices(rate){document.getElementById('p100').innerText='Rp'+(100*rate).toLocaleString('id-ID');document.getElementById('p774').innerText='Rp'+(774*rate).toLocaleString('id-ID');document.getElementById('p1000').innerText='Rp'+(1000*rate).toLocaleString('id-ID');document.getElementById('p5000').innerText='Rp'+(5000*rate).toLocaleString('id-ID');}
 function setRbx(v){document.getElementById('cRbx').value=v;calcRbx();}
-function calcRbx(){
-let j=document.getElementById('cRbx').value||0;
-let rate=method=='username'?160:method=='gamepass'?140:95;
-let total=j*rate;
-document.getElementById('tRbx').innerText='Total: '+j+' R$ = Rp'+total.toLocaleString('id-ID')+' ('+method+')';
-document.getElementById('wantRbx').innerText=j;
-document.getElementById('needPrice').innerText=Math.ceil(j/0.7).toLocaleString('id-ID')+' R$ (Pasang di Roblox)';
-}
-function orderRbx(){
-let j=document.getElementById('cRbx').value,u=document.getElementById('uRbx').value,gp=document.getElementById('uGP').value;
-if(!j||!u){alert('Isi username & jumlah dulu bos!');return;}
-let need=Math.ceil(j/0.7);
-let msg=`Halo WafaStore mau order Roblox ${j} R$ via ${method} Username:${u} ${gp?' Gamepass:'+gp:''} Total: ${document.getElementById('tRbx').innerText} ${method=='gamepass'?' Pasang '+need+' R$ di Roblox ya':''}`;
-window.open('https://wa.me/6283862776790?text='+encodeURIComponent(msg),'_blank');
-}
+function calcRbx(){let j=document.getElementById('cRbx').value||0;let rate=method=='username'?160:method=='gamepass'?140:95;let total=j*rate;document.getElementById('tRbx').innerText='Total: '+j+' R$ = Rp'+total.toLocaleString('id-ID')+' ('+method+')';document.getElementById('wantRbx').innerText=j;document.getElementById('needPrice').innerText=Math.ceil(j/0.7).toLocaleString('id-ID')+' R$ (Pasang di Roblox)';}
+function orderRbx(){let j=document.getElementById('cRbx').value,u=document.getElementById('uRbx').value,gp=document.getElementById('uGP').value;if(!j||!u){alert('Isi username & jumlah dulu bos!');return;}let need=Math.ceil(j/0.7);let msg=`Halo WafaStore mau order Roblox ${j} R$ via ${method} Username:${u} ${gp?' Gamepass:'+gp:''} Total: ${document.getElementById('tRbx').innerText} ${method=='gamepass'?' Pasang '+need+' R$ di Roblox':''}`;window.open('https://wa.me/6283862776790?text='+encodeURIComponent(msg),'_blank');}
 calcRbx();
 </script>
 </body>
