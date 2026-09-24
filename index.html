@@ -1,73 +1,120 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WafaStoreOnly - Top Up & Rekber QRIS Auto</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WafaStoreOnly.cloud - Top Up & Rekber Aman #1</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
-body{background:#060a18;color:#fff;padding-bottom:90px}
-header{padding:10px 4%;display:flex;justify-content:space-between;background:#0b1020;border-bottom:1px solid #1c2648;position:sticky;top:0;z-index:99}
-.logo{font-weight:800;background:linear-gradient(90deg,#00e5ff,#b24cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.banner{margin:12px 4%;padding:22px 18px;border-radius:18px;background:linear-gradient(100deg,#0f1230,#1a103e);border:1px solid #2a2a6a}
-.tabs{margin:12px 4%;display:flex;gap:8px;overflow-x:auto}
-.tab{white-space:nowrap;padding:10px 16px;background:#111a33;border:1px solid #25325a;border-radius:30px;font-weight:700;font-size:13px;cursor:pointer}
-.tab.active{background:linear-gradient(90deg,#00d4ff,#7c3aed)}
-.sec{display:none;padding:0 4%}.sec.active{display:block}
-.card{background:#111a33;border:1px solid #25325a;border-radius:14px;padding:12px;margin-top:10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
-.prod{background:#0a0f25;border:1px solid #25325a;border-radius:10px;padding:8px;text-align:center;cursor:pointer;font-size:11px}
-.prod.active{border-color:#00ff88;background:#0a2a1a}
-.old{color:#ff4757;text-decoration:line-through;font-size:10px}.price{color:#00ff88;font-weight:900}
-.input{width:100%;padding:11px;background:#060a18;border:1px solid #25325a;border-radius:10px;color:#fff;margin-top:8px}
-.btn{width:100%;padding:13px;background:linear-gradient(90deg,#00d4ff,#7c3aed);border:none;border-radius:12px;color:#fff;font-weight:800;margin-top:10px}
-.total{background:#1e1e3e;padding:10px;border-radius:10px;margin-top:10px;display:flex;justify-content:space-between;font-weight:800}
-#qrisModal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:99;padding:20px}
-.modalBox{background:#1a1a2e;border:2px solid #5865F2;border-radius:20px;padding:20px;max-width:380px;width:100%;text-align:center}
-.bot{position:fixed;bottom:0;left:0;right:0;background:#0a1020f2;backdrop-filter:blur(12px);border-top:1px solid #1c2648;display:flex;justify-content:space-around;padding:8px 0 10px;z-index:99}
-.bot a{color:#4a5a7a;text-decoration:none;font-size:10px;text-align:center;display:flex;flex-direction:column;gap:3px}
-.bot a.active{color:#00d4ff}.bot a span{font-size:18px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:#0f1229;color:white;min-height:100vh;padding-bottom:80px}
+.header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#0f1229;border-bottom:1px solid #2a2d4a;position:sticky;top:0;z-index:10}
+.logo{font-weight:800;font-size:18px;background:linear-gradient(90deg,#00d4ff,#8a2be2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header-right{font-size:11px;color:#aaa}
+.hero{margin:16px;background:linear-gradient(135deg,#1a1d3d,#252850);border-radius:20px;padding:20px;border:1px solid #2a2d4a}
+.hero h1{font-size:32px;line-height:1.1;font-weight:800;margin-bottom:8px}
+.hero p{font-size:14px;color:#ccc}
+.tabs{display:flex;gap:8px;padding:0 16px;overflow-x:auto;white-space:nowrap}
+.tab{padding:10px 18px;border-radius:30px;border:none;background:#1e2140;color:#ccc;font-weight:600;font-size:14px;cursor:pointer;flex-shrink:0}
+.tab.active{background:linear-gradient(90deg,#00d4ff,#8a2be2);color:white}
+.game-section{display:none;padding:0 16px}
+.game-section.active{display:block}
+.card{background:#1a1d3d;border:1px solid #2a2d4a;border-radius:16px;padding:16px;margin-top:12px}
+.card-title{font-size:16px;font-weight:700;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.item{background:#15182f;border:1px solid #2a2d4a;border-radius:12px;padding:12px;text-align:center;cursor:pointer}
+.item .price{color:#00ff88;font-weight:700;font-size:14px;margin-top:4px}
+.item .name{font-size:13px}
+.wa-btn{display:block;background:linear-gradient(90deg,#25D366,#128C7E);color:white;text-align:center;padding:14px;border-radius:12px;text-decoration:none;font-weight:700;margin-top:16px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#15182f;border-top:1px solid #2a2d4a;display:flex;justify-content:space-around;padding:8px 0}
+.nav-item{display:flex;flex-direction:column;align-items:center;font-size:11px;color:#777}
+.nav-item.active{color:#00d4ff}
+.nav-item span{font-size:20px}
 </style>
 </head>
 <body>
-<header><div class="logo">WafaStoreOnly.cloud</div><div style="font-size:11px;color:#5a6a8a">QRIS AUTO • WA 083862776790</div></header>
-<div class="banner"><h1>TOP UP & REKBER AMAN #1</h1><p>Username 16K/100 • Gamepass 14K/100 • Gift 95 • Rekber Fee 3K • QRIS Auto</p></div>
+<div class="header"><div class="logo">WafaStoreOnly.cloud</div><div class="header-right">QRIS AUTO • WA 083862776790</div></div>
+<div class="hero"><h1>TOP UP & REKBER<br>AMAN #1</h1><p>Roblox 16K/100 • MLBB • FF • PUBG • Redfinger • Gift 95 • Rekber Fee 3K</p></div>
 <div class="tabs">
-<div class="tab active" onclick="switchTab('topup',this)">⚡ Top Up Robux</div>
-<div class="tab" onclick="switchTab('rekber',this)">🛡️ Rekber Aman</div>
-<div class="tab" onclick="switchTab('info',this)">📜 Info KYC</div>
+<button class="tab active" onclick="showGame('roblox')">⚡ Roblox</button>
+<button class="tab" onclick="showGame('ml')">💎 MLBB</button>
+<button class="tab" onclick="showGame('ff')">🔥 Free Fire</button>
+<button class="tab" onclick="showGame('pubg')">🎯 PUBG</button>
+<button class="tab" onclick="showGame('redfinger')">📱 Redfinger</button>
 </div>
-
-<div id="sec-topup" class="sec active">
-<div style="display:flex;gap:6px;margin-bottom:8px">
-<div class="tab active" onclick="switchTop('username',this)" style="font-size:11px">Username 16k</div>
-<div class="tab" onclick="switchTop('gamepass',this)" style="font-size:11px">Gamepass 14k</div>
-<div class="tab" onclick="switchTop('gift',this)" style="font-size:11px">Gift 95</div>
+<div id="roblox" class="game-section active">
+<div class="card"><div class="card-title">Roblox - Via Username 16k/100R$</div>
+<div class="grid">
+<div class="item" onclick="orderWA('Roblox 100 R$')"><div class="name">100 R$</div><div class="price">Rp16.000</div></div>
+<div class="item" onclick="orderWA('Roblox 200 R$')"><div class="name">200 R$</div><div class="price">Rp32.000</div></div>
+<div class="item" onclick="orderWA('Roblox 400 R$')"><div class="name">400 R$</div><div class="price">Rp64.000</div></div>
+<div class="item" onclick="orderWA('Roblox 800 R$')"><div class="name">800 R$</div><div class="price">Rp128.000</div></div>
+<div class="item" onclick="orderWA('Roblox 1000 R$')"><div class="name">1000 R$</div><div class="price">Rp160.000</div></div>
+<div class="item" onclick="orderWA('Roblox 1700 R$')"><div class="name">1700 R$</div><div class="price">Rp272.000</div></div>
+<div class="item" onclick="orderWA('Roblox 2200 R$')"><div class="name">2200 R$</div><div class="price">Rp352.000</div></div>
+<div class="item" onclick="orderWA('Roblox 3000 R$')"><div class="name">3000 R$</div><div class="price">Rp480.000</div></div>
+<div class="item" onclick="orderWA('Roblox 4000 R$')"><div class="name">4000 R$</div><div class="price">Rp640.000</div></div>
+<div class="item" onclick="orderWA('Roblox 5000 R$')"><div class="name">5000 R$</div><div class="price">Rp800.000</div></div>
 </div>
-<div id="top-username"><div class="card"><h4>Via Username - 16k/100R$ (diskon 18k)</h4><div class="grid" id="grid-username"></div><input type="number" id="customUser" class="input" placeholder="Custom: 10000 = 1.6jt" oninput="calcUser()"><div class="total"><span>Total:</span><span id="totalUser">Rp 0</span></div><input id="uUser" class="input" placeholder="Username Roblox"><button class="btn" onclick="bayarQRIS('username')">BAYAR QRIS AUTO</button></div></div>
-<div id="top-gamepass" style="display:none"><div class="card"><h4>Via Gamepass - 14k/100R$ PALING MURAH</h4><div class="grid" id="grid-gamepass"></div><input type="number" id="customGp" class="input" placeholder="Mau dapat 744?" oninput="calcGp()"><div id="gpInfo" style="font-size:11px;background:#1a1a35;padding:8px;border-radius:8px;margin-top:8px;display:none"></div><div class="total"><span>Total:</span><span id="totalGp">Rp 0</span></div><input id="uGpUser" class="input" placeholder="Username"><input id="uGpLink" class="input" placeholder="Link Gamepass"><button class="btn" onclick="bayarQRIS('gamepass')">BAYAR QRIS AUTO</button></div></div>
-<div id="top-gift" style="display:none"><div class="card"><h4>Gift - 95/robux</h4><input id="gUser" class="input" placeholder="Username"><input id="gMap" class="input" placeholder="Map: Adopt Me"><input id="gItem" class="input" placeholder="Item: Fly Potion"><input type="number" id="gRobux" class="input" placeholder="Harga Robux: 199" oninput="calcGift()"><div class="total"><span>Total:</span><span id="totalGift">Rp 0</span></div><button class="btn" onclick="bayarQRIS('gift')">BAYAR QRIS AUTO</button></div></div>
+<a class="wa-btn" href="https://wa.me/6283862776790?text=Halo%20WafaStore%20mau%20top%20up%20Roblox">Order Via WhatsApp</a></div></div>
+<div id="ml" class="game-section">
+<div class="card"><div class="card-title">Mobile Legends - Diamond Fast</div>
+<div class="grid">
+<div class="item" onclick="orderWA('ML 86 Diamond')"><div class="name">86 💎</div><div class="price">Rp22.000</div></div>
+<div class="item" onclick="orderWA('ML 172 Diamond')"><div class="name">172 💎</div><div class="price">Rp44.000</div></div>
+<div class="item" onclick="orderWA('ML 257 Diamond')"><div class="name">257 💎</div><div class="price">Rp66.000</div></div>
+<div class="item" onclick="orderWA('ML 344 Diamond')"><div class="name">344 💎</div><div class="price">Rp88.000</div></div>
+<div class="item" onclick="orderWA('ML 514 Diamond')"><div class="name">514 💎</div><div class="price">Rp132.000</div></div>
+<div class="item" onclick="orderWA('ML 878 Diamond')"><div class="name">878 💎</div><div class="price">Rp220.000</div></div>
+<div class="item" onclick="orderWA('ML 1028 Diamond')"><div class="name">1028 💎</div><div class="price">Rp264.000</div></div>
+<div class="item" onclick="orderWA('ML 1412 Diamond')"><div class="name">1412 💎</div><div class="price">Rp352.000</div></div>
 </div>
-
-<div id="sec-rekber" class="sec"><div class="card"><h3>🛡️ REKBER WafaStoreOnly x Pakasir</h3><p style="font-size:11px;color:#8ea0c0;margin:6px 0">Fee 3K-15K • DANA/GOPAY 083862776790 • QRIS Auto • Discord Ticket</p><input id="buyer" class="input" placeholder="Discord Buyer"><input id="seller" class="input" placeholder="Discord Seller"><input id="nominal" type="number" class="input" placeholder="Nominal 50000"><button class="btn" onclick="buatRekber()">🎫 Buat Ticket Rekber</button><div id="payBox" style="display:none;margin-top:12px;background:#060a18;padding:12px;border-radius:12px;border:1px solid #25325a"><p id="payInfo" style="font-size:12px"></p><img id="qrImg" style="width:200px;height:200px;background:#fff;border-radius:10px;margin:10px auto;display:block"></div></div></div>
-
-<div id="sec-info" class="sec"><div class="card"><h4>Untuk KYC Pakasir/Tripay/Duitku</h4><p style="font-size:11px;margin-top:6px;line-height:1.6">Website: wafastoreonly.cloud<br>Produk: Top Up Roblox Via Username (16k/100), Gamepass (14k/100), Gift (95), Rekber Fee 3K<br>Metode: QRIS Pakasir Auto, Tripay, DANA 083862776790, GOPAY 083862776790<br>Alamat: Citayam, Tajurhalang, Bogor 16920<br>WA: 083862776790<br>Jam: 08.00-23.00 WIB<br>Proses: 5 menit - 7 hari (pending Roblox)</p></div></div>
-
-<div id="qrisModal"><div class="modalBox"><h3>Scan QRIS</h3><p id="mDesc" style="font-size:13px;margin:8px 0"></p><img id="mQrisImg" style="width:260px;height:260px;background:#fff;border-radius:12px;display:none;margin:10px auto"><div id="mLoader">Membuat QRIS...</div><p id="mTotal" style="font-size:20px;font-weight:900;color:#00ff88"></p><button class="btn" onclick="closeModal()" style="background:#2a2a4a">Tutup</button></div></div>
-
-<div class="bot"><a class="active"><span>🏠</span>Beranda</a><a onclick="switchTab('rekber',document.querySelectorAll('.tabs.tab')[1])"><span>🛡️</span>Rekber</a><a onclick="switchTab('topup',document.querySelectorAll('.tabs.tab')[0])"><span>⚡</span>Top Up</a><a><span>☰</span>Info</a><a><span>👤</span>Profil</a></div>
-
+<a class="wa-btn" href="https://wa.me/6283862776790?text=Halo%20WafaStore%20mau%20top%20up%20MLBB">Order MLBB Via WA</a></div></div>
+<div id="ff" class="game-section">
+<div class="card"><div class="card-title">Free Fire - Diamond</div>
+<div class="grid">
+<div class="item" onclick="orderWA('FF 100 DM')"><div class="name">100 DM</div><div class="price">Rp14.000</div></div>
+<div class="item" onclick="orderWA('FF 210 DM')"><div class="name">210 DM</div><div class="price">Rp28.000</div></div>
+<div class="item" onclick="orderWA('FF 355 DM')"><div class="name">355 DM</div><div class="price">Rp46.000</div></div>
+<div class="item" onclick="orderWA('FF 720 DM')"><div class="name">720 DM</div><div class="price">Rp92.000</div></div>
+<div class="item" onclick="orderWA('FF 1450 DM')"><div class="name">1450 DM</div><div class="price">Rp184.000</div></div>
+<div class="item" onclick="orderWA('FF 2180 DM')"><div class="name">2180 DM</div><div class="price">Rp276.000</div></div>
+</div>
+<a class="wa-btn" href="https://wa.me/6283862776790?text=Halo%20WafaStore%20mau%20top%20up%20Free%20Fire">Order FF Via WA</a></div></div>
+<div id="pubg" class="game-section">
+<div class="card"><div class="card-title">PUBG Mobile - UC</div>
+<div class="grid">
+<div class="item" onclick="orderWA('PUBG 60 UC')"><div class="name">60 UC</div><div class="price">Rp14.000</div></div>
+<div class="item" onclick="orderWA('PUBG 120 UC')"><div class="name">120 UC</div><div class="price">Rp28.000</div></div>
+<div class="item" onclick="orderWA('PUBG 250 UC')"><div class="name">250 UC</div><div class="price">Rp56.000</div></div>
+<div class="item" onclick="orderWA('PUBG 500 UC')"><div class="name">500 UC</div><div class="price">Rp110.000</div></div>
+<div class="item" onclick="orderWA('PUBG 750 UC')"><div class="name">750 UC</div><div class="price">Rp165.000</div></div>
+<div class="item" onclick="orderWA('PUBG 1000 UC')"><div class="name">1000 UC</div><div class="price">Rp220.000</div></div>
+</div>
+<a class="wa-btn" href="https://wa.me/6283862776790?text=Halo%20WafaStore%20mau%20top%20up%20PUBG">Order PUBG Via WA</a></div></div>
+<div id="redfinger" class="game-section">
+<div class="card"><div class="card-title">Redfinger - Cloud Phone</div>
+<div class="grid">
+<div class="item" onclick="orderWA('Redfinger 7 Hari')"><div class="name">7 Hari</div><div class="price">Rp25.000</div></div>
+<div class="item" onclick="orderWA('Redfinger 15 Hari')"><div class="name">15 Hari</div><div class="price">Rp45.000</div></div>
+<div class="item" onclick="orderWA('Redfinger 30 Hari')"><div class="name">30 Hari</div><div class="price">Rp80.000</div></div>
+<div class="item" onclick="orderWA('Redfinger 60 Hari')"><div class="name">60 Hari</div><div class="price">Rp150.000</div></div>
+</div>
+<a class="wa-btn" href="https://wa.me/6283862776790?text=Halo%20WafaStore%20mau%20sewa%20Redfinger">Order Redfinger Via WA</a></div></div>
+<div class="bottom-nav">
+<div class="nav-item active"><span>🏠</span>Beranda</div>
+<div class="nav-item"><span>🛡️</span>Rekber</div>
+<div class="nav-item"><span>⚡</span>Top Up</div>
+<div class="nav-item"><span>☰</span>Info</div>
+<div class="nav-item"><span>👤</span>Profil</div>
+</div>
 <script>
-let sel={};function switchTab(m,el){document.querySelectorAll('.sec').forEach(x=>x.classList.remove('active'));document.getElementById('sec-'+m).classList.add('active');document.querySelectorAll('.tabs.tab').forEach(x=>x.classList.remove('active'));el.classList.add('active')}
-function switchTop(m,el){document.getElementById('top-username').style.display=m=='username'?'block':'none';document.getElementById('top-gamepass').style.display=m=='gamepass'?'block':'none';document.getElementById('top-gift').style.display=m=='gift'?'block':'none';el.parentElement.querySelectorAll('.tab').forEach(x=>x.style.background='#111a33');el.style.background='linear-gradient(90deg,#00d4ff,#7c3aed)'}
-function genGrid(){let gU=document.getElementById('grid-username');[100,200,400,800,1000,1700,2200,3000,4000,5000].forEach(r=>{let p=Math.ceil(r/100)*16000;let d=document.createElement('div');d.className='prod';d.innerHTML=`${r} R$<br><span class=price>Rp${p.toLocaleString('id-ID')}</span>`;d.onclick=()=>{document.querySelectorAll('#grid-username.prod').forEach(x=>x.classList.remove('active'));d.classList.add('active');sel.username={r,price:p};document.getElementById('totalUser').innerText='Rp'+p.toLocaleString('id-ID');document.getElementById('customUser').value=r};gU.appendChild(d)});let gG=document.getElementById('grid-gamepass');[100,200,400,744,800,1000,1200,1700,2200,5000].forEach(r=>{let need=Math.ceil(r/0.7/100)*100;if(r==744)need=1000;let p=Math.ceil(need/100)*14000;let d=document.createElement('div');d.className='prod';d.innerHTML=`${r} R$<br><small>GP ${need}</small><br><span class=price>Rp${p.toLocaleString('id-ID')}</span>`;d.onclick=()=>{document.querySelectorAll('#grid-gamepass.prod').forEach(x=>x.classList.remove('active'));d.classList.add('active');calcGpFrom(r)};gG.appendChild(d)})}
-function calcUser(){let r=parseInt(document.getElementById('customUser').value)||0;let p=Math.ceil(r/100)*16000;document.getElementById('totalUser').innerText='Rp'+p.toLocaleString('id-ID');sel.username={r,price:p}}
-function calcGpFrom(w){let need=Math.ceil(w/0.7/100)*100;if(w==744)need=1000;let p=Math.ceil(need/100)*14000;document.getElementById('totalGp').innerText='Rp'+p.toLocaleString('id-ID');let i=document.getElementById('gpInfo');i.style.display='block';i.innerHTML=`Mau ${w}R$ → Buat GP ${need}R$ = Rp${p.toLocaleString('id-ID')}`;sel.gamepass={r:w,need,price:p}}
-function calcGp(){let w=parseInt(document.getElementById('customGp').value)||0;if(!w)return;calcGpFrom(w)}
-function calcGift(){let r=parseInt(document.getElementById('gRobux').value)||0;let p=r*95;document.getElementById('totalGift').innerText='Rp'+p.toLocaleString('id-ID');sel.gift={r,price:p}}
-async function bayarQRIS(type){let payload,total,robux,user;if(type=='username'){robux=sel.username?.r||parseInt(document.getElementById('customUser').value);user=document.getElementById('uUser').value;total=sel.username?.price||Math.ceil(robux/100)*16000;if(!robux||!user)return alert('Isi lengkap');payload={method:'username',robux,username:user,total}}else if(type=='gamepass'){robux=sel.gamepass?.r||parseInt(document.getElementById('customGp').value);user=document.getElementById('uGpUser').value;let link=document.getElementById('uGpLink').value;total=sel.gamepass?.price;if(!robux||!user||!link)return alert('Isi lengkap');payload={method:'gamepass',robux,username:user,link,total}}else{user=document.getElementById('gUser').value;let map=document.getElementById('gMap').value,item=document.getElementById('gItem').value;robux=parseInt(document.getElementById('gRobux').value);total=robux*95;if(!user||!map)return alert('Isi lengkap');payload={method:'gift',robux,username:user,map,item,total}}document.getElementById('qrisModal').style.display='flex';document.getElementById('mLoader').style.display='block';document.getElementById('mQrisImg').style.display='none';document.getElementById('mDesc').innerText=`${type} ${robux} R$ - ${user}`;document.getElementById('mTotal').innerText='Rp'+total.toLocaleString('id-ID');try{const res=await fetch('/api/create-pakasir',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const data=await res.json();document.getElementById('mLoader').style.display='none';let img=document.getElementById('mQrisImg');img.style.display='block';img.src=data.qr_image||`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(data.qr_string||'PAKASIR-'+total)}`}catch(e){document.getElementById('mLoader').style.display='none';let img=document.getElementById('mQrisImg');img.style.display='block';img.src=`https://via.placeholder.com/300?text=QRIS+${total}`}}
-function closeModal(){document.getElementById('qrisModal').style.display='none'}
-async function buatRekber(){let buyer=document.getElementById('buyer').value,seller=document.getElementById('seller').value,nominal=parseInt(document.getElementById('nominal').value);if(!nominal)return alert('Isi nominal');let fee=3000;if(nominal>50000)fee=6000;if(nominal>100000)fee=9000;if(nominal>150000)fee=12000;if(nominal>200000)fee=15000;let total=nominal+fee;document.getElementById('payBox').style.display='block';document.getElementById('payInfo').innerHTML=`Ref: WAFA-${Date.now()}<br>Total: Rp ${total.toLocaleString('id-ID')} (Fee ${fee})<br>TF DANA/GOPAY 083862776790`;document.getElementById('qrImg').src=`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=PAKASIR-${total}`;try{await fetch('/api/create-ticket',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({buyer,seller,nominal,fee,total})})}catch(e){}}
-genGrid();
+function showGame(id){
+document.querySelectorAll('.game-section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+event.target.classList.add('active');
+}
+function orderWA(p){window.open('https://wa.me/6283862776790?text=Halo%20WafaStore%20mau%20order%20'+encodeURIComponent(p),'_blank')}
 </script>
 </body>
 </html>
