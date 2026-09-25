@@ -11,14 +11,11 @@ body{background:#080c25;color:#fff;padding-bottom:90px}
 .header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#080c25;position:sticky;top:0;z-index:50;border-bottom:1px solid #151a3a}
 .logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:22px}
 .logo span{background:linear-gradient(90deg,#00e5ff,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.banner{background:radial-gradient(circle at top,#1a1f6b,#080c25 70%);padding:32px 16px 24px;text-align:left;border-bottom:1px solid #1e2450}
+.banner{background:radial-gradient(circle at top,#1a1f6b,#080c25 70%);padding:32px 16px 24px;border-bottom:1px solid #1e2450}
 .banner h1{font-family:'Bebas Neue';font-size:38px;line-height:0.95;letter-spacing:1px;font-style:italic}
 .banner p{font-size:11px;color:#aab0d0;margin-top:8px}
-.btn-mulai{margin-top:16px;background:linear-gradient(90deg,#00c6ff,#7c3aed);border:none;padding:12px 22px;border-radius:30px;color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px;cursor:pointer}
+.btn-mulai{margin-top:16px;background:linear-gradient(90deg,#00c6ff,#7c3aed);border:none;padding:12px 22px;border-radius:30px;color:#fff;font-weight:800;font-size:13px;cursor:pointer}
 .section{padding:16px}
-.head-pop{display:flex;justify-content:space-between;align-items:center}
-.head-pop h2{font-size:16px;font-weight:800}
-.head-pop span{color:#00d4ff;font-size:12px}
 .grid-game{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
 .card-game{background:#121631;border:1px solid #3a3e8a;border-radius:16px;overflow:hidden;text-align:center;position:relative;cursor:pointer}
 .card-game img{width:100%;height:85px;object-fit:cover}
@@ -26,20 +23,20 @@ body{background:#080c25;color:#fff;padding-bottom:90px}
 .card-game .name{padding:8px 0 10px;font-size:11px;font-weight:600}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:#080c25;border-top:1px solid #1e2450;display:flex;justify-content:space-around;padding:8px 0 10px;z-index:100}
 .nav{font-size:9px;color:#5a638a;text-align:center;flex:1;cursor:pointer}.nav.active{color:#00d4ff}
-#robloxPage{display:none}.show{display:block!important}
+#robloxPage{display:none}
 .method-tabs{display:flex;gap:8px;margin-top:16px;overflow-x:auto}
 .tab{padding:8px 16px;border-radius:20px;font-size:11px;font-weight:800;border:1px solid #2a3366;background:#141936;white-space:nowrap;cursor:pointer}
 .tab.active{background:linear-gradient(90deg,#00c6ff,#7c3aed);border-color:#00d4ff}
 .input-group{margin-top:14px}label{font-size:11px;color:#8d94b8;margin-bottom:6px;display:block}
 input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;background:#131740;color:#fff;outline:none}
-.total-box{background:#131740;border:1px dashed #00d4ff;padding:12px;border-radius:10px;text-align:center;margin-top:12px;font-weight:800;font-size:13px}
+.total-box{background:#131740;border:1px dashed #00d4ff;padding:12px;border-radius:10px;text-align:center;margin-top:12px;font-weight:800;font-size:13px;line-height:1.5}
 .grid-robux{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 .item{background:#141936;border:1px solid #2a3366;border-radius:14px;padding:14px;text-align:center;cursor:pointer}
 .item .r{font-size:13px;font-weight:800}
 .item .old{font-size:11px;color:#6b7394;text-decoration:line-through;margin-top:4px;display:block}
 .item .new{font-size:14px;color:#00ff88;font-weight:900;display:block;margin-top:2px}
 .item .disc{font-size:9px;background:#ff3b30;color:#fff;padding:2px 6px;border-radius:10px;display:inline-block;margin-top:4px}
-.btn-pay{position:fixed;bottom:54px;left:14px;right:14px;padding:15px;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;border:none;border-radius:14px;font-weight:900;z-index:90;cursor:pointer}
+.btn-pay{position:fixed;bottom:54px;left:14px;right:14px;padding:15px;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;border:none;border-radius:14px;font-weight:900;z-index:90}
 </style>
 </head>
 <body>
@@ -55,7 +52,7 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 <button class="btn-mulai" onclick="openRoblox()">⚡ Mulai Top Up Sekarang</button>
 </div>
 <div class="section">
-<div class="head-pop"><h2>Pilih Game Populer</h2><span>Lihat Semua ></span></div>
+<div style="display:flex;justify-content:space-between"><h2 style="font-size:16px;font-weight:800">Pilih Game Populer</h2><span style="color:#00d4ff;font-size:12px">Lihat Semua ></span></div>
 <div class="grid-game">
 <div class="card-game" onclick="openRoblox()"><span class="off">-10% OFF</span><img src="https://tr.rbxcdn.com/38c6edcb50633730ff4cf39ac885deea/512/512/Image/Png"><div class="name">Roblox</div></div>
 <div class="card-game"><span class="off">-10% OFF</span><img src="https://cdn.mobygames.com/covers/12651856-mobile-legends-bang-bang-android-front-cover.jpg"><div class="name">Mobile Legends</div></div>
@@ -68,7 +65,7 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 </div>
 
 <div id="robloxPage" class="section">
-<div style="color:#00d4ff;font-size:12px;margin-bottom:10px" onclick="goHome()">← Kembali</div>
+<div style="color:#00d4ff;font-size:12px;margin-bottom:10px;cursor:pointer" onclick="goHome()">← Kembali</div>
 <div style="font-weight:800;font-size:16px">Roblox - Top Up Robux</div>
 
 <div class="method-tabs">
@@ -83,8 +80,6 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 <div class="total-box" id="tRbx">Total: 0 robux = Rp0</div>
 <div style="font-weight:800;font-size:13px;margin:18px 0 10px">Pilih Paket Via Username - 160/robux (diskon dari 180)</div>
 <div class="grid-robux" id="gridUsername"></div>
-
-<!-- SYARAT YANG BARU LU MINTA - UDAH GUA TAMBAHIN -->
 <div style="background:#121631;border:1px solid #232a5a;border-radius:12px;padding:12px;margin-top:16px;font-size:11px;line-height:1.7">
 <b style="color:#00ff88">syarat dan ketentuan robux via username✅</b><br>
 1. pastikan username benar (kesalahan memasukan username diluar tanggung jawab kami<br>
@@ -92,10 +87,27 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 3. pastikan v2f (verifikasi 2 langkah) on<br>
 4. pastikan akun sudah 18+ (jika dibawah umur bisa menggunakan akun parent/orang tua)
 </div>
-
 </div>
 
-<div id="m-gamepass" style="display:none"><div style="margin-top:20px;text-align:center;color:#8d94b8;font-size:12px">Via Gamepass akan gua tambahin next</div></div>
+<!-- VIA GAMEPASS UPDATE BARU - SESUAI REQUEST LU -->
+<div id="m-gamepass" style="display:none">
+<div class="input-group"><label>Username Roblox:</label><input id="uRbx2" placeholder="SANTRI_PRIDE"></div>
+<div class="input-group"><label>Mau Berapa robux? (otomatis 140/robux)</label><input id="cRbx2" type="number" placeholder="Contoh: 1000" oninput="calcGamepass()"></div>
+<div class="total-box" id="tRbx2">Total: 0 robux = Rp0<br>Setting Gamepass: 0 robux</div>
+<div style="font-size:10px;color:#8d94b8;margin-top:6px">*Contoh kalo buyer mau 1000 robux, setting gamepass di dalam game robloxnya 1429 robux (karena potongan 30%)</div>
+
+<div style="font-weight:800;font-size:13px;margin:18px 0 10px">Pilih Paket Via Gamepass - 140/robux (diskon dari 155)</div>
+<div class="grid-robux" id="gridGamepass"></div>
+
+<div style="background:#121631;border:1px solid #232a5a;border-radius:12px;padding:12px;margin-top:16px;font-size:11px;line-height:1.7">
+<b style="color:#ffcc00">syarat dan ketentuan robux via gamepass✅</b><br>
+1. pastikan username benar<br>
+2. buat gamepass di dalam game kamu, set harga sesuai kalkulator (contoh 1000 robux = set 1429)<br>
+3. pastikan gamepass public / on sale<br>
+4. akun tidak private
+</div>
+</div>
+
 <div id="m-gift" style="display:none"><div style="margin-top:20px;text-align:center;color:#8d94b8;font-size:12px">Gift In Game akan gua tambahin next</div></div>
 </div>
 
@@ -106,14 +118,16 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 
 <script>
 const listUsername = [100,200,300,400,500,1000,1500,2000,3000,4000,5000];
+const listGamepass = [100,200,300,400,500,1000,1500,2000,3000,4000,5000];
+
 function renderUsername(){
  let g=document.getElementById('gridUsername');g.innerHTML='';
  listUsername.forEach(j=>{
   let oldPrice=j*180;
   let newPrice=j*160;
   let div=document.createElement('div');div.className='item';
-  div.innerHTML=`<div class="r">${j} robux</div><div class="old">${oldPrice.toLocaleString('id-ID')}</div><div class="new">${newPrice.toLocaleString('id-ID')}</div><div class="disc">diskon ${Math.round((1-newPrice/oldPrice)*100)}%</div>`;
-  div.onclick=()=>{document.getElementById('cRbx').value=j;calcUsername();document.querySelectorAll('#gridUsername .item').forEach(x=>x.style.borderColor='#2a3366');div.style.borderColor='#00d4ff'};
+  div.innerHTML=`<div class="r">${j} robux</div><div class="old">Rp${oldPrice.toLocaleString('id-ID')}</div><div class="new">Rp${newPrice.toLocaleString('id-ID')}</div><div class="disc">diskon ${Math.round((1-newPrice/oldPrice)*100)}%</div>`;
+  div.onclick=()=>{document.getElementById('cRbx').value=j;calcUsername()};
   g.appendChild(div);
  })
 }
@@ -122,7 +136,25 @@ function calcUsername(){
  let total=j*160;
  document.getElementById('tRbx').innerText=`Total: ${j} robux = Rp${total.toLocaleString('id-ID')}`;
 }
-function openRoblox(){document.getElementById('homePage').style.display='none';document.getElementById('robloxPage').style.display='block';renderUsername()}
+
+function renderGamepass(){
+ let g=document.getElementById('gridGamepass');g.innerHTML='';
+ listGamepass.forEach(j=>{
+  let oldPrice=j*155;
+  let newPrice=j*140;
+  let div=document.createElement('div');div.className='item';
+  div.innerHTML=`<div class="r">${j} robux</div><div class="old">Rp${oldPrice.toLocaleString('id-ID')}</div><div class="new">Rp${newPrice.toLocaleString('id-ID')}</div><div class="disc">diskon ${Math.round((1-newPrice/oldPrice)*100)}%</div>`;
+  div.onclick=()=>{document.getElementById('cRbx2').value=j;calcGamepass()};
+  g.appendChild(div);
+ })
+}
+function calcGamepass(){
+ let j=parseInt(document.getElementById('cRbx2').value)||0;
+ let total=j*140;
+ let setGamepass=Math.ceil(j/0.7);
+ document.getElementById('tRbx2').innerHTML=`Total: ${j} robux = Rp${total.toLocaleString('id-ID')}<br>Setting Gamepass: ${setGamepass} robux`;
+}
+function openRoblox(){document.getElementById('homePage').style.display='none';document.getElementById('robloxPage').style.display='block';renderUsername();renderGamepass()}
 function goHome(){document.getElementById('homePage').style.display='block';document.getElementById('robloxPage').style.display='none'}
 function switchMethod(m,el){
  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');
@@ -130,7 +162,7 @@ function switchMethod(m,el){
  document.getElementById('m-gamepass').style.display=m=='gamepass'?'block':'none';
  document.getElementById('m-gift').style.display=m=='gift'?'block':'none';
 }
-renderUsername();
+renderUsername();renderGamepass();
 </script>
 </body>
 </html>
