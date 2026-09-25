@@ -4,13 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>WafaStoreOnly</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
 body{background:#080c25;color:#fff;padding-bottom:130px}
-.header{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid #151a3a;position:sticky;top:0;background:#080c25;z-index:50}
-.avatar{width:42px;height:42px;border-radius:50%;background:url('./logo.png') center/cover #111;border:2px solid #2a3366}
-.logo{font-weight:900;font-size:22px;background:linear-gradient(90deg,#00e5ff,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header{display:flex;align-items:center;gap:10px;padding:12px 16px;background:#080c25;border-bottom:1px solid #151a3a;position:sticky;top:0;z-index:20}
+.avatar{width:40px;height:40px;border-radius:50%;background:url('./logo.png') center/cover #111;border:2px solid #2a3366}
+.logo{font-weight:900;font-size:20px;background:linear-gradient(90deg,#00e5ff,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.banner{padding:24px 16px;background:linear-gradient(180deg,#0a0e27,#080c25)}
+.banner h1{font-family:'Bebas Neue';font-size:34px;line-height:.9;font-style:italic}
+.btn-topup{margin-top:14px;background:linear-gradient(90deg,#00c6ff,#5b4ef7);border:none;padding:10px 18px;border-radius:24px;color:#fff;font-weight:800;font-size:12px}
 .section{padding:16px}
+.grid-game{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.card-game{background:#121631;border-radius:12px;overflow:hidden;border:1px solid #232a5a;text-align:center;padding-bottom:8px;cursor:pointer}
+.card-game img{width:100%;height:70px;object-fit:cover}
 .input-group{margin-top:12px}label{font-size:11px;color:#8d94b8;margin-bottom:5px;display:block}
 input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;background:#131740;color:#fff;outline:none}
 .total-box{background:#131740;border:1px dashed #00d4ff;padding:12px;border-radius:10px;text-align:center;margin-top:12px;font-weight:800}
@@ -27,30 +35,41 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 .bank-list{background:#0f1330;border-radius:12px;padding:12px;margin-top:12px;border:1px solid #232a5a}
 .bank-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1e2450;font-size:12px}
 .qr-box{background:#fff;padding:12px;border-radius:12px;margin-top:14px;display:flex;justify-content:center}
-#qrcode canvas,#qrcode img{width:100%;max-width:260px}
+#home{display:block}#robloxPage{display:none}#robloxPage.active{display:block}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 <div class="header"><div class="avatar"></div><div class="logo">WafaStoreOnly</div></div>
 
-<div class="section">
+<div id="home">
+<div class="banner"><h1>TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1><p style="font-size:11px;color:#aab0d0;margin-top:8px">Top Up Game Instan • Aman • 24/7</p><button class="btn-topup" onclick="openRoblox()">⚡ Mulai Top Up Sekarang</button></div>
+<div class="section"><div style="display:flex;justify-content:space-between"><h2 style="font-size:16px;font-weight:800">Pilih Game Populer</h2><span style="color:#00d4ff;font-size:11px">Lihat Semua ></span></div>
+<div class="grid-game">
+<div class="card-game" onclick="openRoblox()"><img src="./logo.png"><div>Roblox</div></div>
+<div class="card-game"><img src="https://cdn.mobygames.com/covers/12651856-mobile-legends-bang-bang-android-front-cover.jpg"><div>Mobile Legends</div></div>
+<div class="card-game"><img src="https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg"><div>PUBG Mobile</div></div>
+</div></div>
+</div>
+
+<div id="robloxPage" class="section">
+<div style="color:#00d4ff;font-size:12px;margin-bottom:10px" onclick="goHome()">← Kembali</div>
 <div style="font-weight:800">Roblox - Top Up Robux</div>
 <div class="input-group"><label>Username Roblox:</label><input id="uRbx" placeholder="SANTRI_PRIDE"></div>
 <div class="input-group"><label>Mau Berapa robux?</label><input id="cRbx" type="number" value="100" oninput="calc()"></div>
 <div class="total-box" id="tRbx">Total: 100 robux = Rp16.000</div>
 <div style="font-weight:800;font-size:13px;margin:16px 0 10px">Via Username - 16k/100 robux (diskon 18k)</div>
 <div class="grid-robux" id="priceGrid"></div>
-<div class="tutor"><b style="color:#00d4ff">✅ SYARAT & KETENTUAN VIA USERNAME 1-5 MENIT CAIR:</b><br>1. username benar<br>2. wajib v2<br>3. akun 18+<br>4. jangan ganti username saat proses</div>
+<div class="tutor"><b style="color:#00d4ff">✅ SYARAT & KETENTUAN VIA USERNAME 1-5 MENIT CAIR:</b><br>1. pastikan username benar<br>2. wajib aktifkan v2<br>3. pastikan akun 18+<br>4. jangan ganti username saat proses</div>
 </div>
 
 <div class="btn-wrap"><button class="btn-pay" onclick="orderRbx()">LANJUT PEMBAYARAN</button></div>
-<div class="bottom"><div class="nav">🏠<br>Beranda</div><div class="nav">⚡<br>Top Up</div><div class="nav">☰<br>Pesanan</div><div class="nav">👛<br>Dompet</div><div class="nav">👤<br>Profil</div></div>
+<div class="bottom"><div class="nav" onclick="goHome()">🏠<br>Beranda</div><div class="nav">⚡<br>Top Up</div><div class="nav">☰<br>Pesanan</div><div class="nav">👛<br>Dompet</div><div class="nav">👤<br>Profil</div></div>
 
 <div id="payModal" onclick="if(event.target==this)closePay()">
 <div class="modalBox">
 <div style="text-align:center;font-weight:800">💳 Lanjutkan Pembayaran</div>
 <div id="payDetail" style="text-align:center;color:#00ff88;font-size:12px;margin-top:6px;font-weight:700"></div>
+<div id="orderId" style="text-align:center;color:#ffd600;font-size:11px;margin-top:4px;font-weight:800"></div>
 <div style="text-align:center;margin-top:14px;font-size:12px">Silahkan melanjutkan pembayaran melalui</div>
 <div class="bank-list">
 <div class="bank-item"><b>💙 DANA</b><span style="color:#00ff88;font-weight:800">083862776790</span></div>
@@ -59,7 +78,7 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 </div>
 <div style="text-align:center;margin-top:14px;font-size:11px;color:#aab0d0">dibawahnya atau scan qris dibawah ini</div>
 <div class="qr-box"><div id="qrcode"></div></div>
-<div id="qrText" style="font-size:6px;word-break:break-all;background:#0f1330;padding:8px;border-radius:8px;color:#8d94b8;margin-top:10px"></div>
+<div style="background:#ff3b30;color:#fff;padding:8px;border-radius:8px;font-size:10px;text-align:center;margin-top:10px">⚠️ TRANSFER SESUAI NOMINAL UNIK SAMPAI 3 DIGIT TERAKHIR! JANGAN DIBULATKAN. INI UNTUK CEK OTOMATIS SIAPA YANG BAYAR.</div>
 <a id="waAfter" href="#" style="display:block;background:#25D366;color:#fff;padding:14px;border-radius:12px;margin-top:14px;text-align:center;text-decoration:none;font-weight:800">✅ Sudah Bayar - Konfirmasi WA</a>
 <div onclick="closePay()" style="text-align:center;margin-top:12px;color:#7a82aa;font-size:11px">Tutup</div>
 </div>
@@ -72,16 +91,31 @@ function makeQRIS(a){let q=QRIS_STATIC.slice(0,-4).replace("010211","010212");le
 const prices=[100,200,400,800,1000,1700,2200,3000,4000,5000];
 function render(){let g=document.getElementById('priceGrid');g.innerHTML='';prices.forEach(j=>{let d=document.createElement('div');d.className='item-robux'+(document.getElementById('cRbx').value==j?' active':'');d.innerHTML=`${j} robux<br><span style="font-size:10px;text-decoration:line-through;color:#6b7394">Rp${(j*180).toLocaleString('id-ID')}</span><br><span style="color:#00ff88;font-weight:800">Rp${(j*160).toLocaleString('id-ID')}</span>`;d.onclick=()=>{document.getElementById('cRbx').value=j;calc();render()};g.appendChild(d)})}
 function calc(){let j=document.getElementById('cRbx').value||0;document.getElementById('tRbx').innerText=`Total: ${j} robux = Rp${(j*160).toLocaleString('id-ID')}`}
+function openRoblox(){document.getElementById('home').style.display='none';document.getElementById('robloxPage').classList.add('active');window.scrollTo(0,0)}
+function goHome(){document.getElementById('home').style.display='block';document.getElementById('robloxPage').classList.remove('active')}
 function orderRbx(){
-  let j=document.getElementById('cRbx').value||100,u=document.getElementById('uRbx').value;
-  if(!u){alert('Isi Username dulu bos!');return}
-  let total=j*160,qr=makeQRIS(total);
-  document.getElementById('payDetail').innerText=`${j} robux - ${u} = Rp${total.toLocaleString('id-ID')}`;
-  document.getElementById('qrText').innerText=qr;
+  let j=document.getElementById('cRbx').value||100,u=document.getElementById('uRbx').value.trim();
+  if(!u){alert('Isi Username Roblox dulu bos!');return}
+  let base=j*160;
+  let unik=Math.floor(Math.random()*900)+100; // 100-999 biar unik
+  let total=base+unik;
+  let orderId='WFS-'+Date.now().toString().slice(-6);
+  let qr=makeQRIS(total);
+  
+  document.getElementById('payDetail').innerText=`${j} robux - ${u}`;
+  document.getElementById('orderId').innerText=`ORDER ID: ${orderId} | Total Unik: Rp${total.toLocaleString('id-ID')}`;
   document.getElementById('qrcode').innerHTML="";
   new QRCode(document.getElementById('qrcode'),{text:qr,width:256,height:256,correctLevel:QRCode.CorrectLevel.M});
   document.getElementById('payModal').classList.add('show');
-  document.getElementById('waAfter').href=`https://wa.me/6283862776790?text=${encodeURIComponent(`Halo WafaStore saya sudah bayar\nUser:${u}\n${j} robux Rp${total}\n${qr}`)}`;
+  
+  // INI YANG BARU - WA GAK ADA CODE ANEH LAGI
+  let waMsg=`Halo WafaStore saya sudah bayar\n\nORDER ID: ${orderId}\nUser: ${u}\nJumlah: ${j} robux\nTotal Transfer: Rp${total.toLocaleString('id-ID')} (UNIK!)\nMetode: DANA/GOPAY/SEABANK/QRIS\n\nSaya sudah transfer sesuai nominal unik ya kak, tolong dicek.`;
+  document.getElementById('waAfter').href=`https://wa.me/6283862776790?text=${encodeURIComponent(waMsg)}`;
+  
+  // Simpan ke localStorage biar lu bisa cek di admin
+  let logs=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
+  logs.unshift({orderId,u,j,total,time:new Date().toLocaleString()});
+  localStorage.setItem('wafa_orders',JSON.stringify(logs));
 }
 function closePay(){document.getElementById('payModal').classList.remove('show')}
 render();calc();
