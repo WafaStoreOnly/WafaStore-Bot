@@ -80,8 +80,6 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 <div class="total-box" id="tRbx">Total: 0 robux = Rp0</div>
 <div style="font-weight:800;font-size:13px;margin:18px 0 10px">Pilih Paket Via Username - 160/robux (diskon dari 180)</div>
 <div class="grid-robux" id="gridUsername"></div>
-
-<!-- SYARAT VIA USERNAME UPDATE TAMBAH NO 5 -->
 <div style="background:#121631;border:1px solid #232a5a;border-radius:12px;padding:12px;margin-top:16px;font-size:11px;line-height:1.7">
 <b style="color:#00ff88">syarat dan ketentuan robux via username✅</b><br>
 1. pastikan username benar (kesalahan memasukan username diluar tanggung jawab kami<br>
@@ -108,7 +106,23 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 </div>
 </div>
 
-<div id="m-gift" style="display:none"><div style="margin-top:20px;text-align:center;color:#8d94b8;font-size:12px">Gift In Game akan gua tambahin next</div></div>
+<div id="m-gift" style="display:none">
+<div class="input-group"><label>Username Roblox:</label><input id="uRbx3" placeholder="SANTRI_PRIDE"></div>
+<div class="input-group"><label>Nama Item yang mau di Gift:</label><input id="giftItem" placeholder="Contoh: VIP"></div>
+<div class="input-group"><label>Jumlah Robux yang dibutuhkan Item (contoh VIP Fish It 445):</label><input id="cGift" type="number" placeholder="Contoh: 445" oninput="calcGift()"></div>
+<div class="total-box" id="tGift">Total: 0 robux x Rp95 = Rp0<br>Item: -</div>
+<div class="input-group"><label>Link Private Server:</label><input id="psLink" placeholder="https://www.roblox.com/games/..."></div>
+<div style="font-size:10px;color:#8d94b8;margin-top:6px">*Kalkulator otomatis 1 robux = 95 perak. Contoh 445 robux = Rp42.275</div>
+
+<!-- UPDATE SYARAT VIA GIFT SESUAI REQUEST TERBARU -->
+<div style="background:#121631;border:1px solid #232a5a;border-radius:12px;padding:12px;margin-top:16px;font-size:11px;line-height:1.7">
+<b style="color:#00e5ff">syarat dan ketentuan via gift in game✅</b><br>
+1. pastikan username benar (kesalahan memasukan username diluar tanggung jawab kami)<br>
+2. pastikan ketika order selalu stand by di server<br>
+3. item akan diterima ± 10 menit setelah pembelian
+</div>
+</div>
+
 </div>
 
 <div class="bottom">
@@ -145,6 +159,13 @@ function calcGamepass(){
  let total=j*140;let setGamepass=Math.ceil(j/0.7);
  document.getElementById('tRbx2').innerHTML=`Total: ${j} robux = Rp${total.toLocaleString('id-ID')}<br>Setting Gamepass: ${setGamepass} robux`;
 }
+function calcGift(){
+ let j=parseInt(document.getElementById('cGift').value)||0;
+ let item=document.getElementById('giftItem').value||'-';
+ let total=j*95;
+ document.getElementById('tGift').innerHTML=`Total: ${j} robux x Rp95 = Rp${total.toLocaleString('id-ID')}<br>Item: ${item}`;
+}
+document.getElementById('giftItem').addEventListener('input',calcGift);
 function openRoblox(){document.getElementById('homePage').style.display='none';document.getElementById('robloxPage').style.display='block';renderUsername();renderGamepass()}
 function goHome(){document.getElementById('homePage').style.display='block';document.getElementById('robloxPage').style.display='none'}
 function switchMethod(m,el){
