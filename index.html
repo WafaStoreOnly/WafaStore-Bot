@@ -24,8 +24,7 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .card-game .name{padding:8px 0 10px;font-size:11px;font-weight:600}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(8,12,37,0.97);backdrop-filter:blur(10px);border-top:1px solid #1e2450;display:flex;justify-content:space-around;padding:8px 0 10px;z-index:100}
 .nav{font-size:9px;color:#5a638a;text-align:center;flex:1;cursor:pointer}.nav.active{color:#00d4ff}
-#robloxPage{display:none}
-#paymentPage{display:none}
+#robloxPage{display:none}#paymentPage{display:none}#pesananPage{display:none}
 .method-tabs{display:flex;gap:8px;margin-top:16px;overflow-x:auto}
 .tab{padding:8px 16px;border-radius:20px;font-size:11px;font-weight:800;border:1px solid #2a3366;background:#141936;white-space:nowrap;cursor:pointer}
 .tab.active{background:linear-gradient(90deg,#00c6ff,#7c3aed);border-color:#00d4ff;box-shadow:0 0 15px #00e5ff80}
@@ -33,26 +32,31 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;background:#131740;color:#fff;outline:none}
 .total-box{background:#131740;border:1px dashed #00d4ff;padding:12px;border-radius:10px;text-align:center;margin-top:12px;font-weight:800;font-size:13px;line-height:1.5}
 .grid-robux{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.item{background:#141936;border:1px solid #2a3366;border-radius:14px;padding:14px;text-align:center;cursor:pointer}
 .btn-pay{position:fixed;bottom:54px;left:14px;right:14px;padding:15px;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;border:none;border-radius:14px;font-weight:900;z-index:90;box-shadow:0 0 25px #7c3aed80}
 .pay-card{background:#121631;border:1px solid #232a5a;border-radius:14px;padding:14px;margin-top:12px;display:flex;gap:12px;align-items:center}
 .pay-card img.logo-pay{width:48px;height:48px;border-radius:10px;background:#fff;object-fit:contain;padding:4px}
+.order-card{background:#121631;border:1px solid #2a3a8a;border-radius:14px;padding:14px;margin-top:12px}
+.badge{padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800}.badge-pending{background:#ffcc00;color:#000}
+/* LAYANAN WAFASTOREONLY WIDGET */
+#layananBtn{position:fixed;bottom:110px;right:14px;width:56px;height:56px;background:linear-gradient(135deg,#00e5ff,#7c3aed);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;z-index:200;box-shadow:0 0 25px #00e5ff80;border:2px solid #fff}
+#layananBox{position:fixed;bottom:175px;right:14px;width:320px;max-width:90vw;height:420px;background:rgba(12,16,45,0.98);border:2px solid #00e5ff40;border-radius:18px;display:none;flex-direction:column;z-index:201;overflow:hidden;backdrop-filter:blur(12px)}
+#layananHeader{background:linear-gradient(90deg,#00c6ff,#7c3aed);padding:12px 14px;display:flex;justify-content:space-between;align-items:center}
+#layananChat{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:80%;padding:10px 12px;border-radius:12px;font-size:12px;line-height:1.5}
+.msg.bot{background:#1a1f4a;border:1px solid #2a3366;align-self:flex-start}
+.msg.user{background:linear-gradient(90deg,#00c6ff,#7c3aed);align-self:flex-end}
+#layananInput{display:flex;gap:6px;padding:10px;border-top:1px solid #1e2450;background:#0c102d}
+#layananInput input{flex:1;padding:10px;border-radius:20px;font-size:12px}
+#layananInput button{padding:10px 14px;border-radius:20px;border:none;background:#00e5ff;color:#000;font-weight:800}
+.quick{padding:6px 10px;border-radius:16px;background:#141936;border:1px solid #2a3366;font-size:10px;cursor:pointer;display:inline-block;margin:2px}
 </style>
 </head>
 <body>
-<div class="header">
-<div class="logo"><img src="./logo.png" style="width:36px;height:36px;border-radius:50%;border:2px solid #00e5ff"><span>WafaStoreOnly</span></div>
-<div style="display:flex;gap:12px;font-size:18px">⚡ 🔔 👤</div>
-</div>
+<div class="header"><div class="logo"><img src="./logo.png" style="width:36px;height:36px;border-radius:50%;border:2px solid #00e5ff"><span>WafaStoreOnly</span></div><div style="display:flex;gap:12px;font-size:18px">⚡ 🔔 👤</div></div>
 
 <div id="homePage">
-<div class="banner">
-<h1>TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1>
-<p>⚡ Killua Edition • Top Up Game Instan • Aman • 24/7 • Godspeed Delivery • AWA_NEWSTREAM</p>
-<button class="btn-mulai" onclick="openRoblox()">⚡ Mulai Top Up Sekarang</button>
-</div>
-<div class="section">
-<div style="display:flex;justify-content:space-between"><h2 style="font-size:16px;font-weight:800">Pilih Game Populer</h2><span style="color:#00d4ff;font-size:12px">Killua ON ⚡</span></div>
+<div class="banner"><h1>TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1><p>⚡ Killua Edition • Top Up Game Instan • Aman • 24/7 • Godspeed Delivery • AWA_NEWSTREAM</p><button class="btn-mulai" onclick="openRoblox()">⚡ Mulai Top Up Sekarang</button></div>
+<div class="section"><div style="display:flex;justify-content:space-between"><h2 style="font-size:16px;font-weight:800">Pilih Game Populer</h2><span style="color:#00d4ff;font-size:12px">Killua ON ⚡</span></div>
 <div class="grid-game">
 <div class="card-game" onclick="openRoblox()"><span class="off">-10% OFF</span><img src="https://tr.rbxcdn.com/38c6edcb50633730ff4cf39ac885deea/512/512/Image/Png"><div class="name">Roblox</div></div>
 <div class="card-game"><span class="off">-10% OFF</span><img src="https://cdn.mobygames.com/covers/12651856-mobile-legends-bang-bang-android-front-cover.jpg"><div class="name">Mobile Legends</div></div>
@@ -60,83 +64,46 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 <div class="card-game"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe1F8Z5o7k9m0qJ5b9v8q0v9"><div class="name">Valorant</div></div>
 <div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/freefire.png"><div class="name">Free Fire</div></div>
 <div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/genshin-impact.png"><div class="name">Genshin Impact</div></div>
-</div>
-</div>
-</div>
+</div></div></div>
 
 <div id="robloxPage" class="section">
-<div style="color:#00d4ff;font-size:12px;margin-bottom:10px;cursor:pointer" onclick="goHome()">← Kembali</div>
-<div style="font-weight:800;font-size:16px">Roblox - Top Up Robux ⚡ Killua</div>
-<div class="method-tabs">
-<div class="tab active" onclick="switchMethod('username',this)">Via Username</div>
-<div class="tab" onclick="switchMethod('gamepass',this)">Via Gamepass</div>
-<div class="tab" onclick="switchMethod('gift',this)">Gift In Game</div>
-</div>
-<div id="m-username">
-<div class="input-group"><label>Username Roblox:</label><input id="uRbx" placeholder="SANTRI_PRIDE"></div>
-<div class="input-group"><label>Mau Berapa robux? (kalkulator otomatis 160/robux)</label><input id="cRbx" type="number" placeholder="Contoh: 10000" oninput="calcUsername()"></div>
-<div class="total-box" id="tRbx">Total: 0 robux = Rp0</div>
-<div style="font-weight:800;font-size:13px;margin:18px 0 10px">Pilih Paket Via Username - 160/robux (diskon dari 180)</div>
-<div class="grid-robux" id="gridUsername"></div>
-<div style="background:#121631;border:1px solid #232a5a;border-radius:12px;padding:12px;margin-top:16px;font-size:11px;line-height:1.7"><b style="color:#00ff88">syarat dan ketentuan robux via username✅</b><br>1. pastikan username benar (kesalahan memasukan username diluar tanggung jawab kami<br>2. pastikan akun tidak limit (bisa di cek di akun masing²)<br>3. pastikan v2f (verifikasi 2 langkah) on<br>4. pastikan akun sudah 18+ (jika dibawah umur bisa menggunakan akun parent/orang tua)<br>5. robux akan di terima ± 5-10 menit setelah pembelian</div>
-</div>
-<div id="m-gamepass" style="display:none">
-<div class="input-group"><label>Username Roblox:</label><input id="uRbx2" placeholder="SANTRI_PRIDE"></div>
-<div class="input-group"><label>Mau Berapa robux? (otomatis 140/robux)</label><input id="cRbx2" type="number" placeholder="Contoh: 1000" oninput="calcGamepass()"></div>
-<div class="total-box" id="tRbx2">Total: 0 robux = Rp0<br>Setting Gamepass: 0 robux</div>
-<div style="font-weight:800;font-size:13px;margin:18px 0 10px">Pilih Paket Via Gamepass - 140/robux (diskon dari 155)</div>
-<div class="grid-robux" id="gridGamepass"></div>
-<div style="background:#121631;border:1px solid #232a5a;border-radius:12px;padding:12px;margin-top:16px;font-size:11px;line-height:1.7"><b style="color:#ffcc00">syarat dan ketentuan robux via gamepass✅</b><br>1. pastikan username benar (kesalahan memasukan username diluar tanggung jawab kami)<br>2. pastikan gamepass sudah dibuat sesuai dengan jumlah robux yang di beli<br>3. pastikan link/server gamepass nya public<br>4. robux akan di terima ± 5-7 hari setelah pembelian</div>
-</div>
-<div id="m-gift" style="display:none">
-<div class="input-group"><label>Username Roblox:</label><input id="uRbx3" placeholder="SANTRI_PRIDE"></div>
-<div class="input-group"><label>Nama Item yang mau di Gift:</label><input id="giftItem" placeholder="Contoh: VIP"></div>
-<div class="input-group"><label>Jumlah Robux yang dibutuhkan Item (contoh VIP Fish It 445):</label><input id="cGift" type="number" placeholder="Contoh: 445" oninput="calcGift()"></div>
-<div class="total-box" id="tGift">Total: 0 robux x Rp95 = Rp0<br>Item: -</div>
-<div class="input-group"><label>Link Private Server:</label><input id="psLink" placeholder="https://www.roblox.com/games/..."></div>
-<div style="background:#121631;border:1px solid #232a5a;border-radius:12px;padding:12px;margin-top:16px;font-size:11px;line-height:1.7"><b style="color:#00e5ff">syarat dan ketentuan via gift in game✅</b><br>1. pastikan username benar (kesalahan memasukan username diluar tanggung jawab kami)<br>2. pastikan ketika order selalu stand by di server<br>3. item akan diterima ± 10 menit setelah pembelian</div>
-</div>
+<div style="color:#00d4ff;font-size:12px;margin-bottom:10px;cursor:pointer" onclick="goHome()">← Kembali</div><div style="font-weight:800;font-size:16px">Roblox - Top Up Robux ⚡ Killua</div>
+<div class="method-tabs"><div class="tab active" onclick="switchMethod('username',this)">Via Username</div><div class="tab" onclick="switchMethod('gamepass',this)">Via Gamepass</div><div class="tab" onclick="switchMethod('gift',this)">Gift In Game</div></div>
+<div id="m-username"><div class="input-group"><label>Username Roblox:</label><input id="uRbx" placeholder="SANTRI_PRIDE"></div><div class="input-group"><label>Mau Berapa robux? (160/robux)</label><input id="cRbx" type="number" placeholder="Contoh: 10000" oninput="calcUsername()"></div><div class="total-box" id="tRbx">Total: 0 robux = Rp0</div><div style="font-weight:800;font-size:13px;margin:18px 0 10px">Pilih Paket Via Username - 160/robux (diskon dari 180)</div><div class="grid-robux" id="gridUsername"></div><div style="background:#121631;border:1px solid #232a5a;border-radius:12px;padding:12px;margin-top:16px;font-size:11px;line-height:1.7"><b style="color:#00ff88">syarat dan ketentuan robux via username✅</b><br>1. pastikan username benar (kesalahan memasukan username diluar tanggung jawab kami<br>2. pastikan akun tidak limit (bisa di cek di akun masing²)<br>3. pastikan v2f (verifikasi 2 langkah) on<br>4. pastikan akun sudah 18+ (jika dibawah umur bisa menggunakan akun parent/orang tua)<br>5. robux akan di terima ± 5-10 menit setelah pembelian</div></div>
+<div id="m-gamepass" style="display:none"><div class="input-group"><label>Username Roblox:</label><input id="uRbx2" placeholder="SANTRI_PRIDE"></div><div class="input-group"><label>Mau Berapa robux? (140/robux)</label><input id="cRbx2" type="number" placeholder="Contoh: 1000" oninput="calcGamepass()"></div><div class="total-box" id="tRbx2">Total: 0 robux = Rp0<br>Setting Gamepass: 0 robux</div><div style="font-weight:800;font-size:13px;margin:18px 0 10px">Pilih Paket Via Gamepass - 140/robux (diskon dari 155)</div><div class="grid-robux" id="gridGamepass"></div><div style="background:#121631;border:1px solid #232a5a;border-radius:12px;padding:12px;margin-top:16px;font-size:11px;line-height:1.7"><b style="color:#ffcc00">syarat dan ketentuan robux via gamepass✅</b><br>1. pastikan username benar<br>2. pastikan gamepass sudah dibuat sesuai dengan jumlah robux yang di beli<br>3. pastikan link/server gamepass nya public<br>4. robux akan di terima ± 5-7 hari setelah pembelian</div></div>
+<div id="m-gift" style="display:none"><div class="input-group"><label>Username Roblox:</label><input id="uRbx3" placeholder="SANTRI_PRIDE"></div><div class="input-group"><label>Nama Item yang mau di Gift:</label><input id="giftItem" placeholder="Contoh: VIP"></div><div class="input-group"><label>Jumlah Robux yang dibutuhkan Item:</label><input id="cGift" type="number" placeholder="Contoh: 445" oninput="calcGift()"></div><div class="total-box" id="tGift">Total: 0 robux x Rp95 = Rp0<br>Item: -</div><div class="input-group"><label>Link Private Server:</label><input id="psLink" placeholder="https://www.roblox.com/games/..."></div><div style="background:#121631;border:1px solid #232a5a;border-radius:12px;padding:12px;margin-top:16px;font-size:11px;line-height:1.7"><b style="color:#00e5ff">syarat dan ketentuan via gift in game✅</b><br>1. pastikan username benar<br>2. pastikan ketika order selalu stand by di server<br>3. item akan diterima ± 10 menit setelah pembelian</div></div>
 </div>
 
 <div id="paymentPage" class="section">
-<div style="color:#00d4ff;font-size:12px;margin-bottom:10px;cursor:pointer" onclick="backToRoblox()">← Kembali ke Pesanan</div>
-<div style="font-weight:900;font-size:20px">Cara Pembayaran ⚡ Killua</div>
+<div style="color:#00d4ff;font-size:12px;margin-bottom:10px;cursor:pointer" onclick="backToRoblox()">← Kembali ke Pesanan</div><div style="font-weight:900;font-size:20px">Cara Pembayaran ⚡ Killua</div>
 <div style="background:#121631;border:1px dashed #00d4ff;border-radius:12px;padding:14px;margin-top:14px;font-size:12px;line-height:1.8" id="orderSummary">Ringkasan belum ada</div>
-<div style="margin-top:18px;font-weight:800;font-size:14px">Jumlah Yang Wajib Dibayar</div>
-<div style="background:linear-gradient(135deg,#1a1f6b,#2a1a6b);border:2px solid #00d4ff;border-radius:12px;padding:14px;margin-top:8px;text-align:center;font-size:24px;font-weight:900;color:#00ff88;box-shadow:0 0 20px #00d4ff60" id="wajibBayar">Rp0</div>
-
+<div style="margin-top:18px;font-weight:800;font-size:14px">Jumlah Yang Wajib Dibayar</div><div style="background:linear-gradient(135deg,#1a1f6b,#2a1a6b);border:2px solid #00d4ff;border-radius:12px;padding:14px;margin-top:8px;text-align:center;font-size:24px;font-weight:900;color:#00ff88;box-shadow:0 0 20px #00d4ff60" id="wajibBayar">Rp0</div>
 <div style="margin-top:18px;font-weight:800;font-size:14px">Metode Pembayaran</div>
-
-<div class="pay-card">
-<img class="logo-pay" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_DANA.png/500px-Logo_DANA.png">
-<div style="flex:1"><div style="font-size:13px;font-weight:800">DANA</div><div style="font-size:12px">083862776790</div><div style="font-size:10px;color:#aab0d0">A/N Abi Wafa Ali</div></div>
-<button onclick="copyText('083862776790')" style="padding:8px 12px;border-radius:8px;border:none;background:#118EEA;color:#fff;font-weight:800;font-size:11px">Salin</button>
+<div class="pay-card"><img class="logo-pay" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_DANA.png/500px-Logo_DANA.png"><div style="flex:1"><div style="font-size:13px;font-weight:800">DANA</div><div style="font-size:12px">083862776790</div><div style="font-size:10px;color:#aab0d0">A/N Abi Wafa Ali</div></div><button onclick="copyText('083862776790')" style="padding:8px 12px;border-radius:8px;border:none;background:#118EEA;color:#fff;font-weight:800;font-size:11px">Salin</button></div>
+<div class="pay-card"><img class="logo-pay" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/512px-Gopay_logo.svg.png"><div style="flex:1"><div style="font-size:13px;font-weight:800">GOPAY</div><div style="font-size:12px">083862776790</div><div style="font-size:10px;color:#aab0d0">A/N Abi Wafa Ali</div></div><button onclick="copyText('083862776790')" style="padding:8px 12px;border-radius:8px;border:none;background:#00AA13;color:#fff;font-weight:800;font-size:11px">Salin</button></div>
+<div class="pay-card"><img class="logo-pay" src="https://seeklogo.com/images/S/seabank-logo-3E0C3F868E-seeklogo.com.png"><div style="flex:1"><div style="font-size:13px;font-weight:800">SEABANK</div><div style="font-size:12px">901162765462</div><div style="font-size:10px;color:#aab0d0">A/N Abi Wafa Ali</div></div><button onclick="copyText('901162765462')" style="padding:8px 12px;border-radius:8px;border:none;background:#ffcc00;color:#000;font-weight:800;font-size:11px">Salin</button></div>
+<div style="margin-top:20px;background:rgba(18,22,49,0.95);border:2px solid #00e5ff;border-radius:16px;padding:0;overflow:hidden;text-align:center;box-shadow:0 0 30px #00e5ff40"><img src="./qris-killua-final.jpg" style="width:100%;display:block"></div>
+<div style="background:#141936;border:1px dashed #ffcc00;border-radius:12px;padding:12px;margin-top:14px;font-size:11px;line-height:1.6"><b>Penting:</b> Setelah transfer, screenshot bukti TF dan kirim ke WA Admin 083862776790</div>
 </div>
 
-<div class="pay-card">
-<img class="logo-pay" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/512px-Gopay_logo.svg.png">
-<div style="flex:1"><div style="font-size:13px;font-weight:800">GOPAY</div><div style="font-size:12px">083862776790</div><div style="font-size:10px;color:#aab0d0">A/N Abi Wafa Ali</div></div>
-<button onclick="copyText('083862776790')" style="padding:8px 12px;border-radius:8px;border:none;background:#00AA13;color:#fff;font-weight:800;font-size:11px">Salin</button>
+<div id="pesananPage" class="section">
+<div style="font-weight:900;font-size:20px">Pesanan Saya ⚡</div><p style="font-size:11px;color:#aab0d0;margin-top:4px">Riwayat orderan kamu otomatis masuk sini & ke Layanan WafaStoreOnly</p>
+<div id="listPesanan" style="margin-top:16px"></div>
+<div id="emptyPesanan" style="text-align:center;margin-top:40px;color:#5a638a"><div style="font-size:40px">📦</div><div style="font-size:13px;margin-top:8px">Belum ada pesanan</div><div style="font-size:11px">Orderan bakal muncul di sini setelah klik Bayar</div></div>
 </div>
 
-<div class="pay-card">
-<img class="logo-pay" src="https://seeklogo.com/images/S/seabank-logo-3E0C3F868E-seeklogo.com.png">
-<div style="flex:1"><div style="font-size:13px;font-weight:800">SEABANK</div><div style="font-size:12px">901162765462</div><div style="font-size:10px;color:#aab0d0">A/N Abi Wafa Ali</div></div>
-<button onclick="copyText('901162765462')" style="padding:8px 12px;border-radius:8px;border:none;background:#ffcc00;color:#000;font-weight:800;font-size:11px">Salin</button>
+<!-- LAYANAN WAFASTOREONLY WIDGET -->
+<div id="layananBtn" onclick="toggleLayanan()">💬</div>
+<div id="layananBox">
+<div id="layananHeader"><div><b style="font-size:13px">Layanan WafaStoreOnly ⚡</b><div style="font-size:10px;opacity:0.8">Killua Edition • Online 24/7</div></div><div style="cursor:pointer" onclick="toggleLayanan()">✕</div></div>
+<div id="layananChat">
+<div class="msg bot">Halo! Saya Layanan WafaStoreOnly ⚡<br>Mau top up berapa robux hari ini?<br><br>Ketik: <b>cara beli</b>, <b>harga</b>, <b>syarat</b>, <b>pesanan saya</b></div>
+<div style="margin-top:6px"><span class="quick" onclick="quickChat('cara beli')">Cara Beli</span><span class="quick" onclick="quickChat('harga')">Harga Robux</span><span class="quick" onclick="quickChat('syarat')">Syarat</span><span class="quick" onclick="quickChat('pesanan saya')">Pesanan Saya</span></div>
+</div>
+<div id="layananInput"><input id="layananText" placeholder="Ketik pesan..." onkeypress="if(event.key==='Enter')sendLayanan()"><button onclick="sendLayanan()">➤</button></div>
 </div>
 
-<div style="margin-top:20px;background:rgba(18,22,49,0.95);border:2px solid #00e5ff;border-radius:16px;padding:0;overflow:hidden;text-align:center;box-shadow:0 0 30px #00e5ff40">
-<img src="./qris-killua-final.jpg" style="width:100%;display:block">
-</div>
-
-<div style="background:#141936;border:1px dashed #ffcc00;border-radius:12px;padding:12px;margin-top:14px;font-size:11px;line-height:1.6">
-<b>Penting:</b> Setelah transfer, screenshot bukti TF dan kirim ke WA Admin 083862776790 dengan format Username + Jumlah Robux + Via
-</div>
-</div>
-
-<div class="bottom">
-<div class="nav active">🏠<br>Beranda</div><div class="nav">⚡<br>Top Up</div><div class="nav">☰<br>Pesanan</div><div class="nav">👛<br>Dompet</div><div class="nav">👤<br>Profil</div>
-</div>
+<div class="bottom"><div class="nav active" id="navHome" onclick="goHome()">🏠<br>Beranda</div><div class="nav" onclick="openRoblox()">⚡<br>Top Up</div><div class="nav" id="navPesanan" onclick="openPesanan()">☰<br>Pesanan</div><div class="nav">👛<br>Dompet</div><div class="nav">👤<br>Profil</div></div>
 <button class="btn-pay" id="btnPay" onclick="goToPayment()">LANJUT PEMBAYARAN</button>
 
 <script>
@@ -149,37 +116,40 @@ function renderGamepass(){let g=document.getElementById('gridGamepass');g.innerH
 function calcGamepass(){let j=parseInt(document.getElementById('cRbx2').value)||0;let tot=j*140;let set=Math.ceil(j/0.7);document.getElementById('tRbx2').innerHTML=`Total: ${j} robux = Rp${tot.toLocaleString('id-ID')}<br>Setting Gamepass: ${set} robux`;}
 function calcGift(){let j=parseInt(document.getElementById('cGift').value)||0;let it=document.getElementById('giftItem').value||'-';let tot=j*95;document.getElementById('tGift').innerHTML=`Total: ${j} robux x Rp95 = Rp${tot.toLocaleString('id-ID')}<br>Item: ${it}`;}
 document.getElementById('giftItem')?.addEventListener('input',calcGift);
-function openRoblox(){document.getElementById('homePage').style.display='none';document.getElementById('robloxPage').style.display='block';document.getElementById('paymentPage').style.display='none';document.getElementById('btnPay').innerText='LANJUT PEMBAYARAN';document.getElementById('btnPay').onclick=goToPayment;renderUsername();renderGamepass()}
-function goHome(){document.getElementById('homePage').style.display='block';document.getElementById('robloxPage').style.display='none';document.getElementById('paymentPage').style.display='none';}
-function backToRoblox(){document.getElementById('paymentPage').style.display='none';document.getElementById('robloxPage').style.display='block';document.getElementById('btnPay').innerText='LANJUT PEMBAYARAN';document.getElementById('btnPay').onclick=goToPayment;}
+function openRoblox(){hideAll();document.getElementById('robloxPage').style.display='block';document.getElementById('btnPay').style.display='block';document.getElementById('btnPay').innerText='LANJUT PEMBAYARAN';document.getElementById('btnPay').onclick=goToPayment;renderUsername();renderGamepass();setActive('topup')}
+function goHome(){hideAll();document.getElementById('homePage').style.display='block';document.getElementById('btnPay').style.display='none';setActive('home')}
+function backToRoblox(){hideAll();document.getElementById('robloxPage').style.display='block';document.getElementById('btnPay').style.display='block';document.getElementById('btnPay').innerText='LANJUT PEMBAYARAN';document.getElementById('btnPay').onclick=goToPayment;}
+function hideAll(){document.getElementById('homePage').style.display='none';document.getElementById('robloxPage').style.display='none';document.getElementById('paymentPage').style.display='none';document.getElementById('pesananPage').style.display='none';}
+function setActive(k){document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));if(k=='home')document.getElementById('navHome').classList.add('active');if(k=='pesanan')document.getElementById('navPesanan').classList.add('active');}
 function switchMethod(m,el){currentMethod=m;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.getElementById('m-username').style.display=m=='username'?'block':'none';document.getElementById('m-gamepass').style.display=m=='gamepass'?'block':'none';document.getElementById('m-gift').style.display=m=='gift'?'block':'none';}
 function copyText(t){navigator.clipboard.writeText(t);alert('Disalin: '+t)}
+// PESANAN SYSTEM
+function saveOrder(data){let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');data.id=Date.now();data.date=new Date().toLocaleString('id-ID');data.status='pending';orders.unshift(data);localStorage.setItem('wafa_orders',JSON.stringify(orders));}
+function renderPesanan(){let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');let list=document.getElementById('listPesanan');let empty=document.getElementById('emptyPesanan');if(orders.length==0){list.innerHTML='';empty.style.display='block';return;}empty.style.display='none';list.innerHTML='';orders.forEach(o=>{let d=document.createElement('div');d.className='order-card';d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)} - ${o.method.toUpperCase()}</b><span class="badge badge-pending">Menunggu</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date}</div><div style="font-size:12px;margin-top:10px;line-height:1.6">Username: <b>${o.username}</b><br>Jumlah: <b>${o.jumlah} Robux</b><br>Total: <b style="color:#00ff88">Rp${o.total.toLocaleString('id-ID')}</b>${o.item?'<br>Item: '+o.item:''}${o.setting?'<br>Setting GP: '+o.setting+' Robux':''}</div><div style="display:flex;gap:8px;margin-top:12px"><button onclick="chatOrder(${o.id})" style="flex:1;padding:10px;border-radius:10px;border:none;background:#00AA13;color:#fff;font-weight:800;font-size:12px">💬 Chat Admin</button><button onclick="hapusOrder(${o.id})" style="padding:10px 14px;border-radius:10px;border:1px solid #ff4444;background:transparent;color:#ff4444;font-weight:800;font-size:12px">Hapus</button></div>`;list.appendChild(d);});}
+function openPesanan(){hideAll();document.getElementById('pesananPage').style.display='block';document.getElementById('btnPay').style.display='none';setActive('pesanan');renderPesanan();}
+function chatOrder(id){let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');let o=orders.find(x=>x.id==id);if(!o)return;let text=`Halo Admin WafaStoreOnly, saya mau konfirmasi pesanan%0AID: ${o.id}%0AMethod: ${o.method}%0AUsername: ${o.username}%0AJumlah: ${o.jumlah} Robux%0ATotal: Rp${o.total.toLocaleString('id-ID')}%0A${o.item?'Item: '+o.item+'%0A':''}Tanggal: ${o.date}`;window.open(`https://wa.me/6283862776790?text=${text}`,'_blank');}
+function hapusOrder(id){if(!confirm('Hapus pesanan ini?'))return;let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');orders=orders.filter(x=>x.id!=id);localStorage.setItem('wafa_orders',JSON.stringify(orders));renderPesanan();}
 function goToPayment(){
- let summary='';let total=0;
- if(currentMethod=='username'){
-  let u=document.getElementById('uRbx').value||'-';let j=parseInt(document.getElementById('cRbx').value)||0;total=j*160;
-  if(!j){alert('Isi jumlah robux dulu bos');return;}
-  summary=`<b>RINGKASAN ORDER</b><br>Via: Username (160/robux)<br>Username: <b>${u}</b><br>Jumlah: <b>${j} Robux</b><br>Total Harga: <b>Rp${total.toLocaleString('id-ID')}</b>`;
- }else if(currentMethod=='gamepass'){
-  let u=document.getElementById('uRbx2').value||'-';let j=parseInt(document.getElementById('cRbx2').value)||0;total=j*140;let set=Math.ceil(j/0.7);
-  if(!j){alert('Isi jumlah robux dulu bos');return;}
-  summary=`<b>RINGKASAN ORDER</b><br>Via: Gamepass (140/robux)<br>Username: <b>${u}</b><br>Jumlah: <b>${j} Robux</b><br>Setting Gamepass: <b>${set} Robux</b><br>Total Harga: <b>Rp${total.toLocaleString('id-ID')}</b>`;
- }else{
-  let u=document.getElementById('uRbx3').value||'-';let it=document.getElementById('giftItem').value||'-';let j=parseInt(document.getElementById('cGift').value)||0;total=j*95;let link=document.getElementById('psLink').value||'-';
-  if(!j){alert('Isi jumlah robux gift dulu bos');return;}
-  summary=`<b>RINGKASAN ORDER</b><br>Via: Gift In Game (95/robux)<br>Username: <b>${u}</b><br>Item: <b>${it}</b><br>Robux Item: <b>${j} Robux</b><br>Total Harga: <b>Rp${total.toLocaleString('id-ID')}</b>`;
- }
- document.getElementById('orderSummary').innerHTML=summary;
- document.getElementById('wajibBayar').innerText=`Rp${total.toLocaleString('id-ID')}`;
- document.getElementById('robloxPage').style.display='none';
- document.getElementById('paymentPage').style.display='block';
- document.getElementById('btnPay').innerText='BAYAR SEKARANG';
+ let summary='',total=0,u,j,it,set,link;
+ if(currentMethod=='username'){u=document.getElementById('uRbx').value||'-';j=parseInt(document.getElementById('cRbx').value)||0;total=j*160;if(!j){alert('Isi jumlah robux dulu bos');return;}summary=`<b>RINGKASAN ORDER</b><br>Via: Username (160/robux)<br>Username: <b>${u}</b><br>Jumlah: <b>${j} Robux</b><br>Total Harga: <b>Rp${total.toLocaleString('id-ID')}</b>`;}
+ else if(currentMethod=='gamepass'){u=document.getElementById('uRbx2').value||'-';j=parseInt(document.getElementById('cRbx2').value)||0;total=j*140;set=Math.ceil(j/0.7);if(!j){alert('Isi jumlah robux dulu bos');return;}summary=`<b>RINGKASAN ORDER</b><br>Via: Gamepass (140/robux)<br>Username: <b>${u}</b><br>Jumlah: <b>${j} Robux</b><br>Setting Gamepass: <b>${set} Robux</b><br>Total Harga: <b>Rp${total.toLocaleString('id-ID')}</b>`;}
+ else{u=document.getElementById('uRbx3').value||'-';it=document.getElementById('giftItem').value||'-';j=parseInt(document.getElementById('cGift').value)||0;total=j*95;link=document.getElementById('psLink').value||'-';if(!j){alert('Isi jumlah robux gift dulu bos');return;}summary=`<b>RINGKASAN ORDER</b><br>Via: Gift In Game (95/robux)<br>Username: <b>${u}</b><br>Item: <b>${it}</b><br>Robux Item: <b>${j} Robux</b><br>Total Harga: <b>Rp${total.toLocaleString('id-ID')}</b>`;}
+ document.getElementById('orderSummary').innerHTML=summary;document.getElementById('wajibBayar').innerText=`Rp${total.toLocaleString('id-ID')}`;hideAll();document.getElementById('paymentPage').style.display='block';document.getElementById('btnPay').style.display='block';document.getElementById('btnPay').innerText='BAYAR SEKARANG';
  document.getElementById('btnPay').onclick=()=>{
+  let data={username:u,method:currentMethod,jumlah:j,total:total,item:it||'',setting:set||''};
+  saveOrder(data);
   let waText=`Halo Admin WafaStoreOnly, saya mau konfirmasi pembayaran%0A${summary.replace(/<[^>]*>/g,' ')}%0AWajib Bayar: Rp${total.toLocaleString('id-ID')}`;
   window.open(`https://wa.me/6283862776790?text=${waText}`,'_blank');
+  setTimeout(()=>{openPesanan();addBotMsg(`Yosh! Pesanan kamu #${data.id.toString().slice(-6)} udah masuk ke Pesanan ⚡\nUsername: ${u}\n${j} Robux = Rp${total.toLocaleString('id-ID')}\n\nSilakan transfer & chat admin ya!`);},800);
  };
  window.scrollTo(0,0);
 }
+// LAYANAN WAFASTOREONLY LOGIC
+function toggleLayanan(){let b=document.getElementById('layananBox');b.style.display=b.style.display=='flex'?'none':'flex';b.style.flexDirection='column';}
+function quickChat(t){document.getElementById('layananText').value=t;sendLayanan();}
+function addBotMsg(txt){let c=document.getElementById('layananChat');let d=document.createElement('div');d.className='msg bot';d.innerText=txt;c.appendChild(d);c.scrollTop=c.scrollHeight;}
+function addUserMsg(txt){let c=document.getElementById('layananChat');let d=document.createElement('div');d.className='msg user';d.innerText=txt;c.appendChild(d);c.scrollTop=c.scrollHeight;}
+function sendLayanan(){let inp=document.getElementById('layananText');let t=inp.value.trim().toLowerCase();if(!t)return;addUserMsg(inp.value);inp.value='';setTimeout(()=>{let res='';if(t.includes('cara beli')||t.includes('gimana beli'))res='Cara beli gampang bos:\n1. Pilih Roblox di halaman utama\n2. Pilih Via Username / Gamepass / Gift\n3. Isi username & jumlah robux\n4. Klik Lanjut Pembayaran\n5. Transfer ke DANA/GOPAY/SEABANK/QRIS\n6. Pesanan otomatis masuk ke tab Pesanan ⚡';else if(t.includes('harga'))res='Harga Robux Killua Edition:\n• Via Username: Rp160/robux (diskon dari 180)\n• Via Gamepass: Rp140/robux (diskon dari 155) + setting 70%\n• Via Gift: Rp95/robux (paling murah!)\n\nContoh: 1000 robux via username = Rp160.000';else if(t.includes('syarat'))res='Syarat & Ketentuan:\n\nVia Username:\n- Username bener\n- Akun tidak limit\n- V2F ON\n- Akun 18+ / pake akun ortu\n- Masuk 5-10 menit\n\nVia Gamepass:\n- Gamepass sesuai jumlah\n- Public\n- 5-7 hari\n\nVia Gift:\n- Standby di private server\n- 10 menit masuk';else if(t.includes('pesanan')){let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');if(orders.length==0)res='Kamu belum ada pesanan bos. Yuk top up dulu! Klik Top Up di bawah.';else{let o=orders[0];res=`Pesanan terakhir kamu:\n#${o.id.toString().slice(-6)}\n${o.username} - ${o.jumlah} Robux = Rp${o.total.toLocaleString('id-ID')}\nStatus: Menunggu Pembayaran\n\nKlik tab Pesanan buat liat semua atau Chat Admin.`; setTimeout(()=>openPesanan(),1000);} }else if(t.includes('qris')||t.includes('bayar'))res='Bisa bayar via:\n• DANA 083862776790\n• GOPAY 083862776790\n• SEABANK 901162765462\n• QRIS Killua kotak AWA_NEWSTREAM di halaman pembayaran\n\nAbis transfer screenshot & chat admin ya!';else if(t.includes('lama')||t.includes('berapa lama'))res='Estimasi masuk:\n• Via Username: 5-10 menit\n• Via Gamepass: 5-7 hari (karena pending Roblox)\n• Via Gift: 10 menit (harus standby di server)';else res='Saya Layanan WafaStoreOnly siap bantu! ⚡\n\nKetik:\n• cara beli\n• harga\n• syarat\n• pesanan saya\n• bayar / qris\n• berapa lama\n\nAtau langsung chat admin: 083862776790';addBotMsg(res);},500);}
 renderUsername();renderGamepass();
 </script>
 </body>
