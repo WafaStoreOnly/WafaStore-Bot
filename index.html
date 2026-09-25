@@ -9,46 +9,32 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
 body{background:#080c25;color:white;min-height:100vh;padding-bottom:90px}
-
-/* HEADER KAYA SS */
 .header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#080c25;position:sticky;top:0;z-index:50;border-bottom:1px solid #151a3a}
 .logo-wrap{display:flex;align-items:center;gap:10px}
-.avatar{width:44px;height:44px;border-radius:50%;background:url('https://i.imgur.com/8Km9tLL.png') center/cover #111;border:2px solid #2a3366}
+.avatar{width:44px;height:44px;border-radius:50%;background:url('logo.png') center/cover #111;border:2px solid #2a3366}
 .logo-text{font-weight:900;font-size:26px;background:linear-gradient(90deg,#00e5ff 0%,#8b5cf6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-0.5px}
 .icons{display:flex;gap:18px;font-size:20px;color:#8d94b8;align-items:center}
-
-/* BANNER NEON KAYA SS */
-.banner{position:relative;padding:28px 18px 32px;background:#080c25;overflow:hidden;border-bottom:1px solid #1e2450}
-.banner::before{content:'';position:absolute;inset:0;background: radial-gradient(80% 120% at 10% 0%, rgba(124,58,237,0.4) 0%, transparent 60%), radial-gradient(80% 80% at 90% 0%, rgba(0,212,255,0.25) 0%, transparent 50%), linear-gradient(90deg, transparent 0%, rgba(124,58,237,0.3) 50%, transparent 100%); pointer-events:none}
-.banner::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#7c3aed,#00d4ff,#7c3aed);box-shadow:0 0 15px #7c3aed}
+.banner{position:relative;padding:28px 18px 32px;background:#0a0e27;overflow:hidden;border-bottom:1px solid #1e2450}
 .banner h1{position:relative;font-family:'Bebas Neue', sans-serif;font-size:38px;line-height:0.95;letter-spacing:0.5px;font-weight:400;font-style:italic;transform:skewX(-2deg)}
 .banner p{position:relative;font-size:12px;color:#aab0d0;margin-top:12px;letter-spacing:0.2px}
-.btn-grad{position:relative;margin-top:18px;background:linear-gradient(90deg,#00c6ff,#5b4ef7);border:none;padding:12px 24px;border-radius:28px;color:white;font-weight:800;font-size:14px;box-shadow:0 8px 20px rgba(0,198,255,0.4);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
-
-/* SECTION GAME */
+.btn-grad{position:relative;margin-top:18px;background:linear-gradient(90deg,#00c6ff,#5b4ef7);border:none;padding:12px 24px;border-radius:28px;color:white;font-weight:800;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
 .section{padding:18px 14px}
 .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
 .head-left h2{font-size:18px;font-weight:800}
 .head-left .underline{width:40px;height:3px;background:#00d4ff;border-radius:10px;margin-top:6px}
 .link{color:#00d4ff;font-size:13px;font-weight:600}
-
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.card{position:relative;background:#121631;border-radius:14px;overflow:hidden;cursor:pointer;border:1px solid #3b46c4;box-shadow:0 0 12px rgba(59,70,196,0.3), inset 0 0 0 1px rgba(124,58,237,0.3);transition:.2s}
-.card:hover{transform:translateY(-2px);box-shadow:0 0 20px rgba(0,212,255,0.4)}
+.card{position:relative;background:#121631;border-radius:14px;overflow:hidden;cursor:pointer;border:1px solid #3b46c4;transition:.2s}
 .card-img{width:100%;height:90px;position:relative;overflow:hidden;background:#0e1230;display:flex;align-items:center;justify-content:center}
 .card-img img{width:100%;height:100%;object-fit:cover}
 .badge{position:absolute;top:6px;right:6px;background:linear-gradient(90deg,#6366f1,#8b5cf6);font-size:8px;padding:3px 7px;border-radius:8px;font-weight:800;z-index:3}
 .card-bottom{padding:10px 4px;background:#0f1330;text-align:center;font-size:12px;font-weight:700;border-top:1px solid #232a5a}
-
-/* PROMO */
 .promo-sec{padding:10px 14px 20px}
 .promo-title{font-size:16px;font-weight:800;margin-bottom:10px}
 .promo-card{background:linear-gradient(135deg,#6d5cff 0%, #8b5cf6 60%, #a78bfa 100%);border-radius:14px;padding:16px;position:relative;overflow:hidden}
 .promo-card h3{font-size:15px;font-weight:800}
 .promo-card p{font-size:11px;color:rgba(255,255,255,0.9);margin-top:4px}
 .btn-klaim{position:absolute;right:12px;bottom:10px;background:rgba(0,0,0,0.35);border:none;padding:6px 12px;border-radius:18px;font-size:11px;color:white;font-weight:600}
-
-/* ROBLOX PAGE - TETEP ADA HARGA CORET */
 .page{display:none;padding:16px}.page.active{display:block}
 .back{color:#00d4ff;font-size:13px;margin-bottom:12px;cursor:pointer;display:inline-flex;font-weight:600}
 .subtabs{display:flex;gap:7px;overflow-x:auto;margin-bottom:14px;padding-bottom:4px}
@@ -65,14 +51,9 @@ body{background:#080c25;color:white;min-height:100vh;padding-bottom:90px}
 .tutor{background:#121631;border:1px solid #232a5a;border-radius:14px;padding:14px;margin-top:16px}.tutor h4{font-size:12px;font-weight:800;margin-bottom:10px;color:#00d4ff}.tutor ol{font-size:11.5px;color:#c2c8e0;padding-left:18px;line-height:1.7}
 .calc-box{background:#0f1330;border:1px solid #7c3aed;border-radius:12px;padding:12px;margin-top:12px}.calc-box .res{color:#00ff88;font-weight:800;font-size:16px;margin-top:6px;text-align:center}
 .wa{display:block;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:white;text-align:center;padding:14px;border-radius:12px;font-weight:800;margin-top:16px;text-decoration:none;cursor:pointer;border:none;width:100%}
-
-/* BOTTOM NAV KAYA SS */
 .bottom{position:fixed;bottom:0;left:0;right:0;background:#080c25;border-top:1px solid #1e2450;display:flex;justify-content:space-around;padding:8px 0 10px;z-index:100;border-radius:18px 18px 0 0}
 .nav{font-size:10px;color:#5a638a;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:600;flex:1}
-.nav.active{color:#00d4ff}
-.nav i{font-style:normal;font-size:20px}
-
-/* QRIS MODAL */
+.nav.active{color:#00d4ff}.nav i{font-style:normal;font-size:20px}
 #payModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:999;align-items:center;justify-content:center;padding:20px}
 #payModal.show{display:flex}
 .modalBox{background:#141840;border:1px solid #2a3ab8;border-radius:20px;padding:20px;width:100%;max-width:380px;text-align:center}
@@ -81,10 +62,9 @@ body{background:#080c25;color:white;min-height:100vh;padding-bottom:90px}
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="logo-wrap">
-    <div class="avatar" style="background:url('https://i.ibb.co/3M9R1nQ/roblox-logo.png') center/cover"></div>
+    <div class="avatar"></div>
     <div class="logo-text">WafaStoreOnly</div>
   </div>
   <div class="icons"><span>🔍</span><span>🔔</span><span>👤</span></div>
@@ -96,30 +76,23 @@ body{background:#080c25;color:white;min-height:100vh;padding-bottom:90px}
     <p>Top Up Game Instan • Aman • 24/7 • Harga Termurah • Bonus Rewards</p>
     <button class="btn-grad" onclick="document.getElementById('games').scrollIntoView({behavior:'smooth'})">⚡ Mulai Top Up Sekarang</button>
   </div>
-
   <div class="section" id="games">
     <div class="head"><div class="head-left"><h2>Pilih Game Populer</h2><div class="underline"></div></div><span class="link">Lihat Semua ></span></div>
     <div class="grid">
-      <div class="card" onclick="openGame('roblox')"><div class="badge">-10% OFF</div><div class="card-img"><img src="https://tr.rbxcdn.com/180DAY-6f7d6b6e6b0e1e1b1c1c1c1c1c1c1c1/150/150/Image/Png" onerror="this.src='https://i.imgur.com/Qz6b7kG.png'"></div><div class="card-bottom">Roblox</div></div>
-      <div class="card"><div class="badge">-10% OFF</div><div class="card-img"><img src="https://i.imgur.com/8w6S2Jq.png"></div><div class="card-bottom">Mobile Legends</div></div>
-      <div class="card"><div class="card-img"><img src="https://i.imgur.com/L3h2jZp.png"></div><div class="card-bottom">PUBG Mobile</div></div>
-      <div class="card"><div class="card-img"><img src="https://i.imgur.com/5T1mW2o.png"></div><div class="card-bottom">Valorant</div></div>
-      <div class="card"><div class="card-img"><img src="https://i.imgur.com/9aZ5s3v.png"></div><div class="card-bottom">Free Fire</div></div>
-      <div class="card"><div class="card-img"><img src="https://i.imgur.com/3Y2v1pF.png"></div><div class="card-bottom">Genshin Impact</div></div>
+      <div class="card" onclick="openGame('roblox')"><div class="badge">-10% OFF</div><div class="card-img"><img src="logo.png"></div><div class="card-bottom">Roblox</div></div>
+      <div class="card"><div class="badge">-10% OFF</div><div class="card-img"><img src="https://cdn.mobygames.com/covers/12651856-mobile-legends-bang-bang-android-front-cover.jpg"></div><div class="card-bottom">Mobile Legends</div></div>
+      <div class="card"><div class="card-img"><img src="https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg"></div><div class="card-bottom">PUBG Mobile</div></div>
+      <div class="card"><div class="card-img"><img src="https://cdn.akamai.steamstatic.com/steam/apps/710140/header.jpg"></div><div class="card-bottom">Valorant</div></div>
+      <div class="card"><div class="card-img"><img src="https://cdn.akamai.steamstatic.com/steam/apps/219740/header.jpg"></div><div class="card-bottom">Free Fire</div></div>
+      <div class="card"><div class="card-img"><img src="https://cdn1.epicgames.com/offer/f5deacee017a4b109476933f7dd2ed7d/EGS_GenshinImpact_miHoYoLimited_S1_2560x1440-91c6cd7312cc2647c3ebccca10f30399"></div><div class="card-bottom">Genshin Impact</div></div>
     </div>
   </div>
-
   <div class="promo-sec">
     <div class="promo-title">Promo Spesial Hari Ini</div>
-    <div class="promo-card">
-      <h3>Diskon 15% Untuk Top Up Pertama!</h3>
-      <p>Pakai kode: WAFA15 • Berlaku hingga 30 Okt 2024</p>
-      <div class="btn-klaim">Klaim Sekarang →</div>
-    </div>
+    <div class="promo-card"><h3>Diskon 15% Untuk Top Up Pertama!</h3><p>Pakai kode: WAFA15 • Berlaku hingga 30 Okt 2024</p><div class="btn-klaim">Klaim Sekarang →</div></div>
   </div>
 </div>
 
-<!-- ROBLOX PAGE -->
 <div id="roblox" class="page">
   <div class="back" onclick="goHome()">← Kembali</div>
   <div style="font-weight:800;font-size:18px">Roblox - Top Up Robux</div>
@@ -134,7 +107,6 @@ body{background:#080c25;color:white;min-height:100vh;padding-bottom:90px}
   <div class="total" id="tRbx">Total: 100 robux = Rp16.000</div>
   <div class="via-title" id="viaTitle">Via Username - 16k/100 robux (diskon 18k)</div>
   <div class="grid2" id="priceGrid"></div>
-
   <div class="tutor" id="tutorUsername">
     <h4>✅ SYARAT & KETENTUAN VIA USERNAME 1-5 MENIT CAIR:</h4>
     <ol>
