@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>WafaStoreOnly</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
@@ -12,23 +12,20 @@ body{background:#080c25;color:#fff;padding-bottom:130px}
 .header{display:flex;align-items:center;gap:10px;padding:12px 16px;background:#080c25;border-bottom:1px solid #151a3a;position:sticky;top:0;z-index:20}
 .avatar{width:40px;height:40px;border-radius:50%;background:url('./logo.png') center/cover #111;border:2px solid #2a3366}
 .logo{font-weight:900;font-size:20px;background:linear-gradient(90deg,#00e5ff,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.banner{padding:24px 16px;background:linear-gradient(180deg,#0a0e27,#080c25)}
-.banner h1{font-family:'Bebas Neue';font-size:34px;line-height:.9;font-style:italic}
-.btn-topup{margin-top:14px;background:linear-gradient(90deg,#00c6ff,#5b4ef7);border:none;padding:10px 18px;border-radius:24px;color:#fff;font-weight:800;font-size:12px;cursor:pointer}
 .section{padding:16px}
-.grid-game{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-.card-game{background:#121631;border-radius:12px;overflow:hidden;border:1px solid #232a5a;text-align:center;padding-bottom:8px;cursor:pointer}
-.card-game img{width:100%;height:70px;object-fit:cover}
-.method-tabs{display:flex;gap:8px;margin-top:16px;overflow-x:auto;padding-bottom:4px}
-.method-tab{padding:8px 14px;border-radius:20px;font-size:11px;font-weight:800;border:1px solid #2a3366;background:#141936;white-space:nowrap;cursor:pointer}
+.method-tabs{display:flex;gap:8px;margin-top:16px}
+.method-tab{padding:8px 16px;border-radius:20px;font-size:11px;font-weight:800;border:1px solid #2a3366;background:#141936;cursor:pointer}
 .method-tab.active{background:linear-gradient(90deg,#00c6ff,#7c3aed);border-color:#00d4ff;color:#fff}
 .input-group{margin-top:12px}label{font-size:11px;color:#8d94b8;margin-bottom:5px;display:block}
-input,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;background:#131740;color:#fff;outline:none;font-size:12px}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;background:#131740;color:#fff;outline:none}
 .total-box{background:#131740;border:1px dashed #00d4ff;padding:12px;border-radius:10px;text-align:center;margin-top:12px;font-weight:800}
-.grid-robux{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.item-robux{background:#141936;border:1px solid #2a3366;border-radius:12px;padding:12px;text-align:center;cursor:pointer}
+.grid-robux{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.item-robux{background:#141936;border:1px solid #2a3366;border-radius:14px;padding:14px;text-align:center;cursor:pointer}
 .item-robux.active{border-color:#00d4ff;background:#1a2250}
-.tutor{background:#121631;border:1px solid #232a5a;border-radius:12px;padding:12px;margin-top:14px;font-size:11px;line-height:1.6}
+.item-robux .label{font-size:13px;font-weight:800}
+.item-robux .old{font-size:11px;color:#6b7394;text-decoration:line-through;margin-top:4px;display:block}
+.item-robux .new{font-size:14px;color:#00ff88;font-weight:900;display:block;margin-top:2px}
+.tutor{background:#121631;border:1px solid #232a5a;border-radius:12px;padding:12px;margin-top:16px;font-size:11px;line-height:1.6;white-space:pre-line}
 .btn-wrap{position:fixed;bottom:52px;left:0;right:0;padding:10px 14px;background:#080c25;z-index:9999;border-top:1px solid #1e2450}
 .btn-pay{width:100%;padding:15px;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;border:none;border-radius:14px;font-weight:900;cursor:pointer}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:#080c25;border-top:1px solid #1e2450;display:flex;justify-content:space-around;padding:8px 0;z-index:10}.nav{font-size:9px;color:#5a638a;text-align:center;flex:1}
@@ -38,32 +35,20 @@ input,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #232a
 .bank-list{background:#0f1330;border-radius:12px;padding:12px;margin-top:12px;border:1px solid #232a5a}
 .bank-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1e2450;font-size:12px}
 .qr-box{background:#fff;padding:12px;border-radius:12px;margin-top:14px;display:flex;justify-content:center}
-#home{display:block}#robloxPage{display:none}#robloxPage.active{display:block}
+#robloxPage{display:block}
 .method-content{display:none}.method-content.active{display:block}
 </style>
 </head>
 <body>
 <div class="header"><div class="avatar"></div><div class="logo">WafaStoreOnly</div></div>
 
-<div id="home">
-<div class="banner"><h1>TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1><p style="font-size:11px;color:#aab0d0;margin-top:8px">Top Up Game Instan • Aman • 24/7 • Harga Termurah</p><button class="btn-topup" onclick="openRoblox()">⚡ Mulai Top Up Sekarang</button></div>
-<div class="section"><div style="display:flex;justify-content:space-between"><h2 style="font-size:16px;font-weight:800">Pilih Game Populer</h2><span style="color:#00d4ff;font-size:11px">Lihat Semua ></span></div>
-<div class="grid-game">
-<div class="card-game" onclick="openRoblox()"><img src="./logo.png"><div>Roblox</div></div>
-<div class="card-game"><img src="https://cdn.mobygames.com/covers/12651856-mobile-legends-bang-bang-android-front-cover.jpg"><div>Mobile Legends</div></div>
-<div class="card-game"><img src="https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg"><div>PUBG Mobile</div></div>
-</div></div>
-</div>
-
 <div id="robloxPage" class="section">
-<div style="color:#00d4ff;font-size:12px;margin-bottom:10px" onclick="goHome()">← Kembali</div>
 <div style="font-weight:800;font-size:16px">Roblox - Top Up Robux</div>
 
-<!-- TABS VIA YANG LU MAU BALIK -->
 <div class="method-tabs">
-<div class="method-tab active" onclick="switchMethod('username')">Via Username</div>
-<div class="method-tab" onclick="switchMethod('gamepass')">Via Gamepass</div>
-<div class="method-tab" onclick="switchMethod('gift')">Gift In Game</div>
+<div class="method-tab active" onclick="switchMethod('username',this)">Via Username</div>
+<div class="method-tab" onclick="switchMethod('gamepass',this)">Via Gamepass</div>
+<div class="method-tab" onclick="switchMethod('gift',this)">Gift In Game</div>
 </div>
 
 <!-- VIA USERNAME -->
@@ -73,38 +58,52 @@ input,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #232a
 <div class="total-box" id="tRbx">Total: 100 robux = Rp16.000</div>
 <div style="font-weight:800;font-size:13px;margin:16px 0 10px">Via Username - 16k/100 robux (diskon 18k)</div>
 <div class="grid-robux" id="priceGrid"></div>
-<div class="tutor"><b style="color:#00d4ff">✅ SYARAT USERNAME 1-5 MENIT CAIR:</b><br>1. username benar<br>2. wajib aktifkan v2<br>3. akun 18+<br>4. jangan ganti username saat proses</div>
+<div class="tutor">✅ SYARAT & KETENTUAN VIA USERNAME 1-5 MENIT CAIR:
+1. pastikan username benar contoh SANTRI_PRIDE (kesalahan username diluar tanggung jawab kami)
+2. wajib aktifkan v2 (verifikasi 2 langkah)
+3. pastikan akun 18+ (jika dibawah umur bisa pakai akun parent)
+4. jangan ganti akun username saat sedang proses</div>
 </div>
 
 <!-- VIA GAMEPASS -->
 <div id="method-gamepass" class="method-content">
 <div class="input-group"><label>Username Roblox:</label><input id="uRbx2" placeholder="SANTRI_PRIDE"></div>
-<div class="input-group"><label>Link Gamepass (wajib 10-1000 robux):</label><input id="linkGp" placeholder="https://www.roblox.com/game-pass/..."></div>
-<div class="input-group"><label>Jumlah Robux di Gamepass:</label><input id="cRbx2" type="number" value="100" oninput="calc2()"></div>
-<div class="total-box" id="tRbx2">Total: 100 robux = Rp18.000</div>
+<div class="input-group"><label>Link Gamepass:</label><input id="linkGp" placeholder="https://www.roblox.com/game-pass/..."></div>
+<div class="input-group"><label>Jumlah Robux:</label><input id="cRbx2" type="number" value="100" oninput="calc2()"></div>
+<div class="total-box" id="tRbx2">Total: 100 robux = Rp14.000</div>
+<div style="font-weight:800;font-size:13px;margin:16px 0 10px">Via Gamepass - 14k/100 robux (diskon 16k)</div>
 <div class="grid-robux" id="priceGrid2"></div>
-<div class="tutor"><b style="color:#ffd600">⚠️ SYARAT GAMEPASS:</b><br>1. Buat gamepass di akun sendiri (jangan private)<br>2. Harga gamepass harus sesuai robux yang dibeli<br>3. Akun harus sudah 5 hari+ untuk bisa jual gamepass<br>4. Robux masuk 7 hari (pending Roblox)<br>5. Wajib kirim link gamepass yang valid</div>
+<div class="tutor">✅ SYARAT & KETENTUAN VIA GAMEPASS 3-7 HARI CAIR:
+1. buat gamepass dengan harga sesuai robux yang dibeli (jangan private)
+2. pastikan akun sudah berumur 5 hari+ untuk bisa menjual gamepass
+3. robux akan masuk setelah 3-7 hari karena pending dari Roblox
+4. wajib kirim link gamepass yang valid dan benar
+5. jangan hapus gamepass selama proses pending</div>
 </div>
 
-<!-- VIA GIFT IN GAME -->
+<!-- VIA GIFT -->
 <div id="method-gift" class="method-content">
-<div class="input-group"><label>Username Roblox (Penerima Gift):</label><input id="uRbx3" placeholder="SANTRI_PRIDE"></div>
-<div class="input-group"><label>Username Teman / Link Profil (untuk add friend):</label><input id="friendUser" placeholder="WafaStoreOnly / link profil"></div>
-<div class="input-group"><label>Mau Gift Berapa Robux / Item Apa?</label><textarea id="giftDesc" rows="2" placeholder="Contoh: 100 robux gift / Korblox dll"></textarea></div>
-<div class="input-group"><label>Jumlah Robux Gift:</label><input id="cRbx3" type="number" value="100" oninput="calc3()"></div>
+<div class="input-group"><label>Username Roblox:</label><input id="uRbx3" placeholder="SANTRI_PRIDE"></div>
+<div class="input-group"><label>Jumlah Robux:</label><input id="cRbx3" type="number" value="100" oninput="calc3()"></div>
 <div class="total-box" id="tRbx3">Total: 100 robux = Rp20.000</div>
+<div style="font-weight:800;font-size:13px;margin:16px 0 10px">Gift In Game - 20k/100 robux</div>
 <div class="grid-robux" id="priceGrid3"></div>
-<div class="tutor"><b style="color:#00ff88">🎁 SYARAT GIFT IN GAME:</b><br>1. Add friend akun WafaStoreOnly (nanti dikasih)<br>2. Akun tidak private / tidak block<br>3. Untuk gift robux butuh waktu 3-7 hari (pending)<br>4. Untuk gift item, pastikan item masih tersedia<br>5. Wajib online saat proses gift</div>
+<div class="tutor">✅ SYARAT & KETENTUAN GIFT IN GAME:
+1. add friend akun WafaStoreOnly
+2. akun tidak private
+3. untuk gift robux butuh waktu 3-7 hari pending
+4. untuk gift item pastikan item masih tersedia
+5. wajib online saat proses gift</div>
 </div>
 
 </div>
 
 <div class="btn-wrap"><button class="btn-pay" onclick="orderRbx()">LANJUT PEMBAYARAN</button></div>
-<div class="bottom"><div class="nav" onclick="goHome()">🏠<br>Beranda</div><div class="nav">⚡<br>Top Up</div><div class="nav">☰<br>Pesanan</div><div class="nav">👛<br>Dompet</div><div class="nav">👤<br>Profil</div></div>
+<div class="bottom"><div class="nav">🏠<br>Beranda</div><div class="nav">⚡<br>Top Up</div><div class="nav">☰<br>Pesanan</div><div class="nav">👛<br>Dompet</div><div class="nav">👤<br>Profil</div></div>
 
 <div id="payModal" onclick="if(event.target==this)closePay()">
 <div class="modalBox">
-<div style="text-align:center;font-weight:800">💳 Lanjutkan Pembayaran</div>
+<div style="text-align:center;font-weight:800">Lanjutkan Pembayaran</div>
 <div id="payDetail" style="text-align:center;color:#00ff88;font-size:12px;margin-top:6px;font-weight:700"></div>
 <div id="orderId" style="text-align:center;color:#ffd600;font-size:11px;margin-top:4px;font-weight:800"></div>
 <div style="text-align:center;margin-top:14px;font-size:12px">Silahkan melanjutkan pembayaran melalui</div>
@@ -115,7 +114,6 @@ input,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #232a
 </div>
 <div style="text-align:center;margin-top:14px;font-size:11px;color:#aab0d0">dibawahnya atau scan qris dibawah ini</div>
 <div class="qr-box"><div id="qrcode"></div></div>
-<div style="background:#ff3b30;color:#fff;padding:8px;border-radius:8px;font-size:10px;text-align:center;margin-top:10px">⚠️ TRANSFER SESUAI NOMINAL UNIK! JANGAN DIBULATKAN.</div>
 <a id="waAfter" href="#" style="display:block;background:#25D366;color:#fff;padding:14px;border-radius:12px;margin-top:14px;text-align:center;text-decoration:none;font-weight:800">✅ Sudah Bayar - Konfirmasi WA</a>
 <div onclick="closePay()" style="text-align:center;margin-top:12px;color:#7a82aa;font-size:11px">Tutup</div>
 </div>
@@ -126,20 +124,29 @@ const QRIS_STATIC="00020101021126570011ID.DANA.WWW011893600915303356172402090335
 function crc16(s){let c=0xFFFF;for(let i=0;i<s.length;i++){c^=s.charCodeAt(i)<<8;for(let j=0;j<8;j++){c=(c&0x8000)?(c<<1)^0x1021:c<<1;c&=0xFFFF}}return c.toString(16).toUpperCase().padStart(4,'0')}
 function makeQRIS(a){let q=QRIS_STATIC.slice(0,-4).replace("010211","010212");let amt=Math.round(a).toString();let tag="54"+String(amt.length).padStart(2,'0')+amt;q=q.replace("5802ID",tag+"5802ID")+"6304";return q+crc16(q)}
 let currentMethod='username';
-function switchMethod(m){currentMethod=m;document.querySelectorAll('.method-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.method-content').forEach(c=>c.classList.remove('active'));document.getElementById('method-'+m).classList.add('active');event.target.classList.add('active')}
-const prices=[100,200,400,800,1000,1700,2200,3000,4000,5000];
-function renderGrid(id,calcFn,pricePer){let g=document.getElementById(id);g.innerHTML='';prices.forEach(j=>{let d=document.createElement('div');d.className='item-robux';d.innerHTML=`${j} robux<br><span style="color:#00ff88;font-weight:800">Rp${(j*pricePer).toLocaleString('id-ID')}</span>`;d.onclick=()=>{if(id=='priceGrid')document.getElementById('cRbx').value=j;if(id=='priceGrid2')document.getElementById('cRbx2').value=j;if(id=='priceGrid3')document.getElementById('cRbx3').value=j;calcFn()};g.appendChild(d)})}
+function switchMethod(m,el){currentMethod=m;document.querySelectorAll('.method-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.method-content').forEach(c=>c.classList.remove('active'));document.getElementById('method-'+m).classList.add('active');el.classList.add('active')}
+
+// VIA USERNAME: 18k coret jadi 16k
+// VIA GAMEPASS: 16k coret jadi 14k (sesuai request lu)
+// VIA GIFT: 22k coret jadi 20k
+function renderGrid(id, oldPrice, newPrice, inputId, calcFn){
+  let g=document.getElementById(id);g.innerHTML='';
+  [100,200,400,800,1000,1700,2200,3000,4000,5000].forEach(j=>{
+    let d=document.createElement('div');d.className='item-robux';
+    d.innerHTML=`<div class="label">${j} robux</div><div class="old">~${(j*oldPrice).toLocaleString('id-ID')}~</div><div class="new">${(j*newPrice).toLocaleString('id-ID')}</div>`;
+    d.onclick=()=>{document.getElementById(inputId).value=j;calcFn();document.querySelectorAll('#'+id+' .item-robux').forEach(x=>x.classList.remove('active'));d.classList.add('active')};
+    g.appendChild(d)
+  })
+}
 function calc(){let j=document.getElementById('cRbx').value||0;document.getElementById('tRbx').innerText=`Total: ${j} robux = Rp${(j*160).toLocaleString('id-ID')}`}
-function calc2(){let j=document.getElementById('cRbx2').value||0;document.getElementById('tRbx2').innerText=`Total: ${j} robux = Rp${(j*180).toLocaleString('id-ID')}`}
+function calc2(){let j=document.getElementById('cRbx2').value||0;document.getElementById('tRbx2').innerText=`Total: ${j} robux = Rp${(j*140).toLocaleString('id-ID')}`}
 function calc3(){let j=document.getElementById('cRbx3').value||0;document.getElementById('tRbx3').innerText=`Total: ${j} robux = Rp${(j*200).toLocaleString('id-ID')}`}
-function openRoblox(){document.getElementById('home').style.display='none';document.getElementById('robloxPage').classList.add('active')}
-function goHome(){document.getElementById('home').style.display='block';document.getElementById('robloxPage').classList.remove('active')}
 function orderRbx(){
   let u,j,total,via,extra='';
   if(currentMethod=='username'){u=document.getElementById('uRbx').value;j=document.getElementById('cRbx').value||100;total=j*160;via='Via Username';}
-  else if(currentMethod=='gamepass'){u=document.getElementById('uRbx2').value;j=document.getElementById('cRbx2').value||100;total=j*180;via='Via Gamepass';extra=`\nLink GP: ${document.getElementById('linkGp').value}`;}
-  else{u=document.getElementById('uRbx3').value;j=document.getElementById('cRbx3').value||100;total=j*200;via='Gift In Game';extra=`\nFriend: ${document.getElementById('friendUser').value}\nGift: ${document.getElementById('giftDesc').value}`;}
-  if(!u){alert('Isi Username dulu bos!');return}
+  else if(currentMethod=='gamepass'){u=document.getElementById('uRbx2').value;j=document.getElementById('cRbx2').value||100;total=j*140;via='Via Gamepass';extra=`\nLink GP: ${document.getElementById('linkGp').value}`;}
+  else{u=document.getElementById('uRbx3').value;j=document.getElementById('cRbx3').value||100;total=j*200;via='Gift In Game';}
+  if(!u){alert('Isi Username dulu!');return}
   let unik=Math.floor(Math.random()*900)+100;
   let totalUnik=total+unik;
   let orderId='WFS-'+Date.now().toString().slice(-6);
@@ -149,11 +156,14 @@ function orderRbx(){
   document.getElementById('qrcode').innerHTML="";
   new QRCode(document.getElementById('qrcode'),{text:qr,width:256,height:256});
   document.getElementById('payModal').classList.add('show');
-  let waMsg=`Halo WafaStore saya sudah bayar\n\nORDER ID: ${orderId}\nMetode: ${via}\nUser: ${u}\nJumlah: ${j} robux\nTotal: Rp${totalUnik.toLocaleString('id-ID')} (UNIK)${extra}\n\nSaya sudah transfer sesuai nominal unik ya kak.`;
+  let waMsg=`Halo WafaStore saya sudah bayar\n\nORDER ID: ${orderId}\nMetode: ${via}\nUser: ${u}\nJumlah: ${j} robux\nTotal: Rp${totalUnik.toLocaleString('id-ID')} (UNIK)${extra}`;
   document.getElementById('waAfter').href=`https://wa.me/6283862776790?text=${encodeURIComponent(waMsg)}`;
 }
 function closePay(){document.getElementById('payModal').classList.remove('show')}
-renderGrid('priceGrid',calc,160);renderGrid('priceGrid2',calc2,180);renderGrid('priceGrid3',calc3,200);calc();calc2();calc3();
+renderGrid('priceGrid',180,160,'cRbx',calc);
+renderGrid('priceGrid2',160,140,'cRbx2',calc2);
+renderGrid('priceGrid3',220,200,'cRbx3',calc3);
+calc();calc2();calc3();
 </script>
 </body>
 </html>
