@@ -80,31 +80,31 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 <div class="total-box" id="tRbx">Total: 0 robux = Rp0</div>
 <div style="font-weight:800;font-size:13px;margin:18px 0 10px">Pilih Paket Via Username - 160/robux (diskon dari 180)</div>
 <div class="grid-robux" id="gridUsername"></div>
+
+<!-- SYARAT VIA USERNAME UPDATE TAMBAH NO 5 -->
 <div style="background:#121631;border:1px solid #232a5a;border-radius:12px;padding:12px;margin-top:16px;font-size:11px;line-height:1.7">
 <b style="color:#00ff88">syarat dan ketentuan robux via username✅</b><br>
 1. pastikan username benar (kesalahan memasukan username diluar tanggung jawab kami<br>
 2. pastikan akun tidak limit (bisa di cek di akun masing²)<br>
 3. pastikan v2f (verifikasi 2 langkah) on<br>
-4. pastikan akun sudah 18+ (jika dibawah umur bisa menggunakan akun parent/orang tua)
+4. pastikan akun sudah 18+ (jika dibawah umur bisa menggunakan akun parent/orang tua)<br>
+5. robux akan di terima ± 5-10 menit setelah pembelian
 </div>
 </div>
 
-<!-- VIA GAMEPASS UPDATE BARU - SESUAI REQUEST LU -->
 <div id="m-gamepass" style="display:none">
 <div class="input-group"><label>Username Roblox:</label><input id="uRbx2" placeholder="SANTRI_PRIDE"></div>
 <div class="input-group"><label>Mau Berapa robux? (otomatis 140/robux)</label><input id="cRbx2" type="number" placeholder="Contoh: 1000" oninput="calcGamepass()"></div>
 <div class="total-box" id="tRbx2">Total: 0 robux = Rp0<br>Setting Gamepass: 0 robux</div>
 <div style="font-size:10px;color:#8d94b8;margin-top:6px">*Contoh kalo buyer mau 1000 robux, setting gamepass di dalam game robloxnya 1429 robux (karena potongan 30%)</div>
-
 <div style="font-weight:800;font-size:13px;margin:18px 0 10px">Pilih Paket Via Gamepass - 140/robux (diskon dari 155)</div>
 <div class="grid-robux" id="gridGamepass"></div>
-
 <div style="background:#121631;border:1px solid #232a5a;border-radius:12px;padding:12px;margin-top:16px;font-size:11px;line-height:1.7">
 <b style="color:#ffcc00">syarat dan ketentuan robux via gamepass✅</b><br>
-1. pastikan username benar<br>
-2. buat gamepass di dalam game kamu, set harga sesuai kalkulator (contoh 1000 robux = set 1429)<br>
-3. pastikan gamepass public / on sale<br>
-4. akun tidak private
+1. pastikan username benar (kesalahan memasukan username diluar tanggung jawab kami)<br>
+2. pastikan gamepass sudah dibuat sesuai dengan jumlah robux yang di beli<br>
+3. pastikan link/server gamepass nya public<br>
+4. robux akan di terima ± 5-7 hari setelah pembelian
 </div>
 </div>
 
@@ -119,29 +119,21 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 <script>
 const listUsername = [100,200,300,400,500,1000,1500,2000,3000,4000,5000];
 const listGamepass = [100,200,300,400,500,1000,1500,2000,3000,4000,5000];
-
 function renderUsername(){
  let g=document.getElementById('gridUsername');g.innerHTML='';
  listUsername.forEach(j=>{
-  let oldPrice=j*180;
-  let newPrice=j*160;
+  let oldPrice=j*180;let newPrice=j*160;
   let div=document.createElement('div');div.className='item';
   div.innerHTML=`<div class="r">${j} robux</div><div class="old">Rp${oldPrice.toLocaleString('id-ID')}</div><div class="new">Rp${newPrice.toLocaleString('id-ID')}</div><div class="disc">diskon ${Math.round((1-newPrice/oldPrice)*100)}%</div>`;
   div.onclick=()=>{document.getElementById('cRbx').value=j;calcUsername()};
   g.appendChild(div);
  })
 }
-function calcUsername(){
- let j=parseInt(document.getElementById('cRbx').value)||0;
- let total=j*160;
- document.getElementById('tRbx').innerText=`Total: ${j} robux = Rp${total.toLocaleString('id-ID')}`;
-}
-
+function calcUsername(){let j=parseInt(document.getElementById('cRbx').value)||0;document.getElementById('tRbx').innerText=`Total: ${j} robux = Rp${(j*160).toLocaleString('id-ID')}`;}
 function renderGamepass(){
  let g=document.getElementById('gridGamepass');g.innerHTML='';
  listGamepass.forEach(j=>{
-  let oldPrice=j*155;
-  let newPrice=j*140;
+  let oldPrice=j*155;let newPrice=j*140;
   let div=document.createElement('div');div.className='item';
   div.innerHTML=`<div class="r">${j} robux</div><div class="old">Rp${oldPrice.toLocaleString('id-ID')}</div><div class="new">Rp${newPrice.toLocaleString('id-ID')}</div><div class="disc">diskon ${Math.round((1-newPrice/oldPrice)*100)}%</div>`;
   div.onclick=()=>{document.getElementById('cRbx2').value=j;calcGamepass()};
@@ -150,8 +142,7 @@ function renderGamepass(){
 }
 function calcGamepass(){
  let j=parseInt(document.getElementById('cRbx2').value)||0;
- let total=j*140;
- let setGamepass=Math.ceil(j/0.7);
+ let total=j*140;let setGamepass=Math.ceil(j/0.7);
  document.getElementById('tRbx2').innerHTML=`Total: ${j} robux = Rp${total.toLocaleString('id-ID')}<br>Setting Gamepass: ${setGamepass} robux`;
 }
 function openRoblox(){document.getElementById('homePage').style.display='none';document.getElementById('robloxPage').style.display='block';renderUsername();renderGamepass()}
