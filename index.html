@@ -3,62 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WafaStoreOnly - ANTI GAGAL KLIK</title>
+<title>WafaStoreOnly</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
 body{background:#080c25;color:#fff}
-.page{padding:14px;padding-bottom:90px}
-input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;background:#131740;color:#fff;margin-top:4px}
-.total{background:#131740;border:1px dashed #00d4ff;padding:10px;border-radius:10px;text-align:center;margin-top:10px;font-weight:800}
+.page{padding:14px;padding-bottom:100px}
+input{width:100%;padding:13px;border-radius:12px;border:1px solid #232a5a;background:#131740;color:#fff;margin-top:5px}
+.total{background:#131740;border:1px dashed #00d4ff;padding:12px;border-radius:12px;text-align:center;margin-top:12px;font-weight:800}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.item2{background:#141936;border:1px solid #2a3366;border-radius:12px;padding:10px;text-align:center;font-size:12px}
-.tutor{background:#121631;border:1px solid #232a5a;border-radius:10px;padding:10px;margin-top:12px;font-size:11px}
+.item2{background:#141936;border:1px solid #2a3366;border-radius:12px;padding:12px;text-align:center;font-size:12px;cursor:pointer}.item2.active{border-color:#00d4ff;background:#1a2250}
+.tutor{background:#121631;border:1px solid #232a5a;border-radius:10px;padding:10px;margin-top:12px;font-size:11px;line-height:1.6}
+.btn-wrap{position:fixed;bottom:52px;left:0;right:0;padding:10px 14px;background:#080c25;z-index:99999;border-top:1px solid #1e2450}
+.btn-pay{display:block;width:100%;padding:16px;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;text-align:center;border-radius:14px;font-weight:900;text-decoration:none}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:#080c25;border-top:1px solid #1e2450;display:flex;justify-content:space-around;padding:8px 0;z-index:5}
 .nav{font-size:9px;color:#5a638a;text-align:center;flex:1}
 
-/* TOMBOL YANG PASTI KEPENCET - PAKE <a> + DI ATAS NAV */
-.btn-wrap{position:fixed;bottom:52px;left:0;right:0;padding:10px 14px;background:#080c25;z-index:99999;border-top:1px solid #1e2450}
-.btn-pay{display:block;width:100%;padding:16px;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;text-align:center;border-radius:14px;font-weight:900;text-decoration:none;font-size:14px}
-
-/* MODAL PAKE :TARGET - GAK BUTUH JS BUAT BUKA */
-#payModal{position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:100000;display:none;align-items:center;justify-content:center;padding:20px}
+/* MODAL */
+#payModal{position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:100000;display:none;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
 #payModal:target{display:flex}
-.modalBox{background:#141840;border-radius:16px;padding:18px;width:100%;max-width:360px;text-align:center}
-#qrcode{background:#fff;padding:10px;border-radius:10px;margin:12px 0}
-#qrcode img{width:100%}
+#payModal.show{display:flex}
+.modalBox{background:#141840;border:1px solid #2a3ab8;border-radius:20px;padding:20px;width:100%;max-width:380px}
+.pay-title{font-weight:800;font-size:14px;text-align:center}
+.pay-sub{font-size:11px;color:#aab0d0;text-align:center;margin-top:6px;line-height:1.5}
+.bank-list{background:#0f1330;border-radius:12px;padding:12px;margin-top:14px;border:1px solid #232a5a}
+.bank-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #1e2450}
+.bank-item:last-child{border:none}
+.bank-name{font-size:12px;font-weight:700}.bank-num{font-size:12px;color:#00ff88;font-weight:800}
+.qr-box{background:#fff;padding:12px;border-radius:12px;margin-top:14px;text-align:center}
+.qr-box img{width:100%;max-width:260px}
+.qr-text{font-size:6px;word-break:break-all;background:#0f1330;padding:8px;border-radius:8px;color:#8d94b8;margin-top:10px}
 </style>
 </head>
 <body>
 
 <div class="page">
-<div style="font-weight:800">Roblox - Top Up Robux</div>
+<div style="font-weight:800;font-size:16px">Roblox - Top Up Robux</div>
 <div style="margin-top:10px"><span style="background:#2a5bd7;padding:8px 14px;border-radius:20px;font-size:11px">Username 16k/100</span></div>
-<div style="margin-top:12px"><label style="font-size:11px;color:#8d94b8">Username Roblox:</label><input id="uRbx" value="wafastore03"></div>
-<div style="margin-top:8px"><label style="font-size:11px;color:#8d94b8">Mau Berapa robux?</label><input id="cRbx" type="number" value="100"></div>
+<div style="margin-top:12px"><label style="font-size:11px;color:#8d94b8">Username Roblox:</label><input id="uRbx" value="wafastore03" placeholder="SANTRI_PRIDE"></div>
+<div style="margin-top:8px"><label style="font-size:11px;color:#8d94b8">Mau Berapa robux?</label><input id="cRbx" type="number" value="100" oninput="calc()"></div>
 <div class="total" id="tRbx">Total: 100 robux = Rp16.000</div>
-<div class="grid2">
-<div class="item2">100 robux<br>Rp16.000</div><div class="item2">200 robux<br>Rp32.000</div>
-<div class="item2">400 robux<br>Rp64.000</div><div class="item2">800 robux<br>Rp128.000</div>
-</div>
-<div class="tutor">✅ SYARAT: pastikan username benar SANTRI_PRIDE, wajib verifikasi 2 langkah, akun 18+, jangan ganti username saat proses</div>
+<div class="grid2" id="priceGrid"></div>
+<div class="tutor"><b style="color:#00d4ff">✅ SYARAT VIA USERNAME 1-5 MENIT CAIR:</b><br>1. username benar<br>2. wajib aktifkan v2<br>3. akun 18+<br>4. jangan ganti username saat proses</div>
 </div>
 
-<!-- INI TOMBOL BARU - PAKE <a> HREF JADI PASTI KEPENCET -->
 <div class="btn-wrap">
-<a href="#payModal" class="btn-pay" onclick="setTimeout(orderRbx,50)">💳 BAYAR PAKAI QRIS DINAMIS</a>
+<a href="#payModal" class="btn-pay" onclick="setTimeout(orderRbx,30)">LANJUT PEMBAYARAN</a>
 </div>
 
 <div class="bottom"><div class="nav">🏠<br>Beranda</div><div class="nav">⚡<br>Top Up</div><div class="nav">☰<br>Pesanan</div><div class="nav">👛<br>Dompet</div><div class="nav">👤<br>Profil</div></div>
 
-<!-- MODAL -->
+<!-- POPUP PEMBAYARAN SESUAI REQUEST LU -->
 <div id="payModal">
 <div class="modalBox">
-<h3>Scan QRIS untuk Bayar</h3>
-<p id="payDetail" style="color:#00ff88;font-size:11px;margin-top:6px"></p>
-<div id="qrcode"><img id="qrImg" src="" alt="QRIS Loading..."></div>
-<div id="qrText" style="font-size:6px;word-break:break-all;background:#0f1330;padding:6px;border-radius:6px;color:#8d94b8"></div>
-<a id="waAfter" href="https://wa.me/6283862776790" style="display:block;background:#25D366;color:#fff;padding:12px;border-radius:10px;margin-top:12px;text-decoration:none;font-weight:800">✅ Sudah Bayar - Konfirmasi WA</a>
-<a href="#" style="display:block;margin-top:10px;color:#7a82aa;font-size:11px;text-decoration:none">Tutup</a>
+<div class="pay-title">💳 Lanjutkan Pembayaran</div>
+<p class="pay-sub" id="payDetail">Total: 100 robux = Rp16.000</p>
+
+<div style="margin-top:14px;text-align:center;font-size:12px;line-height:1.6;color:#d0d4e8">
+Silahkan melanjutkan pembayaran melalui
+</div>
+
+<div class="bank-list">
+<div class="bank-item"><span class="bank-name">💙 DANA</span><span class="bank-num">0838-6277-6790</span></div>
+<div class="bank-item"><span class="bank-name">💚 GOPAY</span><span class="bank-num">0838-6277-6790</span></div>
+<div class="bank-item"><span class="bank-name">💛 SEABANK</span><span class="bank-num">901162765462</span></div>
+</div>
+
+<div style="margin-top:14px;text-align:center;font-size:11px;color:#aab0d0">dibawahnya atau scan qris dibawah ini</div>
+
+<div class="qr-box"><img id="qrImg" src="" alt="QRIS DINAMIS"></div>
+<div class="qr-text" id="qrText"></div>
+
+<a id="waAfter" href="#" style="display:block;background:#25D366;color:#fff;padding:14px;border-radius:12px;margin-top:14px;text-align:center;text-decoration:none;font-weight:800">✅ Sudah Bayar - Konfirmasi WA</a>
+<a href="#" style="display:block;margin-top:10px;text-align:center;color:#7a82aa;font-size:11px;text-decoration:none" onclick="closePay()">Tutup</a>
 </div>
 </div>
 
@@ -66,16 +82,22 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 const QRIS_STATIC="00020101021126570011ID.DANA.WWW011893600915303356172402090335617240303UMI51440014ID.CO.QRIS.WWW0215ID10265588813750303UMI5204594553033605802ID5913AWA_NEWSTREAM6010Kab. Bogor610516320630452D8";
 function crc16(s){let c=0xFFFF;for(let i=0;i<s.length;i++){c^=s.charCodeAt(i)<<8;for(let j=0;j<8;j++){c=(c&0x8000)?(c<<1)^0x1021:c<<1;c&=0xFFFF}}return c.toString(16).toUpperCase().padStart(4,'0')}
 function makeQRIS(a){let q=QRIS_STATIC.slice(0,-4).replace("010211","010212");let amt=Math.round(a).toString();let tag="54"+String(amt.length).padStart(2,'0')+amt;q=q.replace("5802ID",tag+"5802ID")+"6304";return q+crc16(q)}
+const prices=[100,200,400,800,1000,1700,2200,3000,4000,5000];
+function renderPrices(){let g=document.getElementById('priceGrid');g.innerHTML='';prices.forEach(j=>{let d=document.createElement('div');d.className='item2'+(document.getElementById('cRbx').value==j?' active':'');d.innerHTML=`${j} robux<br><span style="font-size:10px;text-decoration:line-through;color:#6b7394">Rp${(j*180).toLocaleString('id-ID')}</span><br><span style="color:#00ff88;font-weight:800">Rp${(j*160).toLocaleString('id-ID')}</span>`;d.onclick=()=>{document.getElementById('cRbx').value=j;calc();renderPrices()};g.appendChild(d)})}
+function calc(){let j=document.getElementById('cRbx').value||0;document.getElementById('tRbx').innerText=`Total: ${j} robux = Rp${(j*160).toLocaleString('id-ID')}`}
 function orderRbx(){
   let j=document.getElementById('cRbx').value||100;
   let u=document.getElementById('uRbx').value||'wafastore03';
   let total=j*160;
   let qr=makeQRIS(total);
-  document.getElementById('payDetail').innerText=`${j} robux = Rp${total.toLocaleString('id-ID')} - ${u}`;
+  document.getElementById('payDetail').innerText=`Username: ${u} | ${j} robux = Rp${total.toLocaleString('id-ID')}`;
   document.getElementById('qrText').innerText=qr;
   document.getElementById('qrImg').src=`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qr)}`;
-  document.getElementById('waAfter').href=`https://wa.me/6283862776790?text=${encodeURIComponent(`Halo WafaStore saya sudah bayar QRIS\nUser:${u}\n${j} robux\nTotal:Rp${total}\n${qr}`)}`;
+  document.getElementById('payModal').classList.add('show');
+  document.getElementById('waAfter').href=`https://wa.me/6283862776790?text=${encodeURIComponent(`Halo WafaStore saya sudah bayar\nUser:${u}\n${j} robux - Rp${total}\nDANA/GOPAY/SEABANK/QRIS\n${qr}`)}`;
 }
+function closePay(){document.getElementById('payModal').classList.remove('show');location.hash='#'}
+renderPrices();calc();
 </script>
 </body>
 </html>
