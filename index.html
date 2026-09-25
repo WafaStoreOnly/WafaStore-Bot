@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WafaStoreOnly - ULTRA PRO</title>
+<title>WafaStoreOnly - FIX QRIS DINAMIS</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
 body{background:#0a0e27;color:white;min-height:100vh;padding-bottom:110px}
@@ -15,75 +15,45 @@ body{background:#0a0e27;color:white;min-height:100vh;padding-bottom:110px}
 .logo-text{font-weight:900;font-size:22px;background:linear-gradient(90deg,#00d4ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .banner{position:relative;padding:26px 20px 28px;background:radial-gradient(120% 120% at 0% 0%, #1a1f5c 0%, #0a0e27 60%);border-bottom:1px solid #1e2450}
 .banner h1{font-size:26px;font-weight:900;font-style:italic;line-height:1.05;text-transform:uppercase}
-.banner p{font-size:11px;color:#8d94b8;margin-top:10px}
-.btn-grad{margin-top:18px;background:linear-gradient(90deg,#00c6ff,#7c3aed);border:none;padding:13px 28px;border-radius:28px;color:white;font-weight:800;font-size:13px;cursor:pointer}
-.section{padding:16px 14px}
-.head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px}
-.head-left h2{font-size:18px;font-weight:800}
-.head-left .underline{width:38px;height:3px;background:linear-gradient(90deg,#00d4ff,#7c3aed);border-radius:10px;margin-top:6px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.card{position:relative;background:#121631;border-radius:18px;overflow:hidden;cursor:pointer;border:1px solid #232a5a}
-.card-img{width:100%;height:110px;background:#0e1230} .card-img img{width:100%;height:100%;object-fit:cover}
-.badge{position:absolute;top:7px;left:7px;background:linear-gradient(90deg,#6366f1,#8b5cf6);font-size:9px;padding:4px 9px;border-radius:12px;font-weight:800;z-index:3}
-.card-bottom{padding:10px 6px;background:#0f1330;text-align:center;font-size:12px;font-weight:700}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#0a0e27;border-top:1px solid #1e2450;display:flex;justify-content:space-around;padding:10px 0 14px;z-index:100}
-.nav{font-size:10px;color:#5a638a;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:600}.nav.active{color:#00d4ff}.nav i{font-style:normal;font-size:22px}
+.total{background:linear-gradient(135deg,#131740,#1a1f4a);border:1px dashed #00d4ff;padding:12px;border-radius:12px;text-align:center;margin-top:14px;font-weight:800;font-size:13px}
 .page{display:none;padding:16px}.page.active{display:block}
 .back{color:#00d4ff;font-size:13px;margin-bottom:12px;cursor:pointer;display:inline-flex;font-weight:600}
 .subtabs{display:flex;gap:7px;overflow-x:auto;margin-bottom:14px;padding-bottom:4px}
 .subtab{padding:9px 16px;border-radius:22px;background:#151a3a;border:1px solid #232a5a;color:#7a82aa;font-size:11px;white-space:nowrap;cursor:pointer;flex-shrink:0;font-weight:600}.subtab.active{background:linear-gradient(90deg,#2a5bd7,#4a7eff);color:white;border-color:#2a5bd7}
 .input label{font-size:11px;color:#8d94b8;display:block;margin:12px 0 6px;font-weight:600}.input input{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #232a5a;background:#131740;color:white;font-size:13px;outline:none}
-.total{background:linear-gradient(135deg,#131740,#1a1f4a);border:1px dashed #00d4ff;padding:12px;border-radius:12px;text-align:center;margin-top:14px;font-weight:800;font-size:13px}
 .tutor{background:#121631;border:1px solid #232a5a;border-radius:14px;padding:14px;margin-top:16px}.tutor h4{font-size:12px;font-weight:800;margin-bottom:10px;color:#00d4ff}.tutor ol{font-size:11.5px;color:#c2c8e0;padding-left:18px;line-height:1.7}
 .calc-box{background:#0f1330;border:1px solid #7c3aed;border-radius:12px;padding:12px;margin-top:12px}.calc-box .res{color:#00ff88;font-weight:800;font-size:16px;margin-top:6px;text-align:center}
 .wa{display:block;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:white;text-align:center;padding:14px;border-radius:12px;font-weight:800;margin-top:16px;text-decoration:none;cursor:pointer;border:none;width:100%}
-
-/* LIST HARGA BARU SESUAI SCREENSHOT */
 .via-title{font-weight:800;font-size:16px;margin:18px 0 12px;color:#fff}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.item2{background:#141936;border:1px solid #2a3366;border-radius:14px;padding:14px 8px;text-align:center;cursor:pointer;transition:.2s}
-.item2:hover{border-color:#00d4ff;transform:translateY(-2px)}
+.item2{background:#141936;border:1px solid #2a3366;border-radius:14px;padding:14px 8px;text-align:center;cursor:pointer}
+.item2.active{border-color:#00d4ff;background:#1a2250;box-shadow:0 0 15px rgba(0,212,255,0.3)}
 .item2 .robux-label{font-size:13px;font-weight:600;color:#d0d4e8}
 .item2 .old-price{font-size:11px;color:#6b7394;text-decoration:line-through;margin-top:2px}
 .item2 .pr{color:#00ff88;font-weight:800;font-size:14px;margin-top:2px}
-.item2.active{border-color:#00d4ff;background:#1a2250;box-shadow:0 0 15px rgba(0,212,255,0.3)}
-
-#payModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;align-items:center;justify-content:center;padding:20px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#0a0e27;border-top:1px solid #1e2450;display:flex;justify-content:space-around;padding:10px 0 14px;z-index:100}
+.nav{font-size:10px;color:#5a638a;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:600}.nav.active{color:#00d4ff}.nav i{font-style:normal;font-size:22px}
+#payModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:999;align-items:center;justify-content:center;padding:20px}
 #payModal.show{display:flex}
 .modalBox{background:#141840;border:1px solid #2a3ab8;border-radius:20px;padding:20px;width:100%;max-width:380px;text-align:center}
-#qrcode{display:flex;justify-content:center;margin:16px 0;background:white;padding:12px;border-radius:12px}
-.qr-text{font-size:8px;color:#aab0d0;word-break:break-all;background:#0f1330;padding:8px;border-radius:8px;margin-top:10px}
+#qrcode{display:flex;justify-content:center;margin:16px 0;background:white;padding:12px;border-radius:12px;min-height:250px;align-items:center}
+.qr-text{font-size:7px;color:#aab0d0;word-break:break-all;background:#0f1330;padding:8px;border-radius:8px;margin-top:10px}
 </style>
 </head>
 <body>
 <div class="header"><div class="logo-wrap"><div class="avatar"></div><div class="logo-text">WafaStoreOnly</div></div></div>
 
-<div id="home">
-<div class="banner"><h1>TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1></div>
-<div class="section" id="games">
-<div class="grid">
-<div class="card" onclick="openGame('roblox')"><div class="badge">-10% OFF</div><div class="card-img"><img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?q=80&w=400"></div><div class="card-bottom">Roblox</div></div>
-</div>
-</div>
-</div>
-
 <div id="roblox" class="page active">
-<div class="back" onclick="goHome()">← Kembali</div>
 <div style="font-weight:800;font-size:18px">Roblox - Top Up Robux</div>
-
 <div class="subtabs" style="margin-top:12px">
 <button class="subtab active" id="t1" onclick="setMethod('username')">Username 16k/100</button>
 <button class="subtab" id="t2" onclick="setMethod('gamepass')">Gamepass 14k/100</button>
 <button class="subtab" id="t3" onclick="setMethod('gift')">Gift 95/R$</button>
 </div>
-
 <div class="input"><label>Username Roblox:</label><input id="uRbx" placeholder="SANTRI_PRIDE"></div>
 <div class="input" id="gpInput" style="display:none"><label>Link Gamepass:</label><input id="uGP" placeholder="https://www.roblox.com/game-pass/..."></div>
 <div class="input"><label>Mau Berapa robux?</label><input id="cRbx" type="number" value="100" oninput="calcRbx()"></div>
 <div class="total" id="tRbx">Total: 100 robux = Rp16.000</div>
-<div style="font-size:10px;color:#7a82aa;margin-top:8px" id="rateInfo">Via Username - 16k/100 robux (diskon 18k)</div>
-
-<!-- INI LIST BARU -->
 <div class="via-title" id="viaTitle">Via Username - 16k/100 robux (diskon 18k)</div>
 <div class="grid2" id="priceGrid"></div>
 
@@ -110,7 +80,6 @@ body{background:#0a0e27;color:white;min-height:100vh;padding-bottom:110px}
 <li>jangan ganti akun username saat sedang proses</li>
 </ol>
 </div>
-
 <button class="wa" onclick="orderRbx()">💳 BAYAR PAKAI QRIS DINAMIS</button>
 </div>
 
@@ -130,42 +99,51 @@ body{background:#0a0e27;color:white;min-height:100vh;padding-bottom:110px}
 <script>
 let method='username';
 const QRIS_STATIC="00020101021126570011ID.DANA.WWW011893600915303356172402090335617240303UMI51440014ID.CO.QRIS.WWW0215ID10265588813750303UMI5204594553033605802ID5913AWA_NEWSTREAM6010Kab. Bogor610516320630452D8";
-const QRIS_BASE_NOCRC=QRIS_STATIC.slice(0,-8);
 function crc16(str){let crc=0xFFFF;for(let i=0;i<str.length;i++){crc^=str.charCodeAt(i)<<8;for(let j=0;j<8;j++){if((crc&0x8000)!==0)crc=(crc<<1)^0x1021;else crc<<=1;crc&=0xFFFF;}}return crc.toString(16).toUpperCase().padStart(4,'0');}
-function makeDynamicQRIS(amount){let base=QRIS_BASE_NOCRC.replace("010211","010212").replace(/54\d{2}\d+/,"");let amt=amount.toString();let tag54="54"+String(amt.length).padStart(2,'0')+amt;let idx=base.indexOf("5802ID");return (base.substring(0,idx)+tag54+base.substring(idx)+"6304")+crc16(base.substring(0,idx)+tag54+base.substring(idx)+"6304");}
-
+function makeDynamicQRIS(amount){
+  let qris=QRIS_STATIC.slice(0,-4).replace("010211","010212");
+  qris=qris.replace(/54\d{2,}\d+/,"");
+  let amt=Math.round(amount).toString();
+  let tag54="54"+String(amt.length).padStart(2,'0')+amt;
+  qris=qris.replace("5802ID", tag54+"5802ID");
+  qris+="6304";
+  qris+=crc16(qris);
+  return qris;
+}
 const prices=[100,200,400,800,1000,1700,2200,3000,4000,5000];
-
 function renderPrices(){
- let grid=document.getElementById('priceGrid');
- grid.innerHTML='';
+ let grid=document.getElementById('priceGrid'); grid.innerHTML='';
  let newRate, oldRate, title;
  if(method=='username'){newRate=160; oldRate=180; title=`Via Username - 16k/100 robux (diskon 18k)`;}
  else if(method=='gamepass'){newRate=140; oldRate=160; title=`Via Gamepass - 14k/100 robux (diskon 16k)`;}
  else {newRate=95; oldRate=120; title=`Via Gift - 9.5k/100 robux (diskon 12k)`;}
-
  document.getElementById('viaTitle').innerText=title;
- document.getElementById('rateInfo').innerText=title;
-
  prices.forEach(j=>{
-   let total=j*newRate;
-   let oldTotal=j*oldRate;
+   let total=j*newRate; let oldTotal=j*oldRate;
    let div=document.createElement('div');
    div.className='item2'+(document.getElementById('cRbx').value==j?' active':'');
-   div.onclick=()=>{document.getElementById('cRbx').value=j;calcRbx(); renderPrices();};
+   div.onclick=()=>{document.getElementById('cRbx').value=j;calcRbx();renderPrices();};
    div.innerHTML=`<div class="robux-label">${j} robux</div><div class="old-price">Rp${oldTotal.toLocaleString('id-ID')}</div><div class="pr">Rp${total.toLocaleString('id-ID')}</div>`;
    grid.appendChild(div);
  });
 }
-
-function openGame(id){document.getElementById('home').style.display='none';document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
-function goHome(){document.getElementById('home').style.display='block';document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('roblox').classList.add('active');}
 function setMethod(m){method=m;document.querySelectorAll('.subtab').forEach(s=>s.classList.remove('active'));document.getElementById('tutorUsername').style.display='none';document.getElementById('tutorGamepass').style.display='none';document.getElementById('tutorGift').style.display='none';if(m=='username'){document.getElementById('t1').classList.add('active');document.getElementById('gpInput').style.display='none';document.getElementById('tutorUsername').style.display='block';}if(m=='gamepass'){document.getElementById('t2').classList.add('active');document.getElementById('gpInput').style.display='block';document.getElementById('tutorGamepass').style.display='block';}if(m=='gift'){document.getElementById('t3').classList.add('active');document.getElementById('gpInput').style.display='none';document.getElementById('tutorGift').style.display='block';}calcRbx();renderPrices();}
-function setRbx(v){document.getElementById('cRbx').value=v;calcRbx();renderPrices();}
 function calcRbx(){let j=document.getElementById('cRbx').value||0;let rate=method=='username'?160:method=='gamepass'?140:95;let total=j*rate;document.getElementById('tRbx').innerText=`Total: ${j} robux = Rp${total.toLocaleString('id-ID')} (${method})`;document.getElementById('wantRbx').innerText=j;document.getElementById('needPrice').innerText=Math.ceil(j/0.7).toLocaleString('id-ID')+' robux';}
-function orderRbx(){let j=document.getElementById('cRbx').value,u=document.getElementById('uRbx').value,gp=document.getElementById('uGP').value;if(!j||!u){alert('Isi username & jumlah dulu bos!');return;}let rate=method=='username'?160:method=='gamepass'?140:95;let total=j*rate;let dynamicQR=makeDynamicQRIS(total);document.getElementById('payDetail').innerText=`${j} robux via ${method} = Rp${total.toLocaleString('id-ID')} - User: ${u}`;document.getElementById('qrText').innerText=dynamicQR;document.getElementById('qrcode').innerHTML="";new QRCode(document.getElementById('qrcode'),{text:dynamicQR,width:220,height:220});document.getElementById('payModal').classList.add('show');let msg=`Halo WafaStore saya sudah bayar QRIS\nUsername: ${u}\nJumlah: ${j} robux via ${method}\nTotal: Rp${total}\nGamepass: ${gp}`;document.getElementById('waAfter').href='https://wa.me/6283862776790?text='+encodeURIComponent(msg);}
+function orderRbx(){
+  let j=document.getElementById('cRbx').value,u=document.getElementById('uRbx').value,gp=document.getElementById('uGP').value;
+  if(!j||!u){alert('Isi username & jumlah dulu bos!');return;}
+  let rate=method=='username'?160:method=='gamepass'?140:95; let total=j*rate;
+  let dynamicQR=makeDynamicQRIS(total);
+  document.getElementById('payDetail').innerText=`${j} robux via ${method} = Rp${total.toLocaleString('id-ID')} - User: ${u}`;
+  document.getElementById('qrText').innerText=dynamicQR;
+  document.getElementById('qrcode').innerHTML="";
+  new QRCode(document.getElementById('qrcode'),{text:dynamicQR,width:250,height:250});
+  document.getElementById('payModal').classList.add('show');
+  let msg=`Halo WafaStore saya sudah bayar QRIS\nUsername: ${u}\nJumlah: ${j} robux via ${method}\nTotal: Rp${total}\nGamepass: ${gp}`;
+  document.getElementById('waAfter').href='https://wa.me/6283862776790?text='+encodeURIComponent(msg);
+}
 function closePay(){document.getElementById('payModal').classList.remove('show');}
-calcRbx();renderPrices();goHome();
+calcRbx();renderPrices();
 </script>
 </body>
 </html>
