@@ -1,96 +1,18 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WafaStoreOnly FIX</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-body{background:#080c25;color:white;min-height:100vh;padding-bottom:140px}
-.header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#080c25;position:sticky;top:0;z-index:50;border-bottom:1px solid #151a3a}
-.logo-wrap{display:flex;align-items:center;gap:10px}
-.avatar{width:44px;height:44px;border-radius:50%;background:url('logo.png') center/cover #111;border:2px solid #2a3366}
-.logo-text{font-weight:900;font-size:26px;background:linear-gradient(90deg,#00e5ff,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.section{padding:18px 14px}
-.page{padding:16px;padding-bottom:180px}.page.active{display:block}
-.subtab{padding:9px 16px;border-radius:22px;background:#151a3a;border:1px solid #232a5a;color:#7a82aa;font-size:11px;cursor:pointer}.subtab.active{background:#2a5bd7;color:white}
-.input label{font-size:11px;color:#8d94b8;display:block;margin:12px 0 6px;font-weight:600}.input input{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #232a5a;background:#131740;color:white;outline:none}
-.total{background:#131740;border:1px dashed #00d4ff;padding:12px;border-radius:12px;text-align:center;margin-top:14px;font-weight:800}
-.via-title{font-weight:800;margin:18px 0 12px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.item2{background:#141936;border:1px solid #2a3366;border-radius:14px;padding:14px 8px;text-align:center;cursor:pointer}.item2.active{border-color:#00d4ff;background:#1a2250}
-.item2 .robux-label{font-size:13px;font-weight:600}.item2 .old-price{font-size:11px;color:#6b7394;text-decoration:line-through}.item2 .pr{color:#00ff88;font-weight:800;font-size:14px;margin-top:2px}
-.tutor{background:#121631;border:1px solid #232a5a;border-radius:14px;padding:14px;margin-top:16px;font-size:11px}
-.wa{background:linear-gradient(90deg,#00c6ff,#7c3aed);color:white;text-align:center;padding:16px;border-radius:14px;font-weight:800;margin-top:18px;width:100%;border:none;cursor:pointer;position:relative;z-index:9999;display:block}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#080c25;border-top:1px solid #1e2450;display:flex;justify-content:space-around;padding:8px 0;z-index:10}
-.nav{font-size:10px;color:#5a638a;text-align:center;flex:1}.nav.active{color:#00d4ff}
-#payModal{position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:10000;display:none;align-items:center;justify-content:center;padding:20px}#payModal.show{display:flex}
-.modalBox{background:#141840;border:1px solid #2a3ab8;border-radius:20px;padding:20px;width:100%;max-width:380px;text-align:center}
-#qrcode{background:white;padding:12px;border-radius:12px;display:flex;justify-content:center;margin:16px 0;min-height:200px;align-items:center}
-#qrcode img{max-width:100%}
-.qr-text{font-size:7px;color:#aab0d0;word-break:break-all;background:#0f1330;padding:8px;border-radius:8px}
-</style>
-</head>
-<body>
-<div class="header"><div class="logo-wrap"><div class="avatar"></div><div class="logo-text">WafaStoreOnly</div></div></div>
-
-<div id="roblox" class="page active">
-<div style="font-weight:800;font-size:18px">Roblox - Top Up Robux</div>
-<div style="display:flex;gap:7px;margin-top:12px"><button class="subtab active" id="t1" onclick="setMethod('username')">Username 16k/100</button><button class="subtab" id="t2" onclick="setMethod('gamepass')">Gamepass 14k/100</button><button class="subtab" id="t3" onclick="setMethod('gift')">Gift 95/robux</button></div>
-<div class="input"><label>Username Roblox:</label><input id="uRbx" placeholder="SANTRI_PRIDE" value="WafaStore03"></div>
-<div class="input"><label>Mau Berapa robux?</label><input id="cRbx" type="number" value="100" oninput="calcRbx()"></div>
-<div class="total" id="tRbx">Total: 100 robux = Rp16.000</div>
-<div class="via-title" id="viaTitle">Via Username - 16k/100 robux (diskon 18k)</div>
-<div class="grid2" id="priceGrid"></div>
-<div class="tutor"><b style="color:#00d4ff">✅ SYARAT & KETENTUAN VIA USERNAME 1-5 MENIT CAIR:</b><ol style="padding-left:18px;margin-top:8px;line-height:1.6"><li>pastikan username benar contoh SANTRI_PRIDE</li><li>wajib aktifkan v2(verfikasi 2 langkah)</li><li>pastikan akun 18+</li><li>jangan ganti akun username saat sedang proses</li></ol></div>
-
-<!-- TOMBOL FIX - PAKE DIV BUKAN BUTTON -->
-<div class="wa" id="btnBayar" onclick="orderRbx()">💳 BAYAR PAKAI QRIS DINAMIS</div>
-</div>
-
-<div id="payModal" onclick="if(event.target==this) closePay()"><div class="modalBox"><h3>Scan QRIS untuk Bayar</h3><p id="payDetail" style="color:#00ff88;font-size:12px;margin-top:8px;font-weight:700"></p><div id="qrcode"><span style="color:#000;font-size:12px">Loading QR...</span></div><div class="qr-text" id="qrText"></div><a id="waAfter" class="wa" style="background:#25D366;margin-top:14px;margin-bottom:0">✅ Sudah Bayar - Konfirmasi WA</a><div style="margin-top:12px;font-size:11px;color:#7a82aa" onclick="closePay()">Tutup</div></div></div>
-<div class="bottom"><div class="nav active">🏠<br>Beranda</div><div class="nav">⚡<br>Top Up</div><div class="nav">☰<br>Pesanan</div><div class="nav">👛<br>Dompet</div><div class="nav">👤<br>Profil</div></div>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
+<body style="background:#080c25;padding:20px;color:white;font-family:sans-serif">
+<h3>TEST TOMBOL</h3>
+<input id="uRbx" placeholder="username" value="WafaStore03" style="width:100%;padding:12px;margin:10px 0">
+<button id="btnBayar" style="width:100%;padding:16px;background:cyan;border:none;border-radius:12px;font-weight:800;font-size:16px" onclick="alert('KEPENCET BOS!');document.getElementById('hasil').innerHTML='SUKSES KEPENCET';">
+TEST KLIK GUA
+</button>
+<div id="hasil" style="margin-top:20px;color:#00ff88"></div>
 
 <script>
-let method='username';
-const QRIS_STATIC="00020101021126570011ID.DANA.WWW011893600915303356172402090335617240303UMI51440014ID.CO.QRIS.WWW0215ID10265588813750303UMI5204594553033605802ID5913AWA_NEWSTREAM6010Kab. Bogor610516320630452D8";
-function crc16(s){let c=0xFFFF;for(let i=0;i<s.length;i++){c^=s.charCodeAt(i)<<8;for(let j=0;j<8;j++){c=(c&0x8000)?(c<<1)^0x1021:c<<1;c&=0xFFFF}}return c.toString(16).toUpperCase().padStart(4,'0')}
-function makeDynamicQRIS(a){let q=QRIS_STATIC.slice(0,-4).replace("010211","010212");let amt=Math.round(a).toString();let tag="54"+String(amt.length).padStart(2,'0')+amt;q=q.replace("5802ID",tag+"5802ID")+"6304";return q+crc16(q)}
-const prices=[100,200,400,800,1000,1700,2200,3000,4000,5000];
-function renderPrices(){let g=document.getElementById('priceGrid');g.innerHTML='';let nr=method=='username'?160:method=='gamepass'?140:95,or=method=='username'?180:method=='gamepass'?160:120;prices.forEach(j=>{let d=document.createElement('div');d.className='item2'+(document.getElementById('cRbx').value==j?' active':'');d.onclick=()=>{document.getElementById('cRbx').value=j;calcRbx();renderPrices()};d.innerHTML=`<div class="robux-label">${j} robux</div><div class="old-price">Rp${(j*or).toLocaleString('id-ID')}</div><div class="pr">Rp${(j*nr).toLocaleString('id-ID')}</div>`;g.appendChild(d)})}
-function setMethod(m){method=m;document.querySelectorAll('.subtab').forEach(s=>s.classList.remove('active'));if(m=='username')document.getElementById('t1').classList.add('active');if(m=='gamepass')document.getElementById('t2').classList.add('active');if(m=='gift')document.getElementById('t3').classList.add('active');calcRbx();renderPrices()}
-function calcRbx(){let j=document.getElementById('cRbx').value||0;let rate=method=='username'?160:method=='gamepass'?140:95;document.getElementById('tRbx').innerText=`Total: ${j} robux = Rp${(j*rate).toLocaleString('id-ID')} (${method})`;document.getElementById('viaTitle').innerText=`Via ${method} - ${rate}k/100 robux`}
-function orderRbx(){
-  console.log("btn clicked");
-  let j=document.getElementById('cRbx').value;
-  let u=document.getElementById('uRbx').value;
-  if(!u){alert('Isi username dulu');return;}
-  let rate=method=='username'?160:method=='gamepass'?140:95;
-  let total=j*rate;
-  let qr=makeDynamicQRIS(total);
-  
-  // TAMPILIN MODAL DULU - JANGAN TUNGGU QR LIBRARY
-  document.getElementById('payDetail').innerText=`${j} robux = Rp${total.toLocaleString('id-ID')} - ${u}`;
-  document.getElementById('qrText').innerText=qr;
-  document.getElementById('payModal').classList.add('show');
-  
-  // COBA GENERATE QR
-  try{
-    document.getElementById('qrcode').innerHTML="";
-    if(typeof QRCode!=='undefined'){
-      new QRCode(document.getElementById('qrcode'),{text:qr,width:250,height:250});
-    }else{throw "QRCode lib not loaded";}
-  }catch(e){
-    console.log("QRCode fail, use backup",e);
-    // BACKUP PAKAI API QR SERVER
-    document.getElementById('qrcode').innerHTML=`<img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(qr)}" alt="QRIS">`;
-  }
-  document.getElementById('waAfter').href='https://wa.me/6283862776790?text='+encodeURIComponent(`Halo sudah bayar\nUser:${u}\n${j} robux ${method}\nRp${total}\n${qr}`);
-}
-function closePay(){document.getElementById('payModal').classList.remove('show');}
-calcRbx();renderPrices();
+document.getElementById('btnBayar').addEventListener('touchstart', function(){
+  alert('touchstart kepencet!');
+});
 </script>
 </body>
 </html>
