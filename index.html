@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WafaStoreOnly x Killua - FINAL BUTTON</title>
+<title>WafaStoreOnly - FINAL BUTTON LINK FIX</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
@@ -54,8 +54,8 @@ window.DISCORD_URL="https://discord.com/api/webhooks/1553218744803917856/uUaVtWr
 </script>
 </head>
 <body>
-<div class="header"><div class="logo"><img src="./logo.png" style="width:36px;height:36px;border-radius:50%;border:2px solid #00e5ff"><span>WafaStoreOnly</span></div><div style="font-size:11px;background:#00ff8820;border:1px solid #00ff88;padding:4px 8px;border-radius:20px">BUTTON FIX ✅</div></div>
-<div id="homePage"><div class="banner"><h1>TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1><p>⚡ Killua Edition • Aman • 24/7</p><button class="btn-mulai" onclick="openRoblox()">⚡ Mulai Top Up Sekarang</button></div>
+<div class="header"><div class="logo"><img src="./logo.png" style="width:36px;height:36px;border-radius:50%;border:2px solid #00e5ff"><span>WafaStoreOnly</span></div><div style="font-size:11px;background:#00ff8820;border:1px solid #00ff88;padding:4px 8px;border-radius:20px">NO ENDPOINT ✅</div></div>
+<div id="homePage"><div class="banner"><h1>TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1><p>⚡ Killua Edition • Aman • 24/7 • Godspeed Delivery</p><button class="btn-mulai" onclick="openRoblox()">⚡ Mulai Top Up Sekarang</button></div>
 <div class="section"><div class="grid-game">
 <div class="card-game" onclick="openRoblox()"><img src="https://tr.rbxcdn.com/38c6edcb50633730ff4cf39ac885deea/512/512/Image/Png"><div class="name">Roblox</div></div>
 <div class="card-game"><img src="https://cdn.mobygames.com/covers/12651856-mobile-legends-bang-bang-android-front-cover.jpg"><div class="name">Mobile Legends</div></div>
@@ -122,7 +122,7 @@ function attachFirebaseListener(orderId){
           orders[idx].notifProses=true; localStorage.setItem('wafa_orders',JSON.stringify(orders));
         }
         if(o.status=='selesai' &&!orders[idx].notifSelesai){
-          addBotMsg(`🎉 Pesanan #${o.id.toString().slice(-6)} sudah diterima transaksi done silahkan cek✅\n\n📌 ticket akan terhapus otomatis dalam 10 menit\n\n${o.jumlah} Robux udah masuk ke ${o.username}!\n\nTerimakasih telah order di WafaStoreOnly🥰🙏\nDitunggu orderan selanjutnya!`);
+          addBotMsg(`🎉 Pesanan #${o.id.toString().slice(-6)} sudah diterima transaksi done silahkan cek✅\n\n📌 ticket akan terhapus otomatis dalam 10 menit\n\n${o.jumlah} Robux udah masuk ke ${o.username}!\n\nTerimakasih telah order di WafaStoreOnly🥰🙏`);
           orders[idx].notifSelesai=true; localStorage.setItem('wafa_orders',JSON.stringify(orders));
           setTimeout(()=>{let cur=JSON.parse(localStorage.getItem('wafa_orders')||'[]').filter(x=>x.id!=o.id);localStorage.setItem('wafa_orders',JSON.stringify(cur));renderPesanan();addBotMsg(`📌 Ticket #${o.id.toString().slice(-6)} auto terhapus setelah 10 menit ✅`);},600000);
         }
@@ -138,12 +138,16 @@ function saveOrder(data){
   try{
     if(window.wafaDB){ window.wafaSet(window.wafaRef(window.wafaDB,'orders/'+data.id), data); }
     if(window.DISCORD_URL){
-      fetch(window.DISCORD_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ content: `🔥 **ORDER BARU!**\nID: #${data.id.toString().slice(-6)}\nUsername: ${data.username}\nJumlah: ${data.jumlah} Robux\nTotal: Rp${data.total.toLocaleString('id-ID')}\nMenunggu bukti TF...` })});
+      fetch(window.DISCORD_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ content: `🔥 **ORDER BARU!**\nID: #${data.id.toString().slice(-6)}\nUsername: ${data.username}\nJumlah: ${data.jumlah} Robux\nTotal: Rp${data.total.toLocaleString('id-ID')}` })});
     }
   }catch(e){}
   return data.id
 }
 function sendDiscordWithBukti(o, dataUrl, judul){
+  const baseUrl = "https://wafastoreonly-official.vercel.app/";
+  const prosesUrl = `${baseUrl}admin.html?id=${o.id}&action=proses`;
+  const selesaiUrl = `${baseUrl}admin.html?id=${o.id}&action=selesai`;
+  const batalUrl = `${baseUrl}admin.html?id=${o.id}&action=batal`;
   const text = `${judul}\n\n📦 **FORMAT ORDERAN**\nID: #${o.id.toString().slice(-6)}\nUsername: ${o.username}\nMethod: ${o.method}\nJumlah: ${o.jumlah} Robux\nTotal: Rp${o.total.toLocaleString('id-ID')}\nItem: ${o.item||'-'}\nTanggal: ${o.date}\n\n⚠️ Cek mutasi dulu bos!`;
   fetch(dataUrl).then(r=>r.blob()).then(blob=>{
     let form=new FormData();
@@ -155,18 +159,18 @@ function sendDiscordWithBukti(o, dataUrl, judul){
           method:'POST',
           headers:{'Content-Type':'application/json'},
           body: JSON.stringify({
-            content: `⬇️ **AKSI ORDER #${o.id.toString().slice(-6)} - ${o.username}**`,
+            content: `⬇️ **AKSI ORDER #${o.id.toString().slice(-6)} - ${o.username}**\nKlik tombol dibawah bos!`,
             components: [{
               type:1,
               components:[
-                { type:2, style:1, label:"PROSES ✅", custom_id:`proses_${o.id}` },
-                { type:2, style:3, label:"KONFIRMASI ✅", custom_id:`selesai_${o.id}` },
-                { type:2, style:4, label:"BATALKAN ❌", custom_id:`batal_${o.id}` }
+                { type:2, style:5, label:"PROSES ✅", url: prosesUrl },
+                { type:2, style:5, label:"KONFIRMASI ✅", url: selesaiUrl },
+                { type:2, style:5, label:"BATALKAN ❌", url: batalUrl }
               ]
             }]
           })
         });
-      }, 800);
+      }, 900);
     });
   });
 }
@@ -206,7 +210,7 @@ function uploadBuktiFromChat(input){
   let r=new FileReader();
   r.onload=()=>{
     o.bukti=r.result; orders[0]=o; localStorage.setItem('wafa_orders',JSON.stringify(orders)); renderPesanan();
-    addBotMsg(`✅ Bukti TF #${o.id.toString().slice(-6)} dari chat berhasil! Admin cek mutasi ya 🥰`);
+    addBotMsg(`✅ Bukti TF #${o.id.toString().slice(-6)} dari chat berhasil!`);
     sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF MASUK VIA CHAT!**`);
   }; r.readAsDataURL(file); input.value='';
 }
