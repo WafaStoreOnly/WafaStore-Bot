@@ -1,114 +1,41 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Dompet - WafaStoreOnly</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
-body{background:#0f0f0f;color:white;padding-bottom:80px}
-.header{padding:15px;display:flex;align-items:center;gap:10px;background:#1a1a1a;border-bottom:1px solid #333;position:sticky;top:0;z-index:10}
-.header a{color:white;text-decoration:none;font-size:20px}
-.card-saldo{margin:15px;background:linear-gradient(135deg,#7c3aed,#4f46e5);border-radius:20px;padding:20px;position:relative;overflow:hidden}
-.card-saldo h4{opacity:0.8;font-size:14px}
-.card-saldo h1{font-size:32px;margin:10px 0}
-.card-saldo p{font-size:12px;opacity:0.7}
-.btn-topup{width:100%;background:white;color:#7c3aed;border:none;padding:12px;border-radius:12px;font-weight:bold;margin-top:15px;cursor:pointer}
-.menu-dompet{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:15px}
-.item-menu{background:#1e1e1e;border:1px solid #2a2a2a;padding:15px;border-radius:15px;text-align:center;cursor:pointer}
-.item-menu h3{font-size:14px;margin-top:8px}
-.item-menu p{font-size:11px;color:#888;margin-top:4px}
-.history{padding:15px}
-.history h3{margin-bottom:10px}
-.history-item{background:#1e1e1e;padding:12px;border-radius:12px;display:flex;justify-content:space-between;margin-bottom:10px;border:1px solid #2a2a2a}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;border-top:1px solid #333;display:flex;justify-content:space-around;padding:10px 0}
-.bottom-nav a{color:#666;text-decoration:none;text-align:center;font-size:11px}
-.bottom-nav a.active{color:#7c3aed}
+body{background:#060a23;color:#fff;font-family:Inter;padding-bottom:90px;margin:0}
+.header{padding:12px 16px;background:rgba(8,12,37,0.9);display:flex;gap:10px;align-items:center;position:sticky;top:0;border-bottom:2px solid #00e5ff40}
+.card{margin:16px;background:linear-gradient(135deg,#00c6ff,#7c3aed);border-radius:20px;padding:20px;box-shadow:0 0 25px #00e5ff80}
+.btn{width:100%;background:#fff;color:#000;border:none;padding:12px;border-radius:12px;font-weight:900;margin-top:12px}
+.item{background:#121631;border:1px solid #2a3a8a;border-radius:12px;padding:12px;margin-top:10px;display:flex;justify-content:space-between}
 </style>
 </head>
 <body>
-
-<div class="header">
-<a href="index.html">←</a>
-<b>Dompet Saya</b>
+<div class="header"><a href="index.html" style="color:#00e5ff;text-decoration:none">← Kembali</a><b> Dompet Saya ⚡</b></div>
+<div class="card">
+<div style="font-size:12px;opacity:0.8">Saldo WafaStoreOnly x Killua</div>
+<h1 id="saldo" style="font-size:36px;margin:8px 0">Rp 0</h1>
+<div id="email" style="font-size:11px">Loading...</div>
+<button class="btn" onclick="alert('Top Up Saldo hubungi Admin - Transfer ke DANA 083862776790')">+ TOP UP SALDO</button>
 </div>
-
-<div class="card-saldo">
-<h4>Saldo WafaStoreOnly</h4>
-<h1 id="saldoText">Rp 0</h1>
-<p id="emailText">Loading...</p>
-<button class="btn-topup" onclick="window.location.href='topup-saldo.html'">+ Top Up Saldo</button>
+<div style="padding:16px">
+<div style="font-weight:800">Riwayat Saldo</div>
+<div class="item"><span>Belum ada transaksi</span><span>-</span></div>
 </div>
-
-<div class="menu-dompet">
-<div class="item-menu" onclick="window.location.href='topup-saldo.html'">
-<div style="font-size:28px">💳</div>
-<h3>Top Up</h3>
-<p>Isi saldo instan</p>
-</div>
-<div class="item-menu" onclick="alert('Fitur tarik saldo hubungi Admin WA')">
-<div style="font-size:28px">💸</div>
-<h3>Tarik Saldo</h3>
-<p>Withdraw ke DANA</p>
-</div>
-<div class="item-menu" onclick="window.location.href='pesanan.html'">
-<div style="font-size:28px">📜</div>
-<h3>Riwayat</h3>
-<p>Transaksi top up game</p>
-</div>
-<div class="item-menu" onclick="window.open('https://wa.me/628xxxx','_blank')">
-<div style="font-size:28px">💬</div>
-<h3>Bantuan</h3>
-<p>Chat Admin</p>
-</div>
-</div>
-
-<div class="history">
-<h3>Riwayat Saldo Terakhir</h3>
-<div id="historyList">
-<div class="history-item">
-<span>Belum ada transaksi</span>
-<span style="color:#888">-</span>
-</div>
-</div>
-</div>
-
-<div class="bottom-nav">
-<a href="index.html"><div>🏠</div>Beranda</a>
-<a href="index.html#topup"><div>🎮</div>Top-Up</a>
-<a href="pesanan.html"><div>📦</div>Pesanan</a>
-<a href="dompet.html" class="active"><div>👛</div>Dompet</a>
-<a href="profil.html"><div>👤</div>Profil</a>
-</div>
-
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyA...",
-  authDomain: "wafastoreonly.firebaseapp.com",
-  databaseURL: "https://wafastoreonly-default-rtdb.firebaseio.com",
-  projectId: "wafastoreonly",
-  appId: "1:..."
-};
-// GANTI firebaseConfig DI ATAS SAMA PUNYA LU BOS! COPY DARI FIREBASE CONSOLE!
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getDatabase(app);
-
-onAuthStateChanged(auth, (user) => {
-  if(!user){ window.location.href="login.html"; return; }
-  document.getElementById("emailText").innerText = user.email;
-  const saldoRef = ref(db, 'users/' + user.uid + '/saldo');
-  onValue(saldoRef, (snap)=>{
-    const saldo = snap.val() || 0;
-    document.getElementById("saldoText").innerText = "Rp " + saldo.toLocaleString("id-ID");
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getDatabase,ref,onValue} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyDTkQVpME0XRQmk9Jo7eDQuf0OFY8stm_8", authDomain: "wafastoreonly.firebaseapp.com", databaseURL: "https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "wafastoreonly", appId: "1:208012194307:web:551a540b0151333da69436" };
+const app=initializeApp(firebaseConfig);const auth=getAuth(app);const db=getDatabase(app);
+onAuthStateChanged(auth,(user)=>{
+  if(!user){location.href='login.html';return}
+  document.getElementById('email').innerText=user.email;
+  onValue(ref(db,'users/'+user.uid+'/saldo'),(s)=>{
+    document.getElementById('saldo').innerText='Rp '+(s.val()||0).toLocaleString('id-ID');
   });
 });
 </script>
-
 </body>
 </html>
