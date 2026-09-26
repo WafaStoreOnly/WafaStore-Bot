@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin WafaStoreOnly</title>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin WafaStoreOnly</title>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, update, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-const firebaseConfig = { apiKey: "AIzaSyDTkQVpME0XRQmk9Jo7eDQuf0OFY8stm_8", authDomain: "wafastoreonly.firebaseapp.com", databaseURL: "https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "wafastoreonly", storageBucket: "wafastoreonly.firebasestorage.app", messagingSenderId: "208012194307", appId: "1:208012194307:web:551a540b0151333da69436" };
+import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyDTkQVpME0XRQmk9Jo7eDQuf0OFY8stm_8", authDomain: "wafastoreonly.firebaseapp.com", databaseURL: "https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "wafastoreonly" };
 const app = initializeApp(firebaseConfig); const db = getDatabase(app);
 const p=new URLSearchParams(location.search); const id=p.get('id'); const action=p.get('action');
-async function run(){
-  if(!id || !action){document.body.innerHTML='<h2 style=color:white;background:#060a23;padding:20px>❌ ID / Action gak ada bos!</h2>';return;}
-  try{
-    await update(ref(db,'orders/'+id), { status: action==='selesai'?'selesai':action==='proses'?'proses':'batal' });
-    document.body.innerHTML=`<div style="background:#060a23;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;font-family:sans-serif;text-align:center;padding:20px"><div style="font-size:60px">${action==='selesai'?'✅':action==='proses'?'⚡':'❌'}</div><h1>Pesanan #${id.toString().slice(-6)}<br>Status jadi: ${action.toUpperCase()}</h1><p style="color:#aab0d0;margin-top:10px">Buyer udah auto dapet notif di web!<br>${action==='selesai'?'Ticket auto hapus 10 menit':'Lanjutkan proses bos!'}</p><a href="/" style="margin-top:20px;padding:12px 20px;background:#00e5ff;color:#000;border-radius:10px;text-decoration:none;font-weight:800">Kembali ke Web</a></div>`;
-  }catch(e){document.body.innerHTML='<h2 style=color:white>Error: '+e.message+'</h2>';}
-} run();
+(async()=>{
+  if(!id||!action){document.body.innerHTML='<h2>❌ ID/Action kosong</h2>';return;}
+  let st=action==='selesai'?'selesai':action==='proses'?'proses':'batal';
+  await update(ref(db,'orders/'+id),{status:st});
+  document.body.innerHTML=`<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#060a23;color:#fff;font-family:sans-serif;text-align:center"><div style="font-size:60px">${st==='selesai'?'✅':st==='proses'?'⚡':'❌'}</div><h1>#${id.slice(-6)} - ${st.toUpperCase()}</h1><p>Buyer auto dapet notif!</p><a href="/" style="margin-top:20px;padding:12px 20px;background:#00e5ff;color:#000;border-radius:10px;text-decoration:none;font-weight:800">Kembali</a></div>`;
+})();
 </script></head><body style="margin:0;background:#060a23"></body></html>
