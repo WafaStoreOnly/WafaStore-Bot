@@ -190,36 +190,88 @@ Kirim bukti TF kamu disini ya biar admin cek mutasi 🥰 (Anti foto porno & fake
 // ================= TAMBAHAN FITUR BARU - SENSOR & ANTI PORNO - GUA SELIPIN DISINI BOS =================
 function sensorEmail(e){if(!e||!e.includes('@'))return'****';let [a,b]=e.split('@');if(a.length<=2)return a[0]+'****@'+b;return a.slice(0,3)+'****@'+b}
 function sensorNomor(n){if(!n)return'****';let s=n.toString();if(s.length<7)return'****';return s.slice(0,4)+'****'+s.slice(-3)}
+
+// FIX UTAMA - KALO BUKAN NOMOR/QRIS LU AUTO GAGAL BOS!
 async function cekBuktiValid(file){
-  // loading overlay
   let loading=document.createElement('div');
   loading.id='loadingDetect';
   loading.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;justify-content:center;align-items:center;flex-direction:column;color:#fff;font-weight:800;text-align:center;padding:20px';
-  loading.innerHTML='<div style="font-size:50px">🔍</div><div style="margin-top:10px">CEK BUKTI TF OTOMATIS...</div><div id="cek-status" style="font-size:12px;color:#00e5ff;margin-top:8px">1/3 Detect NSFW...</div>';
+  loading.innerHTML='<div style="font-size:50px">🔍</div><div style="margin-top:10px">CEK BUKTI TF OTOMATIS...</div><div id="cek-status" style="font-size:12px;color:#00e5ff;margin-top:8px">1/4 Detect NSFW...</div>';
   document.body.appendChild(loading);
   try{
     // 1. NSFW DETECT
-    document.getElementById('cek-status').innerText='1/3 Cek foto porno / NSFW...';
+    document.getElementById('cek-status').innerText='1/4 Cek foto porno / NSFW...';
     let img=document.createElement('img');img.src=URL.createObjectURL(file);await new Promise(r=>{img.onload=r;img.onerror=r;});
     const model=await nsfwjs.load();
     const preds=await model.classify(img);
     let pornScore=0;preds.forEach(p=>{if(['Porn','Hentai','Sexy'].includes(p.className))pornScore=Math.max(pornScore,p.probability)});
     console.log('NSFW:',preds);
     if(pornScore>0.5){document.getElementById('loadingDetect').remove();return {valid:false,reason:`❌ FOTO DITOLAK! Terdeteksi foto porno/NSFW (${Math.round(pornScore*100)}%)! Upload bukti TF asli bos!`};}
-    // 2. OCR CEK
-    document.getElementById('cek-status').innerText='2/3 Cek keaslian bukti TF (OCR)...';
+
+    // 2. OCR
+    document.getElementById('cek-status').innerText='2/4 Baca tulisan bukti...';
     let {data:{text}}=await Tesseract.recognize(file,'ind+eng');
     let lower=text.toLowerCase();
+    let lowerNoSpace=lower.replace(/\s/g,'');
     console.log('OCR:',lower);
-    let keys=['berhasil','sukses','transfer','dana','gopay','seabank','qris','rp','total','nominal','pembayaran','terkirim'];
-    let match=keys.filter(k=>lower.includes(k)).length;
-    if(match<2){document.getElementById('loadingDetect').remove();return {valid:false,reason:'❌ BUKTI TIDAK VALID! Tidak terdeteksi sebagai bukti transfer! Harus ada tulisan Berhasil / Transfer / DANA / GOPAY / Rp. Jangan upload foto random!'};}
-    document.getElementById('cek-status').innerText='3/3 Cek nominal...';
-    if(!lower.includes('rp')&&!/\d{4,}/.test(lower)){document.getElementById('loadingDetect').remove();return {valid:false,reason:'❌ Tidak ada nominal uang di foto! Upload screenshot asli dari e-wallet!'};}
-    document.getElementById('cek-status').innerText=`VALID ✅ - NSFW Aman | OCR ${match}/12`;
-    setTimeout(()=>{let l=document.getElementById('loadingDetect');if(l)l.remove();},800);
-    return {valid:true,match,pornScore};
-  }catch(err){let l=document.getElementById('loadingDetect');if(l)l.remove();console.error(err);return {valid:true,match:99,pornScore:0,error:err.message};}
+
+    // BLACKLIST TOXIC
+    let blacklist=['kontol','memek','ngentot','anjing','babi','bangsat','tolol','goblok','asu','jancok','fuck','shit','peler','itil','jembut','kerjakontol'];
+    let toxicFound=blacklist.find(k=>lower.includes(k));
+    if(toxicFound){
+      document.getElementById('loadingDetect').remove();
+      return {valid:false,reason:`❌ FOTO DITOLAK! Terdeteksi kata kasar "${toxicFound.toUpperCase()}"! Jangan ngisengin admin!`};
+    }
+
+    // 3. CEK PENERIMA - KALO BUKAN PUNYA LU AUTO GAGAL!
+    document.getElementById('cek-status').innerText='3/4 Cek penerima wajib punya gua...';
+
+    // DAFTAR VALID PUNYA LU BOS
+    let validNumbers=['083862776790','83862776790','3862776790','62776790','901162765462','01162765462','1162765462'];
+    let validNames=['wafastoreonly','wafastore','awa_newstream','killua'];
+
+    let isMyNumber = validNumbers.some(no => lowerNoSpace.includes(no));
+    let isMyName = validNames.some(nm => lower.includes(nm));
+    let isQris = lower.includes('qris');
+
+    // FAKE RECEIVER
+    let fakeList=['jhonny','benjamin','manurung','budi','santoso','danaid'];
+    let isFake = fakeList.some(f => lower.includes(f));
+
+    if(isFake){
+      document.getElementById('loadingDetect').remove();
+      return {valid:false,reason:`❌ BUKTI FAKE! Penerima bukan WafaStoreOnly! Di foto penerimanya bukan punya lu bos! Transfer ke DANA 083862776790 / SEABANK 901162765462 / QRIS WafaStoreOnly!`};
+    }
+
+    if(!isMyNumber &&!isMyName &&!isQris){
+      document.getElementById('loadingDetect').remove();
+      return {valid:false,reason:`❌ BUKTI SALAH TUJUAN! Penerima bukan punya gua!
+
+Yang valid:
+DANA/GOPAY: 083862776790
+SEABANK: 901162765462
+QRIS: WafaStoreOnly
+
+Bukti kamu tidak ada nomor/nama gua! Transfer dulu ke nomor gua bos!`};
+    }
+
+    // 4. CEK NOMINAL & BERHASIL
+    document.getElementById('cek-status').innerText='4/4 Cek nominal & status berhasil...';
+    let keys=['berhasil','sukses','success','completed','terkirim'];
+    let adaBerhasil = keys.some(k=>lower.includes(k));
+    if(!adaBerhasil){
+      document.getElementById('loadingDetect').remove();
+      return {valid:false,reason:'❌ BUKTI TIDAK VALID! Tidak ada tulisan Berhasil/Sukses! Upload screenshot bukti berhasil transfer!'};
+    }
+    if(!lower.includes('rp')&&!/\d{4,}/.test(lower)){
+      document.getElementById('loadingDetect').remove();
+      return {valid:false,reason:'❌ Tidak ada nominal uang di foto! Upload screenshot asli dari e-wallet!'};
+    }
+
+    document.getElementById('cek-status').innerText=`VALID ✅ - Penerima punya gua!`;
+    setTimeout(()=>{let l=document.getElementById('loadingDetect');if(l)l.remove();},700);
+    return {valid:true,match:10,pornScore};
+  }catch(err){let l=document.getElementById('loadingDetect');if(l)l.remove();console.error(err);return {valid:false,reason:'❌ Gagal baca bukti! Upload ulang yang jelas!'};}
 }
 // ================= END TAMBAHAN FITUR BARU =================
 
@@ -343,8 +395,8 @@ async function uploadBukti(id){
       let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
       let o=orders.find(x=>x.id==id); if(!o) return;
       o.bukti=r.result; localStorage.setItem('wafa_orders',JSON.stringify(orders)); renderPesanan();
-      addBotMsg(`✅ Bukti TF #${id.toString().slice(-6)} valid & berhasil! (NSFW Aman ✅, OCR ${cek.match}/12) Admin cek mutasi ya 🥰`);
-      sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF MASUK! [✅ VALID - LULUS DETEKSI]**`, cek);
+      addBotMsg(`✅ Bukti TF #${id.toString().slice(-6)} valid & berhasil! (NSFW Aman ✅, Penerima Valid ✅) Admin cek mutasi ya 🥰`);
+      sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF MASUK! [✅ VALID - PENERIMA PUNYA GUA]**`, cek);
     }; r.readAsDataURL(file);
   }; input.click();
 }
@@ -358,8 +410,8 @@ async function uploadBuktiFromChat(input){
   let r=new FileReader();
   r.onload=()=>{
     o.bukti=r.result; orders[0]=o; localStorage.setItem('wafa_orders',JSON.stringify(orders)); renderPesanan();
-    addBotMsg(`✅ Bukti TF #${o.id.toString().slice(-6)} dari chat valid! (NSFW Aman ✅) Admin cek mutasi ya 🥰`);
-    sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF MASUK VIA CHAT! [✅ VALID]**`, cek);
+    addBotMsg(`✅ Bukti TF #${o.id.toString().slice(-6)} dari chat valid! (Penerima Valid ✅) Admin cek mutasi ya 🥰`);
+    sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF MASUK VIA CHAT! [✅ VALID - PENERIMA PUNYA GUA]**`, cek);
   }; r.readAsDataURL(file); input.value='';
 }
 function checkExpired(){let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');let changed=false;let now=Date.now();orders.forEach(o=>{if(o.status=='verifikasi' && o.expiry && now>o.expiry){o.status='batal';changed=true;}});if(changed){localStorage.setItem('wafa_orders',JSON.stringify(orders));if(document.getElementById('pesananPage').style.display=='block')renderPesanan();}}
@@ -373,7 +425,7 @@ function goToPayment(){
  document.getElementById('btnPay').onclick=()=>{
   let data={username:u,method:currentMethod,jumlah:j,total:total,item:it||'',setting:set||''};
   let newId=saveOrder(data);
-  openPesanan(); addBotMsg(`Yosh pesanan #${newId.toString().slice(-6)} masuk! 📤 Kirim bukti TF kamu via tombol kuning di chat ini ya! ⏰ Sisa 10:00 (Anti porno & fake aktif ✅)`);
+  openPesanan(); addBotMsg(`Yosh pesanan #${newId.toString().slice(-6)} masuk! 📤 Kirim bukti TF kamu via tombol kuning di chat ini ya! ⏰ Sisa 10:00 (Anti porno & toxic aktif ✅)`);
   toggleLayanan();
  }; window.scrollTo(0,0);
 }
