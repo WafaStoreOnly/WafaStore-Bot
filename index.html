@@ -52,6 +52,25 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 #layananInput{display:flex;gap:6px;padding:10px;border-top:1px solid #1e2450;background:#0c102d}
 #layananInput input{flex:1;padding:10px;border-radius:20px;font-size:12px}
 #layananInput button{padding:10px 14px;border-radius:20px;border:none;background:#00e5ff;color:#000;font-weight:800}
+/* TAMBAHAN PROFILE KLIK - WAFASTOREONLY UPDATE ONLY */
+#profileModal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9998;display:none;justify-content:center;align-items:center;padding:16px;backdrop-filter:blur(8px)}
+#profileModal.open{display:flex}
+.profileBox{width:100%;max-width:380px;background:linear-gradient(180deg,#151a48,#0c102d);border:2px solid #00e5ff60;border-radius:20px;overflow:hidden;box-shadow:0 0 40px #00e5ff40}
+.profileTop{background:linear-gradient(90deg,#00c6ff,#7c3aed);padding:16px;display:flex;justify-content:space-between;align-items:center}
+.profileContent{padding:20px;text-align:center}
+.profileContent img#profilePic{width:90px;height:90px;border-radius:50%;border:3px solid #00e5ff;object-fit:cover;box-shadow:0 0 20px #00e5ff80}
+.profileRow{background:#121631;border:1px solid #232a5a;border-radius:12px;padding:10px 12px;margin-top:10px;text-align:left;display:flex;justify-content:space-between;align-items:center}
+.profileRow span.lbl{font-size:10px;color:#8d94b8;font-weight:800}
+.profileRow span.val{font-size:12px;font-weight:700;word-break:break-all}
+#userName{cursor:pointer;transition:0.2s} #userName:active{transform:scale(0.9)}
+/* TAMBAHAN HALAMAN PROFIL BAWAH - UPDATE TANPA HAPUS */
+#profilePage{display:none}
+.profilePageCard{background:linear-gradient(180deg,#151a48,#0c102d);border:2px solid #00e5ff30;border-radius:20px;padding:18px;margin-top:12px}
+.profileBigImg{width:100px;height:100px;border-radius:50%;border:3px solid #00e5ff;object-fit:cover;box-shadow:0 0 25px #00e5ff80}
+.btn-edit-foto{background:#1a1f4a;border:1px solid #00e5ff;color:#00e5ff;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:800;cursor:pointer;margin-top:10px}
+.btn-action{width:100%;padding:13px;border-radius:12px;border:none;font-weight:900;font-size:13px;cursor:pointer;margin-top:10px}
+.btn-logout{background:linear-gradient(90deg,#ff4444,#ff6a6a);color:#fff}
+.btn-ganti{background:linear-gradient(90deg,#1a1f4a,#2a2f6a);border:1px solid #2a3366;color:#fff}
 </style>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -70,7 +89,29 @@ onAuthStateChanged(auth, (user)=>{ if(user &&!localStorage.getItem('wafa_uid')){
 </script>
 </head>
 <body>
-<div class="header"><div class="logo"><img src="./logo.png" style="width:36px;height:36px;border-radius:50%;border:2px solid #00e5ff"><span>WafaStoreOnly</span></div><div style="display:flex;gap:6px;align-items:center"><div id="userName" style="font-size:10px;background:#00ff8820;border:1px solid #00ff88;padding:5px 10px;border-radius:20px">Loading...</div><button onclick="logout()" style="font-size:10px;background:#ff444420;border:1px solid #ff4444;padding:5px 10px;border-radius:20px;color:#fff;cursor:pointer">Logout</button></div></div>
+<div class="header"><div class="logo"><img src="./logo.png" style="width:36px;height:36px;border-radius:50%;border:2px solid #00e5ff"><span>WafaStoreOnly</span></div><div style="display:flex;gap:6px;align-items:center"><div id="userName" onclick="openProfileModal()" style="font-size:10px;background:#00ff8820;border:1px solid #00ff88;padding:5px 10px;border-radius:20px">Loading...</div><button onclick="logout()" style="font-size:10px;background:#ff444420;border:1px solid #ff4444;padding:5px 10px;border-radius:20px;color:#fff;cursor:pointer">Logout</button></div></div>
+
+<!-- PROFILE MODAL TAMBAHAN - BISA DI KLIK -->
+<div id="profileModal" onclick="if(event.target===this)closeProfileModal()">
+<div class="profileBox">
+<div class="profileTop"><div><b style="font-size:14px">👤 Profil Akun</b><div style="font-size:10px;opacity:0.8">WafaStoreOnly x Killua ⚡</div></div><div style="cursor:pointer;font-size:18px" onclick="closeProfileModal()">✕</div></div>
+<div class="profileContent">
+<img id="profilePic" src="https://ui-avatars.com/api/?name=Wafa&background=00e5ff&color=000" alt="foto">
+<h3 id="profileName" style="margin-top:12px;font-weight:900">Loading...</h3>
+<div id="profileEmail" style="font-size:11px;color:#8d94b8;margin-top:4px">-</div>
+<div class="profileRow"><span class="lbl">NAMA LENGKAP</span><span class="val" id="pNama">-</span></div>
+<div class="profileRow"><span class="lbl">EMAIL (GMAIL)</span><span class="val" id="pEmail">-</span></div>
+<div class="profileRow"><span class="lbl">TANGGAL LAHIR</span><span class="val" id="pTgl">-</span></div>
+<div class="profileRow"><span class="lbl">FOTO PROFILE</span><span class="val" id="pFotoStatus">Google Login ✅</span></div>
+<div class="profileRow"><span class="lbl">UID</span><span class="val" id="pUid" style="font-size:9px">-</span></div>
+<div style="display:flex;gap:8px;margin-top:14px">
+<input id="inputTglLahir" type="date" style="flex:1">
+<button onclick="saveTglLahir()" style="padding:10px 14px;border-radius:10px;border:none;background:#00e5ff;color:#000;font-weight:900;cursor:pointer">Simpan Tgl</button>
+</div>
+<div style="font-size:10px;color:#5a638a;margin-top:10px;line-height:1.5">Klik nama di pojok kanan atas buat lihat data ini. Data diambil langsung dari Gmail login kamu + database WafaStoreOnly.</div>
+</div>
+</div>
+</div>
 
 <div id="homePage">
 <div class="banner"><h1>TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1><p>⚡ Killua Edition • Aman • 24/7 • Godspeed • Auto Batal 10 Menit • Anti Porn ✅</p><button class="btn-mulai" onclick="openRoblox()">⚡ Mulai Top Up Sekarang</button></div>
@@ -153,6 +194,45 @@ onAuthStateChanged(auth, (user)=>{ if(user &&!localStorage.getItem('wafa_uid')){
 
 <div id="pesananPage" class="section"><div style="font-weight:900;font-size:20px">Pesanan Saya ⚡</div><div id="listPesanan" style="margin-top:16px"></div><div id="emptyPesanan" style="text-align:center;margin-top:40px;color:#5a638a"><div style="font-size:40px">📦</div><div style="font-size:13px;margin-top:8px">Belum ada pesanan</div></div></div>
 
+<!-- HALAMAN PROFIL BAWAH - TAMBAHAN BARU TANPA HAPUS YANG LAMA -->
+<div id="profilePage" class="section">
+<div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:900;font-size:20px">Profil Saya ⚡</div><div style="font-size:10px;background:#00e5ff20;border:1px solid #00e5ff;padding:5px 10px;border-radius:20px">Killua Mode ON</div></div>
+
+<div class="profilePageCard" style="text-align:center">
+<img id="profileBigPic" class="profileBigImg" src="https://ui-avatars.com/api/?name=Wafa&background=00e5ff&color=000">
+<h2 id="profileBigName" style="margin-top:12px;font-weight:900">Loading...</h2>
+<div id="profileBigEmail" style="font-size:12px;color:#aab0d0">-</div>
+<button class="btn-edit-foto" onclick="document.getElementById('inputFotoAlbum').click()">📸 Ganti Foto dari Album</button>
+<input type="file" id="inputFotoAlbum" accept="image/*" style="display:none" onchange="gantiFotoProfile(this)">
+<div style="font-size:10px;color:#5a638a;margin-top:6px">Foto dari galeri HP kamu, auto kesimpen</div>
+</div>
+
+<div class="profilePageCard">
+<div style="font-weight:800;font-size:14px;margin-bottom:12px">📋 Data Diri</div>
+<div class="profileRow"><span class="lbl">Nama Lengkap</span><span class="val" id="bigP_Nama">-</span></div>
+<div class="profileRow"><span class="lbl">Nickname Toko</span><span class="val" id="bigP_Nick">-</span></div>
+<div class="profileRow"><span class="lbl">Email / Gmail</span><span class="val" id="bigP_Email">-</span></div>
+<div class="profileRow"><span class="lbl">Tanggal Lahir</span><span class="val" id="bigP_Tgl">-</span></div>
+<div class="profileRow"><span class="lbl">UID Akun</span><span class="val" id="bigP_Uid" style="font-size:9px">-</span></div>
+<div class="profileRow"><span class="lbl">Bergabung</span><span class="val" id="bigP_Join">-</span></div>
+<div style="display:flex;gap:8px;margin-top:12px">
+<input id="bigInputNama" placeholder="Edit nama..." style="flex:1">
+<button onclick="saveNamaProfile()" style="padding:10px 14px;border-radius:10px;border:none;background:#00e5ff;color:#000;font-weight:900">Simpan Nama</button>
+</div>
+<div style="display:flex;gap:8px;margin-top:8px">
+<input id="bigInputTgl" type="date" style="flex:1">
+<button onclick="saveTglLahirBig()" style="padding:10px 14px;border-radius:10px;border:none;background:#7c3aed;color:#fff;font-weight:900">Simpan Tgl Lahir</button>
+</div>
+</div>
+
+<div class="profilePageCard">
+<div style="font-weight:800;font-size:14px;margin-bottom:8px">⚙️ Kelola Akun</div>
+<button class="btn-action btn-ganti" onclick="gantiAkun()">🔄 Ganti Akun / Login Gmail Lain</button>
+<button class="btn-action btn-logout" onclick="logout()">🚪 Logout Akun</button>
+<div style="font-size:10px;color:#5a638a;margin-top:10px;text-align:center;line-height:1.5">Logout akan menghapus sesi login & balik ke halaman login.html<br>Ganti akun buat login pakai Gmail lain</div>
+</div>
+</div>
+
 <div id="layananBtn" onclick="toggleLayanan()">💬</div>
 <div id="layananBox">
 <div id="layananHeader"><div><b style="font-size:13px">Layanan WafaStoreOnly ⚡</b><div style="font-size:10px;opacity:0.8">Kirim Bukti TF Disini - Anti Porn Active</div></div><div style="cursor:pointer" onclick="toggleLayanan()">✕</div></div>
@@ -172,7 +252,7 @@ Kirim bukti TF kamu disini ya biar admin cek mutasi 🥰</div></div>
 <div class="nav" onclick="openRoblox()">⚡<br>Top Up</div>
 <div class="nav" id="navPesanan" onclick="openPesanan()">☰<br>Pesanan</div>
 <div class="nav" onclick="window.location.href='dompet.html'">👛<br>Dompet</div>
-<div class="nav" onclick="window.location.href='profil.html'">👤<br>Profil</div>
+<div class="nav" id="navProfil" onclick="openProfilePage()">👤<br>Profil</div>
 </div>
 
 <button class="btn-pay" id="btnPay" onclick="goToPayment()">LANJUT PEMBAYARAN</button>
@@ -226,8 +306,8 @@ function renderGamepass(){let g=document.getElementById('gridGamepass');g.innerH
 function calcGamepass(){let j=parseInt(document.getElementById('cRbx2').value)||0;let tot=j*140;let set=Math.ceil(j/0.7);document.getElementById('tRbx2').innerHTML=`Total: ${j} robux = Rp${tot.toLocaleString('id-ID')}<br>Setting Gamepass: ${set} robux`;}
 function calcGift(){let j=parseInt(document.getElementById('cGift').value)||0;let it=document.getElementById('giftItem').value||'-';let tot=j*95;document.getElementById('tGift').innerHTML=`Total: ${j} robux x Rp95 = Rp${tot.toLocaleString('id-ID')}<br>Item: ${it}`;}
 document.getElementById('giftItem')?.addEventListener('input',calcGift);
-function hideAll(){document.getElementById('homePage').style.display='none';document.getElementById('robloxPage').style.display='none';document.getElementById('paymentPage').style.display='none';document.getElementById('pesananPage').style.display='none';}
-function setActive(k){document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));if(k=='home')document.getElementById('navHome').classList.add('active');if(k=='pesanan')document.getElementById('navPesanan').classList.add('active');}
+function hideAll(){document.getElementById('homePage').style.display='none';document.getElementById('robloxPage').style.display='none';document.getElementById('paymentPage').style.display='none';document.getElementById('pesananPage').style.display='none';document.getElementById('profilePage').style.display='none';}
+function setActive(k){document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));if(k=='home')document.getElementById('navHome').classList.add('active');if(k=='pesanan')document.getElementById('navPesanan').classList.add('active');if(k=='profile')document.getElementById('navProfil').classList.add('active');}
 function openRoblox(){hideAll();document.getElementById('robloxPage').style.display='block';document.getElementById('btnPay').style.display='block';document.getElementById('btnPay').innerText='LANJUT PEMBAYARAN';document.getElementById('btnPay').onclick=goToPayment;renderUsername();renderGamepass();setActive('topup')}
 function goHome(){hideAll();document.getElementById('homePage').style.display='block';document.getElementById('btnPay').style.display='none';setActive('home')}
 function backToRoblox(){hideAll();document.getElementById('robloxPage').style.display='block';document.getElementById('btnPay').style.display='block';document.getElementById('btnPay').innerText='LANJUT PEMBAYARAN';document.getElementById('btnPay').onclick=goToPayment;}
@@ -403,6 +483,149 @@ async function loadUser(){
   }catch(e){ document.getElementById('userName').innerText='User'; }
 }
 loadUser();
+
+// === TAMBAHAN PROFILE LOGIC - UPDATE ONLY, TIDAK HAPUS CODE LAMA ===
+let currentAuthUser = null;
+if(window.wafaAuth){
+  window.wafaAuth.onAuthStateChanged(async (user)=>{
+    if(user){
+      currentAuthUser = user;
+      const pic = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName||user.email||'Wafa')}&background=00e5ff&color=000`;
+      document.getElementById('profilePic').src = pic;
+      document.getElementById('profileName').innerText = user.displayName || user.email.split('@')[0];
+      document.getElementById('profileEmail').innerText = user.email;
+      document.getElementById('pNama').innerText = user.displayName || '-';
+      document.getElementById('pEmail').innerText = user.email;
+      document.getElementById('pUid').innerText = user.uid;
+      try{
+        let r = await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${user.uid}.json`);
+        let d = await r.json();
+        if(d){
+          if(d.birthDate) document.getElementById('pTgl').innerText = d.birthDate;
+          else if(d.tanggalLahir) document.getElementById('pTgl').innerText = d.tanggalLahir;
+          else document.getElementById('pTgl').innerText = 'Belum diisi - isi dibawah';
+          if(d.photoURL) document.getElementById('profilePic').src = d.photoURL;
+          if(d.photoBase64) document.getElementById('profilePic').src = d.photoBase64;
+        }
+      }catch(e){}
+      // update juga halaman profil bawah
+      updateBigProfile(user);
+    }
+  });
+}
+function openProfileModal(){
+  document.getElementById('profileModal').classList.add('open');
+  if(currentAuthUser && currentAuthUser.photoURL){
+    document.getElementById('profilePic').src = currentAuthUser.photoURL;
+  }
+}
+function closeProfileModal(){ document.getElementById('profileModal').classList.remove('open'); }
+async function saveTglLahir(){
+  const tgl = document.getElementById('inputTglLahir').value;
+  if(!tgl){ alert('Pilih tanggal dulu bos!'); return; }
+  const uid = localStorage.getItem('wafa_uid') || (currentAuthUser && currentAuthUser.uid);
+  if(!uid){ alert('UID ga ketemu, login ulang!'); return; }
+  try{
+    await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}.json`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ birthDate: tgl, tanggalLahir: tgl }) });
+    document.getElementById('pTgl').innerText = tgl;
+    document.getElementById('bigP_Tgl').innerText = tgl;
+    alert('✅ Tanggal lahir disimpan: '+tgl);
+  }catch(e){ alert('❌ Gagal simpan: '+e.message); }
+}
+
+// === TAMBAHAN BARU UNTUK TAB PROFIL BAWAH - TIDAK HAPUS CODE LAMA ===
+function openProfilePage(){
+  hideAll();
+  document.getElementById('profilePage').style.display='block';
+  document.getElementById('btnPay').style.display='none';
+  setActive('profile');
+  if(currentAuthUser) updateBigProfile(currentAuthUser);
+  else loadBigProfileFromDB();
+}
+async function updateBigProfile(user){
+  try{
+    let pic = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName||user.email)}&background=00e5ff&color=000`;
+    document.getElementById('profileBigPic').src = pic;
+    document.getElementById('profileBigName').innerText = user.displayName || user.email.split('@')[0];
+    document.getElementById('profileBigEmail').innerText = user.email;
+    document.getElementById('bigP_Nama').innerText = user.displayName || '-';
+    document.getElementById('bigP_Email').innerText = user.email;
+    document.getElementById('bigP_Uid').innerText = user.uid;
+    document.getElementById('bigP_Join').innerText = user.metadata && user.metadata.creationTime? new Date(user.metadata.creationTime).toLocaleDateString('id-ID') : '-';
+    let res = await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${user.uid}.json`);
+    let d = await res.json();
+    if(d){
+      if(d.nickname) { document.getElementById('bigP_Nick').innerText = d.nickname; document.getElementById('userName').innerText = d.nickname.slice(0,14); }
+      else { document.getElementById('bigP_Nick').innerText = user.displayName || '-'; }
+      if(d.birthDate || d.tanggalLahir){ document.getElementById('bigP_Tgl').innerText = d.birthDate || d.tanggalLahir; document.getElementById('pTgl').innerText = d.birthDate || d.tanggalLahir; }
+      if(d.photoBase64){ document.getElementById('profileBigPic').src = d.photoBase64; document.getElementById('profilePic').src = d.photoBase64; }
+      else if(d.photoURL){ document.getElementById('profileBigPic').src = d.photoURL; document.getElementById('profilePic').src = d.photoURL; }
+    }
+  }catch(e){}
+}
+async function loadBigProfileFromDB(){
+  try{
+    let uid=localStorage.getItem('wafa_uid'); if(!uid) return;
+    let res = await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}.json`);
+    let d = await res.json(); if(!d) return;
+    if(d.photoBase64) document.getElementById('profileBigPic').src = d.photoBase64;
+  }catch(e){}
+}
+function gantiFotoProfile(input){
+  let file = input.files[0]; if(!file) return;
+  if(file.size > 2*1024*1024){ alert('❌ Foto max 2MB bos!'); return; }
+  let reader = new FileReader();
+  reader.onload = async (e)=>{
+    let base64 = e.target.result;
+    document.getElementById('profileBigPic').src = base64;
+    document.getElementById('profilePic').src = base64;
+    document.getElementById('pFotoStatus').innerText = 'Custom Album ✅';
+    let uid = localStorage.getItem('wafa_uid') || (currentAuthUser && currentAuthUser.uid);
+    if(!uid){ alert('UID ga ketemu'); return; }
+    try{
+      // simpan ke Firebase RTDB sebagai base64
+      await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}.json`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ photoBase64: base64, photoURL: base64 }) });
+      // simpan lokal juga
+      let curUser = JSON.parse(localStorage.getItem('wafa_user')||'{}');
+      curUser.photoBase64 = base64; localStorage.setItem('wafa_user', JSON.stringify(curUser));
+      alert('✅ Foto profile berhasil diganti dari album!');
+    }catch(err){ alert('❌ Gagal simpan foto: '+err.message); }
+  };
+  reader.readAsDataURL(file);
+}
+async function saveNamaProfile(){
+  let nama = document.getElementById('bigInputNama').value.trim();
+  if(!nama){ alert('Isi nama dulu bos!'); return; }
+  let uid = localStorage.getItem('wafa_uid') || (currentAuthUser && currentAuthUser.uid);
+  if(!uid) return;
+  try{
+    await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}.json`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ nickname: nama, displayName: nama }) });
+    document.getElementById('bigP_Nama').innerText = nama;
+    document.getElementById('bigP_Nick').innerText = nama;
+    document.getElementById('pNama').innerText = nama;
+    document.getElementById('profileBigName').innerText = nama;
+    document.getElementById('profileName').innerText = nama;
+    document.getElementById('userName').innerText = nama.slice(0,14);
+    let curUser = JSON.parse(localStorage.getItem('wafa_user')||'{}'); curUser.nickname = nama; localStorage.setItem('wafa_user', JSON.stringify(curUser));
+    alert('✅ Nama berhasil diganti jadi: '+nama);
+  }catch(e){ alert('❌ Gagal: '+e.message); }
+}
+async function saveTglLahirBig(){
+  let tgl = document.getElementById('bigInputTgl').value;
+  if(!tgl){ alert('Pilih tanggal dulu!'); return; }
+  let uid = localStorage.getItem('wafa_uid') || (currentAuthUser && currentAuthUser.uid);
+  try{
+    await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}.json`, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ birthDate: tgl, tanggalLahir: tgl }) });
+    document.getElementById('bigP_Tgl').innerText = tgl;
+    document.getElementById('pTgl').innerText = tgl;
+    alert('✅ Tanggal lahir disimpan: '+tgl);
+  }catch(e){ alert('❌ Gagal'); }
+}
+function gantiAkun(){
+  if(confirm('Mau ganti akun Gmail lain? Kamu akan logout dulu.')){
+    logout();
+  }
+}
 </script>
 </body>
 </html>
