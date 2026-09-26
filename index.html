@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>WafaStoreOnly x Killua - OFFICIAL</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
-<!-- TAMBAHAN FITUR ANTI PORNO & FAKE - GUA SELIPIN DISINI BOS, GA HAPUS APAPUN -->
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/nsfwjs@4.2.0/dist/index.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -187,11 +186,10 @@ Kirim bukti TF kamu disini ya biar admin cek mutasi 🥰 (Anti foto porno & fake
 <button class="btn-pay" id="btnPay" onclick="goToPayment()">LANJUT PEMBAYARAN</button>
 
 <script>
-// ================= TAMBAHAN FITUR BARU - SENSOR & ANTI PORNO - GUA SELIPIN DISINI BOS =================
 function sensorEmail(e){if(!e||!e.includes('@'))return'****';let [a,b]=e.split('@');if(a.length<=2)return a[0]+'****@'+b;return a.slice(0,3)+'****@'+b}
 function sensorNomor(n){if(!n)return'****';let s=n.toString();if(s.length<7)return'****';return s.slice(0,4)+'****'+s.slice(-3)}
 
-// FIX UTAMA - KALO BUKAN NOMOR/QRIS LU AUTO GAGAL BOS!
+// VALIDASI BUKTI - SUDAH TERMASUK AWA_NEWSTREAM BOS!
 async function cekBuktiValid(file){
   let loading=document.createElement('div');
   loading.id='loadingDetect';
@@ -199,81 +197,57 @@ async function cekBuktiValid(file){
   loading.innerHTML='<div style="font-size:50px">🔍</div><div style="margin-top:10px">CEK BUKTI TF OTOMATIS...</div><div id="cek-status" style="font-size:12px;color:#00e5ff;margin-top:8px">1/4 Detect NSFW...</div>';
   document.body.appendChild(loading);
   try{
-    // 1. NSFW DETECT
     document.getElementById('cek-status').innerText='1/4 Cek foto porno / NSFW...';
     let img=document.createElement('img');img.src=URL.createObjectURL(file);await new Promise(r=>{img.onload=r;img.onerror=r;});
     const model=await nsfwjs.load();
     const preds=await model.classify(img);
     let pornScore=0;preds.forEach(p=>{if(['Porn','Hentai','Sexy'].includes(p.className))pornScore=Math.max(pornScore,p.probability)});
-    console.log('NSFW:',preds);
-    if(pornScore>0.5){document.getElementById('loadingDetect').remove();return {valid:false,reason:`❌ FOTO DITOLAK! Terdeteksi foto porno/NSFW (${Math.round(pornScore*100)}%)! Upload bukti TF asli bos!`};}
+    if(pornScore>0.5){document.getElementById('loadingDetect').remove();return {valid:false,reason:`❌ FOTO DITOLAK! Terdeteksi foto porno/NSFW (${Math.round(pornScore*100)}%)!`};}
 
-    // 2. OCR
     document.getElementById('cek-status').innerText='2/4 Baca tulisan bukti...';
     let {data:{text}}=await Tesseract.recognize(file,'ind+eng');
     let lower=text.toLowerCase();
     let lowerNoSpace=lower.replace(/\s/g,'');
-    console.log('OCR:',lower);
 
-    // BLACKLIST TOXIC
     let blacklist=['kontol','memek','ngentot','anjing','babi','bangsat','tolol','goblok','asu','jancok','fuck','shit','peler','itil','jembut','kerjakontol'];
     let toxicFound=blacklist.find(k=>lower.includes(k));
     if(toxicFound){
       document.getElementById('loadingDetect').remove();
-      return {valid:false,reason:`❌ FOTO DITOLAK! Terdeteksi kata kasar "${toxicFound.toUpperCase()}"! Jangan ngisengin admin!`};
+      return {valid:false,reason:`❌ FOTO DITOLAK! Terdeteksi kata kasar "${toxicFound.toUpperCase()}"!`};
     }
 
-    // 3. CEK PENERIMA - KALO BUKAN PUNYA LU AUTO GAGAL!
-    document.getElementById('cek-status').innerText='3/4 Cek penerima wajib punya gua...';
-
-    // DAFTAR VALID PUNYA LU BOS
-    let validNumbers=['083862776790','83862776790','3862776790','62776790','901162765462','01162765462','1162765462'];
-    let validNames=['wafastoreonly','wafastore','awa_newstream','killua'];
-
+    document.getElementById('cek-status').innerText='3/4 Cek penerima...';
+    let validNumbers=['083862776790','83862776790','3862776790','901162765462','01162765462'];
+    let validNames=['wafastoreonly','wafastore','wafa','killua','awa_newstream','awa newstream','awanewstream','awa','newstream'];
     let isMyNumber = validNumbers.some(no => lowerNoSpace.includes(no));
     let isMyName = validNames.some(nm => lower.includes(nm));
     let isQris = lower.includes('qris');
 
-    // FAKE RECEIVER
-    let fakeList=['jhonny','benjamin','manurung','budi','santoso','danaid'];
+    let fakeList=['jhonny','benjamin','manurung'];
     let isFake = fakeList.some(f => lower.includes(f));
-
     if(isFake){
       document.getElementById('loadingDetect').remove();
-      return {valid:false,reason:`❌ BUKTI FAKE! Penerima bukan WafaStoreOnly! Di foto penerimanya bukan punya lu bos! Transfer ke DANA 083862776790 / SEABANK 901162765462 / QRIS WafaStoreOnly!`};
+      return {valid:false,reason:`❌ BUKTI FAKE! Penerima bukan WafaStoreOnly / AWA_NEWSTREAM!`};
     }
-
     if(!isMyNumber &&!isMyName &&!isQris){
       document.getElementById('loadingDetect').remove();
-      return {valid:false,reason:`❌ BUKTI SALAH TUJUAN! Penerima bukan punya gua!
-
-Yang valid:
-DANA/GOPAY: 083862776790
-SEABANK: 901162765462
-QRIS: AWA_NEWSTREAM
-
-Bukti kamu tidak ada nomor/nama gua! Transfer dulu ke nomor gua bos!`};
+      return {valid:false,reason:`❌ BUKTI SALAH TUJUAN! Bukan ke 083862776790 / 901162765462 / WafaStoreOnly / AWA_NEWSTREAM!`};
     }
 
-    // 4. CEK NOMINAL & BERHASIL
-    document.getElementById('cek-status').innerText='4/4 Cek nominal & status berhasil...';
+    document.getElementById('cek-status').innerText='4/4 Cek status berhasil...';
     let keys=['berhasil','sukses','success','completed','terkirim'];
-    let adaBerhasil = keys.some(k=>lower.includes(k));
-    if(!adaBerhasil){
+    if(!keys.some(k=>lower.includes(k))){
       document.getElementById('loadingDetect').remove();
-      return {valid:false,reason:'❌ BUKTI TIDAK VALID! Tidak ada tulisan Berhasil/Sukses! Upload screenshot bukti berhasil transfer!'};
+      return {valid:false,reason:'❌ BUKTI TIDAK VALID! Tidak ada tulisan Berhasil/Sukses!'};
     }
     if(!lower.includes('rp')&&!/\d{4,}/.test(lower)){
       document.getElementById('loadingDetect').remove();
-      return {valid:false,reason:'❌ Tidak ada nominal uang di foto! Upload screenshot asli dari e-wallet!'};
+      return {valid:false,reason:'❌ Tidak ada nominal!'};
     }
-
-    document.getElementById('cek-status').innerText=`VALID ✅ - Penerima punya gua!`;
-    setTimeout(()=>{let l=document.getElementById('loadingDetect');if(l)l.remove();},700);
+    document.getElementById('loadingDetect').remove();
     return {valid:true,match:10,pornScore};
-  }catch(err){let l=document.getElementById('loadingDetect');if(l)l.remove();console.error(err);return {valid:false,reason:'❌ Gagal baca bukti! Upload ulang yang jelas!'};}
+  }catch(err){let l=document.getElementById('loadingDetect');if(l)l.remove();return {valid:false,reason:'❌ Gagal baca bukti!'};}
 }
-// ================= END TAMBAHAN FITUR BARU =================
 
 let currentMethod='username';
 const listUsername=[100,200,300,400,500,1000,1500,2000,3000,4000,5000,10000];
@@ -322,8 +296,7 @@ function saveOrder(data){
   data.id=Date.now(); data.date=new Date().toLocaleString('id-ID'); data.status='verifikasi'; data.bukti=''; data.expiry=Date.now()+(10*60*1000);
   let uid=localStorage.getItem('wafa_uid')||'guest';
   data.uid=uid;
-  // TAMBAHAN NAMA PANGGILAN BOS
-  try{let userData=JSON.parse(localStorage.getItem('wafa_user')||'{}');data.nickname=userData.nickname||data.nickname||'-';data.email=userData.email||'-';}catch(e){}
+  try{let userData=JSON.parse(localStorage.getItem('wafa_user')||'{}');data.nickname=userData.nickname||'-';data.email=userData.email||'-';}catch(e){}
   orders.unshift(data); localStorage.setItem('wafa_orders',JSON.stringify(orders));
   attachFirebaseListener(data.id);
   try{
@@ -341,9 +314,8 @@ function sendDiscordWithBukti(o, dataUrl, judul, detectInfo){
   const prosesUrl = `${baseUrl}admin.html?id=${o.id}&action=proses`;
   const selesaiUrl = `${baseUrl}admin.html?id=${o.id}&action=selesai`;
   const batalUrl = `${baseUrl}admin.html?id=${o.id}&action=batal`;
-  // TAMBAHAN SENSOR & DETECT INFO BOS
-  let infoDetect = detectInfo? `\n\n🤖 **AUTO DETECT:**\n• NSFW: Aman ✅ (${Math.round((1-(detectInfo.pornScore||0))*100)}% clean)\n• OCR: ${detectInfo.match||0}/12 keyword\n• Status: VALID ✅` : '';
-  const text = `${judul}\n\n📦 **FORMAT ORDERAN**\nID: #${o.id.toString().slice(-6)}\nUsername: ${o.username}\nMethod: ${o.method}\nJumlah: ${o.jumlah} Robux\nTotal: Rp${o.total.toLocaleString('id-ID')}\nItem: ${o.item||'-'}\nBuyer: ${sensorEmail(o.email||'-')} (${o.nickname||'-'})\nTanggal: ${o.date}\nUID: ${o.uid||'-'}${infoDetect}\n\n⚠️ Cek mutasi dulu bos!`;
+  let infoDetect = detectInfo? `\n\n🤖 **AUTO DETECT:**\n• NSFW: Aman ✅\n• Penerima: Valid ✅ (AWA_NEWSTREAM / Wafa)\n• Status: VALID ✅` : '';
+  const text = `${judul}\n\n📦 **FORMAT ORDERAN**\nID: #${o.id.toString().slice(-6)}\nUsername: ${o.username}\nMethod: ${o.method}\nJumlah: ${o.jumlah} Robux\nTotal: Rp${o.total.toLocaleString('id-ID')}\nBuyer: ${sensorEmail(o.email||'-')} (${o.nickname||'-'})\nTanggal: ${o.date}\nUID: ${o.uid||'-'}${infoDetect}\n\n⚠️ Cek mutasi dulu bos!`;
   fetch(dataUrl).then(r=>r.blob()).then(blob=>{
     let form=new FormData();
     form.append('payload_json', JSON.stringify({ content: text }));
@@ -354,15 +326,8 @@ function sendDiscordWithBukti(o, dataUrl, judul, detectInfo){
           method:'POST',
           headers:{'Content-Type':'application/json'},
           body: JSON.stringify({
-            content: `⬇️ **AKSI ORDER #${o.id.toString().slice(-6)} - ${o.username} [VALID ✅]**\nKlik tombol dibawah bos!`,
-            components: [{
-              type:1,
-              components:[
-                { type:2, style:5, label:"PROSES ✅", url: prosesUrl },
-                { type:2, style:5, label:"KONFIRMASI ✅", url: selesaiUrl },
-                { type:2, style:5, label:"BATALKAN ❌", url: batalUrl }
-              ]
-            }]
+            content: `⬇️ **AKSI ORDER #${o.id.toString().slice(-6)} - ${o.username} [VALID ✅]**`,
+            components: [{ type:1, components:[ { type:2, style:5, label:"PROSES ✅", url: prosesUrl }, { type:2, style:5, label:"KONFIRMASI ✅", url: selesaiUrl }, { type:2, style:5, label:"BATALKAN ❌", url: batalUrl } ] }]
           })
         });
       }, 900);
@@ -370,52 +335,140 @@ function sendDiscordWithBukti(o, dataUrl, judul, detectInfo){
   });
 }
 function getSisaWaktu(expiry){let sisa=expiry-Date.now();if(sisa<=0)return"00:00";let m=Math.floor(sisa/60000);let s=Math.floor((sisa%60000)/1000);return `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;}
+
+// ================= FIX AUTO BATAL 10 MENIT BOS - INI YANG LU MAU! =================
+function checkExpired(){
+  let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
+  let changed=false;
+  let now=Date.now();
+  orders.forEach(o=>{
+    if(o.status=='verifikasi' && o.expiry && now>o.expiry){
+      o.status='batal';
+      o.batalReason='timeout';
+      changed=true;
+      // KIRIM PESAN BATAL KE CHAT BOS
+      setTimeout(()=>{
+        addBotMsg(`❌ TRANSAKSI DIBATALKAN OTOMATIS!
+
+Pesanan #${o.id.toString().slice(-6)} dibatalkan karena melebihi batas waktu 10 menit dan belum mengirim bukti TF 🙏
+
+Format:
+ID: #${o.id.toString().slice(-6)}
+Username: ${o.username}
+Jumlah: ${o.jumlah} Robux
+Status: DIBATALKAN ⏰ Timeout 10 menit
+
+Silahkan order kembali ya bos! 🥰🙏
+- WafaStoreOnly x Killua`);
+      },500);
+      try{
+        if(window.wafaDB){ window.wafaSet(window.wafaRef(window.wafaDB,'orders/'+o.id), o); }
+        if(window.DISCORD_URL){
+          fetch(window.DISCORD_URL+"?with_components=true", { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+            content: `⏰ **AUTO BATAL 10 MENIT!**\nID: #${o.id.toString().slice(-6)}\nUsername: ${o.username}\nJumlah: ${o.jumlah} Robux\nAlasan: Tidak kirim bukti TF selama 10 menit\nStatus: DIBATALKAN OTOMATIS`,
+          })});
+        }
+      }catch(e){}
+    }
+  });
+  if(changed){
+    localStorage.setItem('wafa_orders',JSON.stringify(orders));
+    if(document.getElementById('pesananPage').style.display=='block') renderPesanan();
+  }
+}
+
 function renderPesanan(){
- let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');let list=document.getElementById('listPesanan');let empty=document.getElementById('emptyPesanan');
+ let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
+ let list=document.getElementById('listPesanan');
+ let empty=document.getElementById('emptyPesanan');
  if(orders.length==0){list.innerHTML='';empty.style.display='block';return;}
  empty.style.display='none';list.innerHTML='';
  orders.forEach(o=>{
+  let isTimeout = o.status=='batal' && o.batalReason=='timeout';
   let color=o.status=='verifikasi'?'#ffcc00':o.status=='proses'?'#00e5ff':o.status=='selesai'?'#00ff88':'#ff4444';
-  let label=o.status=='verifikasi'?`Menunggu Bukti ⏰ ${o.expiry?getSisaWaktu(o.expiry):'10:00'}`:o.status=='proses'?'Diproses ⚡':o.status=='selesai'?'Selesai ✅ - Hapus 10m':'Batal ❌';
+  let label=o.status=='verifikasi'?`Menunggu Bukti ⏰ ${o.expiry?getSisaWaktu(o.expiry):'10:00'}`:o.status=='proses'?'Diproses ⚡':o.status=='selesai'?'Selesai ✅ - Hapus 10m': isTimeout? 'Batal ⏰ Timeout 10m' : 'Batal ❌';
   let d=document.createElement('div');d.className='order-card';d.style.borderColor=color;
-  d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)} - ${o.method.toUpperCase()}</b><span style="background:${color};color:#000;padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800">${label}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date}</div><div style="font-size:12px;margin-top:10px">Username: <b>${o.username}</b><br>Jumlah: <b>${o.jumlah} Robux</b><br>Total: <b style="color:#00ff88">Rp${o.total.toLocaleString('id-ID')}</b></div><div style="display:flex;gap:8px;margin-top:12px"><button onclick="uploadBukti(${o.id})" style="flex:1;padding:12px;border-radius:10px;border:none;background:#ffcc00;color:#000;font-weight:800">📤 Upload Bukti TF (Anti Porn Detect)</button></div>`;
+  if(o.status=='verifikasi'){
+    d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)} - ${o.method.toUpperCase()}</b><span style="background:${color};color:#000;padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800">${label}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date}</div><div style="font-size:12px;margin-top:10px">Username: <b>${o.username}</b><br>Jumlah: <b>${o.jumlah} Robux</b><br>Total: <b style="color:#00ff88">Rp${o.total.toLocaleString('id-ID')}</b></div><div style="display:flex;gap:8px;margin-top:12px"><button onclick="uploadBukti(${o.id})" style="flex:1;padding:12px;border-radius:10px;border:none;background:#ffcc00;color:#000;font-weight:800">📤 Upload Bukti TF</button></div>`;
+  } else if(o.status=='batal'){
+    let msgTimeout = isTimeout? `<div style="background:#ff444420;border:1px solid #ff4444;padding:8px;border-radius:8px;margin-top:10px;font-size:11px;line-height:1.6">❌ <b>Transaksi dibatalkan karena melebihi batas waktu 10 menit</b><br>Silahkan order kembali 🙏<br>Order #${o.id.toString().slice(-6)} timeout ⏰</div>` : '';
+    d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)} - ${o.method.toUpperCase()}</b><span style="background:${color};color:#fff;padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800">${label}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date}</div><div style="font-size:12px;margin-top:10px">Username: <b>${o.username}</b><br>Jumlah: <b>${o.jumlah} Robux</b><br>Total: <b style="color:#ff4444">Rp${o.total.toLocaleString('id-ID')}</b></div>${msgTimeout}<div style="display:flex;gap:8px;margin-top:12px"><button onclick="location.reload()" style="flex:1;padding:12px;border-radius:10px;border:none;background:#2a3366;color:#fff;font-weight:800">🔄 Order Lagi</button></div>`;
+  } else {
+    d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)} - ${o.method.toUpperCase()}</b><span style="background:${color};color:#000;padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800">${label}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date}</div><div style="font-size:12px;margin-top:10px">Username: <b>${o.username}</b><br>Jumlah: <b>${o.jumlah} Robux</b><br>Total: <b style="color:#00ff88">Rp${o.total.toLocaleString('id-ID')}</b></div>`;
+  }
   list.appendChild(d);
  });
 }
+
 function openPesanan(){hideAll();document.getElementById('pesananPage').style.display='block';document.getElementById('btnPay').style.display='none';setActive('pesanan');renderPesanan();}
+
 async function uploadBukti(id){
+  let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
+  let oCheck=orders.find(x=>x.id==id);
+  if(!oCheck){alert('Pesanan tidak ditemukan!');return;}
+  if(oCheck.status=='batal'){
+    alert(`❌ TRANSAKSI DIBATALKAN!
+
+Pesanan #${id.toString().slice(-6)} sudah dibatalkan karena melebihi batas waktu 10 menit ⏰
+
+Transaksi dibatalkan karena melebihi batas waktu, silahkan order kembali 🙏`);
+    renderPesanan();
+    return;
+  }
+  if(oCheck.expiry && Date.now()>oCheck.expiry){
+    alert(`❌ WAKTU HABIS! Pesanan timeout 10 menit! Silahkan order kembali 🙏`);
+    checkExpired();
+    return;
+  }
+
   let input=document.createElement('input');input.type='file';input.accept='image/*';
   input.onchange=async e=>{
     let file=e.target.files[0]; if(!file) return;
-    // CEK VALID DULU BOS
     let cek=await cekBuktiValid(file);
     if(!cek.valid){alert(cek.reason);return;}
     let r=new FileReader();
     r.onload=()=>{
-      let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
-      let o=orders.find(x=>x.id==id); if(!o) return;
-      o.bukti=r.result; localStorage.setItem('wafa_orders',JSON.stringify(orders)); renderPesanan();
-      addBotMsg(`✅ Bukti TF #${id.toString().slice(-6)} valid & berhasil! (NSFW Aman ✅, Penerima Valid ✅) Admin cek mutasi ya 🥰`);
-      sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF MASUK! [✅ VALID - PENERIMA PUNYA GUA]**`, cek);
+      let orders2=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
+      let o=orders2.find(x=>x.id==id); if(!o) return;
+      if(o.status=='batal'){alert('❌ Pesanan sudah dibatalkan timeout! Order lagi ya!');return;}
+      o.bukti=r.result; localStorage.setItem('wafa_orders',JSON.stringify(orders2)); renderPesanan();
+      addBotMsg(`✅ Bukti TF #${id.toString().slice(-6)} valid! Admin cek mutasi ya 🥰`);
+      sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF MASUK! [VALID ✅]**`, cek);
     }; r.readAsDataURL(file);
   }; input.click();
 }
+
 async function uploadBuktiFromChat(input){
+  let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
+  if(orders.length==0){alert('Buat pesanan dulu bos!');input.value='';return;}
+  let o=orders[0];
+  if(o.status=='batal'){
+    alert(`❌ TRANSAKSI DIBATALKAN!
+
+Pesanan #${o.id.toString().slice(-6)} dibatalkan karena melebihi batas waktu 🙏
+
+Silahkan order kembali!`);
+    input.value=''; renderPesanan(); return;
+  }
+  if(o.expiry && Date.now()>o.expiry){
+    alert(`❌ Waktu habis 10 menit! Pesanan auto batal! Order lagi ya 🙏`);
+    checkExpired(); input.value=''; return;
+  }
+
   let file=input.files[0]; if(!file) return;
   let cek=await cekBuktiValid(file);
   if(!cek.valid){alert(cek.reason);input.value='';return;}
-  let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
-  if(orders.length==0){alert('Buat pesanan dulu bos!');return;}
-  let o=orders[0];
   let r=new FileReader();
   r.onload=()=>{
     o.bukti=r.result; orders[0]=o; localStorage.setItem('wafa_orders',JSON.stringify(orders)); renderPesanan();
-    addBotMsg(`✅ Bukti TF #${o.id.toString().slice(-6)} dari chat valid! (Penerima Valid ✅) Admin cek mutasi ya 🥰`);
-    sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF MASUK VIA CHAT! [✅ VALID - PENERIMA PUNYA GUA]**`, cek);
+    addBotMsg(`✅ Bukti TF #${o.id.toString().slice(-6)} valid! Admin cek mutasi ya 🥰`);
+    sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF VIA CHAT! [VALID]**`, cek);
   }; r.readAsDataURL(file); input.value='';
 }
-function checkExpired(){let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');let changed=false;let now=Date.now();orders.forEach(o=>{if(o.status=='verifikasi' && o.expiry && now>o.expiry){o.status='batal';changed=true;}});if(changed){localStorage.setItem('wafa_orders',JSON.stringify(orders));if(document.getElementById('pesananPage').style.display=='block')renderPesanan();}}
-setInterval(checkExpired,5000); setInterval(()=>{if(document.getElementById('pesananPage').style.display=='block')renderPesanan();},1000);
+
+setInterval(checkExpired,5000);
+setInterval(()=>{if(document.getElementById('pesananPage').style.display=='block')renderPesanan();},1000);
+
 function goToPayment(){
  let summary='',total=0,u,j,it,set;
  if(currentMethod=='username'){u=document.getElementById('uRbx').value||'-';j=parseInt(document.getElementById('cRbx').value)||0;total=j*160;if(!j){alert('Isi jumlah dulu');return;}summary=`<b>RINGKASAN ORDER</b><br>Via: Username<br>Username: <b>${u}</b><br>Jumlah: <b>${j} Robux</b><br>Total: <b>Rp${total.toLocaleString('id-ID')}</b>`;}
@@ -425,14 +478,26 @@ function goToPayment(){
  document.getElementById('btnPay').onclick=()=>{
   let data={username:u,method:currentMethod,jumlah:j,total:total,item:it||'',setting:set||''};
   let newId=saveOrder(data);
-  openPesanan(); addBotMsg(`Yosh pesanan #${newId.toString().slice(-6)} masuk! 📤 Kirim bukti TF kamu via tombol kuning di chat ini ya! ⏰ Sisa 10:00 (Anti porno & toxic aktif ✅)`);
+  openPesanan(); addBotMsg(`Yosh pesanan #${newId.toString().slice(-6)} masuk! 📤 Kirim bukti TF kamu via tombol kuning di chat ini ya! ⏰ Sisa 10:00\n\nJika lewat 10 menit ga kirim bukti, transaksi otomatis dibatalkan 🙏`);
   toggleLayanan();
  }; window.scrollTo(0,0);
 }
 function toggleLayanan(){let b=document.getElementById('layananBox');b.style.display=b.style.display=='flex'?'none':'flex';}
 function addBotMsg(txt){let c=document.getElementById('layananChat');let d=document.createElement('div');d.className='msg bot';d.innerText=txt;c.appendChild(d);c.scrollTop=c.scrollHeight;}
 function addUserMsg(txt){let c=document.getElementById('layananChat');let d=document.createElement('div');d.className='msg user';d.innerText=txt;c.appendChild(d);c.scrollTop=c.scrollHeight;}
-function sendLayanan(){let inp=document.getElementById('layananText');let t=inp.value.trim();if(!t)return;addUserMsg(t);inp.value='';setTimeout(()=>{addBotMsg('Kirim bukti TF pake tombol 📤 kuning ya bos! Anti porno detect aktif!');},400);}
+function sendLayanan(){
+  let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
+  if(orders.length>0 && orders[0].status=='batal'){
+    alert(`❌ TRANSAKSI DIBATALKAN karena melebihi batas waktu! Silahkan order kembali 🙏`);
+    return;
+  }
+  if(orders.length>0 && orders[0].expiry && Date.now()>orders[0].expiry){
+    checkExpired();
+    alert(`❌ Waktu habis! Pesanan auto batal! Order lagi ya 🙏`);
+    return;
+  }
+  let inp=document.getElementById('layananText');let t=inp.value.trim();if(!t)return;addUserMsg(t);inp.value='';setTimeout(()=>{addBotMsg('Kirim bukti TF pake tombol 📤 kuning ya bos!');},400);
+}
 renderUsername();renderGamepass();checkExpired();
 (function initListeners(){ let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]'); orders.forEach(o=>attachFirebaseListener(o.id)); })();
 function logout(){ localStorage.removeItem('wafa_uid'); window.wafaAuth.signOut().then(()=>{ location.href='login.html'; }).catch(()=>{ location.href='login.html'; }); }
@@ -444,7 +509,6 @@ async function loadUser(){
     let data = await res.json();
     if(data){
       let name = data.nickname || data.name || data.email || data.phone || 'User';
-      let emailSensor = sensorEmail(data.email||'');
       document.getElementById('userName').innerText = (name+'').slice(0,14);
       try{localStorage.setItem('wafa_user',JSON.stringify({nickname:name,email:data.email||''}));}catch(e){}
     } else {
