@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login - WafaStoreOnly</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{background:#060a23 url('./killua-bg.webp') no-repeat center;background-size:cover;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
+body::before{content:'';position:fixed;inset:0;background:linear-gradient(180deg,rgba(6,10,35,0.85),rgba(6,10,35,0.96));z-index:-1}
+.card{width:100%;max-width:380px;background:rgba(18,22,49,0.96);border:2px solid #00e5ff40;border-radius:20px;padding:22px;backdrop-filter:blur(12px);box-shadow:0 0 40px #00e5ff30}
+h1{font-family:'Bebas Neue';font-size:32px;font-style:italic;letter-spacing:1px}
+.sub{font-size:12px;color:#aab0d0;margin-top:6px;line-height:1.5}
+.btn{width:100%;padding:13px;border-radius:12px;border:none;font-weight:800;cursor:pointer;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-google{background:#fff;color:#000}
+.btn-wa{background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;background:#131740;color:#fff;outline:none;margin-top:10px}
+.divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:#5a638a;font-size:11px}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:#1e2450}
+#recaptcha-container{margin-top:12px;transform:scale(0.9);transform-origin:left}
+</style>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyDTkQVpME0XRQmk9Jo7eDQuf0OFY8stm_8", authDomain: "wafastoreonly.firebaseapp.com", databaseURL: "https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "wafastoreonly", storageBucket: "wafastoreonly.firebasestorage.app", messagingSenderId: "208012194307", appId: "1:208012194307:web:551a540b0151333da69436" };
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+window._auth=auth; window._db=db; window._ref=ref; window._get=get; window._set=set; window._provider=new GoogleAuthProvider(); window._GoogleSign=signInWithPopup; window._RecaptchaVerifier=RecaptchaVerifier; window._signInWithPhoneNumber=signInWithPhoneNumber;
+</script>
+</head>
+<body>
+<div class="card">
+<h1>WAFASTOREONLY ⚡</h1>
+<div class="sub">Login dulu bos biar saldo & pesanan gak ilang kalo ganti HP. Kalo belum punya akun, nanti auto daftar setelah login.</div>
+
+<button class="btn btn-google" id="btnGoogle">🔵 Login dengan Google</button>
+
+<div class="divider">ATAU LOGIN DENGAN WHATSAPP</div>
+
+<input id="phone" placeholder="Nomor WA: 0838xxxx (tanpa +62)" type="tel">
+<div id="recaptcha-container"></div>
+<button class="btn btn-wa" id="btnSendOTP">Kirim Kode OTP ke WA (SMS)</button>
+
+<div id="otpBox" style="display:none">
+<input id="otp" placeholder="Masukkan 6 digit kode OTP" type="number">
+<button class="btn btn-wa" id="btnVerif">Verifikasi Kode</button>
+</div>
+
+<div style="font-size:10px;color:#5a638a;margin-top:12px;text-align:center">OTP dikirim via SMS gratis (Firebase 10k/bulan) • Nanti kita upgrade ke WA API biar masuk WA langsung</div>
+</div>
+
+<script type="module">
+let confirmationResult=null;
+const auth = window._auth;
+const db = window._db;
+
+// INIT RECAPTCHA - HARUS SETELAH DOM SIAP
+window.recaptchaVerifier = new window._RecaptchaVerifier(auth, 'recaptcha-container', { size: 'normal', theme: 'dark' });
+window.recaptchaVerifier.render();
+
+document.getElementById('btnGoogle').onclick = async () => {
+  try{
+    const result = await window._GoogleSign(auth, window._provider);
+    const user = result.user;
+    const snap = await window._get(window._ref(db, 'users/'+user.uid));
+    if(!snap.exists()){
+      await window._set(window._ref(db, 'users/'+user.uid), { uid:user.uid, email:user.email, name:user.displayName, saldo:0, created:Date.now() });
+    }
+    localStorage.setItem('wafa_uid', user.uid);
+    location.href='index.html';
+  }catch(e){ alert('Login Google gagal: '+e.message); console.log(e); }
+};
+
+document.getElementById('btnSendOTP').onclick = async () => {
+  let phone = document.getElementById('phone').value.trim();
+  if(phone.startsWith('0')) phone='+62'+phone.slice(1);
+  if(!phone.startsWith('+62')) phone='+62'+phone;
+  if(phone.length<11){ alert('Nomor WA salah'); return; }
+  try{
+    confirmationResult = await window._signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
+    document.getElementById('otpBox').style.display='block';
+    alert('Kode OTP dikirim ke '+phone+' cek SMS!');
+  }catch(e){ alert('Gagal kirim OTP: '+e.message); console.log(e); }
+};
+
+document.getElementById('btnVerif').onclick = async () => {
+  let code = document.getElementById('otp').value.trim();
+  if(code.length!=6){ alert('Kode harus 6 digit'); return; }
+  try{
+    const result = await confirmationResult.confirm(code);
+    const user = result.user;
+    const snap = await window._get(window._ref(db, 'users/'+user.uid));
+    if(!snap.exists()){
+      let name = prompt('Akun baru! Masukkan Username kamu:','');
+      if(!name) name='User'+user.uid.slice(0,4);
+      await window._set(window._ref(db, 'users/'+user.uid), { uid:user.uid, phone:user.phoneNumber, name:name, saldo:0, created:Date.now() });
+    }
+    localStorage.setItem('wafa_uid', user.uid);
+    location.href='index.html';
+  }catch(e){ alert('Kode salah: '+e.message); }
+};
+</script>
+</body>
+</html>
