@@ -18,105 +18,59 @@ body{background:#060a23;color:#fff;padding:16px}
 </style>
 </head>
 <body>
-<div class="header">
-<b>⚡ ADMIN WAFASTOREONLY</b>
-<div><button onclick="location.href='index.html'" style="padding:6px 12px;border-radius:8px;border:none;font-weight:800">Home</button></div>
-</div>
-
+<div class="header"><b>⚡ ADMIN WAFASTOREONLY 4 CHANNEL</b><div><button onclick="location.href='index.html'" style="padding:6px 12px;border-radius:8px;border:none;font-weight:800">Home</button></div></div>
 <div id="actionBox" style="display:none;margin-top:16px;background:#00ff88;color:#000;padding:14px;border-radius:12px;font-weight:800"></div>
-
 <div style="display:flex;gap:8px;margin-top:16px">
-<div class="tab active" id="tabOrder" onclick="switchTab('orders')">📦 Order Robux</div>
-<div class="tab" id="tabSaldo" onclick="switchTab('saldo')">💰 Top Up Saldo</div>
+<div class="tab active" id="tabOrder" onclick="switchTab('orders')">📦 Order Robux (proses-topup-web)</div>
+<div class="tab" id="tabSaldo" onclick="switchTab('saldo')">💰 Top Up Saldo (proses-dompet-web)</div>
 </div>
-
 <div id="ordersPage" class="list"></div>
 <div id="saldoPage" class="list" style="display:none"></div>
-
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getDatabase,ref,onValue,set,update,remove,get} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
 const firebaseConfig = { apiKey: "AIzaSyDTkQVpME0XRQmk9Jo7eDQuf0OFY8stm_8", authDomain: "wafastoreonly.firebaseapp.com", databaseURL: "https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "wafastoreonly", appId: "1:208012194307:web:551a540b0151333da69436" };
-const app=initializeApp(firebaseConfig);
-const db=getDatabase(app);
-const auth=getAuth(app);
+const app=initializeApp(firebaseConfig); const db=getDatabase(app); const auth=getAuth(app);
 
-// CEK ADMIN - GANTI EMAIL LU BOS!
-const ADMIN_EMAILS = ["wafastoreonly@gmail.com","admin@wafastoreonly.com","wafa@gmail.com"]; 
+const WEBHOOK_PROSES_DOMPET="https://discord.com/api/webhooks/1553275076332359782/Ndn9EePBTCJe7EWV4esTErBZZwrLGbBMj9kybncr8urHVnq4-ydeCWxl4Dp7kQgC9O64";
+const WEBHOOK_DOMPET_DONE="https://discord.com/api/webhooks/1553275385666478120/snanzgqdkgovJomulzBGLueWdWX7Bnhp0ekS2reNuS8mLrPHLEMTrVS6nuMnE0t_0aXB";
+const WEBHOOK_PROSES_TOPUP="https://discord.com/api/webhooks/1553218744803917856/uUaVtWriD4VYFF_e82Q2xGtvfoTCJ5PvU2UjcXVEeK1EoRvaBKh2dpNf0YD4-d5OBveg";
+const WEBHOOK_TOPUP_DONE="https://discord.com/api/webhooks/1553277385795829770/CZA2wz3K99vCfKa5m0xBATsS4KKL-uJfAhKEN5X0pOwhUvGnWB-q6EV3bCzOzITQ3t5X";
 
-let currentTab='orders';
-
-window.switchTab=(t)=>{
-  currentTab=t;
-  document.getElementById('tabOrder').classList.toggle('active', t=='orders');
-  document.getElementById('tabSaldo').classList.toggle('active', t=='saldo');
-  document.getElementById('ordersPage').style.display = t=='orders'?'grid':'none';
-  document.getElementById('saldoPage').style.display = t=='saldo'?'grid':'none';
-}
+window.switchTab=(t)=>{document.getElementById('tabOrder').classList.toggle('active', t=='orders');document.getElementById('tabSaldo').classList.toggle('active', t=='saldo');document.getElementById('ordersPage').style.display = t=='orders'?'grid':'none';document.getElementById('saldoPage').style.display = t=='saldo'?'grid':'none';}
 
 async function handleActionFromDiscord(){
   const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
-  const action = params.get('action'); // proses / selesai / batal
-  const type = params.get('type') || 'orders'; // orders atau topup_saldo
-
+  const id = params.get('id'); const action = params.get('action'); const type = params.get('type') || 'orders';
   if(!id || !action) return;
-
-  const box = document.getElementById('actionBox');
-  box.style.display='block';
-  box.innerText=`⏳ Memproses ${type} #${id} -> ${action}...`;
-
+  const box = document.getElementById('actionBox'); box.style.display='block'; box.innerText=`⏳ Memproses ${type} #${id} -> ${action}...`;
   try{
     if(type=='topup_saldo'){
-      const snap = await get(ref(db,'topup_saldo/'+id));
-      const data = snap.val();
+      const snap = await get(ref(db,'topup_saldo/'+id)); const data = snap.val();
       if(!data){ box.innerText='❌ Data Top Up Saldo tidak ditemukan!'; return; }
-
-      if(action=='proses'){
-        await update(ref(db,'topup_saldo/'+id),{status:'proses'});
-        box.innerText=`⚡ Top Up Saldo #${id.toString().slice(-6)} Rp${data.jumlah.toLocaleString('id-ID')} DIPROSES!`;
-      }
+      if(action=='proses'){ await update(ref(db,'topup_saldo/'+id),{status:'proses'}); box.innerText=`⚡ Top Up Saldo #${id.toString().slice(-6)} Rp${data.jumlah.toLocaleString('id-ID')} DIPROSES!`; }
       if(action=='selesai'){
-        // TAMBAH SALDO USER!
-        const userRef = ref(db,'users/'+data.uid+'/saldo');
-        const saldoSnap = await get(userRef);
-        const saldoLama = saldoSnap.val()||0;
-        const saldoBaru = saldoLama + data.jumlah;
-        await set(userRef, saldoBaru);
-        await update(ref(db,'topup_saldo/'+id),{status:'selesai'});
-        box.innerText=`✅ Top Up Saldo #${id.toString().slice(-6)} SELESAI! Saldo user ${data.email} dari Rp${saldoLama.toLocaleString('id-ID')} → Rp${saldoBaru.toLocaleString('id-ID')} ✅`;
+        const userRef = ref(db,'users/'+data.uid+'/saldo'); const saldoSnap = await get(userRef); const saldoLama = saldoSnap.val()||0; const saldoBaru = saldoLama + data.jumlah;
+        await set(userRef, saldoBaru); await update(ref(db,'topup_saldo/'+id),{status:'selesai'});
+        box.innerText=`✅ Top Up Saldo #${id.toString().slice(-6)} SELESAI! Rp${saldoLama.toLocaleString('id-ID')} → Rp${saldoBaru.toLocaleString('id-ID')} ✅`;
+        fetch(WEBHOOK_DOMPET_DONE+"?with_components=true",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:`✅ **DOMPET MASUK - SALDO TERISI**\nID: #${id.toString().slice(-6)}\nNominal: Rp${data.jumlah.toLocaleString('id-ID')}\nUser: ${data.email}\nUID: ${data.uid}\nMethod: ${data.method}\nSaldo Lama: Rp${saldoLama.toLocaleString('id-ID')}\nSaldo Baru: Rp${saldoBaru.toLocaleString('id-ID')}\nTanggal: ${new Date().toLocaleString('id-ID')}\n\n⚡ Saldo otomatis masuk ke web!`})});
       }
-      if(action=='batal'){
-        await update(ref(db,'topup_saldo/'+id),{status:'batal'});
-        box.innerText=`❌ Top Up Saldo #${id.toString().slice(-6)} DIBATALKAN!`;
-      }
+      if(action=='batal'){ await update(ref(db,'topup_saldo/'+id),{status:'batal'}); box.innerText=`❌ Top Up Saldo #${id.toString().slice(-6)} DIBATALKAN!`; }
     } else {
-      // ORDER ROBUX BIASA
-      const snap = await get(ref(db,'orders/'+id));
-      const data = snap.val();
+      const snap = await get(ref(db,'orders/'+id)); const data = snap.val();
       if(!data){ box.innerText='❌ Order tidak ditemukan!'; return; }
-
-      if(action=='proses'){
-        await update(ref(db,'orders/'+id),{status:'proses'});
-        box.innerText=`⚡ Order Robux #${id.toString().slice(-6)} - ${data.username} DIPROSES!`;
-      }
+      if(action=='proses'){ await update(ref(db,'orders/'+id),{status:'proses'}); box.innerText=`⚡ Order Robux #${id.toString().slice(-6)} - ${data.username} DIPROSES!`; }
       if(action=='selesai'){
         await update(ref(db,'orders/'+id),{status:'selesai'});
-        box.innerText=`✅ Order Robux #${id.toString().slice(-6)} - ${data.username} SELESAI! Auto hapus 10 menit`;
-        setTimeout(async()=>{
-          await remove(ref(db,'orders/'+id));
-        }, 600000);
+        box.innerText=`✅ Order Robux #${id.toString().slice(-6)} - ${data.username} SELESAI!`;
+        fetch(WEBHOOK_TOPUP_DONE+"?with_components=true",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:`✅ **TOP UP ROBUX SELESAI**\nID: #${id.toString().slice(-6)}\nUsername: ${data.username}\nJumlah: ${data.jumlah} Robux\nTotal: Rp${data.total.toLocaleString('id-ID')}\nItem: ${data.item||'-'}\nMethod: ${data.method}\nTanggal: ${new Date().toLocaleString('id-ID')}\n\nTerimakasih telah order di WafaStoreOnly🥰`})});
+        setTimeout(async()=>{ await remove(ref(db,'orders/'+id)); }, 600000);
       }
-      if(action=='batal'){
-        await update(ref(db,'orders/'+id),{status:'batal'});
-        box.innerText=`❌ Order #${id.toString().slice(-6)} DIBATALKAN!`;
-      }
+      if(action=='batal'){ await update(ref(db,'orders/'+id),{status:'batal'}); box.innerText=`❌ Order #${id.toString().slice(-6)} DIBATALKAN!`; }
     }
   }catch(e){ box.innerText='❌ Error: '+e.message; }
 }
-
 function renderOrders(){
   onValue(ref(db,'orders'),(snap)=>{
     const data=snap.val(); const cont=document.getElementById('ordersPage'); cont.innerHTML='';
@@ -129,7 +83,6 @@ function renderOrders(){
     });
   });
 }
-
 function renderSaldo(){
   onValue(ref(db,'topup_saldo'),(snap)=>{
     const data=snap.val(); const cont=document.getElementById('saldoPage'); cont.innerHTML='';
@@ -142,30 +95,28 @@ function renderSaldo(){
     });
   });
 }
-
 window.adminAction=async(id,action,type)=>{
   if(type=='topup_saldo'){
     const snap=await get(ref(db,'topup_saldo/'+id)); const data=snap.val();
     if(action=='selesai'){
       const saldoSnap=await get(ref(db,'users/'+data.uid+'/saldo')); const lama=saldoSnap.val()||0;
       await set(ref(db,'users/'+data.uid+'/saldo'), lama+data.jumlah);
+      fetch(WEBHOOK_DOMPET_DONE+"?with_components=true",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:`✅ **DOMPET MASUK - SALDO TERISI**\nID: #${id.toString().slice(-6)}\nNominal: Rp${data.jumlah.toLocaleString('id-ID')}\nUser: ${data.email}\nUID: ${data.uid}\nMethod: ${data.method}\nSaldo Lama: Rp${lama.toLocaleString('id-ID')}\nSaldo Baru: Rp${(lama+data.jumlah).toLocaleString('id-ID')}\nTanggal: ${new Date().toLocaleString('id-ID')}`})});
     }
     await update(ref(db,'topup_saldo/'+id),{status:action=='proses'?'proses':action=='selesai'?'selesai':'batal'});
     alert(`Top Up Saldo ${action} Berhasil!`);
   }else{
+    if(action=='selesai'){
+      const snap=await get(ref(db,'orders/'+id)); const data=snap.val();
+      fetch(WEBHOOK_TOPUP_DONE+"?with_components=true",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:`✅ **TOP UP ROBUX SELESAI**\nID: #${id.toString().slice(-6)}\nUsername: ${data.username}\nJumlah: ${data.jumlah} Robux\nTotal: Rp${data.total.toLocaleString('id-ID')}\nMethod: ${data.method}`})});
+    }
     await update(ref(db,'orders/'+id),{status:action=='proses'?'proses':action=='selesai'?'selesai':'batal'});
     alert(`Order ${action} Berhasil!`);
   }
 }
-
 onAuthStateChanged(auth, async(user)=>{
   if(!user){ location.href='login.html'; return; }
-  // OPTIONAL CEK ADMIN - KALO MAU SEMUA BISA AKSES, HAPUS IF INI
-  // if(!ADMIN_EMAILS.includes(user.email) && user.email!=='wafastoreonly@gmail.com'){ alert('Bukan Admin!'); location.href='index.html'; return; }
-  
-  renderOrders();
-  renderSaldo();
-  handleActionFromDiscord();
+  renderOrders(); renderSaldo(); handleActionFromDiscord();
 });
 </script>
 </body>
