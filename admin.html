@@ -1,43 +1,16 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Admin WafaStoreOnly - Ticket</title>
-<style>
-body{background:#060a23;color:#fff;font-family:Inter,sans-serif;padding:16px}
-.card{background:#121631;border:1px solid #2a3a8a;padding:14px;border-radius:14px;margin-top:12px}
-.btn{padding:10px 14px;border:none;border-radius:10px;font-weight:800;cursor:pointer;margin:4px}
-</style>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin WafaStoreOnly</title>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-const cfg={apiKey:"AIzaSyDTkQVpME0XRQmk9Jo7eDQuf0OFY8stm_8",authDomain:"wafastoreonly.firebaseapp.com",databaseURL:"https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"wafastoreonly",storageBucket:"wafastoreonly.firebasestorage.app",messagingSenderId:"208012194307",appId:"1:208012194307:web:551a540b0151333da69436"};
-const app=initializeApp(cfg);const db=getDatabase(app);
-
-const params=new URLSearchParams(location.search);
-const autoId=params.get('id'); const autoAct=params.get('action');
-if(autoId && autoAct){
-  update(ref(db,'orders/'+autoId),{status:autoAct}).then(()=>{
-    document.body.innerHTML=`<h2>✅ Order #${autoId.slice(-6)} jadi ${autoAct}</h2><p>Buyer otomatis dapat pesan bot di web! Ticket akan auto hapus kalo selesai.</p><a href="admin.html" style="color:#00e5ff">← Kembali ke Admin</a>`;
-  });
-}
-
-window.proses=(id)=>update(ref(db,'orders/'+id),{status:'proses'}).then(()=>alert('PROSES ✅ - Buyer dikirim pesan: sedang di proses 🥰'));
-window.selesai=(id)=>update(ref(db,'orders/'+id),{status:'selesai'}).then(()=>alert('KONFIRMASI ✅ - Buyer dikirim pesan: done + terimakasih 🙏 & auto hapus 8 detik'));
-window.batal=(id)=>update(ref(db,'orders/'+id),{status:'batal'});
-
-onValue(ref(db,'orders'),snap=>{
-  const data=snap.val();const div=document.getElementById('list');div.innerHTML='';
-  if(!data){div.innerHTML='Belum ada order';return;}
-  Object.values(data).sort((a,b)=>b.id-a.id).forEach(o=>{
-    div.innerHTML+=`<div class="card"><b>#${o.id.toString().slice(-6)} - ${o.username} - ${o.jumlah} Robux - Rp${o.total.toLocaleString('id-ID')}</b><br><small>${o.date} - ${o.method} - Status: ${o.status}</small><br><br><button class="btn" style="background:#00e5ff" onclick="proses(${o.id})">PROSES ✅</button><button class="btn" style="background:#00ff88" onclick="selesai(${o.id})">KONFIRMASI ✅</button><button class="btn" style="background:#ff4444;color:#fff" onclick="batal(${o.id})">BATALKAN</button></div>`;
-  });
-});
-</script>
-</head>
-<body>
-<h2>⚡ Admin WafaStoreOnly - Ticket System</h2>
-<p>Klik PROSES / KONFIRMASI di sini atau langsung dari Discord. Buyer auto dapat chat bot.</p>
-<div id="list">Loading...</div>
-</body>
-</html>
+import { getDatabase, ref, update, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+const firebaseConfig = { apiKey: "AIzaSyDTkQVpME0XRQmk9Jo7eDQuf0OFY8stm_8", authDomain: "wafastoreonly.firebaseapp.com", databaseURL: "https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "wafastoreonly", storageBucket: "wafastoreonly.firebasestorage.app", messagingSenderId: "208012194307", appId: "1:208012194307:web:551a540b0151333da69436" };
+const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+const p=new URLSearchParams(location.search); const id=p.get('id'); const action=p.get('action');
+async function run(){
+  if(!id || !action){document.body.innerHTML='<h2 style=color:white;background:#060a23;padding:20px>❌ ID / Action gak ada bos!</h2>';return;}
+  try{
+    await update(ref(db,'orders/'+id), { status: action==='selesai'?'selesai':action==='proses'?'proses':'batal' });
+    document.body.innerHTML=`<div style="background:#060a23;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;font-family:sans-serif;text-align:center;padding:20px"><div style="font-size:60px">${action==='selesai'?'✅':action==='proses'?'⚡':'❌'}</div><h1>Pesanan #${id.toString().slice(-6)}<br>Status jadi: ${action.toUpperCase()}</h1><p style="color:#aab0d0;margin-top:10px">Buyer udah auto dapet notif di web!<br>${action==='selesai'?'Ticket auto hapus 10 menit':'Lanjutkan proses bos!'}</p><a href="/" style="margin-top:20px;padding:12px 20px;background:#00e5ff;color:#000;border-radius:10px;text-decoration:none;font-weight:800">Kembali ke Web</a></div>`;
+  }catch(e){document.body.innerHTML='<h2 style=color:white>Error: '+e.message+'</h2>';}
+} run();
+</script></head><body style="margin:0;background:#060a23"></body></html>
