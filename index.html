@@ -53,14 +53,27 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 const firebaseConfig = { apiKey: "AIzaSyDTkQVpME0XRQmk9Jo7eDQuf0OFY8stm_8", authDomain: "wafastoreonly.firebaseapp.com", databaseURL: "https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "wafastoreonly", storageBucket: "wafastoreonly.firebasestorage.app", messagingSenderId: "208012194307", appId: "1:208012194307:web:551a540b0151333da69436" };
-const app = initializeApp(firebaseConfig); const db = getDatabase(app);
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth(app);
 window.wafaDB=db; window.wafaRef=ref; window.wafaSet=set; window.wafaOnValue=onValue;
+window.wafaAuth=auth;
 window.DISCORD_URL="https://discord.com/api/webhooks/1553218744803917856/uUaVtWriD4VYFF_e82Q2xGtvfoTCJ5PvU2UjcXVEeK1EoRvaBKh2dpNf0YD4-d5OBveg";
+// CEK LOGIN - KALO BELUM LOGIN LEMPAR KE LOGIN.HTML
+let uid = localStorage.getItem('wafa_uid');
+if(!uid){ window.location.href='login.html'; }
+onAuthStateChanged(auth, (user)=>{
+  // kalo ada user tapi localStorage kosong, sync
+  if(user &&!localStorage.getItem('wafa_uid')){
+    localStorage.setItem('wafa_uid', user.uid);
+  }
+});
 </script>
 </head>
 <body>
-<div class="header"><div class="logo"><img src="./logo.png" style="width:36px;height:36px;border-radius:50%;border:2px solid #00e5ff"><span>WafaStoreOnly</span></div><div style="font-size:11px;background:#00ff8820;border:1px solid #00ff88;padding:4px 8px;border-radius:20px">NO WA • DC ONLY • FIX BUTTON ✅</div></div>
+<div class="header"><div class="logo"><img src="./logo.png" style="width:36px;height:36px;border-radius:50%;border:2px solid #00e5ff"><span>WafaStoreOnly</span></div><div style="display:flex;gap:6px;align-items:center"><div id="userName" style="font-size:10px;background:#00ff8820;border:1px solid #00ff88;padding:5px 10px;border-radius:20px">Loading...</div><button onclick="logout()" style="font-size:10px;background:#ff444420;border:1px solid #ff4444;padding:5px 10px;border-radius:20px;color:#fff;cursor:pointer">Logout</button></div></div>
 
 <div id="homePage">
 <div class="banner"><h1>TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1><p>⚡ Killua Edition • Aman • 24/7 • Godspeed Delivery • Auto Batal 10 Menit • Termurah</p><button class="btn-mulai" onclick="openRoblox()">⚡ Mulai Top Up Sekarang</button></div>
@@ -89,12 +102,12 @@ window.DISCORD_URL="https://discord.com/api/webhooks/1553218744803917856/uUaVtWr
 <div class="grid-robux" id="gridUsername"></div>
 <div class="syarat-box">
 <b>📜 Syarat & Ketentuan Via Username:</b><br>
-• Akun tidak boleh private, wajib public<br>
-• Username harus benar, salah username bukan tanggung jawab kami<br>
-• Proses 1-5 menit setelah bukti TF valid (Godspeed)<br>
-• Robux masuk via group payout, butuh 3-7 hari pending Roblox? Tetap masuk!<br>
-• Wajib join group WafaStoreOnly (auto invite)<br>
-• No refund jika username salah
+- Akun tidak boleh private, wajib public<br>
+- Username harus benar, salah username bukan tanggung jawab kami<br>
+- Proses 1-5 menit setelah bukti TF valid (Godspeed)<br>
+- Robux masuk via group payout, butuh 3-7 hari pending Roblox? Tetap masuk!<br>
+- Wajib join group WafaStoreOnly (auto invite)<br>
+- No refund jika username salah
 </div>
 </div>
 
@@ -106,13 +119,13 @@ window.DISCORD_URL="https://discord.com/api/webhooks/1553218744803917856/uUaVtWr
 <div class="grid-robux" id="gridGamepass"></div>
 <div class="syarat-box">
 <b>📜 Syarat & Ketentuan Via Gamepass:</b><br>
-• Buyer wajib punya gamepass yang masih dijual<br>
-• Setting harga gamepass sesuai arahan admin (Total / 0.7)<br>
-• Gamepass harus public & tidak di-private<br>
-• Proses 5-30 menit setelah admin cek<br>
-• Roblox tax 30% sudah dihitung, kamu setting sesuai instruksi<br>
-• Jika gamepass tidak ditemukan, order batal otomatis 10 menit<br>
-• Wajib kirim link gamepass di chat layanan
+- Buyer wajib punya gamepass yang masih dijual<br>
+- Setting harga gamepass sesuai arahan admin (Total / 0.7)<br>
+- Gamepass harus public & tidak di-private<br>
+- Proses 5-30 menit setelah admin cek<br>
+- Roblox tax 30% sudah dihitung, kamu setting sesuai instruksi<br>
+- Jika gamepass tidak ditemukan, order batal otomatis 10 menit<br>
+- Wajib kirim link gamepass di chat layanan
 </div>
 </div>
 
@@ -123,13 +136,13 @@ window.DISCORD_URL="https://discord.com/api/webhooks/1553218744803917856/uUaVtWr
 <div class="total-box" id="tGift">Total: 0 robux x Rp95 = Rp0<br>Item: -</div>
 <div class="syarat-box">
 <b>📜 Syarat & Ketentuan Gift In Game:</b><br>
-• Akun harus berteman dengan bot kami minimal 3 hari (peraturan Roblox)<br>
-• Jika belum berteman 3 hari, proses akan tertunda sampai 3 hari<br>
-• Item harus ada di katalog & bisa di gift<br>
-• Harga paling murah, 95/robux saja!<br>
-• Proses 1-24 jam tergantung antrian gift<br>
-• Wajib on Roblox saat proses gift<br>
-• No refund jika username salah atau item tidak tersedia
+- Akun harus berteman dengan bot kami minimal 3 hari (peraturan Roblox)<br>
+- Jika belum berteman 3 hari, proses akan tertunda sampai 3 hari<br>
+- Item harus ada di katalog & bisa di gift<br>
+- Harga paling murah, 95/robux saja!<br>
+- Proses 1-24 jam tergantung antrian gift<br>
+- Wajib on Roblox saat proses gift<br>
+- No refund jika username salah atau item tidak tersedia
 </div>
 </div>
 </div>
@@ -150,7 +163,9 @@ window.DISCORD_URL="https://discord.com/api/webhooks/1553218744803917856/uUaVtWr
 <div id="layananBtn" onclick="toggleLayanan()">💬</div>
 <div id="layananBox">
 <div id="layananHeader"><div><b style="font-size:13px">Layanan WafaStoreOnly ⚡</b><div style="font-size:10px;opacity:0.8">Kirim Bukti TF Disini - No WA</div></div><div style="cursor:pointer" onclick="toggleLayanan()">✕</div></div>
-<div id="layananChat"><div class="msg bot">Halo! Saya Layanan WafaStoreOnly ⚡\n\nKirim bukti TF kamu disini ya biar admin cek mutasi 🥰 (No WA, langsung ke Discord Admin)</div></div>
+<div id="layananChat"><div class="msg bot">Halo! Saya Layanan WafaStoreOnly ⚡
+
+Kirim bukti TF kamu disini ya biar admin cek mutasi 🥰 (No WA, langsung ke Discord Admin)</div></div>
 <div id="layananInput">
 <input id="layananText" placeholder="Ketik / kirim bukti TF..." onkeypress="if(event.key==='Enter')sendLayanan()">
 <button onclick="document.getElementById('buktiChat').click()" style="background:#ffcc00">📤</button>
@@ -193,7 +208,14 @@ function attachFirebaseListener(orderId){
           orders[idx].notifProses=true; localStorage.setItem('wafa_orders',JSON.stringify(orders));
         }
         if(o.status=='selesai' &&!orders[idx].notifSelesai){
-          addBotMsg(`🎉 Pesanan #${o.id.toString().slice(-6)} sudah diterima transaksi done silahkan cek✅\n\n📌 ticket akan terhapus otomatis dalam 10 menit\n\n${o.jumlah} Robux udah masuk ke ${o.username}!\n\nTerimakasih telah order di WafaStoreOnly🥰🙏\nDitunggu orderan selanjutnya!`);
+          addBotMsg(`🎉 Pesanan #${o.id.toString().slice(-6)} sudah diterima transaksi done silahkan cek✅
+
+📌 ticket akan terhapus otomatis dalam 10 menit
+
+${o.jumlah} Robux udah masuk ke ${o.username}!
+
+Terimakasih telah order di WafaStoreOnly🥰🙏
+Ditunggu orderan selanjutnya!`);
           orders[idx].notifSelesai=true; localStorage.setItem('wafa_orders',JSON.stringify(orders));
           setTimeout(()=>{
             let cur=JSON.parse(localStorage.getItem('wafa_orders')||'[]').filter(x=>x.id!=o.id);
@@ -208,13 +230,15 @@ function attachFirebaseListener(orderId){
 function saveOrder(data){
   let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
   data.id=Date.now(); data.date=new Date().toLocaleString('id-ID'); data.status='verifikasi'; data.bukti=''; data.expiry=Date.now()+(10*60*1000);
+  let uid=localStorage.getItem('wafa_uid')||'guest';
+  data.uid=uid;
   orders.unshift(data); localStorage.setItem('wafa_orders',JSON.stringify(orders));
   attachFirebaseListener(data.id);
   try{
     if(window.wafaDB){ window.wafaSet(window.wafaRef(window.wafaDB,'orders/'+data.id), data); }
     if(window.DISCORD_URL){
       fetch(window.DISCORD_URL+"?with_components=true", { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
-        content: `🔥 **ORDER BARU KILLUA! (BELUM BAYAR)**\nID: #${data.id.toString().slice(-6)}\nUsername: ${data.username}\nMethod: ${data.method}\nJumlah: ${data.jumlah} Robux\nTotal: Rp${data.total.toLocaleString('id-ID')}\n\nMenunggu buyer kirim bukti TF di web...`,
+        content: `🔥 **ORDER BARU KILLUA! (BELUM BAYAR)**\nID: #${data.id.toString().slice(-6)}\nUsername: ${data.username}\nMethod: ${data.method}\nJumlah: ${data.jumlah} Robux\nTotal: Rp${data.total.toLocaleString('id-ID')}\nUID: ${uid}\n\nMenunggu buyer kirim bukti TF di web...`,
       })});
     }
   }catch(e){}
@@ -225,7 +249,7 @@ function sendDiscordWithBukti(o, dataUrl, judul){
   const prosesUrl = `${baseUrl}admin.html?id=${o.id}&action=proses`;
   const selesaiUrl = `${baseUrl}admin.html?id=${o.id}&action=selesai`;
   const batalUrl = `${baseUrl}admin.html?id=${o.id}&action=batal`;
-  const text = `${judul}\n\n📦 **FORMAT ORDERAN**\nID: #${o.id.toString().slice(-6)}\nUsername: ${o.username}\nMethod: ${o.method}\nJumlah: ${o.jumlah} Robux\nTotal: Rp${o.total.toLocaleString('id-ID')}\nItem: ${o.item||'-'}\nTanggal: ${o.date}\n\n⚠️ Cek mutasi dulu bos!`;
+  const text = `${judul}\n\n📦 **FORMAT ORDERAN**\nID: #${o.id.toString().slice(-6)}\nUsername: ${o.username}\nMethod: ${o.method}\nJumlah: ${o.jumlah} Robux\nTotal: Rp${o.total.toLocaleString('id-ID')}\nItem: ${o.item||'-'}\nTanggal: ${o.date}\nUID: ${o.uid||'-'}\n\n⚠️ Cek mutasi dulu bos!`;
   fetch(dataUrl).then(r=>r.blob()).then(blob=>{
     let form=new FormData();
     form.append('payload_json', JSON.stringify({ content: text }));
@@ -312,6 +336,23 @@ function addUserMsg(txt){let c=document.getElementById('layananChat');let d=docu
 function sendLayanan(){let inp=document.getElementById('layananText');let t=inp.value.trim();if(!t)return;addUserMsg(t);inp.value='';setTimeout(()=>{addBotMsg('Kirim bukti TF pake tombol 📤 kuning ya bos!');},400);}
 renderUsername();renderGamepass();checkExpired();
 (function initListeners(){ let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]'); orders.forEach(o=>attachFirebaseListener(o.id)); })();
+
+function logout(){ localStorage.removeItem('wafa_uid'); window.wafaAuth.signOut().then(()=>{ location.href='login.html'; }).catch(()=>{ location.href='login.html'; }); }
+async function loadUser(){
+  try{
+    let uid=localStorage.getItem('wafa_uid');
+    if(!uid) return;
+    let res = await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}.json`);
+    let data = await res.json();
+    if(data){
+      let name = data.name || data.email || data.phone || 'User';
+      document.getElementById('userName').innerText = name.slice(0,14);
+    } else {
+      document.getElementById('userName').innerText = 'User';
+    }
+  }catch(e){ document.getElementById('userName').innerText='User'; }
+}
+loadUser();
 </script>
 </body>
 </html>
