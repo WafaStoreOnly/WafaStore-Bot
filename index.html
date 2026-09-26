@@ -66,18 +66,14 @@ window.wafaAuth=auth;
 window.DISCORD_URL="https://discord.com/api/webhooks/1553218744803917856/uUaVtWriD4VYFF_e82Q2xGtvfoTCJ5PvU2UjcXVEeK1EoRvaBKh2dpNf0YD4-d5OBveg";
 let uid = localStorage.getItem('wafa_uid');
 if(!uid){ window.location.href='login.html'; }
-onAuthStateChanged(auth, (user)=>{
-  if(user &&!localStorage.getItem('wafa_uid')){
-    localStorage.setItem('wafa_uid', user.uid);
-  }
-});
+onAuthStateChanged(auth, (user)=>{ if(user &&!localStorage.getItem('wafa_uid')){ localStorage.setItem('wafa_uid', user.uid); } });
 </script>
 </head>
 <body>
 <div class="header"><div class="logo"><img src="./logo.png" style="width:36px;height:36px;border-radius:50%;border:2px solid #00e5ff"><span>WafaStoreOnly</span></div><div style="display:flex;gap:6px;align-items:center"><div id="userName" style="font-size:10px;background:#00ff8820;border:1px solid #00ff88;padding:5px 10px;border-radius:20px">Loading...</div><button onclick="logout()" style="font-size:10px;background:#ff444420;border:1px solid #ff4444;padding:5px 10px;border-radius:20px;color:#fff;cursor:pointer">Logout</button></div></div>
 
 <div id="homePage">
-<div class="banner"><h1>TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1><p>⚡ Killua Edition • Aman • 24/7 • Godspeed Delivery • Auto Batal 10 Menit • Termurah • Anti Porn Detect ✅</p><button class="btn-mulai" onclick="openRoblox()">⚡ Mulai Top Up Sekarang</button></div>
+<div class="banner"><h1>TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1><p>⚡ Killua Edition • Aman • 24/7 • Godspeed • Auto Batal 10 Menit • Anti Porn ✅</p><button class="btn-mulai" onclick="openRoblox()">⚡ Mulai Top Up Sekarang</button></div>
 <div class="section">
 <div style="display:flex;justify-content:space-between"><h2 style="font-size:16px;font-weight:800">Pilih Game Populer</h2><span style="color:#00d4ff;font-size:12px">Killua ON ⚡</span></div>
 <div class="grid-game">
@@ -99,51 +95,46 @@ onAuthStateChanged(auth, (user)=>{
 <div class="input-group"><label>Username Roblox:</label><input id="uRbx" placeholder="SANTRI_PRIDE"></div>
 <div class="input-group"><label>Mau Berapa robux? (160/robux)</label><input id="cRbx" type="number" placeholder="Contoh: 10000" oninput="calcUsername()"></div>
 <div class="total-box" id="tRbx">Total: 0 robux = Rp0</div>
-<div style="font-weight:800;font-size:13px;margin:18px 0 10px">Pilih Paket Via Username - 160/robux (diskon dari 180)</div>
+<div style="font-weight:800;font-size:13px;margin:18px 0 10px">Pilih Paket Via Username - 160/robux</div>
 <div class="grid-robux" id="gridUsername"></div>
 <div class="syarat-box">
-<b>📜 Syarat & Ketentuan Via Username:</b><br>
-- Akun tidak boleh private, wajib public<br>
-- Username harus benar, salah username bukan tanggung jawab kami<br>
-- Proses 1-5 menit setelah bukti TF valid (Godspeed)<br>
-- Robux masuk via group payout, butuh 3-7 hari pending Roblox? Tetap masuk!<br>
-- Wajib join group WafaStoreOnly (auto invite)<br>
-- No refund jika username salah
+<b>📌SYARAT DAN KETENTUAN ROBUX VIA USERNAME📌</b><br>
+1. proses kilat 5-10 menit✅<br>
+2. pastikan username benar (kesalahan memasukan username diluar tanggung jawab kami)✅<br>
+3. pastikan v2f (verfikasi 2 langkah) on✅<br>
+4. pastikan akun tidak limit (bisa di cek dulu di masing"akun)✅<br>
+5. pastikan umur diatas 18+ (jika dibawah umur bisa menggunakan akun parent/orang tua)✅
 </div>
 </div>
 
 <div id="m-gamepass" style="display:none">
-<div class="input-group"><label>Username Roblox:</label><input id="uRbx2" placeholder="SANTRI_PRIDE"></div>
+<div class="input-group"><label>Username Roblox:</label><input id="uRbx2" placeholder="username roblox"></div>
 <div class="input-group"><label>Mau Berapa robux? (140/robux)</label><input id="cRbx2" type="number" placeholder="Contoh: 1000" oninput="calcGamepass()"></div>
+<div class="input-group"><label>Link Gamepass:</label><input id="gamepassLink" placeholder="https://www.roblox.com/game-pass/xxxxxxx/nama-gamepass"></div>
 <div class="total-box" id="tRbx2">Total: 0 robux = Rp0<br>Setting Gamepass: 0 robux</div>
 <div style="font-weight:800;font-size:13px;margin:18px 0 10px">Pilih Paket Via Gamepass - 140/robux</div>
 <div class="grid-robux" id="gridGamepass"></div>
 <div class="syarat-box">
-<b>📜 Syarat & Ketentuan Via Gamepass:</b><br>
-- Buyer wajib punya gamepass yang masih dijual<br>
-- Setting harga gamepass sesuai arahan admin (Total / 0.7)<br>
-- Gamepass harus public & tidak di-private<br>
-- Proses 5-30 menit setelah admin cek<br>
-- Roblox tax 30% sudah dihitung, kamu setting sesuai instruksi<br>
-- Jika gamepass tidak ditemukan, order batal otomatis 10 menit<br>
-- Wajib kirim link gamepass di chat layanan
+<b>📌SYARAT DAN KETENTUAN ROBUX VIA GAMEPASS📌</b><br>
+1. proses robux membutuhkan jangka waktu ± 5-7 hari✅<br>
+2. pastikan username benar (kesalahan memasukan username diluar tanggung jawab kami)✅<br>
+3. pastikan sudah membuat gamepass publik (tidak private)✅<br>
+4. pastikan memasukan gamepass nya sesuai dengan jumlah settingan gamepass yang sudah di berikan✅
 </div>
 </div>
 
 <div id="m-gift" style="display:none">
-<div class="input-group"><label>Username Roblox:</label><input id="uRbx3" placeholder="SANTRI_PRIDE"></div>
+<div class="input-group"><label>Username Roblox:</label><input id="uRbx3" placeholder="username roblox"></div>
 <div class="input-group"><label>Nama Item yang mau di Gift:</label><input id="giftItem" placeholder="Contoh: VIP, Gamepass, T-Shirt"></div>
 <div class="input-group"><label>Jumlah Robux yang dibutuhkan Item:</label><input id="cGift" type="number" placeholder="Contoh: 445" oninput="calcGift()"></div>
+<div class="input-group"><label>Link Private Server:</label><input id="privateServerLink" placeholder="https://www.roblox.com/games/xxxxx/private-server"></div>
 <div class="total-box" id="tGift">Total: 0 robux x Rp95 = Rp0<br>Item: -</div>
 <div class="syarat-box">
-<b>📜 Syarat & Ketentuan Gift In Game:</b><br>
-- Akun harus berteman dengan bot kami minimal 3 hari (peraturan Roblox)<br>
-- Jika belum berteman 3 hari, proses akan tertunda sampai 3 hari<br>
-- Item harus ada di katalog & bisa di gift<br>
-- Harga paling murah, 95/robux saja!<br>
-- Proses 1-24 jam tergantung antrian gift<br>
-- Wajib on Roblox saat proses gift<br>
-- No refund jika username salah atau item tidak tersedia
+<b>📌SYARAT DAN KETENTUAN ROBUX VIA GIFT IN GAME📌</b><br>
+1. proses kilat diharap untuk stand by di server map✅<br>
+2. pastikan username benar (kesalahan memasukan username diluar tanggung jawab kami)✅<br>
+3. nama item sesuai dengan yang ada di game✅<br>
+4. pastikan jumlah robux sama dengan yang di map✅
 </div>
 </div>
 </div>
@@ -157,6 +148,7 @@ onAuthStateChanged(auth, (user)=>{
 <div class="pay-card"><img class="logo-pay" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/512px-Gopay_logo.svg.png"><div style="flex:1"><div style="font-size:13px;font-weight:800">GOPAY</div><div style="font-size:12px">083862776790</div></div><button onclick="copyText('083862776790')" style="padding:8px 12px;border-radius:8px;border:none;background:#00AA13;color:#fff;font-weight:800">Salin</button></div>
 <div class="pay-card"><img class="logo-pay" src="https://seeklogo.com/images/S/seabank-logo-3E0C3F868E-seeklogo.com.png"><div style="flex:1"><div style="font-size:13px;font-weight:800">SEABANK</div><div style="font-size:12px">901162765462</div></div><button onclick="copyText('901162765462')" style="padding:8px 12px;border-radius:8px;border:none;background:#ffcc00;color:#000;font-weight:800">Salin</button></div>
 <div style="margin-top:20px;background:rgba(18,22,49,0.95);border:2px solid #00e5ff;border-radius:16px;overflow:hidden;text-align:center;box-shadow:0 0 30px #00e5ff40"><img src="./qris-killua-final.jpg" style="width:100%;display:block"></div>
+<div style="font-size:10px;color:#00e5ff;margin-top:6px;text-align:center">QRIS Atas Nama: AWA_NEWSTREAM / WafaStoreOnly ✅</div>
 </div>
 
 <div id="pesananPage" class="section"><div style="font-weight:900;font-size:20px">Pesanan Saya ⚡</div><div id="listPesanan" style="margin-top:16px"></div><div id="emptyPesanan" style="text-align:center;margin-top:40px;color:#5a638a"><div style="font-size:40px">📦</div><div style="font-size:13px;margin-top:8px">Belum ada pesanan</div></div></div>
@@ -166,7 +158,7 @@ onAuthStateChanged(auth, (user)=>{
 <div id="layananHeader"><div><b style="font-size:13px">Layanan WafaStoreOnly ⚡</b><div style="font-size:10px;opacity:0.8">Kirim Bukti TF Disini - Anti Porn Active</div></div><div style="cursor:pointer" onclick="toggleLayanan()">✕</div></div>
 <div id="layananChat"><div class="msg bot">Halo! Saya Layanan WafaStoreOnly ⚡
 
-Kirim bukti TF kamu disini ya biar admin cek mutasi 🥰 (Anti foto porno & fake aktif ✅)</div></div>
+Kirim bukti TF kamu disini ya biar admin cek mutasi 🥰</div></div>
 <div id="layananInput">
 <input id="layananText" placeholder="Ketik / kirim bukti TF..." onkeypress="if(event.key==='Enter')sendLayanan()">
 <button onclick="document.getElementById('buktiChat').click()" style="background:#ffcc00">📤</button>
@@ -187,66 +179,42 @@ Kirim bukti TF kamu disini ya biar admin cek mutasi 🥰 (Anti foto porno & fake
 
 <script>
 function sensorEmail(e){if(!e||!e.includes('@'))return'****';let [a,b]=e.split('@');if(a.length<=2)return a[0]+'****@'+b;return a.slice(0,3)+'****@'+b}
-function sensorNomor(n){if(!n)return'****';let s=n.toString();if(s.length<7)return'****';return s.slice(0,4)+'****'+s.slice(-3)}
-
-// VALIDASI BUKTI - SUDAH TERMASUK AWA_NEWSTREAM BOS!
 async function cekBuktiValid(file){
   let loading=document.createElement('div');
   loading.id='loadingDetect';
   loading.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;justify-content:center;align-items:center;flex-direction:column;color:#fff;font-weight:800;text-align:center;padding:20px';
-  loading.innerHTML='<div style="font-size:50px">🔍</div><div style="margin-top:10px">CEK BUKTI TF OTOMATIS...</div><div id="cek-status" style="font-size:12px;color:#00e5ff;margin-top:8px">1/4 Detect NSFW...</div>';
+  loading.innerHTML='<div style="font-size:50px">🔍</div><div style="margin-top:10px">CEK BUKTI TF OTOMATIS...</div><div id="cek-status" style="font-size:12px;color:#00e5ff;margin-top:8px">1/4...</div>';
   document.body.appendChild(loading);
   try{
-    document.getElementById('cek-status').innerText='1/4 Cek foto porno / NSFW...';
+    document.getElementById('cek-status').innerText='1/4 Cek foto porno...';
     let img=document.createElement('img');img.src=URL.createObjectURL(file);await new Promise(r=>{img.onload=r;img.onerror=r;});
     const model=await nsfwjs.load();
     const preds=await model.classify(img);
     let pornScore=0;preds.forEach(p=>{if(['Porn','Hentai','Sexy'].includes(p.className))pornScore=Math.max(pornScore,p.probability)});
-    if(pornScore>0.5){document.getElementById('loadingDetect').remove();return {valid:false,reason:`❌ FOTO DITOLAK! Terdeteksi foto porno/NSFW (${Math.round(pornScore*100)}%)!`};}
+    if(pornScore>0.5){document.getElementById('loadingDetect').remove();return {valid:false,reason:`❌ FOTO DITOLAK! Terdeteksi porno (${Math.round(pornScore*100)}%)!`};}
 
-    document.getElementById('cek-status').innerText='2/4 Baca tulisan bukti...';
+    document.getElementById('cek-status').innerText='2/4 Baca bukti...';
     let {data:{text}}=await Tesseract.recognize(file,'ind+eng');
     let lower=text.toLowerCase();
     let lowerNoSpace=lower.replace(/\s/g,'');
-
     let blacklist=['kontol','memek','ngentot','anjing','babi','bangsat','tolol','goblok','asu','jancok','fuck','shit','peler','itil','jembut','kerjakontol'];
-    let toxicFound=blacklist.find(k=>lower.includes(k));
-    if(toxicFound){
-      document.getElementById('loadingDetect').remove();
-      return {valid:false,reason:`❌ FOTO DITOLAK! Terdeteksi kata kasar "${toxicFound.toUpperCase()}"!`};
-    }
+    if(blacklist.some(k=>lower.includes(k))){document.getElementById('loadingDetect').remove();return {valid:false,reason:`❌ FOTO DITOLAK! Kata kasar!`};}
 
     document.getElementById('cek-status').innerText='3/4 Cek penerima...';
-    let validNumbers=['083862776790','83862776790','3862776790','901162765462','01162765462'];
-    let validNames=['wafastoreonly','wafastore','wafa','killua','awa_newstream','awa newstream','awanewstream','awa','newstream'];
+    let validNumbers=['083862776790','83862776790','901162765462'];
+    let validNames=['wafastoreonly','wafastore','wafa','killua','awa_newstream','awa newstream','awanewstream'];
     let isMyNumber = validNumbers.some(no => lowerNoSpace.includes(no));
     let isMyName = validNames.some(nm => lower.includes(nm));
     let isQris = lower.includes('qris');
-
     let fakeList=['jhonny','benjamin','manurung'];
-    let isFake = fakeList.some(f => lower.includes(f));
-    if(isFake){
-      document.getElementById('loadingDetect').remove();
-      return {valid:false,reason:`❌ BUKTI FAKE! Penerima bukan WafaStoreOnly / AWA_NEWSTREAM!`};
-    }
-    if(!isMyNumber &&!isMyName &&!isQris){
-      document.getElementById('loadingDetect').remove();
-      return {valid:false,reason:`❌ BUKTI SALAH TUJUAN! Bukan ke 083862776790 / 901162765462 / WafaStoreOnly / AWA_NEWSTREAM!`};
-    }
+    if(fakeList.some(f=>lower.includes(f))){document.getElementById('loadingDetect').remove();return {valid:false,reason:`❌ BUKTI FAKE! Bukan ke Wafa / AWA_NEWSTREAM!`}; }
+    if(!isMyNumber &&!isMyName &&!isQris){document.getElementById('loadingDetect').remove();return {valid:false,reason:`❌ SALAH TUJUAN! Harus ke 083862776790 / 901162765462 / AWA_NEWSTREAM!`};}
 
-    document.getElementById('cek-status').innerText='4/4 Cek status berhasil...';
-    let keys=['berhasil','sukses','success','completed','terkirim'];
-    if(!keys.some(k=>lower.includes(k))){
-      document.getElementById('loadingDetect').remove();
-      return {valid:false,reason:'❌ BUKTI TIDAK VALID! Tidak ada tulisan Berhasil/Sukses!'};
-    }
-    if(!lower.includes('rp')&&!/\d{4,}/.test(lower)){
-      document.getElementById('loadingDetect').remove();
-      return {valid:false,reason:'❌ Tidak ada nominal!'};
-    }
+    document.getElementById('cek-status').innerText='4/4 Cek berhasil...';
+    if(!['berhasil','sukses','success','terkirim'].some(k=>lower.includes(k))){document.getElementById('loadingDetect').remove();return {valid:false,reason:'❌ Tidak ada tulisan Berhasil!'};}
     document.getElementById('loadingDetect').remove();
-    return {valid:true,match:10,pornScore};
-  }catch(err){let l=document.getElementById('loadingDetect');if(l)l.remove();return {valid:false,reason:'❌ Gagal baca bukti!'};}
+    return {valid:true};
+  }catch(e){let l=document.getElementById('loadingDetect');if(l)l.remove();return {valid:false,reason:'❌ Gagal baca bukti!'};}
 }
 
 let currentMethod='username';
@@ -274,19 +242,8 @@ function attachFirebaseListener(orderId){
       let idx=orders.findIndex(x=>x.id==o.id); if(idx<0) return;
       if(orders[idx].status!=o.status){
         orders[idx].status=o.status; localStorage.setItem('wafa_orders',JSON.stringify(orders)); renderPesanan();
-        if(o.status=='proses' &&!orders[idx].notifProses){
-          addBotMsg(`⚡ Pesanan #${o.id.toString().slice(-6)} sedang di proses harap ditunggu🥰`);
-          orders[idx].notifProses=true; localStorage.setItem('wafa_orders',JSON.stringify(orders));
-        }
-        if(o.status=='selesai' &&!orders[idx].notifSelesai){
-          addBotMsg(`🎉 Pesanan #${o.id.toString().slice(-6)} sudah diterima transaksi done silahkan cek✅\n\n📌 ticket akan terhapus otomatis dalam 10 menit\n\n${o.jumlah} Robux udah masuk ke ${o.username}!\n\nTerimakasih telah order di WafaStoreOnly🥰🙏\nDitunggu orderan selanjutnya!`);
-          orders[idx].notifSelesai=true; localStorage.setItem('wafa_orders',JSON.stringify(orders));
-          setTimeout(()=>{
-            let cur=JSON.parse(localStorage.getItem('wafa_orders')||'[]').filter(x=>x.id!=o.id);
-            localStorage.setItem('wafa_orders',JSON.stringify(cur)); renderPesanan();
-            addBotMsg(`📌 Ticket #${o.id.toString().slice(-6)} auto terhapus setelah 10 menit ✅`);
-          },600000);
-        }
+        if(o.status=='proses' &&!orders[idx].notifProses){ addBotMsg(`⚡ Pesanan #${o.id.toString().slice(-6)} sedang di proses harap ditunggu🥰`); orders[idx].notifProses=true; localStorage.setItem('wafa_orders',JSON.stringify(orders)); }
+        if(o.status=='selesai' &&!orders[idx].notifSelesai){ addBotMsg(`🎉 Pesanan #${o.id.toString().slice(-6)} sudah diterima transaksi done ✅ ${o.jumlah} Robux udah masuk ke ${o.username}!`); orders[idx].notifSelesai=true; localStorage.setItem('wafa_orders',JSON.stringify(orders)); setTimeout(()=>{ let cur=JSON.parse(localStorage.getItem('wafa_orders')||'[]').filter(x=>x.id!=o.id); localStorage.setItem('wafa_orders',JSON.stringify(cur)); renderPesanan(); },600000); }
       }
     });
   }catch(e){}
@@ -303,80 +260,50 @@ function saveOrder(data){
     if(window.wafaDB){ window.wafaSet(window.wafaRef(window.wafaDB,'orders/'+data.id), data); }
     if(window.DISCORD_URL){
       fetch(window.DISCORD_URL+"?with_components=true", { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
-        content: `🔥 **ORDER BARU KILLUA! (BELUM BAYAR)**\nID: #${data.id.toString().slice(-6)}\nUsername: ${data.username}\nMethod: ${data.method}\nJumlah: ${data.jumlah} Robux\nTotal: Rp${data.total.toLocaleString('id-ID')}\nUID: ${uid}\nBuyer: ${sensorEmail(data.email||'-')} (${data.nickname||'-'})\n\nMenunggu buyer kirim bukti TF di web...`,
+        content: `🔥 **ORDER BARU (BELUM BAYAR)**\nID: #${data.id.toString().slice(-6)}\nUsername: ${data.username}\nMethod: ${data.method}\nJumlah: ${data.jumlah} Robux\nTotal: Rp${data.total.toLocaleString('id-ID')}\nLink Gamepass: ${data.gamepassLink||'-'}\nPrivate Server: ${data.privateServer||'-'}\nItem: ${data.item||'-'}\nBuyer: ${sensorEmail(data.email||'-')}\n\nMenunggu bukti TF...`,
       })});
     }
   }catch(e){}
   return data.id
 }
-function sendDiscordWithBukti(o, dataUrl, judul, detectInfo){
+function sendDiscordWithBukti(o, dataUrl, judul){
   const baseUrl = "https://wafastoreonly-official.vercel.app/";
   const prosesUrl = `${baseUrl}admin.html?id=${o.id}&action=proses`;
   const selesaiUrl = `${baseUrl}admin.html?id=${o.id}&action=selesai`;
   const batalUrl = `${baseUrl}admin.html?id=${o.id}&action=batal`;
-  let infoDetect = detectInfo? `\n\n🤖 **AUTO DETECT:**\n• NSFW: Aman ✅\n• Penerima: Valid ✅ (AWA_NEWSTREAM / Wafa)\n• Status: VALID ✅` : '';
-  const text = `${judul}\n\n📦 **FORMAT ORDERAN**\nID: #${o.id.toString().slice(-6)}\nUsername: ${o.username}\nMethod: ${o.method}\nJumlah: ${o.jumlah} Robux\nTotal: Rp${o.total.toLocaleString('id-ID')}\nBuyer: ${sensorEmail(o.email||'-')} (${o.nickname||'-'})\nTanggal: ${o.date}\nUID: ${o.uid||'-'}${infoDetect}\n\n⚠️ Cek mutasi dulu bos!`;
+  let extra = '';
+  if(o.method=='gamepass') extra = `\nLink Gamepass: ${o.gamepassLink||'-'}`;
+  if(o.method=='gift') extra = `\nItem: ${o.item||'-'}\nPrivate Server: ${o.privateServer||'-'}`;
+  const text = `${judul}\n\n📦 **FORMAT ORDERAN**\nID: #${o.id.toString().slice(-6)}\nUsername: ${o.username}\nMethod: ${o.method}\nJumlah: ${o.jumlah} Robux\nTotal: Rp${o.total.toLocaleString('id-ID')}${extra}\nBuyer: ${sensorEmail(o.email||'-')} (${o.nickname||'-'})\nTanggal: ${o.date}\nUID: ${o.uid||'-'}\n\n🤖 VALID ✅ AWA_NEWSTREAM\n⚠️ Cek mutasi!`;
   fetch(dataUrl).then(r=>r.blob()).then(blob=>{
     let form=new FormData();
     form.append('payload_json', JSON.stringify({ content: text }));
     form.append('files[0]', blob, `bukti-${o.id}.jpg`);
     fetch(window.DISCORD_URL+"?with_components=true", { method:'POST', body: form }).then(()=>{
-      setTimeout(()=>{
-        fetch(window.DISCORD_URL+"?with_components=true", {
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({
-            content: `⬇️ **AKSI ORDER #${o.id.toString().slice(-6)} - ${o.username} [VALID ✅]**`,
-            components: [{ type:1, components:[ { type:2, style:5, label:"PROSES ✅", url: prosesUrl }, { type:2, style:5, label:"KONFIRMASI ✅", url: selesaiUrl }, { type:2, style:5, label:"BATALKAN ❌", url: batalUrl } ] }]
-          })
-        });
-      }, 900);
+      setTimeout(()=>{ fetch(window.DISCORD_URL+"?with_components=true", { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ content: `⬇️ **AKSI ORDER #${o.id.toString().slice(-6)}**`, components: [{ type:1, components:[ { type:2, style:5, label:"PROSES ✅", url: prosesUrl }, { type:2, style:5, label:"KONFIRMASI ✅", url: selesaiUrl }, { type:2, style:5, label:"BATALKAN ❌", url: batalUrl } ] }] }) }); }, 900);
     });
   });
 }
 function getSisaWaktu(expiry){let sisa=expiry-Date.now();if(sisa<=0)return"00:00";let m=Math.floor(sisa/60000);let s=Math.floor((sisa%60000)/1000);return `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;}
-
-// ================= FIX AUTO BATAL 10 MENIT BOS - INI YANG LU MAU! =================
 function checkExpired(){
   let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
   let changed=false;
   let now=Date.now();
   orders.forEach(o=>{
     if(o.status=='verifikasi' && o.expiry && now>o.expiry){
-      o.status='batal';
-      o.batalReason='timeout';
-      changed=true;
-      // KIRIM PESAN BATAL KE CHAT BOS
-      setTimeout(()=>{
-        addBotMsg(`❌ TRANSAKSI DIBATALKAN OTOMATIS!
-
-Pesanan #${o.id.toString().slice(-6)} dibatalkan karena melebihi batas waktu 10 menit dan belum mengirim bukti TF 🙏
-
-Format:
-ID: #${o.id.toString().slice(-6)}
-Username: ${o.username}
-Jumlah: ${o.jumlah} Robux
-Status: DIBATALKAN ⏰ Timeout 10 menit
-
-Silahkan order kembali ya bos! 🥰🙏
-- WafaStoreOnly x Killua`);
-      },500);
+      o.status='batal'; o.batalReason='timeout'; changed=true;
+      setTimeout(()=>{ addBotMsg(`❌ TRANSAKSI DIBATALKAN OTOMATIS!\n\nPesanan #${o.id.toString().slice(-6)} dibatalkan karena melebihi batas waktu 10 menit 🙏\n\nTransaksi dibatalkan karena melebihi batas waktu silahkan di order kembali🙏`); },500);
       try{
         if(window.wafaDB){ window.wafaSet(window.wafaRef(window.wafaDB,'orders/'+o.id), o); }
         if(window.DISCORD_URL){
-          fetch(window.DISCORD_URL+"?with_components=true", { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
-            content: `⏰ **AUTO BATAL 10 MENIT!**\nID: #${o.id.toString().slice(-6)}\nUsername: ${o.username}\nJumlah: ${o.jumlah} Robux\nAlasan: Tidak kirim bukti TF selama 10 menit\nStatus: DIBATALKAN OTOMATIS`,
-          })});
+          let extra = o.method=='gamepass'? `\nLink Gamepass: ${o.gamepassLink||'-'}` : o.method=='gift'? `\nPrivate Server: ${o.privateServer||'-'}\nItem: ${o.item||'-'}` : '';
+          fetch(window.DISCORD_URL+"?with_components=true", { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ content: `❌ **TRANSAKSI DIBATALKAN OTOMATIS!**\n\nID: #${o.id.toString().slice(-6)}\nUsername: ${o.username}\nMethod: ${o.method}\nJumlah: ${o.jumlah} Robux\nTotal: Rp${o.total.toLocaleString('id-ID')}${extra}\nBuyer: ${sensorEmail(o.email||'-')}\nAlasan: Melebihi batas waktu 10 menit tidak kirim bukti TF\n\n**Transaksi dibatalkan karena melebihi batas waktu silahkan di order kembali🙏**`, })});
         }
       }catch(e){}
     }
   });
-  if(changed){
-    localStorage.setItem('wafa_orders',JSON.stringify(orders));
-    if(document.getElementById('pesananPage').style.display=='block') renderPesanan();
-  }
+  if(changed){ localStorage.setItem('wafa_orders',JSON.stringify(orders)); if(document.getElementById('pesananPage').style.display=='block') renderPesanan(); }
 }
-
 function renderPesanan(){
  let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
  let list=document.getElementById('listPesanan');
@@ -386,41 +313,27 @@ function renderPesanan(){
  orders.forEach(o=>{
   let isTimeout = o.status=='batal' && o.batalReason=='timeout';
   let color=o.status=='verifikasi'?'#ffcc00':o.status=='proses'?'#00e5ff':o.status=='selesai'?'#00ff88':'#ff4444';
-  let label=o.status=='verifikasi'?`Menunggu Bukti ⏰ ${o.expiry?getSisaWaktu(o.expiry):'10:00'}`:o.status=='proses'?'Diproses ⚡':o.status=='selesai'?'Selesai ✅ - Hapus 10m': isTimeout? 'Batal ⏰ Timeout 10m' : 'Batal ❌';
+  let label=o.status=='verifikasi'?`Menunggu Bukti ⏰ ${o.expiry?getSisaWaktu(o.expiry):'10:00'}`:o.status=='proses'?'Diproses ⚡':o.status=='selesai'?'Selesai ✅': isTimeout? 'Batal ⏰ Timeout' : 'Batal ❌';
   let d=document.createElement('div');d.className='order-card';d.style.borderColor=color;
+  let extraInfo = '';
+  if(o.method=='gamepass' && o.gamepassLink) extraInfo = `<br>Link Gamepass: <b style="color:#00e5ff;word-break:break-all">${o.gamepassLink}</b>`;
+  if(o.method=='gift' && o.privateServer) extraInfo = `<br>Private Server: <b style="color:#00e5ff;word-break:break-all">${o.privateServer}</b>`;
   if(o.status=='verifikasi'){
-    d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)} - ${o.method.toUpperCase()}</b><span style="background:${color};color:#000;padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800">${label}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date}</div><div style="font-size:12px;margin-top:10px">Username: <b>${o.username}</b><br>Jumlah: <b>${o.jumlah} Robux</b><br>Total: <b style="color:#00ff88">Rp${o.total.toLocaleString('id-ID')}</b></div><div style="display:flex;gap:8px;margin-top:12px"><button onclick="uploadBukti(${o.id})" style="flex:1;padding:12px;border-radius:10px;border:none;background:#ffcc00;color:#000;font-weight:800">📤 Upload Bukti TF</button></div>`;
-  } else if(o.status=='batal'){
-    let msgTimeout = isTimeout? `<div style="background:#ff444420;border:1px solid #ff4444;padding:8px;border-radius:8px;margin-top:10px;font-size:11px;line-height:1.6">❌ <b>Transaksi dibatalkan karena melebihi batas waktu 10 menit</b><br>Silahkan order kembali 🙏<br>Order #${o.id.toString().slice(-6)} timeout ⏰</div>` : '';
-    d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)} - ${o.method.toUpperCase()}</b><span style="background:${color};color:#fff;padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800">${label}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date}</div><div style="font-size:12px;margin-top:10px">Username: <b>${o.username}</b><br>Jumlah: <b>${o.jumlah} Robux</b><br>Total: <b style="color:#ff4444">Rp${o.total.toLocaleString('id-ID')}</b></div>${msgTimeout}<div style="display:flex;gap:8px;margin-top:12px"><button onclick="location.reload()" style="flex:1;padding:12px;border-radius:10px;border:none;background:#2a3366;color:#fff;font-weight:800">🔄 Order Lagi</button></div>`;
+    d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)} - ${o.method.toUpperCase()}</b><span style="background:${color};color:#000;padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800">${label}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date}</div><div style="font-size:12px;margin-top:10px">Username: <b>${o.username}</b><br>Jumlah: <b>${o.jumlah} Robux</b>${o.item?`<br>Item: <b>${o.item}</b>`:''}${extraInfo}<br>Total: <b style="color:#00ff88">Rp${o.total.toLocaleString('id-ID')}</b></div><div style="display:flex;gap:8px;margin-top:12px"><button onclick="uploadBukti(${o.id})" style="flex:1;padding:12px;border-radius:10px;border:none;background:#ffcc00;color:#000;font-weight:800">📤 Upload Bukti TF</button></div>`;
   } else {
-    d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)} - ${o.method.toUpperCase()}</b><span style="background:${color};color:#000;padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800">${label}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date}</div><div style="font-size:12px;margin-top:10px">Username: <b>${o.username}</b><br>Jumlah: <b>${o.jumlah} Robux</b><br>Total: <b style="color:#00ff88">Rp${o.total.toLocaleString('id-ID')}</b></div>`;
+    let msgTimeout = isTimeout? `<div style="background:#ff444420;border:1px solid #ff4444;padding:8px;border-radius:8px;margin-top:10px;font-size:11px;line-height:1.6">❌ Transaksi dibatalkan karena melebihi batas waktu silahkan di order kembali🙏</div>` : '';
+    d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)} - ${o.method.toUpperCase()}</b><span style="background:${color};color:#fff;padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800">${label}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date}</div><div style="font-size:12px;margin-top:10px">Username: <b>${o.username}</b><br>Jumlah: <b>${o.jumlah} Robux</b>${extraInfo}<br>Total: <b>Rp${o.total.toLocaleString('id-ID')}</b></div>${msgTimeout}`;
   }
   list.appendChild(d);
  });
 }
-
 function openPesanan(){hideAll();document.getElementById('pesananPage').style.display='block';document.getElementById('btnPay').style.display='none';setActive('pesanan');renderPesanan();}
-
 async function uploadBukti(id){
   let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
   let oCheck=orders.find(x=>x.id==id);
   if(!oCheck){alert('Pesanan tidak ditemukan!');return;}
-  if(oCheck.status=='batal'){
-    alert(`❌ TRANSAKSI DIBATALKAN!
-
-Pesanan #${id.toString().slice(-6)} sudah dibatalkan karena melebihi batas waktu 10 menit ⏰
-
-Transaksi dibatalkan karena melebihi batas waktu, silahkan order kembali 🙏`);
-    renderPesanan();
-    return;
-  }
-  if(oCheck.expiry && Date.now()>oCheck.expiry){
-    alert(`❌ WAKTU HABIS! Pesanan timeout 10 menit! Silahkan order kembali 🙏`);
-    checkExpired();
-    return;
-  }
-
+  if(oCheck.status=='batal'){alert(`❌ TRANSAKSI DIBATALKAN!\n\nTransaksi dibatalkan karena melebihi batas waktu silahkan di order kembali🙏`);renderPesanan();return;}
+  if(oCheck.expiry && Date.now()>oCheck.expiry){alert(`❌ WAKTU HABIS!`);checkExpired();return;}
   let input=document.createElement('input');input.type='file';input.accept='image/*';
   input.onchange=async e=>{
     let file=e.target.files[0]; if(!file) return;
@@ -430,55 +343,41 @@ Transaksi dibatalkan karena melebihi batas waktu, silahkan order kembali 🙏`);
     r.onload=()=>{
       let orders2=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
       let o=orders2.find(x=>x.id==id); if(!o) return;
-      if(o.status=='batal'){alert('❌ Pesanan sudah dibatalkan timeout! Order lagi ya!');return;}
+      if(o.status=='batal'){alert('❌ Sudah dibatalkan timeout!');return;}
       o.bukti=r.result; localStorage.setItem('wafa_orders',JSON.stringify(orders2)); renderPesanan();
       addBotMsg(`✅ Bukti TF #${id.toString().slice(-6)} valid! Admin cek mutasi ya 🥰`);
-      sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF MASUK! [VALID ✅]**`, cek);
+      sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF MASUK! [VALID ✅]**`);
     }; r.readAsDataURL(file);
   }; input.click();
 }
-
 async function uploadBuktiFromChat(input){
   let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
-  if(orders.length==0){alert('Buat pesanan dulu bos!');input.value='';return;}
+  if(orders.length==0){alert('Buat pesanan dulu!');input.value='';return;}
   let o=orders[0];
-  if(o.status=='batal'){
-    alert(`❌ TRANSAKSI DIBATALKAN!
-
-Pesanan #${o.id.toString().slice(-6)} dibatalkan karena melebihi batas waktu 🙏
-
-Silahkan order kembali!`);
-    input.value=''; renderPesanan(); return;
-  }
-  if(o.expiry && Date.now()>o.expiry){
-    alert(`❌ Waktu habis 10 menit! Pesanan auto batal! Order lagi ya 🙏`);
-    checkExpired(); input.value=''; return;
-  }
-
+  if(o.status=='batal'){alert(`❌ TRANSAKSI DIBATALKAN! Transaksi dibatalkan karena melebihi batas waktu silahkan di order kembali🙏`);input.value='';renderPesanan();return;}
+  if(o.expiry && Date.now()>o.expiry){checkExpired();input.value='';return;}
   let file=input.files[0]; if(!file) return;
   let cek=await cekBuktiValid(file);
   if(!cek.valid){alert(cek.reason);input.value='';return;}
   let r=new FileReader();
   r.onload=()=>{
     o.bukti=r.result; orders[0]=o; localStorage.setItem('wafa_orders',JSON.stringify(orders)); renderPesanan();
-    addBotMsg(`✅ Bukti TF #${o.id.toString().slice(-6)} valid! Admin cek mutasi ya 🥰`);
-    sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF VIA CHAT! [VALID]**`, cek);
+    addBotMsg(`✅ Bukti TF #${o.id.toString().slice(-6)} valid!`);
+    sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF VIA CHAT! [VALID]**`);
   }; r.readAsDataURL(file); input.value='';
 }
-
 setInterval(checkExpired,5000);
 setInterval(()=>{if(document.getElementById('pesananPage').style.display=='block')renderPesanan();},1000);
-
 function goToPayment(){
- let summary='',total=0,u,j,it,set;
+ let summary='',total=0,u,j,it,set,privateLink='',gpassLink='';
  if(currentMethod=='username'){u=document.getElementById('uRbx').value||'-';j=parseInt(document.getElementById('cRbx').value)||0;total=j*160;if(!j){alert('Isi jumlah dulu');return;}summary=`<b>RINGKASAN ORDER</b><br>Via: Username<br>Username: <b>${u}</b><br>Jumlah: <b>${j} Robux</b><br>Total: <b>Rp${total.toLocaleString('id-ID')}</b>`;}
- else if(currentMethod=='gamepass'){u=document.getElementById('uRbx2').value||'-';j=parseInt(document.getElementById('cRbx2').value)||0;total=j*140;set=Math.ceil(j/0.7);if(!j){alert('Isi jumlah dulu');return;}summary=`<b>RINGKASAN ORDER</b><br>Via: Gamepass<br>Username: <b>${u}</b><br>Jumlah: <b>${j} Robux</b><br>Setting: <b>${set}</b><br>Total: <b>Rp${total.toLocaleString('id-ID')}</b>`;}
- else{u=document.getElementById('uRbx3').value||'-';it=document.getElementById('giftItem').value||'-';j=parseInt(document.getElementById('cGift').value)||0;total=j*95;if(!j){alert('Isi jumlah dulu');return;}summary=`<b>RINGKASAN ORDER</b><br>Via: Gift<br>Username: <b>${u}</b><br>Item: <b>${it}</b><br>Robux: <b>${j}</b><br>Total: <b>Rp${total.toLocaleString('id-ID')}</b>`;}
+ else if(currentMethod=='gamepass'){u=document.getElementById('uRbx2').value||'-';j=parseInt(document.getElementById('cRbx2').value)||0;gpassLink=document.getElementById('gamepassLink').value||'-';total=j*140;set=Math.ceil(j/0.7);if(!j){alert('Isi jumlah dulu');return;}summary=`<b>RINGKASAN ORDER</b><br>Via: Gamepass<br>Username: <b>${u}</b><br>Link Gamepass: <b style="word-break:break-all">${gpassLink}</b><br>Jumlah: <b>${j} Robux</b><br>Setting: <b>${set}</b><br>Total: <b>Rp${total.toLocaleString('id-ID')}</b>`;}
+ else{u=document.getElementById('uRbx3').value||'-';it=document.getElementById('giftItem').value||'-';privateLink=document.getElementById('privateServerLink').value||'-';j=parseInt(document.getElementById('cGift').value)||0;total=j*95;if(!j){alert('Isi jumlah dulu');return;}summary=`<b>RINGKASAN ORDER</b><br>Via: Gift In Game<br>Username: <b>${u}</b><br>Item: <b>${it}</b><br>Private Server: <b style="word-break:break-all">${privateLink}</b><br>Robux: <b>${j}</b><br>Total: <b>Rp${total.toLocaleString('id-ID')}</b>`;}
  document.getElementById('orderSummary').innerHTML=summary;document.getElementById('wajibBayar').innerText=`Rp${total.toLocaleString('id-ID')}`;hideAll();document.getElementById('paymentPage').style.display='block';document.getElementById('btnPay').style.display='block';document.getElementById('btnPay').innerText='BUAT PESANAN - KIRIM BUKTI TF DI CHAT';
  document.getElementById('btnPay').onclick=()=>{
-  let data={username:u,method:currentMethod,jumlah:j,total:total,item:it||'',setting:set||''};
+  let data={username:u,method:currentMethod,jumlah:j,total:total,item:it||'',setting:set||'',privateServer:privateLink||'',gamepassLink:gpassLink||''};
   let newId=saveOrder(data);
-  openPesanan(); addBotMsg(`Yosh pesanan #${newId.toString().slice(-6)} masuk! 📤 Kirim bukti TF kamu via tombol kuning di chat ini ya! ⏰ Sisa 10:00\n\nJika lewat 10 menit ga kirim bukti, transaksi otomatis dibatalkan 🙏`);
+  openPesanan(); addBotMsg(`Yosh pesanan #${newId.toString().slice(-6)} masuk! 📤 Kirim bukti TF via tombol kuning ya! ⏰ Sisa 10:00\n\nJika lewat 10 menit ga kirim bukti, Transaksi dibatalkan karena melebihi batas waktu silahkan di order kembali🙏`);
   toggleLayanan();
  }; window.scrollTo(0,0);
 }
@@ -487,15 +386,8 @@ function addBotMsg(txt){let c=document.getElementById('layananChat');let d=docum
 function addUserMsg(txt){let c=document.getElementById('layananChat');let d=document.createElement('div');d.className='msg user';d.innerText=txt;c.appendChild(d);c.scrollTop=c.scrollHeight;}
 function sendLayanan(){
   let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
-  if(orders.length>0 && orders[0].status=='batal'){
-    alert(`❌ TRANSAKSI DIBATALKAN karena melebihi batas waktu! Silahkan order kembali 🙏`);
-    return;
-  }
-  if(orders.length>0 && orders[0].expiry && Date.now()>orders[0].expiry){
-    checkExpired();
-    alert(`❌ Waktu habis! Pesanan auto batal! Order lagi ya 🙏`);
-    return;
-  }
+  if(orders.length>0 && orders[0].status=='batal'){alert(`❌ TRANSAKSI DIBATALKAN karena melebihi batas waktu! Silahkan order kembali 🙏`);return;}
+  if(orders.length>0 && orders[0].expiry && Date.now()>orders[0].expiry){checkExpired();alert(`❌ Waktu habis! Pesanan auto batal!`);return;}
   let inp=document.getElementById('layananText');let t=inp.value.trim();if(!t)return;addUserMsg(t);inp.value='';setTimeout(()=>{addBotMsg('Kirim bukti TF pake tombol 📤 kuning ya bos!');},400);
 }
 renderUsername();renderGamepass();checkExpired();
@@ -507,13 +399,7 @@ async function loadUser(){
     if(!uid) return;
     let res = await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}.json`);
     let data = await res.json();
-    if(data){
-      let name = data.nickname || data.name || data.email || data.phone || 'User';
-      document.getElementById('userName').innerText = (name+'').slice(0,14);
-      try{localStorage.setItem('wafa_user',JSON.stringify({nickname:name,email:data.email||''}));}catch(e){}
-    } else {
-      document.getElementById('userName').innerText = 'User';
-    }
+    if(data){ document.getElementById('userName').innerText = (data.nickname||data.email||'User').slice(0,14); try{localStorage.setItem('wafa_user',JSON.stringify({nickname:data.nickname||'',email:data.email||''}));}catch(e){} } else { document.getElementById('userName').innerText = 'User'; }
   }catch(e){ document.getElementById('userName').innerText='User'; }
 }
 loadUser();
