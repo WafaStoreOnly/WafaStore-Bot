@@ -26,72 +26,21 @@ body{background:#060a23;color:#fff;padding-bottom:110px}
 </head>
 <body>
 <div class="header"><a href="index.html" style="color:#00e5ff;text-decoration:none;font-weight:800">← Kembali</a><b style="margin-left:10px">Dompet Saya ⚡</b></div>
-
-<div class="card">
-<div style="font-size:11px;opacity:0.8">Saldo WafaStoreOnly x Killua</div>
-<h1 id="saldo" style="font-family:'Bebas Neue';font-size:42px;margin:8px 0">Rp 0</h1>
-<div id="email" style="font-size:11px">Loading...</div>
-</div>
-
+<div class="card"><div style="font-size:11px;opacity:0.8">Saldo WafaStoreOnly x Killua</div><h1 id="saldo" style="font-family:'Bebas Neue';font-size:42px;margin:8px 0">Rp 0</h1><div id="email" style="font-size:11px">Loading...</div></div>
 <div class="section">
 <div style="font-weight:900;font-size:16px">Pilih Nominal Top Up Saldo</div>
 <div class="grid-nominal" id="gridNominal"></div>
 <div style="margin-top:12px"><label style="font-size:11px;color:#8d94b8">Atau isi manual:</label><input id="customNom" type="number" class="input" placeholder="Contoh: 50000" oninput="setNominal(this.value)"></div>
 <div class="total-box" id="totalBox">Total Bayar: Rp0</div>
-
 <div style="font-weight:900;font-size:16px;margin-top:20px">Metode Pembayaran Saldo</div>
-
-<!-- DANA -->
-<div class="pay-card active" id="pay-dana" onclick="setMethod('DANA')">
-<img class="logo-pay" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_DANA.png/500px-Logo_DANA.png">
-<div style="flex:1"><div style="font-size:13px;font-weight:800">DANA</div><div style="font-size:12px">083862776790 - WafaStoreOnly</div></div>
-<button onclick="event.stopPropagation();copyText('083862776790')" style="padding:8px 12px;border-radius:8px;border:none;background:#118EEA;color:#fff;font-weight:800">Salin</button>
+<div class="pay-card active" id="pay-dana" onclick="setMethod('DANA')"><img class="logo-pay" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_DANA.png/500px-Logo_DANA.png"><div style="flex:1"><div style="font-size:13px;font-weight:800">DANA</div><div style="font-size:12px">083862776790 - WafaStoreOnly</div></div><button onclick="event.stopPropagation();copyText('083862776790')" style="padding:8px 12px;border-radius:8px;border:none;background:#118EEA;color:#fff;font-weight:800">Salin</button></div>
+<div class="pay-card" id="pay-gopay" onclick="setMethod('GOPAY')"><img class="logo-pay" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/512px-Gopay_logo.svg.png"><div style="flex:1"><div style="font-size:13px;font-weight:800">GOPAY</div><div style="font-size:12px">083862776790 - WafaStoreOnly</div></div><button onclick="event.stopPropagation();copyText('083862776790')" style="padding:8px 12px;border-radius:8px;border:none;background:#00AA13;color:#fff;font-weight:800">Salin</button></div>
+<div class="pay-card" id="pay-seabank" onclick="setMethod('SEABANK')"><img class="logo-pay" src="https://seeklogo.com/images/S/seabank-logo-3E0C3F868E-seeklogo.com.png"><div style="flex:1"><div style="font-size:13px;font-weight:800">SEABANK</div><div style="font-size:12px">901162765462 - WafaStoreOnly</div></div><button onclick="event.stopPropagation();copyText('901162765462')" style="padding:8px 12px;border-radius:8px;border:none;background:#ffcc00;color:#000;font-weight:800">Salin</button></div>
+<div class="pay-card" id="pay-qris" onclick="setMethod('QRIS')"><img class="logo-pay" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/QRIS_logo.svg/512px-QRIS_logo.svg.png"><div style="flex:1"><div style="font-size:13px;font-weight:800">QRIS ALL PAYMENT</div><div style="font-size:11px;color:#aab0d0">Scan DANA / GOPAY / OVO / mBanking</div></div><div style="font-size:11px;background:#00ff88;color:#000;padding:6px 10px;border-radius:20px;font-weight:800">SCAN</div></div>
+<div class="qris-box"><img src="./qris-killua-final.jpg" style="width:100%;display:block"><div style="padding:10px;font-size:11px;background:#0c102d">A.N WafaStoreOnly • QRIS Support All E-Wallet & Bank</div></div>
 </div>
-
-<!-- GOPAY -->
-<div class="pay-card" id="pay-gopay" onclick="setMethod('GOPAY')">
-<img class="logo-pay" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/512px-Gopay_logo.svg.png">
-<div style="flex:1"><div style="font-size:13px;font-weight:800">GOPAY</div><div style="font-size:12px">083862776790 - WafaStoreOnly</div></div>
-<button onclick="event.stopPropagation();copyText('083862776790')" style="padding:8px 12px;border-radius:8px;border:none;background:#00AA13;color:#fff;font-weight:800">Salin</button>
-</div>
-
-<!-- SEABANK - BARU BOS! -->
-<div class="pay-card" id="pay-seabank" onclick="setMethod('SEABANK')">
-<img class="logo-pay" src="https://seeklogo.com/images/S/seabank-logo-3E0C3F868E-seeklogo.com.png">
-<div style="flex:1"><div style="font-size:13px;font-weight:800">SEABANK</div><div style="font-size:12px">901162765462 - WafaStoreOnly</div></div>
-<button onclick="event.stopPropagation();copyText('901162765462')" style="padding:8px 12px;border-radius:8px;border:none;background:#ffcc00;color:#000;font-weight:800">Salin</button>
-</div>
-
-<!-- QRIS -->
-<div class="pay-card" id="pay-qris" onclick="setMethod('QRIS')">
-<img class="logo-pay" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/QRIS_logo.svg/512px-QRIS_logo.svg.png">
-<div style="flex:1"><div style="font-size:13px;font-weight:800">QRIS ALL PAYMENT</div><div style="font-size:11px;color:#aab0d0">Scan DANA / GOPAY / OVO / mBanking</div></div>
-<div style="font-size:11px;background:#00ff88;color:#000;padding:6px 10px;border-radius:20px;font-weight:800">SCAN</div>
-</div>
-
-<div class="qris-box" id="qrisBox"><img src="./qris-killua-final.jpg" style="width:100%;display:block"><div style="padding:10px;font-size:11px;background:#0c102d">A.N WafaStoreOnly • QRIS Support All E-Wallet & Bank</div></div>
-
-<div style="margin-top:16px;background:#0f1333;border:1px solid #2a3366;border-radius:12px;padding:12px;font-size:11px;line-height:1.6;color:#aab0d0">
-<b style="color:#00e5ff">📜 Cara Top Up:</b><br>
-1. Pilih nominal<br>
-2. Pilih DANA / GOPAY / SEABANK / QRIS<br>
-3. Transfer sesuai nominal<br>
-4. Klik BUAT PESANAN → Upload bukti<br>
-5. Saldo masuk 1-5 menit ⚡
-</div>
-
-</div>
-
 <button class="btn-pay" onclick="buatPesananSaldo()">BUAT PESANAN TOP UP - Rp0</button>
-
-<div class="bottom">
-<div class="nav" onclick="window.location.href='index.html'">🏠<br>Beranda</div>
-<div class="nav" onclick="window.location.href='index.html'">⚡<br>Top Up</div>
-<div class="nav" onclick="window.location.href='index.html'">☰<br>Pesanan</div>
-<div class="nav active">👛<br>Dompet</div>
-<div class="nav" onclick="window.location.href='profil.html'">👤<br>Profil</div>
-</div>
-
+<div class="bottom"><div class="nav" onclick="window.location.href='index.html'">🏠<br>Beranda</div><div class="nav" onclick="window.location.href='index.html'">⚡<br>Top Up</div><div class="nav" onclick="window.location.href='index.html'">☰<br>Pesanan</div><div class="nav active">👛<br>Dompet</div><div class="nav" onclick="window.location.href='profil.html'">👤<br>Profil</div></div>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -99,60 +48,53 @@ import {getDatabase,ref,onValue,set} from "https://www.gstatic.com/firebasejs/10
 const firebaseConfig = { apiKey: "AIzaSyDTkQVpME0XRQmk9Jo7eDQuf0OFY8stm_8", authDomain: "wafastoreonly.firebaseapp.com", databaseURL: "https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "wafastoreonly", appId: "1:208012194307:web:551a540b0151333da69436" };
 const app=initializeApp(firebaseConfig);const auth=getAuth(app);const db=getDatabase(app);
 window.wafaDB=db; window.wafaRef=ref; window.wafaSet=set;
-window.DISCORD_URL="https://discord.com/api/webhooks/1553218744803917856/uUaVtWriD4VYFF_e82Q2xGtvfoTCJ5PvU2UjcXVEeK1EoRvaBKh2dpNf0YD4-d5OBveg";
+window.WEBHOOK_PROSES_DOMPET="https://discord.com/api/webhooks/1553275076332359782/Ndn9EePBTCJe7EWV4esTErBZZwrLGbBMj9kybncr8urHVnq4-ydeCWxl4Dp7kQgC9O64";
+window.WEBHOOK_DOMPET_DONE="https://discord.com/api/webhooks/1553275385666478120/snanzgqdkgovJomulzBGLueWdWX7Bnhp0ekS2reNuS8mLrPHLEMTrVS6nuMnE0t_0aXB";
 
 let nominal=0; let method='DANA'; let currentUser=null;
 const listNominal=[10000,20000,50000,100000,200000,500000];
-function renderNominal(){
-  let g=document.getElementById('gridNominal'); g.innerHTML='';
-  listNominal.forEach(v=>{
-    let d=document.createElement('div'); d.className='nom'; d.innerText='Rp'+v.toLocaleString('id-ID');
-    d.onclick=()=>setNominal(v); g.appendChild(d);
-  });
-}
-window.setNominal=(v)=>{
-  nominal=parseInt(v)||0;
-  document.querySelectorAll('.nom').forEach(el=>el.classList.toggle('active', el.innerText.replace(/\D/g,'')==nominal));
-  document.getElementById('totalBox').innerText='Total Bayar: Rp'+nominal.toLocaleString('id-ID');
-  document.querySelector('.btn-pay').innerText='BUAT PESANAN TOP UP - Rp'+nominal.toLocaleString('id-ID')+' via '+method;
-}
-window.setMethod=(m)=>{
-  method=m;
-  document.querySelectorAll('.pay-card').forEach(c=>c.classList.remove('active'));
-  document.getElementById('pay-'+m.toLowerCase()).classList.add('active');
-  if(nominal>0) document.querySelector('.btn-pay').innerText='BUAT PESANAN TOP UP - Rp'+nominal.toLocaleString('id-ID')+' via '+method;
-}
+function renderNominal(){let g=document.getElementById('gridNominal'); g.innerHTML=''; listNominal.forEach(v=>{let d=document.createElement('div'); d.className='nom'; d.innerText='Rp'+v.toLocaleString('id-ID'); d.onclick=()=>setNominal(v); g.appendChild(d);});}
+window.setNominal=(v)=>{nominal=parseInt(v)||0; document.querySelectorAll('.nom').forEach(el=>el.classList.toggle('active', el.innerText.replace(/\D/g,'')==nominal)); document.getElementById('totalBox').innerText='Total Bayar: Rp'+nominal.toLocaleString('id-ID'); document.querySelector('.btn-pay').innerText='BUAT PESANAN TOP UP - Rp'+nominal.toLocaleString('id-ID')+' via '+method;}
+window.setMethod=(m)=>{method=m; document.querySelectorAll('.pay-card').forEach(c=>c.classList.remove('active')); document.getElementById('pay-'+m.toLowerCase()).classList.add('active'); if(nominal>0) document.querySelector('.btn-pay').innerText='BUAT PESANAN TOP UP - Rp'+nominal.toLocaleString('id-ID')+' via '+method;}
 window.copyText=(t)=>{navigator.clipboard.writeText(t);alert('Disalin: '+t)}
 window.buatPesananSaldo=()=>{
   if(nominal<10000){alert('Minimal Rp10.000 bos!');return;}
-  let uid=currentUser?currentUser.uid:'guest';
-  let id=Date.now();
+  let uid=currentUser?currentUser.uid:'guest'; let id=Date.now();
   let data={id:id, type:'TOPUP_SALDO', jumlah:nominal, method:method, status:'verifikasi', date:new Date().toLocaleString('id-ID'), uid:uid, email:currentUser?currentUser.email:'-'};
   window.wafaSet(window.wafaRef(db,'topup_saldo/'+id), data);
-  fetch(window.DISCORD_URL+"?with_components=true",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:`💰 **ORDER TOP UP SALDO BARU!**\nID: #${id.toString().slice(-6)}\nNominal: Rp${nominal.toLocaleString('id-ID')}\nMethod: ${method}\nEmail: ${data.email}\nUID: ${uid}`})});
   let input=document.createElement('input'); input.type='file'; input.accept='image/*';
   input.onchange=e=>{
-    let file=e.target.files[0]; if(!file) return;
-    let r=new FileReader();
+    let file=e.target.files[0]; if(!file) return; let r=new FileReader();
     r.onload=()=>{
       fetch(r.result).then(res=>res.blob()).then(blob=>{
+        let noTF = method=='DANA'? '083862776790' : method=='GOPAY'? '083862776790' : method=='SEABANK'? '901162765462' : 'QRIS';
         let form=new FormData();
-        let noTF = method=='DANA' ? '083862776790' : method=='GOPAY' ? '083862776790' : '901162765462';
-        form.append('payload_json', JSON.stringify({content:`💸 **BUKTI TOP UP SALDO MASUK!**\nID: #${id.toString().slice(-6)}\nNominal: Rp${nominal.toLocaleString('id-ID')}\nMethod: ${method} (${noTF})\nEmail: ${data.email}\n\n⚠️ Cek mutasi ${method} bos!`}));
+        form.append('payload_json', JSON.stringify({content:`💸 **BUKTI TOP UP SALDO MASUK! CEK MUTASI BOS!**\n\n📦 **FORMAT TOP UP SALDO**\nID: #${id.toString().slice(-6)}\nNominal: Rp${nominal.toLocaleString('id-ID')}\nMethod: ${method} (${noTF})\nEmail: ${data.email}\nUID: ${uid}\nTanggal: ${data.date}\n\n⚠️ Cek mutasi ${method} dulu bos!`}));
         form.append('files[0]', blob, `bukti-saldo-${id}.jpg`);
-        fetch(window.DISCORD_URL+"?with_components=true",{method:'POST',body:form}).then(()=>{
-          alert('✅ Bukti TF terkirim! Saldo masuk 1-5 menit setelah admin cek mutasi '+method+'!');
-          window.location.href='index.html';
+        fetch(window.WEBHOOK_PROSES_DOMPET+"?with_components=true",{method:'POST',body:form}).then(()=>{
+          const baseUrl = "https://wafastoreonly-official.vercel.app/";
+          const prosesUrl = `${baseUrl}admin.html?id=${id}&type=topup_saldo&action=proses`;
+          const selesaiUrl = `${baseUrl}admin.html?id=${id}&type=topup_saldo&action=selesai`;
+          const batalUrl = `${baseUrl}admin.html?id=${id}&type=topup_saldo&action=batal`;
+          setTimeout(()=>{
+            fetch(window.WEBHOOK_PROSES_DOMPET+"?with_components=true", {
+              method:'POST',headers:{'Content-Type':'application/json'},
+              body: JSON.stringify({
+                content: `⬇️ **AKSI TOP UP SALDO #${id.toString().slice(-6)} - Rp${nominal.toLocaleString('id-ID')}**\nKlik tombol dibawah bos!`,
+                components: [{ type:1, components:[
+                  { type:2, style:5, label:"PROSES ✅", url: prosesUrl },
+                  { type:2, style:5, label:"KONFIRMASI ✅", url: selesaiUrl },
+                  { type:2, style:5, label:"BATALKAN ❌", url: batalUrl }
+                ]}]
+              })
+            }).then(()=>{ alert('✅ Bukti TF terkirim ke #proses-top-up-dompet-web! Admin cek mutasi '+method+' 1-5 menit ya bos!'); window.location.href='index.html'; });
+          }, 900);
         });
       });
     }; r.readAsDataURL(file);
   }; input.click();
 }
-onAuthStateChanged(auth,(u)=>{
-  if(!u){location.href='login.html';return}
-  currentUser=u; document.getElementById('email').innerText=u.email;
-  onValue(ref(db,'users/'+u.uid+'/saldo'),(s)=>{document.getElementById('saldo').innerText='Rp '+(s.val()||0).toLocaleString('id-ID');});
-});
+onAuthStateChanged(auth,(u)=>{if(!u){location.href='login.html';return} currentUser=u; document.getElementById('email').innerText=u.email; onValue(ref(db,'users/'+u.uid+'/saldo'),(s)=>{document.getElementById('saldo').innerText='Rp '+(s.val()||0).toLocaleString('id-ID');});});
 renderNominal();
 </script>
 </body>
