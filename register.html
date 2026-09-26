@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Daftar - WafaStoreOnly x Killua</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+body{background:#060a23;display:flex;justify-content:center;align-items:center;min-height:100vh;color:#fff;padding:16px}
+.box{background:#121631;border:1px solid #00e5ff40;border-radius:20px;padding:28px;width:100%;max-width:400px;box-shadow:0 0 40px #00e5ff30}
+h2{text-align:center;margin-bottom:20px;font-weight:900}
+.input{width:100%;padding:13px;border-radius:12px;border:1px solid #232a5a;background:#131740;color:#fff;margin-bottom:12px;outline:none;font-size:14px}
+.input:focus{border-color:#00e5ff;box-shadow:0 0 10px #00e5ff60}
+.btn{width:100%;padding:14px;background:linear-gradient(90deg,#00c6ff,#7c3aed);border:none;border-radius:12px;color:#fff;font-weight:900;cursor:pointer;font-size:15px;box-shadow:0 0 20px #7c3aed80}
+.link{font-size:12px;text-align:center;margin-top:14px}
+.link a{color:#00e5ff;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>DAFTAR AKUN ⚡</h2>
+<input id="nickname" class="input" placeholder="Nama Panggilan (contoh: Killua)" required>
+<input id="email" class="input" type="email" placeholder="Email Gmail Kamu" required>
+<input id="pass" class="input" type="password" placeholder="Password Minimal 6 Huruf" required>
+<button class="btn" onclick="daftar()">DAFTAR SEKARANG</button>
+<div class="link"><a href="login.html">Sudah punya akun? Login disini</a></div>
+</div>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getAuth,createUserWithEmailAndPassword,updateProfile} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {getDatabase,ref,set} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+const firebaseConfig={apiKey:"AIzaSyDTkQVpME0XRQmk9Jo7eDQuf0OFY8stm_8",authDomain:"wafastoreonly.firebaseapp.com",databaseURL:"https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"wafastoreonly",appId:"1:208012194307:web:551a540b0151333da69436"};
+const app=initializeApp(firebaseConfig);const auth=getAuth(app);const db=getDatabase(app);
+window.daftar=async()=>{
+  const nick=document.getElementById('nickname').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const pass=document.getElementById('pass').value.trim();
+  if(!nick){alert('Nama panggilan wajib diisi bos!');return}
+  if(!email||!pass){alert('Email & password wajib bos!');return}
+  try{
+    const cred=await createUserWithEmailAndPassword(auth,email,pass);
+    await updateProfile(cred.user,{displayName:nick});
+    await set(ref(db,'users/'+cred.user.uid),{email:email,nickname:nick,saldo:0,created:new Date().toLocaleString('id-ID')});
+    alert('Mantap! Akun '+nick+' berhasil dibuat!');
+    location.href='index.html';
+  }catch(e){alert('Error: '+e.message)}
+}
+</script>
+</body>
+</html>
