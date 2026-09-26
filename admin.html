@@ -1,14 +1,172 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin WafaStoreOnly</title>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin - WafaStoreOnly x Killua</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
+body{background:#060a23;color:#fff;padding:16px}
+.header{padding:12px;background:linear-gradient(90deg,#00c6ff,#7c3aed);border-radius:12px;display:flex;justify-content:space-between;align-items:center}
+.card{background:#121631;border:2px solid #2a3a8a;border-radius:14px;padding:14px;margin-top:12px}
+.btn{padding:10px 14px;border:none;border-radius:8px;font-weight:800;cursor:pointer;margin-right:6px}
+.b-proses{background:#00e5ff;color:#000}
+.b-selesai{background:#00ff88;color:#000}
+.b-batal{background:#ff4444;color:#fff}
+.tab{padding:8px 16px;border-radius:20px;border:1px solid #2a3a8a;background:#121631;cursor:pointer;font-weight:800;font-size:12px}
+.tab.active{background:linear-gradient(90deg,#00c6ff,#7c3aed)}
+.list{display:grid;gap:10px;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="header">
+<b>⚡ ADMIN WAFASTOREONLY</b>
+<div><button onclick="location.href='index.html'" style="padding:6px 12px;border-radius:8px;border:none;font-weight:800">Home</button></div>
+</div>
+
+<div id="actionBox" style="display:none;margin-top:16px;background:#00ff88;color:#000;padding:14px;border-radius:12px;font-weight:800"></div>
+
+<div style="display:flex;gap:8px;margin-top:16px">
+<div class="tab active" id="tabOrder" onclick="switchTab('orders')">📦 Order Robux</div>
+<div class="tab" id="tabSaldo" onclick="switchTab('saldo')">💰 Top Up Saldo</div>
+</div>
+
+<div id="ordersPage" class="list"></div>
+<div id="saldoPage" class="list" style="display:none"></div>
+
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-const firebaseConfig = { apiKey: "AIzaSyDTkQVpME0XRQmk9Jo7eDQuf0OFY8stm_8", authDomain: "wafastoreonly.firebaseapp.com", databaseURL: "https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "wafastoreonly" };
-const app = initializeApp(firebaseConfig); const db = getDatabase(app);
-const p=new URLSearchParams(location.search); const id=p.get('id'); const action=p.get('action');
-(async()=>{
-  if(!id||!action){document.body.innerHTML='<h2>❌ ID/Action kosong</h2>';return;}
-  let st=action==='selesai'?'selesai':action==='proses'?'proses':'batal';
-  await update(ref(db,'orders/'+id),{status:st});
-  document.body.innerHTML=`<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#060a23;color:#fff;font-family:sans-serif;text-align:center"><div style="font-size:60px">${st==='selesai'?'✅':st==='proses'?'⚡':'❌'}</div><h1>#${id.slice(-6)} - ${st.toUpperCase()}</h1><p>Buyer auto dapet notif!</p><a href="/" style="margin-top:20px;padding:12px 20px;background:#00e5ff;color:#000;border-radius:10px;text-decoration:none;font-weight:800">Kembali</a></div>`;
-})();
-</script></head><body style="margin:0;background:#060a23"></body></html>
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getDatabase,ref,onValue,set,update,remove,get} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = { apiKey: "AIzaSyDTkQVpME0XRQmk9Jo7eDQuf0OFY8stm_8", authDomain: "wafastoreonly.firebaseapp.com", databaseURL: "https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "wafastoreonly", appId: "1:208012194307:web:551a540b0151333da69436" };
+const app=initializeApp(firebaseConfig);
+const db=getDatabase(app);
+const auth=getAuth(app);
+
+// CEK ADMIN - GANTI EMAIL LU BOS!
+const ADMIN_EMAILS = ["wafastoreonly@gmail.com","admin@wafastoreonly.com","wafa@gmail.com"]; 
+
+let currentTab='orders';
+
+window.switchTab=(t)=>{
+  currentTab=t;
+  document.getElementById('tabOrder').classList.toggle('active', t=='orders');
+  document.getElementById('tabSaldo').classList.toggle('active', t=='saldo');
+  document.getElementById('ordersPage').style.display = t=='orders'?'grid':'none';
+  document.getElementById('saldoPage').style.display = t=='saldo'?'grid':'none';
+}
+
+async function handleActionFromDiscord(){
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const action = params.get('action'); // proses / selesai / batal
+  const type = params.get('type') || 'orders'; // orders atau topup_saldo
+
+  if(!id || !action) return;
+
+  const box = document.getElementById('actionBox');
+  box.style.display='block';
+  box.innerText=`⏳ Memproses ${type} #${id} -> ${action}...`;
+
+  try{
+    if(type=='topup_saldo'){
+      const snap = await get(ref(db,'topup_saldo/'+id));
+      const data = snap.val();
+      if(!data){ box.innerText='❌ Data Top Up Saldo tidak ditemukan!'; return; }
+
+      if(action=='proses'){
+        await update(ref(db,'topup_saldo/'+id),{status:'proses'});
+        box.innerText=`⚡ Top Up Saldo #${id.toString().slice(-6)} Rp${data.jumlah.toLocaleString('id-ID')} DIPROSES!`;
+      }
+      if(action=='selesai'){
+        // TAMBAH SALDO USER!
+        const userRef = ref(db,'users/'+data.uid+'/saldo');
+        const saldoSnap = await get(userRef);
+        const saldoLama = saldoSnap.val()||0;
+        const saldoBaru = saldoLama + data.jumlah;
+        await set(userRef, saldoBaru);
+        await update(ref(db,'topup_saldo/'+id),{status:'selesai'});
+        box.innerText=`✅ Top Up Saldo #${id.toString().slice(-6)} SELESAI! Saldo user ${data.email} dari Rp${saldoLama.toLocaleString('id-ID')} → Rp${saldoBaru.toLocaleString('id-ID')} ✅`;
+      }
+      if(action=='batal'){
+        await update(ref(db,'topup_saldo/'+id),{status:'batal'});
+        box.innerText=`❌ Top Up Saldo #${id.toString().slice(-6)} DIBATALKAN!`;
+      }
+    } else {
+      // ORDER ROBUX BIASA
+      const snap = await get(ref(db,'orders/'+id));
+      const data = snap.val();
+      if(!data){ box.innerText='❌ Order tidak ditemukan!'; return; }
+
+      if(action=='proses'){
+        await update(ref(db,'orders/'+id),{status:'proses'});
+        box.innerText=`⚡ Order Robux #${id.toString().slice(-6)} - ${data.username} DIPROSES!`;
+      }
+      if(action=='selesai'){
+        await update(ref(db,'orders/'+id),{status:'selesai'});
+        box.innerText=`✅ Order Robux #${id.toString().slice(-6)} - ${data.username} SELESAI! Auto hapus 10 menit`;
+        setTimeout(async()=>{
+          await remove(ref(db,'orders/'+id));
+        }, 600000);
+      }
+      if(action=='batal'){
+        await update(ref(db,'orders/'+id),{status:'batal'});
+        box.innerText=`❌ Order #${id.toString().slice(-6)} DIBATALKAN!`;
+      }
+    }
+  }catch(e){ box.innerText='❌ Error: '+e.message; }
+}
+
+function renderOrders(){
+  onValue(ref(db,'orders'),(snap)=>{
+    const data=snap.val(); const cont=document.getElementById('ordersPage'); cont.innerHTML='';
+    if(!data){ cont.innerHTML='<div style="color:#5a638a;text-align:center;margin-top:20px">Belum ada order robux</div>'; return; }
+    Object.values(data).reverse().forEach(o=>{
+      let color=o.status=='verifikasi'?'#ffcc00':o.status=='proses'?'#00e5ff':o.status=='selesai'?'#00ff88':'#ff4444';
+      let d=document.createElement('div'); d.className='card'; d.style.borderColor=color;
+      d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)} - ${o.username} - ${o.jumlah} Robux</b><span style="background:${color};color:#000;padding:4px 8px;border-radius:10px;font-size:10px;font-weight:800">${o.status}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date} | ${o.method} | Rp${o.total.toLocaleString('id-ID')}</div><div style="margin-top:10px"><button class="btn b-proses" onclick="adminAction('${o.id}','proses','orders')">PROSES ✅</button><button class="btn b-selesai" onclick="adminAction('${o.id}','selesai','orders')">KONFIRMASI ✅</button><button class="btn b-batal" onclick="adminAction('${o.id}','batal','orders')">BATAL ❌</button></div>`;
+      cont.appendChild(d);
+    });
+  });
+}
+
+function renderSaldo(){
+  onValue(ref(db,'topup_saldo'),(snap)=>{
+    const data=snap.val(); const cont=document.getElementById('saldoPage'); cont.innerHTML='';
+    if(!data){ cont.innerHTML='<div style="color:#5a638a;text-align:center;margin-top:20px">Belum ada top up saldo</div>'; return; }
+    Object.values(data).reverse().forEach(o=>{
+      let color=o.status=='verifikasi'?'#ffcc00':o.status=='proses'?'#00e5ff':o.status=='selesai'?'#00ff88':'#ff4444';
+      let d=document.createElement('div'); d.className='card'; d.style.borderColor=color;
+      d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)} - Rp${o.jumlah.toLocaleString('id-ID')} - ${o.method}</b><span style="background:${color};color:#000;padding:4px 8px;border-radius:10px;font-size:10px;font-weight:800">${o.status}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date} | ${o.email} | UID: ${o.uid}</div><div style="margin-top:10px"><button class="btn b-proses" onclick="adminAction('${o.id}','proses','topup_saldo')">PROSES ✅</button><button class="btn b-selesai" onclick="adminAction('${o.id}','selesai','topup_saldo')">KONFIRMASI ✅</button><button class="btn b-batal" onclick="adminAction('${o.id}','batal','topup_saldo')">BATAL ❌</button></div>`;
+      cont.appendChild(d);
+    });
+  });
+}
+
+window.adminAction=async(id,action,type)=>{
+  if(type=='topup_saldo'){
+    const snap=await get(ref(db,'topup_saldo/'+id)); const data=snap.val();
+    if(action=='selesai'){
+      const saldoSnap=await get(ref(db,'users/'+data.uid+'/saldo')); const lama=saldoSnap.val()||0;
+      await set(ref(db,'users/'+data.uid+'/saldo'), lama+data.jumlah);
+    }
+    await update(ref(db,'topup_saldo/'+id),{status:action=='proses'?'proses':action=='selesai'?'selesai':'batal'});
+    alert(`Top Up Saldo ${action} Berhasil!`);
+  }else{
+    await update(ref(db,'orders/'+id),{status:action=='proses'?'proses':action=='selesai'?'selesai':'batal'});
+    alert(`Order ${action} Berhasil!`);
+  }
+}
+
+onAuthStateChanged(auth, async(user)=>{
+  if(!user){ location.href='login.html'; return; }
+  // OPTIONAL CEK ADMIN - KALO MAU SEMUA BISA AKSES, HAPUS IF INI
+  // if(!ADMIN_EMAILS.includes(user.email) && user.email!=='wafastoreonly@gmail.com'){ alert('Bukan Admin!'); location.href='index.html'; return; }
+  
+  renderOrders();
+  renderSaldo();
+  handleActionFromDiscord();
+});
+</script>
+</body>
+</html>
