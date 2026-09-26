@@ -61,11 +61,9 @@ const auth = getAuth(app);
 window.wafaDB=db; window.wafaRef=ref; window.wafaSet=set; window.wafaOnValue=onValue;
 window.wafaAuth=auth;
 window.DISCORD_URL="https://discord.com/api/webhooks/1553218744803917856/uUaVtWriD4VYFF_e82Q2xGtvfoTCJ5PvU2UjcXVEeK1EoRvaBKh2dpNf0YD4-d5OBveg";
-// CEK LOGIN - KALO BELUM LOGIN LEMPAR KE LOGIN.HTML
 let uid = localStorage.getItem('wafa_uid');
 if(!uid){ window.location.href='login.html'; }
 onAuthStateChanged(auth, (user)=>{
-  // kalo ada user tapi localStorage kosong, sync
   if(user &&!localStorage.getItem('wafa_uid')){
     localStorage.setItem('wafa_uid', user.uid);
   }
@@ -174,7 +172,15 @@ Kirim bukti TF kamu disini ya biar admin cek mutasi 🥰 (No WA, langsung ke Dis
 </div>
 </div>
 
-<div class="bottom"><div class="nav active" id="navHome" onclick="goHome()">🏠<br>Beranda</div><div class="nav" onclick="openRoblox()">⚡<br>Top Up</div><div class="nav" id="navPesanan" onclick="openPesanan()">☰<br>Pesanan</div><div class="nav">👛<br>Dompet</div><div class="nav">👤<br>Profil</div></div>
+<!-- INI YANG GUA BENERIN BOS - DOMPET & PROFIL UDAH BISA DI KLIK -->
+<div class="bottom">
+<div class="nav active" id="navHome" onclick="goHome()">🏠<br>Beranda</div>
+<div class="nav" onclick="openRoblox()">⚡<br>Top Up</div>
+<div class="nav" id="navPesanan" onclick="openPesanan()">☰<br>Pesanan</div>
+<div class="nav" onclick="window.location.href='dompet.html'">👛<br>Dompet</div>
+<div class="nav" onclick="window.location.href='profil.html'">👤<br>Profil</div>
+</div>
+
 <button class="btn-pay" id="btnPay" onclick="goToPayment()">LANJUT PEMBAYARAN</button>
 
 <script>
@@ -208,14 +214,7 @@ function attachFirebaseListener(orderId){
           orders[idx].notifProses=true; localStorage.setItem('wafa_orders',JSON.stringify(orders));
         }
         if(o.status=='selesai' &&!orders[idx].notifSelesai){
-          addBotMsg(`🎉 Pesanan #${o.id.toString().slice(-6)} sudah diterima transaksi done silahkan cek✅
-
-📌 ticket akan terhapus otomatis dalam 10 menit
-
-${o.jumlah} Robux udah masuk ke ${o.username}!
-
-Terimakasih telah order di WafaStoreOnly🥰🙏
-Ditunggu orderan selanjutnya!`);
+          addBotMsg(`🎉 Pesanan #${o.id.toString().slice(-6)} sudah diterima transaksi done silahkan cek✅\n\n📌 ticket akan terhapus otomatis dalam 10 menit\n\n${o.jumlah} Robux udah masuk ke ${o.username}!\n\nTerimakasih telah order di WafaStoreOnly🥰🙏\nDitunggu orderan selanjutnya!`);
           orders[idx].notifSelesai=true; localStorage.setItem('wafa_orders',JSON.stringify(orders));
           setTimeout(()=>{
             let cur=JSON.parse(localStorage.getItem('wafa_orders')||'[]').filter(x=>x.id!=o.id);
@@ -336,7 +335,6 @@ function addUserMsg(txt){let c=document.getElementById('layananChat');let d=docu
 function sendLayanan(){let inp=document.getElementById('layananText');let t=inp.value.trim();if(!t)return;addUserMsg(t);inp.value='';setTimeout(()=>{addBotMsg('Kirim bukti TF pake tombol 📤 kuning ya bos!');},400);}
 renderUsername();renderGamepass();checkExpired();
 (function initListeners(){ let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]'); orders.forEach(o=>attachFirebaseListener(o.id)); })();
-
 function logout(){ localStorage.removeItem('wafa_uid'); window.wafaAuth.signOut().then(()=>{ location.href='login.html'; }).catch(()=>{ location.href='login.html'; }); }
 async function loadUser(){
   try{
