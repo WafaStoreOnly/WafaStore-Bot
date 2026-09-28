@@ -24,10 +24,8 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .card-game{background:#121631;border:1px solid #3a3e8a;border-radius:16px;overflow:hidden;text-align:center;position:relative;cursor:pointer;transition:0.2s;pointer-events:auto}
 .card-game:active{transform:scale(0.97)}
 .card-game img{width:100%;height:85px;object-fit:cover;display:block;background:#0f1333}
-.card-game.name{font-size:11px;font-weight:800;padding:8px 4px}
-.card-game.off{position:absolute;top:6px;right:6px;background:#5b5cf6;color:#fff;font-size:8px;font-weight:800;padding:3px 6px;border-radius:10px}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(8,12,37,0.97);backdrop-filter:blur(10px);border-top:1px solid #1e2450;display:flex;justify-content:space-around;padding:8px 0 10px;z-index:999}
-.nav{font-size:9px;color:#5a638a;text-align:center;flex:1;cursor:pointer}.nav.active{color:#00d4ff}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(8,12,37,0.97);backdrop-filter:blur(10px);border-top:1px solid #1e2450;display:flex;justify-content:space-around;padding:8px 0 10px;z-index:9999}
+.nav{font-size:9px;color:#5a638a;text-align:center;flex:1;cursor:pointer;pointer-events:auto}.nav.active{color:#00d4ff}
 #robloxPage,#paymentPage,#pesananPage{display:none}
 .method-tabs{display:flex;gap:8px;margin-top:16px;overflow-x:auto}
 .tab{padding:8px 16px;border-radius:20px;font-size:11px;font-weight:800;border:1px solid #2a3366;background:#141936;white-space:nowrap;cursor:pointer}
@@ -87,6 +85,7 @@ onAuthStateChanged(auth, (user)=>{ if(user &&!localStorage.getItem('wafa_uid')){
 </head>
 <body>
 <div class="header"><div class="logo"><img src="./logo.png" style="width:36px;height:36px;border-radius:50%;border:2px solid #00e5ff"><span>WafaStoreOnly</span></div><div style="font-size:10px;color:#00e5ff">Killua ⚡</div></div>
+<div id="userName" style="display:none">User</div>
 
 <div id="profileModal" onclick="if(event.target===this)closeProfileModal()">
 <div class="profileBox">
@@ -441,15 +440,7 @@ function sendLayanan(){
 renderUsername();renderGamepass();checkExpired();
 (function initListeners(){ let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]'); orders.forEach(o=>attachFirebaseListener(o.id)); })();
 function logout(){ localStorage.removeItem('wafa_uid'); window.wafaAuth.signOut().then(()=>{ location.href='login.html'; }).catch(()=>{ location.href='login.html'; }); }
-async function loadUser(){
-  try{
-    let uid=localStorage.getItem('wafa_uid');
-    if(!uid) return;
-    let res = await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}.json`);
-    let data = await res.json();
-  }catch(e){}
-}
-loadUser();
+async function loadUser(){ try{}catch(e){} }
 let currentAuthUser = null;
 if(window.wafaAuth){
   window.wafaAuth.onAuthStateChanged(async (user)=>{
