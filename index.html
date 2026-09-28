@@ -11,7 +11,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
 body{background:#060a23 url('./killua-bg.webp') no-repeat center top;background-size:cover;background-attachment:fixed;color:#fff;padding-bottom:90px}
-body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(6,10,35,0.78),rgba(6,10,35,0.94));z-index:-1;pointer-events:none}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(6,10,35,0.78),rgba(6,10,35,0.94));z-index:-1}
 .header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(8,12,37,0.9);backdrop-filter:blur(12px);position:sticky;top:0;z-index:50;border-bottom:2px solid #00e5ff40}
 .logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:22px}
 .logo span{background:linear-gradient(90deg,#00e5ff,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
@@ -19,13 +19,15 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 .banner h1{font-family:'Bebas Neue';font-size:38px;line-height:0.95;letter-spacing:1px;font-style:italic;text-shadow:0 0 20px #00e5ff}
 .banner p{font-size:12px;color:#aab0d0;margin-top:10px;line-height:1.5}
 .btn-mulai{margin-top:16px;background:linear-gradient(90deg,#00c6ff,#7c3aed);border:none;padding:12px 22px;border-radius:30px;color:#fff;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 0 25px #00e5ff80}
-.section{padding:16px;position:relative;z-index:1}
-.grid-game{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;position:relative;z-index:2}
-.card-game{background:#121631;border:1px solid #3a3e8a;border-radius:16px;overflow:hidden;text-align:center;position:relative;cursor:pointer;transition:0.2s;pointer-events:auto}
+.section{padding:16px}
+.grid-game{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.card-game{background:#121631;border:1px solid #3a3e8a;border-radius:16px;overflow:hidden;text-align:center;position:relative;cursor:pointer;transition:0.2s}
 .card-game:active{transform:scale(0.97)}
-.card-game img{width:100%;height:85px;object-fit:cover;display:block;background:#0f1333}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(8,12,37,0.97);backdrop-filter:blur(10px);border-top:1px solid #1e2450;display:flex;justify-content:space-around;padding:8px 0 10px;z-index:9999}
-.nav{font-size:9px;color:#5a638a;text-align:center;flex:1;cursor:pointer;pointer-events:auto}.nav.active{color:#00d4ff}
+.card-game img{width:100%;height:85px;object-fit:cover}
+.card-game.name{font-size:11px;font-weight:800;padding:8px 4px}
+.card-game.off{position:absolute;top:6px;right:6px;background:#5b5cf6;color:#fff;font-size:8px;font-weight:800;padding:3px 6px;border-radius:10px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(8,12,37,0.97);backdrop-filter:blur(10px);border-top:1px solid #1e2450;display:flex;justify-content:space-around;padding:8px 0 10px;z-index:100}
+.nav{font-size:9px;color:#5a638a;text-align:center;flex:1;cursor:pointer}.nav.active{color:#00d4ff}
 #robloxPage,#paymentPage,#pesananPage{display:none}
 .method-tabs{display:flex;gap:8px;margin-top:16px;overflow-x:auto}
 .tab{padding:8px 16px;border-radius:20px;font-size:11px;font-weight:800;border:1px solid #2a3366;background:#141936;white-space:nowrap;cursor:pointer}
@@ -34,7 +36,7 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;background:#131740;color:#fff;outline:none}
 .total-box{background:#131740;border:1px dashed #00d4ff;padding:12px;border-radius:10px;text-align:center;margin-top:12px;font-weight:800;font-size:13px;line-height:1.5}
 .grid-robux{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.btn-pay{position:fixed;bottom:54px;left:14px;right:14px;padding:15px;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;border:none;border-radius:14px;font-weight:900;z-index:90;box-shadow:0 0 25px #7c3aed80;display:none}
+.btn-pay{position:fixed;bottom:54px;left:14px;right:14px;padding:15px;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;border:none;border-radius:14px;font-weight:900;z-index:90;box-shadow:0 0 25px #7c3aed80}
 .pay-card{background:#121631;border:1px solid #232a5a;border-radius:14px;padding:14px;margin-top:12px;display:flex;gap:12px;align-items:center}
 .pay-card img.logo-pay{width:48px;height:48px;border-radius:10px;background:#fff;object-fit:contain;padding:4px}
 .order-card{background:#121631;border:2px solid #2a3a8a;border-radius:14px;padding:14px;margin-top:12px}
@@ -59,6 +61,7 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;backgr
 .profileRow{background:#121631;border:1px solid #232a5a;border-radius:12px;padding:10px 12px;margin-top:10px;text-align:left;display:flex;justify-content:space-between;align-items:center}
 .profileRow span.lbl{font-size:10px;color:#8d94b8;font-weight:800}
 .profileRow span.val{font-size:12px;font-weight:700;word-break:break-all}
+#userName{cursor:pointer;transition:0.2s} #userName:active{transform:scale(0.9)}
 #profilePage{display:none}
 .profilePageCard{background:linear-gradient(180deg,#151a48,#0c102d);border:2px solid #00e5ff30;border-radius:20px;padding:18px;margin-top:12px}
 .profileBigImg{width:100px;height:100px;border-radius:50%;border:3px solid #00e5ff;object-fit:cover;box-shadow:0 0 25px #00e5ff80}
@@ -84,8 +87,7 @@ onAuthStateChanged(auth, (user)=>{ if(user &&!localStorage.getItem('wafa_uid')){
 </script>
 </head>
 <body>
-<div class="header"><div class="logo"><img src="./logo.png" style="width:36px;height:36px;border-radius:50%;border:2px solid #00e5ff"><span>WafaStoreOnly</span></div><div style="font-size:10px;color:#00e5ff">Killua ⚡</div></div>
-<div id="userName" style="display:none">User</div>
+<div class="header"><div class="logo"><img src="./logo.png" style="width:36px;height:36px;border-radius:50%;border:2px solid #00e5ff"><span>WafaStoreOnly</span></div><div style="display:flex;gap:6px;align-items:center"><div id="userName" onclick="openProfileModal()" style="font-size:10px;background:#00ff8820;border:1px solid #00ff88;padding:5px 10px;border-radius:20px">Loading...</div><button onclick="logout()" style="font-size:10px;background:#ff444420;border:1px solid #ff4444;padding:5px 10px;border-radius:20px;color:#fff;cursor:pointer">Logout</button></div></div>
 
 <div id="profileModal" onclick="if(event.target===this)closeProfileModal()">
 <div class="profileBox">
@@ -112,12 +114,12 @@ onAuthStateChanged(auth, (user)=>{ if(user &&!localStorage.getItem('wafa_uid')){
 <div class="section">
 <div style="display:flex;justify-content:space-between"><h2 style="font-size:16px;font-weight:800">Pilih Game Populer</h2><span style="color:#00d4ff;font-size:12px">Killua ON ⚡</span></div>
 <div class="grid-game">
-<div class="card-game" onclick="openRoblox()"><span class="off">-10% OFF</span><img src="https://cdn1.codashop.com/S/content/common/images/mno/roblox_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">Roblox</div></div>
-<div class="card-game"><span class="off">-10% OFF</span><img src="https://cdn1.codashop.com/S/content/common/images/mno/mlbb_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">Mobile Legends</div></div>
-<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/pubgm_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">PUBG Mobile</div></div>
-<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/freefire_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">Free Fire</div></div>
-<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/genshin-impact_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">Genshin Impact</div></div>
-<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/valorant_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">Valorant</div></div>
+<div class="card-game" onclick="openRoblox()"><span class="off">-10% OFF</span><img src="https://tr.rbxcdn.com/38c6edcb50633730ff4cf39ac885deea/512/512/Image/Png"><div class="name">Roblox</div></div>
+<div class="card-game"><span class="off">-10% OFF</span><img src="https://cdn.mobygames.com/covers/12651856-mobile-legends-bang-bang-android-front-cover.jpg"><div class="name">Mobile Legends</div></div>
+<div class="card-game"><img src="https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg"><div class="name">PUBG Mobile</div></div>
+<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/freefire.png"><div class="name">Free Fire</div></div>
+<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/genshin-impact.png"><div class="name">Genshin Impact</div></div>
+<div class="card-game"><img src="https://images.crowdspring.com/blog/wp-content/uploads/2022/08/03152551/valorant-logo.png"><div class="name">Valorant</div></div>
 </div>
 </div>
 </div>
@@ -440,7 +442,16 @@ function sendLayanan(){
 renderUsername();renderGamepass();checkExpired();
 (function initListeners(){ let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]'); orders.forEach(o=>attachFirebaseListener(o.id)); })();
 function logout(){ localStorage.removeItem('wafa_uid'); window.wafaAuth.signOut().then(()=>{ location.href='login.html'; }).catch(()=>{ location.href='login.html'; }); }
-async function loadUser(){ try{}catch(e){} }
+async function loadUser(){
+  try{
+    let uid=localStorage.getItem('wafa_uid');
+    if(!uid) return;
+    let res = await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}.json`);
+    let data = await res.json();
+    if(data){ document.getElementById('userName').innerText = (data.nickname||data.email||'User').slice(0,14); try{localStorage.setItem('wafa_user',JSON.stringify({nickname:data.nickname||'',email:data.email||''}));}catch(e){} } else { document.getElementById('userName').innerText = 'User'; }
+  }catch(e){ document.getElementById('userName').innerText='User'; }
+}
+loadUser();
 let currentAuthUser = null;
 if(window.wafaAuth){
   window.wafaAuth.onAuthStateChanged(async (user)=>{
@@ -464,6 +475,7 @@ if(window.wafaAuth){
         document.getElementById('bigP_Join').innerText = checkData.joinDate;
       }
       let namaFinal = (checkData && checkData.nickname)? checkData.nickname : (user.displayName || user.email.split('@')[0]);
+      document.getElementById('userName').innerText = namaFinal.slice(0,14);
       document.getElementById('profileName').innerText = namaFinal;
       document.getElementById('profileBigName').innerText = namaFinal;
       document.getElementById('pNama').innerText = user.displayName || '-';
@@ -505,7 +517,7 @@ function gantiFotoProfile(input){
 }
 async function saveTglLahir(){ const tgl=document.getElementById('inputTglLahir').value; if(!tgl){alert('Pilih tgl');return;} let uid=localStorage.getItem('wafa_uid')||(currentAuthUser&&currentAuthUser.uid); await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}.json`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({birthDate:tgl,tanggalLahir:tgl})}); document.getElementById('pTgl').innerText=tgl; document.getElementById('bigP_Tgl').innerText=tgl; alert('✅ Tgl lahir disimpan: '+tgl); }
 async function saveTglLahirBig(){ let tgl=document.getElementById('bigInputTgl').value; if(!tgl){alert('Pilih tgl');return;} let uid=localStorage.getItem('wafa_uid')||(currentAuthUser&&currentAuthUser.uid); await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}.json`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({birthDate:tgl,tanggalLahir:tgl})}); document.getElementById('bigP_Tgl').innerText=tgl; document.getElementById('pTgl').innerText=tgl; alert('✅ Tgl lahir disimpan'); }
-async function saveNamaProfile(){ let nama=document.getElementById('bigInputNama').value.trim(); if(!nama){alert('Isi nama');return;} let uid=localStorage.getItem('wafa_uid')||(currentAuthUser&&currentAuthUser.uid); await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}.json`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({nickname:nama})}); document.getElementById('bigP_Nick').innerText=nama; document.getElementById('profileName').innerText=nama; document.getElementById('profileBigName').innerText=nama; alert('✅ Nama jadi: '+nama); }
+async function saveNamaProfile(){ let nama=document.getElementById('bigInputNama').value.trim(); if(!nama){alert('Isi nama');return;} let uid=localStorage.getItem('wafa_uid')||(currentAuthUser&&currentAuthUser.uid); await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}.json`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({nickname:nama})}); document.getElementById('bigP_Nick').innerText=nama; document.getElementById('userName').innerText=nama.slice(0,14); document.getElementById('profileName').innerText=nama; document.getElementById('profileBigName').innerText=nama; alert('✅ Nama jadi: '+nama); }
 function gantiAkun(){ if(confirm('Ganti akun Gmail lain?')) logout(); }
 </script>
 </body>
