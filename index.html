@@ -91,6 +91,7 @@ onAuthStateChanged(auth, (user)=>{ if(user &&!localStorage.getItem('wafa_uid')){
 <body>
 <div class="header"><div class="logo"><img src="./logo.png" style="width:36px;height:36px;border-radius:50%;border:2px solid #00e5ff"><span>WafaStoreOnly</span></div><div style="display:flex;gap:6px;align-items:center"><div id="userName" onclick="openProfileModal()" style="font-size:10px;background:#00ff8820;border:1px solid #00ff88;padding:5px 10px;border-radius:20px">Loading...</div><button onclick="logout()" style="font-size:10px;background:#ff444420;border:1px solid #ff4444;padding:5px 10px;border-radius:20px;color:#fff;cursor:pointer">Logout</button></div></div>
 
+<!-- PROFILE MODAL TAMBAHAN - BISA DI KLIK -->
 <div id="profileModal" onclick="if(event.target===this)closeProfileModal()">
 <div class="profileBox">
 <div class="profileTop"><div><b style="font-size:14px">👤 Profil Akun</b><div style="font-size:10px;opacity:0.8">WafaStoreOnly x Killua ⚡</div></div><div style="cursor:pointer;font-size:18px" onclick="closeProfileModal()">✕</div></div>
@@ -117,12 +118,12 @@ onAuthStateChanged(auth, (user)=>{ if(user &&!localStorage.getItem('wafa_uid')){
 <div class="section">
 <div style="display:flex;justify-content:space-between"><h2 style="font-size:16px;font-weight:800">Pilih Game Populer</h2><span style="color:#00d4ff;font-size:12px">Killua ON ⚡</span></div>
 <div class="grid-game">
-<div class="card-game" onclick="openRoblox()"><span class="off">-10% OFF</span><img src="https://cdn1.codashop.com/S/content/common/images/mno/roblox_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">Roblox</div></div>
-<div class="card-game"><span class="off">-10% OFF</span><img src="https://cdn1.codashop.com/S/content/common/images/mno/mlbb_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">Mobile Legends</div></div>
-<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/pubgm_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">PUBG Mobile</div></div>
-<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/freefire_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">Free Fire</div></div>
-<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/genshin-impact_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">Genshin Impact</div></div>
-<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/valorant_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">Valorant</div></div>
+<div class="card-game" onclick="openRoblox()"><span class="off">-10% OFF</span><img src="https://tr.rbxcdn.com/38c6edcb50633730ff4cf39ac885deea/512/512/Image/Png"><div class="name">Roblox</div></div>
+<div class="card-game"><span class="off">-10% OFF</span><img src="https://cdn.mobygames.com/covers/12651856-mobile-legends-bang-bang-android-front-cover.jpg"><div class="name">Mobile Legends</div></div>
+<div class="card-game"><img src="https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg"><div class="name">PUBG Mobile</div></div>
+<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/freefire.png"><div class="name">Free Fire</div></div>
+<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/genshin-impact.png"><div class="name">Genshin Impact</div></div>
+<div class="card-game"><img src="https://images.crowdspring.com/blog/wp-content/uploads/2022/08/03152551/valorant-logo.png"><div class="name">Valorant</div></div>
 </div>
 </div>
 </div>
@@ -193,8 +194,10 @@ onAuthStateChanged(auth, (user)=>{ if(user &&!localStorage.getItem('wafa_uid')){
 
 <div id="pesananPage" class="section"><div style="font-weight:900;font-size:20px">Pesanan Saya ⚡</div><div id="listPesanan" style="margin-top:16px"></div><div id="emptyPesanan" style="text-align:center;margin-top:40px;color:#5a638a"><div style="font-size:40px">📦</div><div style="font-size:13px;margin-top:8px">Belum ada pesanan</div></div></div>
 
+<!-- HALAMAN PROFIL BAWAH - TAMBAHAN BARU TANPA HAPUS YANG LAMA -->
 <div id="profilePage" class="section">
 <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:900;font-size:20px">Profil Saya ⚡</div><div style="font-size:10px;background:#00e5ff20;border:1px solid #00e5ff;padding:5px 10px;border-radius:20px">Killua Mode ON</div></div>
+
 <div class="profilePageCard" style="text-align:center">
 <img id="profileBigPic" class="profileBigImg" src="https://ui-avatars.com/api/?name=Wafa&background=00e5ff&color=000">
 <h2 id="profileBigName" style="margin-top:12px;font-weight:900">Loading...</h2>
@@ -203,6 +206,7 @@ onAuthStateChanged(auth, (user)=>{ if(user &&!localStorage.getItem('wafa_uid')){
 <input type="file" id="inputFotoAlbum" accept="image/*" style="display:none" onchange="gantiFotoProfile(this)">
 <div style="font-size:10px;color:#5a638a;margin-top:6px">Foto dari galeri HP kamu, auto kesimpen</div>
 </div>
+
 <div class="profilePageCard">
 <div style="font-weight:800;font-size:14px;margin-bottom:12px">📋 Data Diri</div>
 <div class="profileRow"><span class="lbl">Nama Lengkap</span><span class="val" id="bigP_Nama">-</span></div>
@@ -220,6 +224,7 @@ onAuthStateChanged(auth, (user)=>{ if(user &&!localStorage.getItem('wafa_uid')){
 <button onclick="saveTglLahirBig()" style="padding:10px 14px;border-radius:10px;border:none;background:#7c3aed;color:#fff;font-weight:900">Simpan Tgl Lahir</button>
 </div>
 </div>
+
 <div class="profilePageCard">
 <div style="font-weight:800;font-size:14px;margin-bottom:8px">⚙️ Kelola Akun</div>
 <button class="btn-action btn-ganti" onclick="gantiAkun()">🔄 Ganti Akun / Login Gmail Lain</button>
@@ -349,7 +354,7 @@ function sendDiscordWithBukti(o, dataUrl, judul){
   let extra = '';
   if(o.method=='gamepass') extra = `\nLink Gamepass: ${o.gamepassLink||'-'}`;
   if(o.method=='gift') extra = `\nItem: ${o.item||'-'}\nPrivate Server: ${o.privateServer||'-'}`;
-  const text = `${judul}\n\n📦 **FORMAT ORDERAN**\nID: #${o.id.toString().slice(-6)}\nUsername: ${o.username}\nMethod: ${o.method}\nJumlah: ${o.jumlah} Robux\nTotal: Rp${o.total.toLocaleString('id-ID')}${extra}\nBuyer: ${sensorEmail(o.email||'-')} (${o.nickname||'-')}\nTanggal: ${o.date}\nUID: ${o.uid||'-'}\n\n🤖 VALID ✅ AWA_NEWSTREAM\n⚠️ Cek mutasi!`;
+  const text = `${judul}\n\n📦 **FORMAT ORDERAN**\nID: #${o.id.toString().slice(-6)}\nUsername: ${o.username}\nMethod: ${o.method}\nJumlah: ${o.jumlah} Robux\nTotal: Rp${o.total.toLocaleString('id-ID')}${extra}\nBuyer: ${sensorEmail(o.email||'-')} (${o.nickname||'-'})\nTanggal: ${o.date}\nUID: ${o.uid||'-'}\n\n🤖 VALID ✅ AWA_NEWSTREAM\n⚠️ Cek mutasi!`;
   fetch(dataUrl).then(r=>r.blob()).then(blob=>{
     let form=new FormData();
     form.append('payload_json', JSON.stringify({ content: text }));
@@ -617,10 +622,11 @@ async function saveTglLahirBig(){
   }catch(e){ alert('❌ Gagal'); }
 }
 function gantiAkun(){
-  if(confirm('Mau ganti akun Gmail lain? Kamu akan logout dulu.')){
+  if(confirm('Kamu akan logout dari akun sekarang jika ingin mengganti ke akun yang lain.')){
     logout();
   }
 }
 </script>
+<script src="./fix-games.js"></script>
 </body>
 </html>
