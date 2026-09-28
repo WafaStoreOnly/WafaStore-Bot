@@ -1,32 +1,27 @@
-// WafaStoreOnly - Fix Gambar Game Auto Muncul
-// Taruh file ini sejajar sama index.html, jangan edit index.html selain tambah <script src="./fix-games.js"></script>
+// WAFASTOREONLY - FIX PAKSA V2 - ANTI CACHE
+console.log("WafaStore Fix Loaded!");
+const NEW_IMGS = [
+  "https://cdn1.codashop.com/S/content/common/images/mno/roblox_320x320.png",
+  "https://cdn1.codashop.com/S/content/common/images/mno/mlbb_320x320.png",
+  "https://cdn1.codashop.com/S/content/common/images/mno/pubgm_320x320.png",
+  "https://cdn1.codashop.com/S/content/common/images/mno/freefire_320x320.png",
+  "https://cdn1.codashop.com/S/content/common/images/mno/genshin-impact_320x320.png",
+  "https://cdn1.codashop.com/S/content/common/images/mno/valorant_320x320.png"
+];
 
-document.addEventListener('DOMContentLoaded', () => {
-  const FIX = {
-    roblox: "https://cdn1.codashop.com/S/content/common/images/mno/roblox_320x320.png",
-    ml: "https://cdn1.codashop.com/S/content/common/images/mno/mlbb_320x320.png",
-    pubg: "https://cdn1.codashop.com/S/content/common/images/mno/pubgm_320x320.png",
-    ff: "https://cdn1.codashop.com/S/content/common/images/mno/freefire_320x320.png",
-    genshin: "https://cdn1.codashop.com/S/content/common/images/mno/genshin-impact_320x320.png",
-    valorant: "https://cdn1.codashop.com/S/content/common/images/mno/valorant_320x320.png"
-  };
-
-  document.querySelectorAll('.grid-game .card-game').forEach(card => {
-    const nameEl = card.querySelector('.name');
-    const img = card.querySelector('img');
-    if (!nameEl || !img) return;
-    const n = nameEl.innerText.toLowerCase();
-
-    if (n.includes('roblox')) img.src = FIX.roblox;
-    else if (n.includes('mobile') || n.includes('legend')) img.src = FIX.ml;
-    else if (n.includes('pubg')) img.src = FIX.pubg;
-    else if (n.includes('free')) img.src = FIX.ff;
-    else if (n.includes('genshin')) img.src = FIX.genshin;
-    else if (n.includes('valorant')) img.src = FIX.valorant;
-
-    img.onerror = function() {
-      this.onerror = null;
-      this.src = './logo.png';
-    };
+function fixNow(){
+  const imgs = document.querySelectorAll('.grid-game.card-game img');
+  if(imgs.length < 6) return;
+  imgs.forEach((img, i)=>{
+    if(NEW_IMGS[i] &&!img.src.includes('codashop')){
+      img.src = NEW_IMGS[i] + "?v=" + Date.now();
+    }
+    img.style.display = "block";
+    img.style.background = "#fff";
   });
-});
+}
+
+setInterval(fixNow, 500);
+document.addEventListener('DOMContentLoaded', fixNow);
+window.addEventListener('load', fixNow);
+fixNow();
