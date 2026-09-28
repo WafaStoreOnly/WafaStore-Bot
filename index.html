@@ -118,12 +118,12 @@ onAuthStateChanged(auth, (user)=>{ if(user &&!localStorage.getItem('wafa_uid')){
 <div class="section">
 <div style="display:flex;justify-content:space-between"><h2 style="font-size:16px;font-weight:800">Pilih Game Populer</h2><span style="color:#00d4ff;font-size:12px">Killua ON ⚡</span></div>
 <div class="grid-game">
-<div class="card-game" onclick="openRoblox()"><span class="off">-10% OFF</span><img src="https://tr.rbxcdn.com/38c6edcb50633730ff4cf39ac885deea/512/512/Image/Png"><div class="name">Roblox</div></div>
-<div class="card-game"><span class="off">-10% OFF</span><img src="https://cdn.mobygames.com/covers/12651856-mobile-legends-bang-bang-android-front-cover.jpg"><div class="name">Mobile Legends</div></div>
-<div class="card-game"><img src="https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg"><div class="name">PUBG Mobile</div></div>
-<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/freefire.png"><div class="name">Free Fire</div></div>
-<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/genshin-impact.png"><div class="name">Genshin Impact</div></div>
-<div class="card-game"><img src="https://images.crowdspring.com/blog/wp-content/uploads/2022/08/03152551/valorant-logo.png"><div class="name">Valorant</div></div>
+<div class="card-game" onclick="openRoblox()"><span class="off">-10% OFF</span><img src="https://cdn1.codashop.com/S/content/common/images/mno/roblox_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">Roblox</div></div>
+<div class="card-game"><span class="off">-10% OFF</span><img src="https://cdn1.codashop.com/S/content/common/images/mno/mlbb_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">Mobile Legends</div></div>
+<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/pubgm_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">PUBG Mobile</div></div>
+<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/freefire_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">Free Fire</div></div>
+<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/genshin-impact_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">Genshin Impact</div></div>
+<div class="card-game"><img src="https://cdn1.codashop.com/S/content/common/images/mno/valorant_320x320.png" onerror="this.onerror=null;this.src='./logo.png'"><div class="name">Valorant</div></div>
 </div>
 </div>
 </div>
@@ -354,7 +354,7 @@ function sendDiscordWithBukti(o, dataUrl, judul){
   let extra = '';
   if(o.method=='gamepass') extra = `\nLink Gamepass: ${o.gamepassLink||'-'}`;
   if(o.method=='gift') extra = `\nItem: ${o.item||'-'}\nPrivate Server: ${o.privateServer||'-'}`;
-  const text = `${judul}\n\n📦 **FORMAT ORDERAN**\nID: #${o.id.toString().slice(-6)}\nUsername: ${o.username}\nMethod: ${o.method}\nJumlah: ${o.jumlah} Robux\nTotal: Rp${o.total.toLocaleString('id-ID')}${extra}\nBuyer: ${sensorEmail(o.email||'-')} (${o.nickname||'-'})\nTanggal: ${o.date}\nUID: ${o.uid||'-'}\n\n🤖 VALID ✅ AWA_NEWSTREAM\n⚠️ Cek mutasi!`;
+  const text = `${judul}\n\n📦 **FORMAT ORDERAN**\nID: #${o.id.toString().slice(-6)}\nUsername: ${o.username}\nMethod: ${o.method}\nJumlah: ${o.jumlah} Robux\nTotal: Rp${o.total.toLocaleString('id-ID')}${extra}\nBuyer: ${sensorEmail(o.email||'-')} (${o.nickname||'-')}\nTanggal: ${o.date}\nUID: ${o.uid||'-'}\n\n🤖 VALID ✅ AWA_NEWSTREAM\n⚠️ Cek mutasi!`;
   fetch(dataUrl).then(r=>r.blob()).then(blob=>{
     let form=new FormData();
     form.append('payload_json', JSON.stringify({ content: text }));
