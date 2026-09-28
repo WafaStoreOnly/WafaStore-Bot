@@ -11,11 +11,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
 body{background:#060a23 url('./killua-bg.webp') no-repeat center top;background-size:cover;background-attachment:fixed;color:#fff;padding-bottom:90px}
-body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(6,10,35,0.78),rgba(6,10,35,0.94));z-index:-1;pointer-events:none}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(6,10,35,0.78),rgba(6,10,35,0.94));z-index:-1}
 .header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(8,12,37,0.9);backdrop-filter:blur(12px);position:sticky;top:0;z-index:50;border-bottom:2px solid #00e5ff40}
 .logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:22px}
 .logo span{background:linear-gradient(90deg,#00e5ff,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.section{padding:16px;position:relative;z-index:1}
+.section{padding:16px}
 .card{background:#121631;border:1px solid #3a3e8a;border-radius:16px;padding:16px;margin-top:14px}
 .saldo-box{background:linear-gradient(135deg,#00c6ff,#7c3aed);border-radius:16px;padding:18px;text-align:center;box-shadow:0 0 25px #00e5ff60}
 .saldo-box h2{font-size:12px;opacity:0.8}
@@ -27,8 +27,8 @@ body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:
 input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;background:#131740;color:#fff;outline:none}
 .pay-card{background:#121631;border:1px solid #232a5a;border-radius:14px;padding:14px;margin-top:12px;display:flex;gap:12px;align-items:center}
 .pay-card img.logo-pay{width:48px;height:48px;border-radius:10px;background:#fff;object-fit:contain;padding:4px}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(8,12,37,0.97);backdrop-filter:blur(10px);border-top:1px solid #1e2450;display:flex;justify-content:space-around;padding:8px 0 10px;z-index:9999}
-.nav{font-size:9px;color:#5a638a;text-align:center;flex:1;cursor:pointer;pointer-events:auto}.nav.active{color:#00d4ff}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(8,12,37,0.97);backdrop-filter:blur(10px);border-top:1px solid #1e2450;display:flex;justify-content:space-around;padding:8px 0 10px;z-index:100}
+.nav{font-size:9px;color:#5a638a;text-align:center;flex:1;cursor:pointer}.nav.active{color:#00d4ff}
 .total-box{background:#131740;border:1px dashed #00d4ff;padding:12px;border-radius:10px;text-align:center;margin-top:12px;font-weight:800;font-size:13px}
 </style>
 <script type="module">
@@ -52,8 +52,7 @@ onAuthStateChanged(auth, (user)=>{
 </script>
 </head>
 <body>
-<div class="header"><div class="logo"><img src="./logo.png" style="width:36px;height:36px;border-radius:50%;border:2px solid #00e5ff"><span>WafaStoreOnly</span></div><div style="font-size:10px;color:#00e5ff">Killua ⚡</div></div>
-<div id="userName" style="display:none">User</div>
+<div class="header"><div class="logo"><img src="./logo.png" style="width:36px;height:36px;border-radius:50%;border:2px solid #00e5ff"><span>WafaStoreOnly</span></div><div style="display:flex;gap:6px;align-items:center"><div id="userName" style="font-size:10px;background:#00ff8820;border:1px solid #00ff88;padding:5px 10px;border-radius:20px">Loading...</div><button onclick="logout()" style="font-size:10px;background:#ff444420;border:1px solid #ff4444;padding:5px 10px;border-radius:20px;color:#fff;cursor:pointer">Logout</button></div></div>
 
 <div class="section">
 <div style="font-weight:900;font-size:20px">Dompet Saya 👛 Killua</div>
@@ -94,12 +93,14 @@ onAuthStateChanged(auth, (user)=>{
 <div class="nav" onclick="window.location.href='index.html'">⚡<br>Top Up</div>
 <div class="nav" onclick="window.location.href='index.html'">☰<br>Pesanan</div>
 <div class="nav active">👛<br>Dompet</div>
-<div class="nav" onclick="window.location.href='index.html'">👤<br>Profil</div>
+<div class="nav" onclick="window.location.href='profil.html'">👤<br>Profil</div>
 </div>
 
 <script>
 function sensorEmail(e){if(!e||!e.includes('@'))return'****';let [a,b]=e.split('@');if(a.length<=2)return a[0]+'****@'+b;return a.slice(0,3)+'****@'+b}
 function copyText(t){navigator.clipboard.writeText(t);alert('Disalin: '+t)}
+
+// SAMA PERSIS KAYAK INDEX.HTML - JANGAN DIUBAH BOS!
 async function cekBuktiValid(file){
   let loading=document.createElement('div');
   loading.id='loadingDetect';
@@ -118,6 +119,8 @@ async function cekBuktiValid(file){
     let {data:{text}}=await Tesseract.recognize(file,'ind+eng');
     let lower=text.toLowerCase();
     let lowerNoSpace=lower.replace(/\s/g,'');
+    console.log('OCR DOMPET:',lower);
+
     let blacklist=['kontol','memek','ngentot','anjing','babi','bangsat','tolol','goblok','fuck','jembut','peler','itil','kerjakontol'];
     let toxicFound=blacklist.find(k=>lower.includes(k));
     if(toxicFound){
@@ -140,7 +143,14 @@ async function cekBuktiValid(file){
     }
     if(!isMyNumber &&!isMyName &&!isQris){
       document.getElementById('loadingDetect').remove();
-      return {valid:false,reason:`❌ BUKTI SALAH TUJUAN! Penerima bukan punya gua!\n\nValid:\nDANA/GOPAY: 083862776790\nSEABANK: 901162765462\nQRIS: AWA_NEWSTREAM`};
+      return {valid:false,reason:`❌ BUKTI SALAH TUJUAN! Penerima bukan punya gua!
+
+Valid:
+DANA/GOPAY: 083862776790
+SEABANK: 901162765462
+QRIS: AWA_NEWSTREAM
+
+Bukti kamu tidak ada nomor/nama gua!`};
     }
 
     document.getElementById('cek-status').innerText='4/4 Cek status berhasil...';
@@ -150,9 +160,13 @@ async function cekBuktiValid(file){
       document.getElementById('loadingDetect').remove();
       return {valid:false,reason:'❌ BUKTI TIDAK VALID! Tidak ada tulisan Berhasil/Sukses!'};
     }
+    if(!lower.includes('rp')&&!/\d{4,}/.test(lower)){
+      document.getElementById('loadingDetect').remove();
+      return {valid:false,reason:'❌ Tidak ada nominal!'};
+    }
 
     document.getElementById('loadingDetect').remove();
-    return {valid:true};
+    return {valid:true,match:10,pornScore};
   }catch(err){let l=document.getElementById('loadingDetect');if(l)l.remove();return {valid:false,reason:'❌ Gagal baca bukti! Upload ulang yang jelas!'};}
 }
 
@@ -170,21 +184,23 @@ async function uploadBuktiDompet(){
     if(!cek.valid){alert(cek.reason);return;}
     let r=new FileReader();
     r.onload=()=>{
+      // SIMPAN RIWAYAT
       let riwayat=JSON.parse(localStorage.getItem('wafa_dompet')||'[]');
       let data={id:Date.now(),nominal:nominal,date:new Date().toLocaleString('id-ID'),bukti:r.result,status:'verifikasi'};
       riwayat.unshift(data);localStorage.setItem('wafa_dompet',JSON.stringify(riwayat));
       renderRiwayat();
+      // KIRIM KE DISCORD SAMA KAYAK INDEX
       let uid=localStorage.getItem('wafa_uid')||'guest';
       let userData=JSON.parse(localStorage.getItem('wafa_user')||'{}');
       let emailSensor=sensorEmail(userData.email||'-');
-      const text=`💰 **TOP UP DOMPET BARU! [VALID ✅]**\nID: #${data.id.toString().slice(-6)}\nNominal: Rp${nominal.toLocaleString('id-ID')}\nBuyer: ${emailSensor} (${userData.nickname||'-'})\nUID: ${uid}\nTanggal: ${data.date}`;
+      const text=`💰 **TOP UP DOMPET BARU! [VALID ✅ - PENERIMA PUNYA GUA]**\nID: #${data.id.toString().slice(-6)}\nNominal: Rp${nominal.toLocaleString('id-ID')}\nBuyer: ${emailSensor} (${userData.nickname||'-'})\nUID: ${uid}\nTanggal: ${data.date}\n\n🤖 AUTO DETECT: NSFW Aman ✅, Penerima Valid ✅`;
       fetch(r.result).then(r=>r.blob()).then(blob=>{
         let form=new FormData();
         form.append('payload_json',JSON.stringify({content:text}));
         form.append('files[0]',blob,`bukti-dompet-${data.id}.jpg`);
         fetch(window.DISCORD_URL+"?with_components=true",{method:'POST',body:form});
       });
-      alert(`✅ Bukti dompet Rp${nominal.toLocaleString('id-ID')} valid! Admin cek mutasi ya!`);
+      alert(`✅ Bukti dompet Rp${nominal.toLocaleString('id-ID')} valid! Penerima punya gua ✅ Admin cek mutasi ya!`);
     }; r.readAsDataURL(file);
   }; input.click();
 }
@@ -212,8 +228,7 @@ async function loadUser(){
     let data = await res.json();
     if(data){
       let name = data.nickname || data.name || data.email || 'User';
-      let el = document.getElementById('userName');
-      if(el) el.innerText = (name+'').slice(0,14);
+      document.getElementById('userName').innerText = (name+'').slice(0,14);
       document.getElementById('userEmailSensor').innerText = sensorEmail(data.email||'');
       document.getElementById('saldoText').innerText = `Rp${(data.saldo||0).toLocaleString('id-ID')}`;
       try{localStorage.setItem('wafa_user',JSON.stringify({nickname:name,email:data.email||'',saldo:data.saldo||0}));}catch(e){}
