@@ -452,6 +452,8 @@ async function loadUser(){
   }catch(e){ document.getElementById('userName').innerText='User'; }
 }
 loadUser();
+
+// === FIX FINAL - KAPAN BERGABUNG + NAMA + FOTO GALERI - TIDAK HAPUS CODE LAMA ===
 let currentAuthUser = null;
 if(window.wafaAuth){
   window.wafaAuth.onAuthStateChanged(async (user)=>{
@@ -463,8 +465,12 @@ if(window.wafaAuth){
       let finalPic = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName||user.email||'Wafa')}&background=00e5ff&color=000`;
       if(checkData && checkData.photoBase64) finalPic = checkData.photoBase64;
       else if(checkData && checkData.photoURL && checkData.photoURL.startsWith('data:')) finalPic = checkData.photoURL;
+
+      // SET FOTO DI SEMUA TEMPAT
       document.getElementById('profilePic').src = finalPic;
       document.getElementById('profileBigPic').src = finalPic;
+
+      // JIKA BELUM ADA JOIN DATE, BUAT SEKARANG (UNTUK USER LAMA & BARU)
       if(!checkData ||!checkData.joinDate){
         let now = new Date();
         let joinStr = now.toLocaleDateString('id-ID', {day:'2-digit',month:'long',year:'numeric'});
@@ -474,6 +480,8 @@ if(window.wafaAuth){
       } else {
         document.getElementById('bigP_Join').innerText = checkData.joinDate;
       }
+
+      // NAMA AKUN DI WEB
       let namaFinal = (checkData && checkData.nickname)? checkData.nickname : (user.displayName || user.email.split('@')[0]);
       document.getElementById('userName').innerText = namaFinal.slice(0,14);
       document.getElementById('profileName').innerText = namaFinal;
