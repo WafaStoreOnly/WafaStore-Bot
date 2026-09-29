@@ -281,14 +281,14 @@ async function cekBuktiValid(file){
     if(blacklist.some(k=>lower.includes(k))){document.getElementById('loadingDetect').remove();return {valid:false,reason:`❌ FOTO DITOLAK! Kata kasar!`};}
 
     document.getElementById('cek-status').innerText='3/4 Cek penerima...';
-    let validNumbers=['083862776790','83862776790','901162765462'];
-    let validNames=['wafastoreonly','wafastore','wafa','killua','awa_newstream','awa newstream','awanewstream'];
+    let validNumbers=['083862776790','83862776790'];
+    let validNames=['wafastoreonly','wafastore','abiwafaali','abi wafa ali','awa_newstream','awanewstream'];
     let isMyNumber = validNumbers.some(no => lowerNoSpace.includes(no));
     let isMyName = validNames.some(nm => lower.includes(nm));
     let isQris = lower.includes('qris');
     let fakeList=['jhonny','benjamin','manurung'];
-    if(fakeList.some(f=>lower.includes(f))){document.getElementById('loadingDetect').remove();return {valid:false,reason:`❌ BUKTI FAKE! Bukan ke Wafa / AWA_NEWSTREAM!`}; }
-    if(!isMyNumber &&!isMyName &&!isQris){document.getElementById('loadingDetect').remove();return {valid:false,reason:`❌ SALAH TUJUAN! Harus ke 083862776790 / 901162765462 / AWA_NEWSTREAM!`};}
+    if(fakeList.some(f=>lower.includes(f))){document.getElementById('loadingDetect').remove();return {valid:false,reason:`❌ BUKTI FAKE! Bukan ke AbiWafaAli / AWA_NEWSTREAM!`}; }
+    if(!isMyNumber &&!isMyName &&!isQris){document.getElementById('loadingDetect').remove();return {valid:false,reason:`❌ SALAH TUJUAN! Harus ke 083862776790 / AbiWafaAli / AWA_NEWSTREAM!`};}
 
     document.getElementById('cek-status').innerText='4/4 Cek berhasil...';
     if(!['berhasil','sukses','success','terkirim'].some(k=>lower.includes(k))){document.getElementById('loadingDetect').remove();return {valid:false,reason:'❌ Tidak ada tulisan Berhasil!'};}
