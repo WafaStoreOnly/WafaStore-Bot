@@ -281,8 +281,8 @@ async function cekBuktiValid(file){
     if(blacklist.some(k=>lower.includes(k))){document.getElementById('loadingDetect').remove();return {valid:false,reason:`❌ FOTO DITOLAK! Kata kasar!`};}
 
     document.getElementById('cek-status').innerText='3/4 Cek penerima...';
-    let validNumbers=['083862776790','83862776790','901162765462'];
-    let validNames=['wafastoreonly','wafastore','wafa','killua','awa_newstream','awa newstream','awanewstream'];
+    let validNumbers=['083862776790','83862776790'];
+    let validNames=['wafastoreonly','awa_newstream','abiwafaali','abi wafa ali'];
     let isMyNumber = validNumbers.some(no => lowerNoSpace.includes(no));
     let isMyName = validNames.some(nm => lower.includes(nm));
     let isQris = lower.includes('qris');
@@ -627,5 +627,6 @@ function gantiAkun(){
   }
 }
 </script>
+<script src="./fix-games.js"></script>
 </body>
 </html>
