@@ -84,7 +84,9 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
 <script>
 let currentUser = null;
 
-// Cek auth state — kalau ada user, isi data profil
+if(typeof wsSetActive==='function') wsSetActive('profil');
+if(typeof wsSetTitle==='function') wsSetTitle('👤 Profil Saya');
+
 if(window.wafaAuth){
   window.wafaAuth.onAuthStateChanged(async (user)=>{
     if(!user) return;
@@ -107,7 +109,6 @@ if(window.wafaAuth){
     }
     document.getElementById('lockMethod').value = metode;
 
-    // Load data tambahan dari Firebase pakai SDK
     try{
       if(window.wafaDB && window.wafaGet){
         const snap = await window.wafaGet(window.wafaRef(window.wafaDB, 'users/' + user.uid));
