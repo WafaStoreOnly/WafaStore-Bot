@@ -158,7 +158,7 @@ function downloadQRIS(){
     });
 }
 
-// ===== UPLOAD BUKTI DOMpet =====
+// ===== UPLOAD BUKTI DOMPET =====
 async function uploadBuktiDompet(){
   let nominal=parseInt(document.getElementById('nominalDompet').value)||0;
   if(nominal<10000){alert('Minimal top up Rp10.000 bos!');return;}
@@ -271,6 +271,53 @@ renderDompet();
 renderRiwayat();
 loadUser();
 attachDompetListener();
+
+// ===== LOAD SETTINGS DARI FIREBASE =====
+function applyThemeDompet(primary, accent){
+  if(!primary) primary = '#00e5ff';
+  if(!accent) accent = '#7c3aed';
+  document.documentElement.style.setProperty('--primary', primary);
+  document.documentElement.style.setProperty('--accent', accent);
+}
+
+function loadSettingsDompet(){
+  if(!window.wafaDB || !window.wafaRef || !window.wafaOnValue){
+    setTimeout(loadSettingsDompet, 500);
+    return;
+  }
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/branding'), (snap)=>{
+    const d = snap.val();
+    if(!d) return;
+    if(d.logo){
+      const sbLogo = document.querySelector('.ws-logo img');
+      if(sbLogo) sbLogo.src = d.logo;
+    }
+    if(d.brandName){
+      const brandEl = document.querySelector('.ws-logo span');
+      if(brandEl) brandEl.innerText = d.brandName;
+      document.title = 'Dompet - ' + d.brandName;
+    }
+  });
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/theme'), (snap)=>{
+    const d = snap.val();
+    if(!d) return;
+    applyThemeDompet(d.primary, d.accent);
+    if(d.primary && d.accent){
+      document.querySelectorAll('.btn-primary').forEach(b=>{
+        b.style.background = `linear-gradient(90deg, ${d.primary}, ${d.accent})`;
+      });
+      document.querySelectorAll('.saldo-box').forEach(b=>{
+        b.style.background = `linear-gradient(135deg, ${d.primary}, ${d.accent})`;
+      });
+    }
+  });
+}
+
+if(document.readyState === 'complete'){
+  loadSettingsDompet();
+} else {
+  window.addEventListener('load', loadSettingsDompet);
+}
 </script>
 </body>
 </html>
