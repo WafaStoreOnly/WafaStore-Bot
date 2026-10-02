@@ -3,10 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Dompet - WafaStoreOnly x Killua</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<title>Dompet - WafaStoreOnly</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <link rel="stylesheet" href="./sidebar.css">
+<style>
+.dompet-header{background:#141414;border:1px solid #2a2a2a;border-radius:16px;padding:24px;text-align:center;margin-top:8px}
+.dompet-header .label{font-size:10px;color:#5a5a5a;letter-spacing:2px;font-weight:800;text-transform:uppercase}
+.dompet-header .amount{font-size:36px;font-weight:900;color:#4ade80;margin-top:8px;letter-spacing:-1px}
+.dompet-header .email{font-size:11px;color:#5a5a5a;margin-top:6px}
+.paket-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.paket-item{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:14px;text-align:center;cursor:pointer;transition:0.15s;font-weight:700;font-size:13px;color:#e8e8e8}
+.paket-item:hover{border-color:#4a90e2}
+.qris-wrap{position:relative;cursor:pointer;background:#141414;border:1px solid #2a2a2a;border-radius:14px;overflow:hidden;text-align:center;margin-top:12px}
+.qris-wrap img{width:100%;display:block}
+.qris-badge{position:absolute;top:12px;right:12px;background:rgba(10,10,10,0.9);border:1px solid #3a3a3a;color:#e8e8e8;padding:6px 12px;border-radius:20px;font-size:10px;font-weight:700;backdrop-filter:blur(8px)}
+.riwayat-item{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:12px;margin-top:8px;display:flex;justify-content:space-between;align-items:center}
+.riwayat-item b{font-size:13px;color:#e8e8e8}
+.riwayat-item small{font-size:10px;color:#5a5a5a}
+.riwayat-badge{padding:4px 10px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:0.5px}
+</style>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, set, onValue, get, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
@@ -26,45 +42,65 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
 <body>
 <div id="wsContent">
 <div class="ws-section">
-  <div style="font-weight:900;font-size:20px">Dompet Saya 👛 Killua</div>
-  <p style="font-size:11px;color:#aab0d0;margin-top:6px">Top up saldo dompet - Anti Porn & Anti Fake ✅</p>
+  <div style="font-weight:800;font-size:20px;color:#e8e8e8">Dompet Saya</div>
+  <p style="font-size:12px;color:#8a8a8a;margin-top:6px">Top up saldo untuk belanja di web</p>
 
-  <div class="saldo-box" style="margin-top:16px">
-    <h2>SALDO SAAT INI</h2>
-    <h1 id="saldoText">Rp0</h1>
-    <div style="font-size:10px;margin-top:6px;opacity:0.85" id="userEmailSensor">****@gmail.com</div>
+  <div class="dompet-header">
+    <div class="label">Saldo Saat Ini</div>
+    <div class="amount" id="saldoText">Rp0</div>
+    <div class="email" id="userEmailSensor">****@gmail.com</div>
   </div>
 
-  <div class="ws-card">
-    <div style="font-weight:800;font-size:14px">Top Up Saldo Dompet</div>
-    <div class="input-group"><label>Nominal Top Up (Min Rp10.000)</label><input id="nominalDompet" type="number" placeholder="Contoh: 50000" oninput="calcDompet()"></div>
+  <div class="ws-card" style="margin-top:16px">
+    <div style="font-weight:700;font-size:14px;color:#e8e8e8;margin-bottom:4px">Top Up Saldo</div>
+    <div style="font-size:11px;color:#8a8a8a">Minimal Rp10.000</div>
+
+    <div class="input-group"><label>Nominal</label><input id="nominalDompet" type="number" placeholder="Contoh: 50000" oninput="calcDompet()"></div>
     <div class="total-box" id="totalDompet">Total bayar: Rp0</div>
 
-    <div style="margin-top:16px;font-weight:800;font-size:13px">Pilih Paket Cepat</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px" id="gridDompet"></div>
-
-    <div style="margin-top:18px;font-weight:800;font-size:14px">Metode Pembayaran</div>
-    <div class="pay-card"><img class="logo-pay" src="./dana.png" alt="DANA"><div style="flex:1"><div style="font-size:13px;font-weight:800">DANA</div><div style="font-size:12px">083862776790</div></div><button onclick="bayarViaApp('dana','083862776790')" style="padding:8px 12px;border-radius:8px;border:none;background:#118EEA;color:#fff;font-weight:800">📱 Buka</button></div>
-    <div class="pay-card"><img class="logo-pay" src="./gopay.png" alt="GoPay"><div style="flex:1"><div style="font-size:13px;font-weight:800">GOPAY</div><div style="font-size:12px">083862776790</div></div><button onclick="bayarViaApp('gopay','083862776790')" style="padding:8px 12px;border-radius:8px;border:none;background:#00AA13;color:#fff;font-weight:800">📱 Buka</button></div>
-    <div class="pay-card"><img class="logo-pay" src="./seabank.png" alt="Seabank"><div style="flex:1"><div style="font-size:13px;font-weight:800">SEABANK</div><div style="font-size:12px">901162765462</div></div><button onclick="bayarViaApp('seabank','901162765462')" style="padding:8px 12px;border-radius:8px;border:none;background:#ffcc00;color:#000;font-weight:800">📋 Salin</button></div>
-
-    <div style="margin-top:16px;background:rgba(18,22,49,0.95);border:2px solid #00e5ff;border-radius:16px;overflow:hidden;text-align:center;box-shadow:0 0 30px #00e5ff40;position:relative;cursor:pointer" onclick="downloadQRIS()">
-      <img id="qrisImage" src="./qris-killua-final.jpg" style="width:100%;display:block">
-      <div style="position:absolute;top:10px;right:10px;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;padding:6px 12px;border-radius:20px;font-size:10px;font-weight:800;box-shadow:0 0 15px #00e5ff80">📥 Klik buat Download</div>
-    </div>
-    <div style="font-size:10px;color:#00e5ff;margin-top:6px;text-align:center">QRIS: AWA_NEWSTREAM / WafaStoreOnly ✅</div>
-    <button class="btn btn-primary" style="margin-top:12px" onclick="downloadQRIS()">📥 Download QRIS</button>
-
-    <button class="btn btn-yellow" style="margin-top:16px" onclick="uploadBuktiDompet()">📤 Upload Bukti TF Dompet</button>
-    <div style="font-size:10px;color:#8d94b8;margin-top:8px;text-align:center">Auto cek: NSFW? TOLAK • Penerima valid? OK</div>
+    <div style="font-weight:700;font-size:12px;margin-top:18px;color:#e8e8e8">Paket Cepat</div>
+    <div class="paket-grid" id="gridDompet"></div>
   </div>
 
   <div class="ws-card">
-    <div style="font-weight:800;font-size:14px">Riwayat Dompet</div>
-    <div id="riwayatDompet" style="margin-top:12px;font-size:12px;color:#aab0d0">Belum ada riwayat top up</div>
+    <div style="font-weight:700;font-size:14px;color:#e8e8e8;margin-bottom:12px">Metode Pembayaran</div>
+
+    <div class="pay-card">
+      <img class="logo-pay" src="./dana.png" alt="DANA">
+      <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#e8e8e8">DANA</div><div style="font-size:12px;color:#8a8a8a;margin-top:2px">083862776790</div></div>
+      <button onclick="bayarViaApp('dana','083862776790')" style="padding:8px 14px;border-radius:8px;border:none;background:#4a90e2;color:#fff;font-weight:700;font-size:11px;cursor:pointer">Buka</button>
+    </div>
+
+    <div class="pay-card">
+      <img class="logo-pay" src="./gopay.png" alt="GoPay">
+      <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#e8e8e8">GOPAY</div><div style="font-size:12px;color:#8a8a8a;margin-top:2px">083862776790</div></div>
+      <button onclick="bayarViaApp('gopay','083862776790')" style="padding:8px 14px;border-radius:8px;border:none;background:#4a90e2;color:#fff;font-weight:700;font-size:11px;cursor:pointer">Buka</button>
+    </div>
+
+    <div class="pay-card">
+      <img class="logo-pay" src="./seabank.png" alt="Seabank">
+      <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#e8e8e8">SEABANK</div><div style="font-size:12px;color:#8a8a8a;margin-top:2px">901162765462</div></div>
+      <button onclick="bayarViaApp('seabank','901162765462')" style="padding:8px 14px;border-radius:8px;border:none;background:#fbbf24;color:#000;font-weight:700;font-size:11px;cursor:pointer">Salin</button>
+    </div>
+
+    <div class="qris-wrap" onclick="downloadQRIS()">
+      <img id="qrisImage" src="./qris-killua-final.jpg" alt="QRIS">
+      <div class="qris-badge">📥 Klik buat download</div>
+    </div>
+    <div style="font-size:10px;color:#8a8a8a;margin-top:8px;text-align:center">QRIS: AWA_NEWSTREAM / WafaStoreOnly</div>
+    <button class="btn btn-primary" style="margin-top:12px" onclick="downloadQRIS()">📥 Download QRIS</button>
+
+    <button class="btn btn-yellow" style="margin-top:16px" onclick="uploadBuktiDompet()">📤 Upload Bukti TF</button>
+    <div style="font-size:10px;color:#5a5a5a;margin-top:10px;text-align:center;line-height:1.6">Auto cek: NSFW filter • Penerima valid</div>
+  </div>
+
+  <div class="ws-card">
+    <div style="font-weight:700;font-size:14px;color:#e8e8e8;margin-bottom:8px">Riwayat Top Up</div>
+    <div id="riwayatDompet" style="font-size:12px;color:#8a8a8a">Belum ada riwayat</div>
   </div>
 </div>
 </div>
+
 <script src="./sidebar.js"></script>
 <script>
 function sensorEmail(e){if(!e||!e.includes('@'))return'****';let [a,b]=e.split('@');return a.slice(0,3)+'****@'+b}
@@ -74,7 +110,7 @@ async function cekBuktiValid(file){
   let loading=document.createElement('div');
   loading.id='loadingDetect';
   loading.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;justify-content:center;align-items:center;flex-direction:column;color:#fff;font-weight:800;text-align:center;padding:20px';
-  loading.innerHTML='<div style="font-size:50px">🔍</div><div style="margin-top:10px">CEK BUKTI TF DOMPET...</div><div id="cek-status" style="font-size:12px;color:#00e5ff;margin-top:8px">1/2...</div>';
+  loading.innerHTML='<div style="font-size:50px">🔍</div><div style="margin-top:10px">CEK BUKTI TF DOMPET...</div><div id="cek-status" style="font-size:12px;color:#4a90e2;margin-top:8px">1/2...</div>';
   document.body.appendChild(loading);
   try{
     document.getElementById('cek-status').innerText='1/2 Baca bukti...';
@@ -106,8 +142,8 @@ function renderDompet(){
   let g=document.getElementById('gridDompet');g.innerHTML='';
   listDompet.forEach(j=>{
     let d=document.createElement('div');
-    d.style.cssText='background:#141936;border:1px solid #2a3366;border-radius:12px;padding:12px;text-align:center;cursor:pointer';
-    d.innerHTML=`<div style="font-weight:800">Rp${j.toLocaleString('id-ID')}</div>`;
+    d.className='paket-item';
+    d.innerText='Rp'+j.toLocaleString('id-ID');
     d.onclick=()=>{document.getElementById('nominalDompet').value=j;calcDompet()};
     g.appendChild(d);
   });
@@ -161,7 +197,7 @@ function downloadQRIS(){
 // ===== UPLOAD BUKTI DOMPET =====
 async function uploadBuktiDompet(){
   let nominal=parseInt(document.getElementById('nominalDompet').value)||0;
-  if(nominal<10000){alert('Minimal top up Rp10.000 bos!');return;}
+  if(nominal<10000){alert('Minimal top up Rp10.000');return;}
   let input=document.createElement('input');input.type='file';input.accept='image/*';
   input.onchange=async e=>{
     let file=e.target.files[0]; if(!file) return;
@@ -188,7 +224,7 @@ async function uploadBuktiDompet(){
       renderRiwayat();
 
       let emailSensor=sensorEmail(userData.email||'-');
-      const text=`💰 **TOP UP DOMPET BARU!**\nID: #${dataId.toString().slice(-6)}\nNominal: Rp${nominal.toLocaleString('id-ID')}\nBuyer: ${emailSensor} (${userData.nickname||'-'})\nUID: ${uid}\nTanggal: ${data.date}\n\n⏳ Menunggu approve admin`;
+      const text=`💰 **TOP UP DOMPET BARU**\nID: #${dataId.toString().slice(-6)}\nNominal: Rp${nominal.toLocaleString('id-ID')}\nBuyer: ${emailSensor} (${userData.nickname||'-'})\nUID: ${uid}\nTanggal: ${data.date}\n\n⏳ Menunggu approve admin`;
 
       try{
         fetch(r.result).then(r=>r.blob()).then(blob=>{
@@ -199,7 +235,7 @@ async function uploadBuktiDompet(){
         });
       }catch(e){}
 
-      alert(`✅ Bukti dompet Rp${nominal.toLocaleString('id-ID')} valid!\n\nAdmin cek mutasi ya! Saldo masuk setelah dikonfirmasi 🥰`);
+      alert(`✅ Bukti dompet Rp${nominal.toLocaleString('id-ID')} valid!\n\nAdmin cek mutasi ya. Saldo masuk setelah dikonfirmasi 🥰`);
     }; r.readAsDataURL(file);
   }; input.click();
 }
@@ -207,13 +243,13 @@ async function uploadBuktiDompet(){
 function renderRiwayat(){
   let riwayat=JSON.parse(localStorage.getItem('wafa_dompet')||'[]');
   let el=document.getElementById('riwayatDompet');
-  if(riwayat.length==0){el.innerHTML='Belum ada riwayat top up';return;}
+  if(riwayat.length==0){el.innerHTML='Belum ada riwayat';return;}
   el.innerHTML='';
   riwayat.forEach(d=>{
     let div=document.createElement('div');
-    div.style.cssText='background:#141936;border:1px solid #2a3366;border-radius:10px;padding:10px;margin-top:8px;display:flex;justify-content:space-between';
-    let color = d.status=='selesai' ? '#00ff88' : d.status=='batal' ? '#ff4444' : '#ffcc00';
-    div.innerHTML=`<div><b>Rp${d.nominal.toLocaleString('id-ID')}</b><div style="font-size:10px;color:#6b7394">${d.date}</div></div><div style="font-size:10px;background:${color};color:${d.status=='selesai'?'#000':'#fff'};padding:4px 8px;border-radius:20px;font-weight:800">${d.status}</div>`;
+    div.className='riwayat-item';
+    let color = d.status=='selesai' ? '#4ade80' : d.status=='batal' ? '#ef4444' : '#fbbf24';
+    div.innerHTML=`<div><b>Rp${d.nominal.toLocaleString('id-ID')}</b><div style="font-size:10px;color:#5a5a5a;margin-top:2px">${d.date}</div></div><div class="riwayat-badge" style="background:${color}20;color:${color};border:1px solid ${color}60">${d.status.toUpperCase()}</div>`;
     el.appendChild(div);
   });
 }
@@ -251,13 +287,13 @@ function attachDompetListener(){
       let my = Object.values(all).filter(x => x.uid === uid);
       my.sort((a,b)=>b.id-a.id);
       let el=document.getElementById('riwayatDompet');
-      if(my.length==0){el.innerHTML='Belum ada riwayat top up';return;}
+      if(my.length==0){el.innerHTML='Belum ada riwayat';return;}
       el.innerHTML='';
       my.forEach(d=>{
         let div=document.createElement('div');
-        div.style.cssText='background:#141936;border:1px solid #2a3366;border-radius:10px;padding:10px;margin-top:8px;display:flex;justify-content:space-between';
-        let color = d.status=='selesai' ? '#00ff88' : d.status=='batal' ? '#ff4444' : '#ffcc00';
-        div.innerHTML=`<div><b>Rp${(d.nominal||d.jumlah||0).toLocaleString('id-ID')}</b><div style="font-size:10px;color:#6b7394">${d.date}</div></div><div style="font-size:10px;background:${color};color:${d.status=='selesai'?'#000':'#fff'};padding:4px 8px;border-radius:20px;font-weight:800">${d.status}</div>`;
+        div.className='riwayat-item';
+        let color = d.status=='selesai' ? '#4ade80' : d.status=='batal' ? '#ef4444' : '#fbbf24';
+        div.innerHTML=`<div><b>Rp${(d.nominal||d.jumlah||0).toLocaleString('id-ID')}</b><div style="font-size:10px;color:#5a5a5a;margin-top:2px">${d.date}</div></div><div class="riwayat-badge" style="background:${color}20;color:${color};border:1px solid ${color}60">${(d.status||'').toUpperCase()}</div>`;
         el.appendChild(div);
       });
     });
@@ -272,17 +308,10 @@ renderRiwayat();
 loadUser();
 attachDompetListener();
 
-// ===== LOAD SETTINGS DARI FIREBASE =====
-function applyThemeDompet(primary, accent){
-  if(!primary) primary = '#00e5ff';
-  if(!accent) accent = '#7c3aed';
-  document.documentElement.style.setProperty('--primary', primary);
-  document.documentElement.style.setProperty('--accent', accent);
-}
-
-function loadSettingsDompet(){
+// ===== LOAD BRANDING =====
+function loadBrandingDompet(){
   if(!window.wafaDB || !window.wafaRef || !window.wafaOnValue){
-    setTimeout(loadSettingsDompet, 500);
+    setTimeout(loadBrandingDompet, 500);
     return;
   }
   window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/branding'), (snap)=>{
@@ -298,26 +327,8 @@ function loadSettingsDompet(){
       document.title = 'Dompet - ' + d.brandName;
     }
   });
-  window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/theme'), (snap)=>{
-    const d = snap.val();
-    if(!d) return;
-    applyThemeDompet(d.primary, d.accent);
-    if(d.primary && d.accent){
-      document.querySelectorAll('.btn-primary').forEach(b=>{
-        b.style.background = `linear-gradient(90deg, ${d.primary}, ${d.accent})`;
-      });
-      document.querySelectorAll('.saldo-box').forEach(b=>{
-        b.style.background = `linear-gradient(135deg, ${d.primary}, ${d.accent})`;
-      });
-    }
-  });
 }
-
-if(document.readyState === 'complete'){
-  loadSettingsDompet();
-} else {
-  window.addEventListener('load', loadSettingsDompet);
-}
+if(document.readyState === 'complete'){ loadBrandingDompet(); } else { window.addEventListener('load', loadBrandingDompet); }
 </script>
 </body>
 </html>
