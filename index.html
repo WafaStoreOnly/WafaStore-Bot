@@ -256,7 +256,7 @@ function attachFirebaseListener(orderId){
   }catch(e){}
 }
 
-// ===== SIMPAN ORDER (TANPA NOTIF DISCORD - notif cuma kalau udah TF) =====
+// ===== SIMPAN ORDER (TANPA NOTIF DISCORD) =====
 function saveOrder(data){
   let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
   data.id=Date.now(); data.date=new Date().toLocaleString('id-ID'); data.status='verifikasi'; data.bukti=''; data.expiry=Date.now()+(10*60*1000);
@@ -266,67 +266,63 @@ function saveOrder(data){
   attachFirebaseListener(data.id);
   try{
     if(window.wafaDB){ window.wafaSet(window.wafaRef(window.wafaDB,'orders/'+data.id), data); }
-    // Notif Discord DIHAPUS - cuma muncul kalau user upload bukti TF
   }catch(e){}
   return data.id;
 }
 
-// ===== KIRIM KE DISCORD: 2 PESAN (FORMAT ORDER + GAMBAR BUKTI & TOMBOL) =====
+// ===== KIRIM KE DISCORD: 2 PESAN BERSIH =====
 function sendDiscordWithBukti(o, dataUrl, judul){
   const baseUrl = "https://wafastoreonly-official.vercel.app/";
   const selesaiUrl = `${baseUrl}admin.html?id=${o.id}&action=selesai`;
   const batalUrl = `${baseUrl}admin.html?id=${o.id}&action=batal`;
   
   let extra = '';
-  if(o.method == 'gamepass' && o.gamepassLink) extra = `\n🔗 **Link Gamepass:** ${o.gamepassLink}`;
-  if(o.method == 'gift' && o.item){ extra = `\n🎁 **Item:** ${o.item}`; if(o.privateServer) extra += `\n🔗 **Private Server:** ${o.privateServer}`; }
+  if(o.method == 'gamepass' && o.gamepassLink) extra = `🔗 Link Gamepass: ${o.gamepassLink}`;
+  if(o.method == 'gift' && o.item){ extra = `🎁 Item: ${o.item}`; if(o.privateServer) extra += `\n🔗 Private Server: ${o.privateServer}`; }
   
-  // ===== PESAN 1: FORMAT ORDER (EMBED) =====
-  const payload1 = {
-    content: `${judul}`,
-    embeds: [{
-      title: `📦 Order #${o.id.toString().slice(-6)}`,
-      color: 0x00e5ff,
-      fields: [
-        { name: "👤 Username Roblox", value: o.username || '-', inline: true },
-        { name: "📊 Jumlah", value: `${o.jumlah} Robux`, inline: true },
-        { name: "💰 Total", value: `Rp${o.total.toLocaleString('id-ID')}`, inline: true },
-        { name: "🔧 Metode", value: o.method || '-', inline: true },
-        { name: "📧 Buyer", value: sensorEmail(o.email||'-'), inline: true },
-        { name: "🕐 Tanggal", value: o.date || '-', inline: true }
-      ],
-      description: extra || null,
-      footer: { text: `UID: ${o.uid || '-'} • Status: OTOMATIS DIPROSES ⚡` },
-      timestamp: new Date().toISOString()
-    }]
+  // PESAN 1: EMBED FORMAT ORDER
+  const embedData = {
+    title: `📦 Order #${o.id.toString().slice(-6)}`,
+    color: 0x00e5ff,
+    fields: [
+      { name: "👤 Username Roblox", value: String(o.username || '-'), inline: true },
+      { name: "📊 Jumlah", value: `${o.jumlah} Robux`, inline: true },
+      { name: "💰 Total", value: `Rp${o.total.toLocaleString('id-ID')}`, inline: true },
+      { name: "🔧 Metode", value: String(o.method || '-'), inline: true },
+      { name: "📧 Buyer", value: sensorEmail(o.email||'-'), inline: true },
+      { name: "🕐 Tanggal", value: String(o.date || '-'), inline: true }
+    ],
+    footer: { text: `UID: ${o.uid || '-'} • Status: OTOMATIS DIPROSES ⚡` }
   };
+  if(extra) embedData.description = extra;
   
   fetch(window.DISCORD_URL+"?with_components=true", {
-    method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify(payload1)
-  }).then(()=>{
-    // ===== PESAN 2: GAMBAR BUKTI TF + 2 TOMBOL =====
-    setTimeout(()=>{
-      fetch(dataUrl).then(r=>r.blob()).then(blob=>{
-        let form = new FormData();
-        form.append('payload_json', JSON.stringify({
-          content: `📸 **BUKTI TF - Order #${o.id.toString().slice(-6)}**`,
-          components: [{
-            type: 1,
-            components: [
-              { type: 2, style: 5, label: "✅ KONFIRMASI SELESAI", url: selesaiUrl },
-              { type: 2, style: 5, label: "❌ BATALKAN", url: batalUrl }
-            ]
-          }]
-        }));
-        form.append('files[0]', blob, `bukti-${o.id}.jpg`);
-        fetch(window.DISCORD_URL+"?with_components=true", { method:'POST', body: form })
-          .then(r=>r.text())
-          .then(t=>console.log('Discord response:', t))
-          .catch(e=>console.log('Discord error:', e));
-      });
-    }, 800);
-  }).catch(e=>console.log('Discord error:', e));
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ content: `💸 **BUKTI TF MASUK! [VALID ✅]**`, embeds: [embedData] })
+  }).then(r=>r.text()).then(t=>console.log('Discord pesan 1:', t)).catch(e=>console.log('Err 1:', e));
+  
+  // PESAN 2: GAMBAR + 2 TOMBOL
+  setTimeout(()=>{
+    fetch(dataUrl).then(r=>r.blob()).then(blob=>{
+      let form = new FormData();
+      form.append('payload_json', JSON.stringify({
+        content: '',
+        components: [{
+          type: 1,
+          components: [
+            { type: 2, style: 5, label: "✅ KONFIRMASI SELESAI", url: selesaiUrl },
+            { type: 2, style: 5, label: "❌ BATALKAN", url: batalUrl }
+          ]
+        }]
+      }));
+      form.append('files[0]', blob, `bukti-${o.id}.jpg`);
+      fetch(window.DISCORD_URL+"?with_components=true", { method:'POST', body: form })
+        .then(r=>r.text())
+        .then(t=>console.log('Discord pesan 2:', t))
+        .catch(e=>console.log('Err 2:', e));
+    });
+  }, 1000);
 }
 
 // ===== AUTO BATAL 10 MENIT =====
@@ -395,6 +391,8 @@ async function uploadBukti(id){
     }; r.readAsDataURL(file);
   }; input.click();
 }
+
+// ===== UPLOAD BUKTI VIA CHAT (TANPA NOTIF KOTOR) =====
 async function uploadBuktiFromChat(input){
   let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
   if(orders.length==0){alert('Buat pesanan dulu!');input.value='';return;}
@@ -416,7 +414,7 @@ async function uploadBuktiFromChat(input){
       if(window.wafaDB){ await window.wafaUpdate(window.wafaRef(window.wafaDB, 'orders/'+o.id), {status:'proses', bukti:r.result, expiry:null}); }
     }catch(e){ console.log('Update FB error:', e); }
     addBotMsg(`✅ Bukti TF #${o.id.toString().slice(-6)} valid!\n\n⚡ Pesanan kamu LANGSUNG DIPROSES!`);
-    sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF VIA CHAT! [VALID]**`);
+    sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF MASUK! [VALID ✅]**`);
   }; r.readAsDataURL(file); input.value='';
 }
 
@@ -482,38 +480,15 @@ async function bayarDenganSaldo(){
     let userData = JSON.parse(localStorage.getItem('wafa_user')||'{}');
     let emailSensor = sensorEmail(userData.email || '-');
     let nickname = userData.nickname || '-';
-    let sisaSaldo = saldoBaru;
     let orderIdShort = newId.toString().slice(-6);
     let totalFormatted = lastOrderData.total.toLocaleString('id-ID');
-    let sisaSaldoFormatted = sisaSaldo.toLocaleString('id-ID');
+    let sisaSaldoFormatted = saldoBaru.toLocaleString('id-ID');
     let metode = lastOrderData.method || 'username';
     let extraInfo = '';
-    if(metode === 'gamepass' && lastOrderData.gamepassLink){
-      extraInfo = `\n🔗 Link Gamepass: ${lastOrderData.gamepassLink}`;
-    } else if(metode === 'gift' && lastOrderData.item){
-      extraInfo = `\n🎁 Item: ${lastOrderData.item}`;
-      if(lastOrderData.privateServer) extraInfo += `\n🔗 Private Server: ${lastOrderData.privateServer}`;
-    }
+    if(metode === 'gamepass' && lastOrderData.gamepassLink){ extraInfo = `\n🔗 Link Gamepass: ${lastOrderData.gamepassLink}`; }
+    else if(metode === 'gift' && lastOrderData.item){ extraInfo = `\n🎁 Item: ${lastOrderData.item}`; if(lastOrderData.privateServer) extraInfo += `\n🔗 Private Server: ${lastOrderData.privateServer}`; }
 
-    let ringkasan = `✅ PEMBAYARAN BERHASIL!\n\n` +
-      `━━━━━━━━━━━━━━━━━━━━\n` +
-      `⚡ Pesanan #${orderIdShort} SEDANG DIPROSES\n` +
-      `━━━━━━━━━━━━━━━━━━━━\n\n` +
-      `💳 Transaksi via: SALDO WEB\n` +
-      `💰 Saldo terpotong: Rp${totalFormatted}\n` +
-      `💵 Sisa saldo kamu: Rp${sisaSaldoFormatted}\n\n` +
-      `📦 DETAIL ORDER:\n` +
-      `• Metode: ${metode.toUpperCase()}\n` +
-      `• Username Roblox: ${lastOrderData.username}\n` +
-      `• Jumlah: ${lastOrderData.jumlah} Robux\n` +
-      `• Total: Rp${totalFormatted}${extraInfo}\n\n` +
-      `👤 Buyer: ${emailSensor} (${nickname})\n` +
-      `📅 ${new Date().toLocaleString('id-ID')}\n\n` +
-      `━━━━━━━━━━━━━━━━━━━━\n` +
-      `⚡ Admin sedang proses order kamu!\n` +
-      `📦 Cek status di menu "Pesanan"\n` +
-      `━━━━━━━━━━━━━━━━━━━━\n\n` +
-      `Makasih udah order di WafaStoreOnly ⚡`;
+    let ringkasan = `✅ PEMBAYARAN BERHASIL!\n\n━━━━━━━━━━━━━━━━━━━━\n⚡ Pesanan #${orderIdShort} SEDANG DIPROSES\n━━━━━━━━━━━━━━━━━━━━\n\n💳 Transaksi via: SALDO WEB\n💰 Saldo terpotong: Rp${totalFormatted}\n💵 Sisa saldo kamu: Rp${sisaSaldoFormatted}\n\n📦 DETAIL ORDER:\n• Metode: ${metode.toUpperCase()}\n• Username Roblox: ${lastOrderData.username}\n• Jumlah: ${lastOrderData.jumlah} Robux\n• Total: Rp${totalFormatted}${extraInfo}\n\n👤 Buyer: ${emailSensor} (${nickname})\n📅 ${new Date().toLocaleString('id-ID')}\n\n━━━━━━━━━━━━━━━━━━━━\n⚡ Admin sedang proses order kamu!\n📦 Cek status di menu "Pesanan"\n━━━━━━━━━━━━━━━━━━━━\n\nMakasih udah order di WafaStoreOnly ⚡`;
 
     showOrderSummary(ringkasan);
     if(typeof addBotMsg === 'function') addBotMsg(ringkasan);
@@ -574,7 +549,7 @@ function buatPesananDanUpload(){
   toggleLayanan();
 }
 
-// ===== CHAT REAL-TIME =====
+// ===== CHAT REAL-TIME (TANPA NOTIF DISCORD) =====
 let chatUnsubscribe = null;
 function toggleLayanan(){
   let b=document.getElementById('layananBox');
@@ -614,6 +589,8 @@ function loadChat(){
     c.scrollTop = c.scrollHeight;
   });
 }
+
+// ===== KIRIM CHAT (TANPA NOTIF DISCORD) =====
 async function sendLayanan(){
   let inp=document.getElementById('layananText');
   let t=inp.value.trim(); if(!t) return;
@@ -626,39 +603,9 @@ async function sendLayanan(){
   try{
     await window.wafaSet(window.wafaRef(window.wafaDB, 'chats/' + uid + '/' + msgId), msgData);
     inp.value='';
-    if(window.DISCORD_URL){
-      fetch(window.DISCORD_URL+"?with_components=true", {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ content: `💬 **CHAT BARU dari ${sensorEmail(userData.email||'-')}** (${userData.nickname||'-'})\n\n"${t}"\n\nBales di: https://wafastoreonly-official.vercel.app/admin.html` })
-      });
-    }
   }catch(e){ alert('Gagal kirim: '+e.message); }
 }
-async function uploadBuktiFromChat(input){
-  const file = input.files[0]; if(!file) return;
-  const chatRef = getChatRef();
-  if(!chatRef){ alert('Login dulu!'); input.value=''; return; }
-  let cek=await cekBuktiValid(file);
-  if(!cek.valid){alert(cek.reason);input.value='';return;}
-  let r=new FileReader();
-  r.onload=async ()=>{
-    const uid = localStorage.getItem('wafa_uid');
-    let userData = JSON.parse(localStorage.getItem('wafa_user')||'{}');
-    const msgId = Date.now() + '_' + Math.random().toString(36).slice(2,7);
-    const msgData = { from: 'user', text: '', image: r.result, time: Date.now(), uid: uid, email: userData.email || '-', nickname: userData.nickname || '-' };
-    try{
-      await window.wafaSet(window.wafaRef(window.wafaDB, 'chats/' + uid + '/' + msgId), msgData);
-      if(window.DISCORD_URL){
-        fetch(window.DISCORD_URL+"?with_components=true", {
-          method:'POST', headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({ content: `📸 **GAMBAR VIA CHAT dari ${sensorEmail(userData.email||'-')}**\nBales di admin panel` })
-        });
-      }
-    }catch(e){ alert('Gagal upload: '+e.message); }
-    input.value='';
-  };
-  r.readAsDataURL(file);
-}
+
 function addBotMsg(txt){
   const c=document.getElementById('layananChat');
   const d=document.createElement('div');d.className='msg bot';d.innerText=txt;c.appendChild(d);c.scrollTop=c.scrollHeight;
