@@ -6,49 +6,98 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+:root{--primary:#00e5ff;--accent:#7c3aed}
 body{background:#060a23 url('./killua-bg.webp') no-repeat center;background-size:cover;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
 body::before{content:'';position:fixed;inset:0;background:linear-gradient(180deg,rgba(6,10,35,0.85),rgba(6,10,35,0.96));z-index:-1}
-.card{width:100%;max-width:380px;background:rgba(18,22,49,0.96);border:2px solid #00e5ff40;border-radius:20px;padding:22px;backdrop-filter:blur(12px);box-shadow:0 0 40px #00e5ff30}
-h1{font-family:'Bebas Neue';font-size:32px;font-style:italic;letter-spacing:1px}
-.sub{font-size:12px;color:#aab0d0;margin-top:6px;line-height:1.5}
-.btn{width:100%;padding:13px;border-radius:12px;border:none;font-weight:800;cursor:pointer;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px}
+.card{width:100%;max-width:380px;background:rgba(18,22,49,0.96);border:2px solid var(--primary)40;border-radius:20px;padding:22px;backdrop-filter:blur(12px);box-shadow:0 0 40px var(--primary)30}
+.logo-box{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.logo-box img{width:52px;height:52px;border-radius:50%;border:2px solid var(--primary);box-shadow:0 0 18px var(--primary)80;object-fit:cover;background:#111}
+.logo-text{flex:1}
+h1{font-family:'Bebas Neue';font-size:28px;font-style:italic;letter-spacing:1px;background:linear-gradient(90deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.tagline{font-size:10px;color:#aab0d0;margin-top:2px}
+.sub{font-size:12px;color:#aab0d0;margin-top:8px;line-height:1.5}
+.btn{width:100%;padding:13px;border-radius:12px;border:none;font-weight:800;cursor:pointer;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;transition:0.15s}
+.btn:active{transform:scale(0.98)}
 .btn-google{background:#fff;color:#000}
-.btn-wa{background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff}
-input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;background:#131740;color:#fff;outline:none;margin-top:10px}
+.btn-wa{background:linear-gradient(90deg,var(--primary),var(--accent));color:#fff;box-shadow:0 0 20px var(--accent)60}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid #232a5a;background:#131740;color:#fff;outline:none;margin-top:10px;font-size:13px}
+input:focus{border-color:var(--primary)}
 .divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:#5a638a;font-size:11px}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:#1e2450}
 #recaptcha-container{margin-top:12px;transform:scale(0.9);transform-origin:left}
 </style>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, RecaptchaVerifier, signInWithPhoneNumber, getRedirectResult, signInWithRedirect } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getDatabase, ref, get, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 const firebaseConfig = { apiKey: "AIzaSyDTkQVpME0XRQmk9Jo7eDQuf0OFY8stm_8", authDomain: "wafastoreonly.firebaseapp.com", databaseURL: "https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "wafastoreonly", storageBucket: "wafastoreonly.firebasestorage.app", messagingSenderId: "208012194307", appId: "1:208012194307:web:551a540b0151333da69436" };
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
-window._auth=auth; window._db=db; window._ref=ref; window._get=get; window._set=set; window._provider=new GoogleAuthProvider(); window._GoogleSign=signInWithPopup; window._RecaptchaVerifier=RecaptchaVerifier; window._signInWithPhoneNumber=signInWithPhoneNumber;
+window._auth=auth; window._db=db; window._ref=ref; window._get=get; window._set=set; window._onValue=onValue;
+window._provider=new GoogleAuthProvider(); window._GoogleSign=signInWithPopup; window._GoogleRedirect=signInWithRedirect; window._getRedirectResult=getRedirectResult;
+window._RecaptchaVerifier=RecaptchaVerifier; window._signInWithPhoneNumber=signInWithPhoneNumber;
+
+// ===== LOAD BRANDING & THEME =====
+function applyLoginTheme(primary, accent){
+  if(primary) document.documentElement.style.setProperty('--primary', primary);
+  if(accent) document.documentElement.style.setProperty('--accent', accent);
+}
+
+function loadLoginSettings(){
+  onValue(ref(db, 'settings/branding'), (snap)=>{
+    const d = snap.val();
+    if(!d) return;
+    if(d.logo){
+      const logoImg = document.getElementById('loginLogo');
+      if(logoImg) logoImg.src = d.logo;
+      const fav = document.querySelector('link[rel="icon"]') || document.createElement('link');
+      fav.rel='icon'; fav.href=d.logo;
+      document.head.appendChild(fav);
+    }
+    if(d.brandName){
+      document.getElementById('loginBrandName').innerText = d.brandName + ' ⚡';
+      document.title = 'Login - ' + d.brandName;
+    }
+    if(d.tagline){
+      document.getElementById('loginTagline').innerText = d.tagline;
+    }
+  });
+  onValue(ref(db, 'settings/theme'), (snap)=>{
+    const d = snap.val();
+    if(!d) return;
+    applyLoginTheme(d.primary, d.accent);
+  });
+}
+loadLoginSettings();
 </script>
 </head>
 <body>
 <div class="card">
-<h1>WAFASTOREONLY ⚡</h1>
-<div class="sub">Login dulu bos biar saldo & pesanan gak ilang kalo ganti HP. Kalo belum punya akun, nanti auto daftar setelah login.</div>
+  <div class="logo-box">
+    <img id="loginLogo" src="./logo.png" alt="logo">
+    <div class="logo-text">
+      <h1 id="loginBrandName">WAFASTOREONLY ⚡</h1>
+      <div class="tagline" id="loginTagline">Top Up Robux Cepat & Aman</div>
+    </div>
+  </div>
 
-<button class="btn btn-google" id="btnGoogle">🔵 Login dengan Google</button>
+  <div class="sub">Login dulu bos biar saldo & pesanan gak ilang kalo ganti HP. Kalo belum punya akun, nanti auto daftar setelah login.</div>
 
-<div class="divider">ATAU LOGIN DENGAN WHATSAPP</div>
+  <button class="btn btn-google" id="btnGoogle">🔵 Login dengan Google</button>
 
-<input id="phone" placeholder="Nomor WA: 0838xxxx (tanpa +62)" type="tel">
-<div id="recaptcha-container"></div>
-<button class="btn btn-wa" id="btnSendOTP">Kirim Kode OTP ke WA (SMS)</button>
+  <div class="divider">ATAU LOGIN DENGAN WHATSAPP</div>
 
-<div id="otpBox" style="display:none">
-<input id="otp" placeholder="Masukkan 6 digit kode OTP" type="number">
-<button class="btn btn-wa" id="btnVerif">Verifikasi Kode</button>
-</div>
+  <input id="phone" placeholder="Nomor WA: 0838xxxx (tanpa +62)" type="tel">
+  <div id="recaptcha-container"></div>
+  <button class="btn btn-wa" id="btnSendOTP">Kirim Kode OTP ke WA (SMS)</button>
 
-<div style="font-size:10px;color:#5a638a;margin-top:12px;text-align:center">OTP dikirim via SMS gratis (Firebase 10k/bulan) • Nanti kita upgrade ke WA API biar masuk WA langsung</div>
+  <div id="otpBox" style="display:none">
+    <input id="otp" placeholder="Masukkan 6 digit kode OTP" type="number">
+    <button class="btn btn-wa" id="btnVerif">Verifikasi Kode</button>
+  </div>
+
+  <div style="font-size:10px;color:#5a638a;margin-top:12px;text-align:center">OTP dikirim via SMS gratis (Firebase 10k/bulan)</div>
 </div>
 
 <script type="module">
@@ -56,23 +105,56 @@ let confirmationResult=null;
 const auth = window._auth;
 const db = window._db;
 
-// INIT RECAPTCHA - HARUS SETELAH DOM SIAP
-window.recaptchaVerifier = new window._RecaptchaVerifier(auth, 'recaptcha-container', { size: 'normal', theme: 'dark' });
-window.recaptchaVerifier.render();
+// Deteksi HP
+const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
+// INIT RECAPTCHA
+try{
+  window.recaptchaVerifier = new window._RecaptchaVerifier(auth, 'recaptcha-container', { size: 'normal', theme: 'dark' });
+  window.recaptchaVerifier.render();
+}catch(e){ console.log('Recaptcha init error:', e); }
+
+// ===== LOGIN GOOGLE =====
 document.getElementById('btnGoogle').onclick = async () => {
   try{
-    const result = await window._GoogleSign(auth, window._provider);
+    if(isMobile){
+      // Di HP: pakai redirect (lebih stabil)
+      await window._GoogleRedirect(auth, window._provider);
+    } else {
+      // Di PC: pakai popup
+      const result = await window._GoogleSign(auth, window._provider);
+      const user = result.user;
+      const snap = await window._get(window._ref(db, 'users/'+user.uid));
+      if(!snap.exists()){
+        await window._set(window._ref(db, 'users/'+user.uid), { uid:user.uid, email:user.email, name:user.displayName, nickname:user.displayName||user.email.split('@')[0], saldo:0, created:Date.now() });
+      }
+      localStorage.setItem('wafa_uid', user.uid);
+      location.href='index.html';
+    }
+  }catch(e){
+    if(e.code === 'auth/cancelled-popup-request' || e.code === 'auth/popup-closed-by-user'){
+      alert('Login dibatalkan. Coba klik lagi ya 🙏');
+    } else {
+      alert('Login Google gagal: '+e.message);
+    }
+    console.log(e);
+  }
+};
+
+// ===== HANDLE REDIRECT (buat HP) =====
+window._getRedirectResult(auth).then(async (result) => {
+  if(result && result.user){
     const user = result.user;
     const snap = await window._get(window._ref(db, 'users/'+user.uid));
     if(!snap.exists()){
-      await window._set(window._ref(db, 'users/'+user.uid), { uid:user.uid, email:user.email, name:user.displayName, saldo:0, created:Date.now() });
+      await window._set(window._ref(db, 'users/'+user.uid), { uid:user.uid, email:user.email, name:user.displayName, nickname:user.displayName||user.email.split('@')[0], saldo:0, created:Date.now() });
     }
     localStorage.setItem('wafa_uid', user.uid);
     location.href='index.html';
-  }catch(e){ alert('Login Google gagal: '+e.message); console.log(e); }
-};
+  }
+}).catch((e)=>{ console.log('Redirect error:', e); });
 
+// ===== LOGIN WHATSAPP OTP =====
 document.getElementById('btnSendOTP').onclick = async () => {
   let phone = document.getElementById('phone').value.trim();
   if(phone.startsWith('0')) phone='+62'+phone.slice(1);
@@ -95,7 +177,7 @@ document.getElementById('btnVerif').onclick = async () => {
     if(!snap.exists()){
       let name = prompt('Akun baru! Masukkan Username kamu:','');
       if(!name) name='User'+user.uid.slice(0,4);
-      await window._set(window._ref(db, 'users/'+user.uid), { uid:user.uid, phone:user.phoneNumber, name:name, saldo:0, created:Date.now() });
+      await window._set(window._ref(db, 'users/'+user.uid), { uid:user.uid, phone:user.phoneNumber, name:name, nickname:name, saldo:0, created:Date.now() });
     }
     localStorage.setItem('wafa_uid', user.uid);
     location.href='index.html';
