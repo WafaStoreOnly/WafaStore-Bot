@@ -24,8 +24,6 @@
   --danger:#ef4444;
 }
 body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;overflow-x:hidden}
-
-/* SIDEBAR */
 #adminSidebar{width:250px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto;transition:transform 0.3s}
 #adminSidebar::-webkit-scrollbar{width:4px}
 #adminSidebar::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:4px}
@@ -46,8 +44,6 @@ body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;overfl
 .sb-user small{color:var(--muted2);font-size:10px;font-weight:500}
 .sb-logout{margin-top:8px;width:100%;padding:10px;border:none;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:0.15s;font-family:inherit}
 .sb-logout:hover{border-color:var(--danger);color:var(--danger)}
-
-/* MAIN */
 #adminMain{margin-left:250px;flex:1;min-height:100vh;background:var(--bg)}
 .admin-header{padding:14px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);position:sticky;top:0;z-index:50}
 .hamburger{display:none;font-size:22px;cursor:pointer;color:var(--text)}
@@ -56,12 +52,8 @@ body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;overfl
 .header-search input:focus{border-color:var(--primary)}
 .header-user{padding:7px 14px;background:var(--card);border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;color:var(--text)}
 .admin-content{padding:24px}
-
-/* PAGE TITLE */
 .page-title{font-size:22px;font-weight:800;color:var(--text);margin-bottom:4px;letter-spacing:-0.5px}
 .page-sub{font-size:12px;color:var(--muted);margin-bottom:24px}
-
-/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:20px}
 .stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;position:relative;transition:0.15s}
 .stat-card:hover{border-color:var(--border-light)}
@@ -71,13 +63,9 @@ body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;overfl
 .stat-card.blue .val{color:var(--primary)}
 .stat-card.purple .val{color:#a78bfa}
 .stat-card.yellow .val{color:var(--warn)}
-
-/* CARD */
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:14px}
 .card-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:10px}
 .card-title::before{content:'';width:6px;height:6px;background:var(--primary);border-radius:50%}
-
-/* BUTTON */
 .btn{padding:10px 18px;border-radius:10px;border:none;font-weight:600;cursor:pointer;font-size:13px;transition:0.15s;display:inline-flex;align-items:center;gap:6px;font-family:inherit}
 .btn:hover{opacity:0.9}
 .btn:active{transform:scale(0.98)}
@@ -87,16 +75,12 @@ body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;overfl
 .btn-warn{background:var(--warn);color:#000}
 .btn-grey{background:var(--card-hover);border:1px solid var(--border);color:var(--text)}
 .btn-sm{padding:7px 12px;font-size:11px;border-radius:8px}
-
-/* INPUT */
 .input-group{margin-bottom:14px}
 .input-group label{font-size:11px;color:var(--text2);display:block;margin-bottom:6px;font-weight:600}
 .input-group input,.input-group textarea,.input-group select{width:100%;padding:11px 14px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);color:var(--text);outline:none;font-size:13px;font-family:inherit;transition:0.15s}
 .input-group input:focus,.input-group textarea:focus,.input-group select:focus{border-color:var(--primary)}
 .input-group textarea{resize:vertical;min-height:80px}
 .input-group small{font-size:10px;color:var(--muted2);margin-top:4px;display:block}
-
-/* ITEM CARD (Order/Topup) */
 .item-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:10px;transition:0.15s}
 .item-card.done{border-color:rgba(74,222,128,0.4)}
 .item-card.batal{border-color:rgba(239,68,68,0.4)}
@@ -112,8 +96,6 @@ body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;overfl
 .badge.proses{background:rgba(74,144,226,0.15);color:#4a90e2;border:1px solid rgba(74,144,226,0.4)}
 .badge.done{background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.4)}
 .badge.batal{background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.4)}
-
-/* CHAT */
 .chat-list-item{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:8px;cursor:pointer;transition:0.15s}
 .chat-list-item:hover{background:var(--card);border-color:var(--border-light)}
 .chat-list-item .name{font-weight:700;font-size:13px;color:var(--text);display:flex;justify-content:space-between;align-items:center}
@@ -130,12 +112,8 @@ body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;overfl
 .msg.admin{background:var(--primary);align-self:flex-end;color:#fff}
 .msg.user{background:var(--card);border:1px solid var(--border);align-self:flex-start;color:var(--text)}
 .msg img{max-width:100%;border-radius:8px;margin-top:6px}
-
-/* CUSTOMERS */
 .cust-row{display:flex;justify-content:space-between;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;font-size:12px;gap:10px}
 .cust-row b{font-size:13px;color:var(--text);font-weight:700}
-
-/* BRANDING */
 .brand-preview{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;gap:16px;align-items:center;margin-bottom:16px}
 .brand-preview img{width:52px;height:52px;border-radius:50%;border:1px solid var(--border);object-fit:cover;background:var(--card)}
 .brand-preview b{font-size:15px;color:var(--text);font-weight:800}
@@ -143,8 +121,6 @@ body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;overfl
 .banner-preview{background:var(--bg2);border:1px dashed var(--border);border-radius:12px;height:130px;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:16px;background-size:cover;background-position:center;color:var(--muted2);font-size:12px}
 .upload-btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px 18px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;display:inline-block;transition:0.15s;font-family:inherit}
 .upload-btn:hover{border-color:var(--primary);color:var(--primary)}
-
-/* GAME GRID */
 .game-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
 .game-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center;position:relative}
 .game-card.active{border-color:rgba(74,222,128,0.4)}
@@ -154,21 +130,13 @@ body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;overfl
 .game-card .status-badge{position:absolute;top:10px;right:10px;padding:3px 8px;border-radius:20px;font-size:9px;font-weight:800;letter-spacing:0.3px}
 .game-card.active .status-badge{background:rgba(74,222,128,0.2);color:#4ade80}
 .game-card.inactive .status-badge{background:rgba(239,68,68,0.2);color:#ef4444}
-
-/* TOAST */
 #admToast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card);border:1px solid var(--border);color:var(--text);padding:12px 24px;border-radius:30px;font-weight:600;font-size:13px;z-index:9999;transition:0.3s;box-shadow:0 8px 30px rgba(0,0,0,0.6);opacity:0}
 #admToast.show{transform:translateX(-50%) translateY(0);opacity:1}
-
-/* LOCK */
 #adminLock{position:fixed;inset:0;background:rgba(10,10,10,0.98);z-index:9999;display:none;justify-content:center;align-items:center;padding:20px;text-align:center}
 #adminLock .box{max-width:400px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px}
 #adminLock h1{font-size:22px;font-weight:800;color:var(--danger);margin:12px 0}
 #adminLock p{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:20px}
-
-/* OVERLAY */
 #sbOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:99;backdrop-filter:blur(4px)}
-
-/* RESPONSIVE */
 @media (max-width:900px){
   #adminSidebar{transform:translateX(-100%)}
   #adminSidebar.open{transform:translateX(0)}
@@ -296,7 +264,6 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
 
   <div class="admin-content">
 
-    <!-- PAGE: DASHBOARD -->
     <div class="page" id="page-dashboard">
       <div class="page-title">Dashboard</div>
       <div class="page-sub">Ringkasan aktivitas WafaStoreOnly</div>
@@ -314,7 +281,6 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
       </div>
     </div>
 
-    <!-- PAGE: ORDERS -->
     <div class="page" id="page-orders" style="display:none">
       <div class="page-title">Orders</div>
       <div class="page-sub">Kelola semua order Robux</div>
@@ -324,7 +290,6 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
       </div>
     </div>
 
-    <!-- PAGE: TOPUP -->
     <div class="page" id="page-topup" style="display:none">
       <div class="page-title">Top Up Dompet</div>
       <div class="page-sub">Approve top up user</div>
@@ -334,7 +299,6 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
       </div>
     </div>
 
-    <!-- PAGE: CHAT -->
     <div class="page" id="page-chat" style="display:none">
       <div class="page-title">Chat / CS</div>
       <div class="page-sub">Bales chat dari user</div>
@@ -355,7 +319,6 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
       </div>
     </div>
 
-    <!-- PAGE: CUSTOMERS -->
     <div class="page" id="page-customers" style="display:none">
       <div class="page-title">Customers</div>
       <div class="page-sub">List semua user + edit saldo</div>
@@ -365,7 +328,6 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
       </div>
     </div>
 
-    <!-- PAGE: BRANDING -->
     <div class="page" id="page-branding" style="display:none">
       <div class="page-title">Branding</div>
       <div class="page-sub">Atur logo, nama brand, & banner web</div>
@@ -401,7 +363,6 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
       </div>
     </div>
 
-    <!-- PAGE: GAMES -->
     <div class="page" id="page-games" style="display:none">
       <div class="page-title">Game Icons</div>
       <div class="page-sub">Upload & atur logo game untuk ditampilkan di web user</div>
@@ -412,7 +373,6 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
       </div>
     </div>
 
-    <!-- PAGE: WELCOME -->
     <div class="page" id="page-welcome" style="display:none">
       <div class="page-title">Welcome Box</div>
       <div class="page-sub">Atur tampilan welcome di beranda web</div>
@@ -450,7 +410,6 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
       </div>
     </div>
 
-    <!-- PAGE: SYARAT -->
     <div class="page" id="page-syarat" style="display:none">
       <div class="page-title">Syarat & Ketentuan</div>
       <div class="page-sub">Edit syarat tiap metode top up. 1 baris = 1 syarat. Item terakhir otomatis hijau.</div>
@@ -507,7 +466,6 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
       </div>
     </div>
 
-    <!-- PAGE: ANNOUNCEMENT -->
     <div class="page" id="page-announcement" style="display:none">
       <div class="page-title">Announcement</div>
       <div class="page-sub">Atur pemberitahuan di beranda web</div>
@@ -521,13 +479,12 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
           </select>
         </div>
         <div style="font-size:12px;color:#8a8a8a;line-height:1.7;background:#141414;border:1px solid #2a2a2a;border-radius:10px;padding:14px;margin-bottom:14px">
-          ℹ️ Announcement di beranda udah <b style="color:#e8e8e8">step-by-step hardcoded</b> (cara order). Menu ini cuma buat on/off aja. Kalau mau edit teks, edit manual di <code style="color:#4a90e2">index.html</code> bagian <code style="color:#4a90e2">annBanner</code>.
+          ℹ️ Announcement di beranda udah <b style="color:#e8e8e8">step-by-step hardcoded</b>. Menu ini cuma buat on/off aja.
         </div>
         <button class="btn btn-success" onclick="saveAnnouncement()">💾 Simpan Status</button>
       </div>
     </div>
 
-    <!-- PAGE: THEME -->
     <div class="page" id="page-theme" style="display:none">
       <div class="page-title">Theme</div>
       <div class="page-sub">Ganti warna utama web</div>
@@ -535,7 +492,7 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
         <div class="card-title">Color Picker</div>
         <div class="input-group"><label>Warna Primary</label><input type="color" id="inputPrimary" value="#4a90e2" style="height:50px;cursor:pointer"></div>
         <div class="input-group"><label>Warna Accent</label><input type="color" id="inputAccent" value="#6b5ce7" style="height:50px;cursor:pointer"></div>
-        <div style="background:linear-gradient(90deg,var(--primary),var(--accent));height:60px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;margin-bottom:14px" id="themePreview">Preview Warna</div>
+        <div style="background:linear-gradient(90deg,#4a90e2,#6b5ce7);height:60px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;margin-bottom:14px" id="themePreview">Preview Warna</div>
         <div style="display:flex;gap:10px">
           <button class="btn btn-success" onclick="saveTheme()">💾 Simpan Theme</button>
           <button class="btn btn-grey" onclick="resetTheme()">🔄 Reset Default</button>
@@ -543,7 +500,6 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
       </div>
     </div>
 
-    <!-- PAGE: SETTINGS -->
     <div class="page" id="page-settings" style="display:none">
       <div class="page-title">Settings</div>
       <div class="page-sub">Pengaturan admin panel</div>
@@ -558,7 +514,7 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
         <div style="font-size:13px;color:#a8a8a8;line-height:1.9">
           <b style="color:#e8e8e8">Web URL:</b> <a href="https://wafastoreonly-official.vercel.app" style="color:#4a90e2" target="_blank">wafastoreonly-official.vercel.app</a><br>
           <b style="color:#e8e8e8">Firebase:</b> wafastoreonly<br>
-          <b style="color:#e8e8e8">Version:</b> Admin Panel v3.0 (Clean Dark)<br>
+          <b style="color:#e8e8e8">Version:</b> Admin Panel v3.1<br>
           <b style="color:#e8e8e8">Admin UID:</b> 5jLY5Gaf...7v12
         </div>
       </div>
@@ -583,16 +539,32 @@ function closeSidebar(){
   document.getElementById('sbOverlay').style.display='none';
 }
 
-// ===== ADMIN CHECK =====
-window.wafaAuth.onAuthStateChanged((user)=>{
-  if(user && window.ADMIN_UIDS.includes(user.uid)){
-    initAdmin(user);
+// ===== ADMIN CHECK (FIX RACE CONDITION) =====
+function checkAuthReady(){
+  if(window.wafaAuth && window.wafaDB && window.wafaOnValue && window.wafaGet){
+    console.log('✅ Firebase ready, checking auth...');
+    window.wafaAuth.onAuthStateChanged((user)=>{
+      console.log('🔐 User:', user ? user.uid : 'not logged in');
+      if(user && window.ADMIN_UIDS.includes(user.uid)){
+        console.log('✅ Admin confirmed, loading data...');
+        initAdmin(user);
+      } else if(user){
+        console.log('❌ Bukan admin. UID:', user.uid);
+        document.getElementById('adminLock').style.display='flex';
+        document.getElementById('adminSidebar').style.display='none';
+        document.getElementById('adminMain').style.display='none';
+      } else {
+        console.log('❌ Belum login');
+        document.getElementById('adminLock').style.display='flex';
+        document.getElementById('adminSidebar').style.display='none';
+        document.getElementById('adminMain').style.display='none';
+      }
+    });
   } else {
-    document.getElementById('adminLock').style.display='flex';
-    document.getElementById('adminSidebar').style.display='none';
-    document.getElementById('adminMain').style.display='none';
+    setTimeout(checkAuthReady, 100);
   }
-});
+}
+checkAuthReady();
 
 function initAdmin(user){
   document.getElementById('sbUserName').innerText = user.displayName || user.email.split('@')[0];
