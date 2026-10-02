@@ -3,9 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Profil - WafaStoreOnly x Killua</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<title>Profil - WafaStoreOnly</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./sidebar.css">
+<style>
+.profile-hero{background:#141414;border:1px solid #2a2a2a;border-radius:16px;padding:24px;text-align:center;margin-top:8px}
+.profile-pic{width:96px;height:96px;border-radius:50%;border:2px solid #2a2a2a;object-fit:cover;background:#1a1a1a}
+.profile-name{font-size:18px;font-weight:800;color:#e8e8e8;margin-top:14px}
+.profile-email{font-size:12px;color:#8a8a8a;margin-top:4px}
+.row{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:12px 14px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.row .lbl{font-size:10px;color:#5a5a5a;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.row .val{font-size:12px;font-weight:600;color:#e8e8e8;text-align:right;word-break:break-all}
+.row.locked .val{color:#5a5a5a}
+.row.locked::after{content:'🔒';margin-left:6px;opacity:0.5;font-size:12px}
+.btn-edit-foto{background:#1a1a1a;border:1px solid #2a2a2a;color:#e8e8e8;padding:9px 16px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;margin-top:14px;transition:0.15s;font-family:inherit}
+.btn-edit-foto:hover{border-color:#4a90e2;color:#4a90e2}
+.locked-input{position:relative}
+.locked-input input{background:#0a0a0a;cursor:not-allowed;color:#5a5a5a;padding-right:36px}
+.locked-input::after{content:'🔒';position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;opacity:0.5}
+</style>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, set, onValue, get, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
@@ -24,20 +40,21 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
 <body>
 <div id="wsContent">
 <div class="ws-section">
-  <div style="font-weight:900;font-size:20px">Profil Saya ⚡</div>
-  <p style="font-size:11px;color:#aab0d0;margin-top:4px">Kelola data diri & akun kamu</p>
+  <div style="font-weight:800;font-size:20px;color:#e8e8e8">Profil Saya</div>
+  <p style="font-size:12px;color:#8a8a8a;margin-top:6px">Kelola data diri & akun kamu</p>
 
-  <div class="ws-card" style="text-align:center">
-    <img id="profileBigPic" src="https://ui-avatars.com/api/?name=Wafa&background=00e5ff&color=000" style="width:100px;height:100px;border-radius:50%;border:3px solid #00e5ff;object-fit:cover;box-shadow:0 0 25px #00e5ff80">
-    <h2 id="profileBigName" style="margin-top:12px;font-weight:900">Loading...</h2>
-    <div id="profileBigEmail" style="font-size:12px;color:#aab0d0">-</div>
-    <button class="btn btn-grey" style="margin-top:12px" onclick="document.getElementById('inputFotoAlbum').click()">📸 Ganti Foto dari Album</button>
+  <div class="profile-hero">
+    <img id="profileBigPic" class="profile-pic" src="https://ui-avatars.com/api/?name=Wafa&background=1a1a1a&color=e8e8e8" alt="foto">
+    <div class="profile-name" id="profileBigName">Loading...</div>
+    <div class="profile-email" id="profileBigEmail">-</div>
+    <button class="btn-edit-foto" onclick="document.getElementById('inputFotoAlbum').click()">📸 Ganti Foto dari Album</button>
     <input type="file" id="inputFotoAlbum" accept="image/*" style="display:none" onchange="gantiFotoProfile(this)">
-    <div style="font-size:10px;color:#5a638a;margin-top:6px">Foto dari galeri HP kamu, max 2MB</div>
+    <div style="font-size:10px;color:#5a5a5a;margin-top:10px">Max 2MB · dari galeri HP kamu</div>
   </div>
 
   <div class="ws-card">
-    <div style="font-weight:800;font-size:14px;margin-bottom:12px">📋 Data Diri (Bisa Diedit)</div>
+    <div style="font-weight:700;font-size:14px;color:#e8e8e8;margin-bottom:4px">📋 Data Diri</div>
+    <div style="font-size:11px;color:#8a8a8a;margin-bottom:8px">Bisa diedit kapan aja</div>
     <div class="input-group">
       <label>Nama / Nickname</label>
       <input id="bigInputNama" placeholder="Isi nama kamu...">
@@ -50,7 +67,9 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
   </div>
 
   <div class="ws-card">
-    <div style="font-weight:800;font-size:14px;margin-bottom:12px">🔒 Data Login (Tidak Bisa Diedit)</div>
+    <div style="font-weight:700;font-size:14px;color:#e8e8e8;margin-bottom:4px">🔒 Data Login</div>
+    <div style="font-size:11px;color:#8a8a8a;margin-bottom:12px">Tidak bisa diedit (terikat akun Google)</div>
+
     <div class="input-group">
       <label>Email / Gmail</label>
       <div class="locked-input"><input id="lockEmail" disabled value="-"></div>
@@ -67,13 +86,10 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
       <label>Tanggal Daftar</label>
       <div class="locked-input"><input id="lockJoin" disabled value="-"></div>
     </div>
-    <div style="font-size:10px;color:#5a638a;margin-top:8px;line-height:1.6">
-      ℹ️ Data login terikat ke akun Google kamu dan tidak bisa diubah. Kalau mau ganti akun, pakai tombol <b>Ganti Akun</b> dibawah.
-    </div>
   </div>
 
   <div class="ws-card">
-    <div style="font-weight:800;font-size:14px;margin-bottom:8px">⚙️ Kelola Akun</div>
+    <div style="font-weight:700;font-size:14px;color:#e8e8e8;margin-bottom:12px">⚙️ Kelola Akun</div>
     <button class="btn btn-grey" onclick="gantiAkun()">🔄 Ganti Akun / Login Gmail Lain</button>
     <button class="btn btn-red" onclick="logout()">🚪 Logout Akun</button>
   </div>
@@ -92,7 +108,7 @@ if(window.wafaAuth){
     if(!user) return;
     currentUser = user;
 
-    const pic = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName||user.email)}&background=00e5ff&color=000`;
+    const pic = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName||user.email)}&background=1a1a1a&color=e8e8e8`;
     document.getElementById('profileBigPic').src = pic;
     document.getElementById('profileBigName').innerText = user.displayName || user.email.split('@')[0];
     document.getElementById('profileBigEmail').innerText = user.email;
@@ -171,6 +187,28 @@ function logout(){
   localStorage.removeItem('wafa_uid');
   window.wafaAuth.signOut().then(()=>{ location.href='login.html'; }).catch(()=>{ location.href='login.html'; });
 }
+
+// ===== LOAD BRANDING =====
+function loadBrandingProfil(){
+  if(!window.wafaDB || !window.wafaRef || !window.wafaOnValue){
+    setTimeout(loadBrandingProfil, 500);
+    return;
+  }
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/branding'), (snap)=>{
+    const d = snap.val();
+    if(!d) return;
+    if(d.logo){
+      const sbLogo = document.querySelector('.ws-logo img');
+      if(sbLogo) sbLogo.src = d.logo;
+    }
+    if(d.brandName){
+      const brandEl = document.querySelector('.ws-logo span');
+      if(brandEl) brandEl.innerText = d.brandName;
+      document.title = 'Profil - ' + d.brandName;
+    }
+  });
+}
+if(document.readyState === 'complete'){ loadBrandingProfil(); } else { window.addEventListener('load', loadBrandingProfil); }
 </script>
 </body>
 </html>
