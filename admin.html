@@ -4,42 +4,166 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Admin Panel - WafaStoreOnly</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./sidebar.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-.tab-bar{display:flex;gap:8px;margin-top:12px;overflow-x:auto;padding-bottom:4px}
-.tab-btn{padding:10px 16px;border-radius:20px;font-size:11px;font-weight:800;border:1px solid #2a3366;background:#141936;white-space:nowrap;cursor:pointer;color:#aab0d0}
-.tab-btn.active{background:linear-gradient(90deg,#00c6ff,#7c3aed);border-color:#00d4ff;color:#fff;box-shadow:0 0 15px #00e5ff60}
-.admin-card{background:#121631;border:1px solid #232a5a;border-radius:14px;padding:14px;margin-top:10px}
-.admin-card h3{font-size:13px;font-weight:800;margin-bottom:8px}
-.order-info{font-size:11px;color:#aab0d0;line-height:1.7}
-.order-info b{color:#fff}
-.btn-sm{padding:8px 12px;border-radius:8px;border:none;font-weight:800;cursor:pointer;font-size:11px;margin-right:6px;margin-top:6px}
-.btn-proses{background:#00c6ff;color:#fff}
-.btn-done{background:#00ff88;color:#000}
-.btn-batal{background:#ff4444;color:#fff}
-.chat-list-item{background:#141936;border:1px solid #2a3366;border-radius:12px;padding:12px;margin-top:8px;cursor:pointer;transition:0.2s}
-.chat-list-item:hover{background:#1a1f4a;border-color:#00e5ff}
-.chat-list-item .name{font-weight:800;font-size:13px}
-.chat-list-item .preview{font-size:11px;color:#8d94b8;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.chat-list-item .time{font-size:9px;color:#5a638a}
-.badge-unread{background:#ff4444;color:#fff;padding:2px 8px;border-radius:20px;font-size:9px;font-weight:800}
-#adminChatBox{background:#0a0d24;border:1px solid #00e5ff40;border-radius:12px;margin-top:12px;display:flex;flex-direction:column;height:400px}
-#adminChatHeader{padding:10px 14px;background:linear-gradient(90deg,#00c6ff,#7c3aed);display:flex;justify-content:space-between;align-items:center}
-#adminChatMessages{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
-#adminChatInput{display:flex;gap:6px;padding:10px;border-top:1px solid #1e2450}
-#adminChatInput input{flex:1;padding:10px;border-radius:20px;font-size:12px}
-#adminChatInput button{padding:10px 14px;border-radius:20px;border:none;background:#00e5ff;color:#000;font-weight:800}
-.msg{max-width:82%;padding:10px 12px;border-radius:12px;font-size:12px;line-height:1.5;white-space:pre-wrap}
-.msg.bot{background:#1a1f4a;border:1px solid #2a3366;align-self:flex-start}
-.msg.user{background:linear-gradient(90deg,#00c6ff,#7c3aed);align-self:flex-end}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+:root{
+  --primary:#00e5ff;
+  --accent:#7c3aed;
+  --bg:#060a23;
+  --bg2:#0a0d24;
+  --card:#121631;
+  --border:#232a5a;
+  --text:#fff;
+  --text2:#aab0d0;
+  --muted:#5a638a;
+  --success:#00ff88;
+  --warn:#ffcc00;
+  --danger:#ff4444;
+}
+body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;overflow-x:hidden}
+
+/* ===== SIDEBAR ===== */
+#adminSidebar{width:250px;background:#0a0d24;border-right:1px solid #1e2450;display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto;transition:transform 0.3s}
+#adminSidebar::-webkit-scrollbar{width:4px}
+#adminSidebar::-webkit-scrollbar-thumb{background:#00e5ff40;border-radius:4px}
+.sb-logo{padding:20px 16px;border-bottom:1px solid #1e2450;display:flex;align-items:center;gap:10px}
+.sb-logo img{width:42px;height:42px;border-radius:50%;border:2px solid var(--primary);box-shadow:0 0 15px #00e5ff60;object-fit:cover;background:#111}
+.sb-logo-info{flex:1}
+.sb-logo-info b{font-size:14px;display:block;background:linear-gradient(90deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sb-logo-info small{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.sb-section{padding:8px 0}
+.sb-section-title{padding:10px 18px 4px;font-size:9px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.sb-menu-item{display:flex;align-items:center;gap:10px;padding:11px 18px;color:var(--text2);font-size:12px;font-weight:700;cursor:pointer;transition:0.15s;border-left:3px solid transparent}
+.sb-menu-item:hover{background:#141936;color:#fff}
+.sb-menu-item.active{background:linear-gradient(90deg,#00c6ff20,transparent);color:var(--primary);border-left-color:var(--primary)}
+.sb-menu-item .icon{font-size:15px;width:20px;text-align:center}
+.sb-footer{margin-top:auto;padding:14px;border-top:1px solid #1e2450}
+.sb-user{background:#141936;border:1px solid #00e5ff30;border-radius:12px;padding:10px;font-size:11px;text-align:center}
+.sb-user b{display:block;color:#fff}
+.sb-user small{color:var(--muted);font-size:9px}
+.sb-logout{margin-top:8px;width:100%;padding:9px;border:none;background:#ff444420;border:1px solid #ff444460;color:#ff8888;border-radius:8px;font-size:11px;font-weight:800;cursor:pointer}
+
+/* ===== MAIN AREA ===== */
+#adminMain{margin-left:250px;flex:1;min-height:100vh;background:var(--bg)}
+.admin-header{padding:12px 20px;border-bottom:1px solid #1e2450;display:flex;justify-content:space-between;align-items:center;background:rgba(10,13,36,0.95);backdrop-filter:blur(10px);position:sticky;top:0;z-index:50}
+.hamburger{display:none;font-size:22px;cursor:pointer;color:var(--primary)}
+.header-search{flex:1;max-width:400px;margin:0 16px}
+.header-search input{width:100%;padding:9px 14px;border-radius:20px;border:1px solid #232a5a;background:#131740;color:#fff;font-size:12px;outline:none}
+.header-right{display:flex;align-items:center;gap:10px}
+.header-user{padding:6px 12px;background:#00ff8820;border:1px solid #00ff88;border-radius:20px;font-size:11px;font-weight:700}
+
+/* ===== CONTENT ===== */
+.admin-content{padding:20px}
+.page-title{font-size:22px;font-weight:900;margin-bottom:4px}
+.page-sub{font-size:11px;color:var(--muted);margin-bottom:20px}
+
+/* ===== STATS ===== */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.stat-card{background:linear-gradient(135deg,#1a1f4a,#0f1333);border:1px solid #232a5a;border-radius:14px;padding:16px;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;right:0;width:60px;height:60px;background:radial-gradient(circle,#00e5ff20,transparent 70%);border-radius:50%}
+.stat-card .lbl{font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:800;letter-spacing:0.5px}
+.stat-card .val{font-size:22px;font-weight:900;color:var(--success);margin-top:6px}
+.stat-card .icon{position:absolute;top:12px;right:14px;font-size:24px;opacity:0.6}
+.stat-card.blue .val{color:var(--primary)}
+.stat-card.purple .val{color:#a78bfa}
+.stat-card.yellow .val{color:var(--warn)}
+
+/* ===== CARDS ===== */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
+.card-title{font-size:14px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card-title .dot{width:8px;height:8px;background:var(--primary);border-radius:50%;box-shadow:0 0 8px var(--primary)}
+
+/* ===== BUTTONS ===== */
+.btn{padding:9px 16px;border-radius:10px;border:none;font-weight:800;cursor:pointer;font-size:12px;transition:0.15s;display:inline-flex;align-items:center;gap:6px}
+.btn:active{transform:scale(0.97)}
+.btn-primary{background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff}
+.btn-success{background:linear-gradient(90deg,#00ff88,#00c96b);color:#000}
+.btn-danger{background:linear-gradient(90deg,#ff4444,#ff6a6a);color:#fff}
+.btn-warn{background:#ffcc00;color:#000}
+.btn-grey{background:#1a1f4a;border:1px solid #2a3366;color:#fff}
+.btn-sm{padding:6px 10px;font-size:10px;border-radius:8px}
+
+/* ===== INPUT ===== */
+.input-group{margin-bottom:14px}
+.input-group label{font-size:11px;color:var(--text2);display:block;margin-bottom:6px;font-weight:700}
+.input-group input,.input-group textarea,.input-group select{width:100%;padding:11px 14px;border-radius:10px;border:1px solid #232a5a;background:#131740;color:#fff;outline:none;font-size:12px;font-family:'Inter',sans-serif}
+.input-group input:focus,.input-group textarea:focus{border-color:var(--primary)}
+.input-group textarea{resize:vertical;min-height:80px}
+
+/* ===== ORDER/TOPUP CARDS ===== */
+.item-card{background:#0f1333;border:1px solid #232a5a;border-radius:12px;padding:14px;margin-bottom:10px;position:relative}
+.item-card.done{border-color:#00ff8860}
+.item-card.batal{border-color:#ff444460}
+.item-card.proses{border-color:#00e5ff60}
+.item-card.verif{border-color:#ffcc0060}
+.item-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.item-head b{font-size:13px}
+.item-body{font-size:11px;color:var(--text2);line-height:1.7}
+.item-body b{color:#fff}
+.item-actions{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px}
+.badge{padding:3px 9px;border-radius:20px;font-size:9px;font-weight:800;white-space:nowrap}
+.badge.verif{background:#ffcc00;color:#000}
+.badge.proses{background:#00e5ff;color:#000}
+.badge.done{background:#00ff88;color:#000}
+.badge.batal{background:#ff4444;color:#fff}
+
+/* ===== CHAT ===== */
+.chat-list-item{background:#0f1333;border:1px solid #232a5a;border-radius:12px;padding:12px;margin-bottom:8px;cursor:pointer;transition:0.15s}
+.chat-list-item:hover{background:#1a1f4a;border-color:var(--primary)}
+.chat-list-item .name{font-weight:800;font-size:12px;display:flex;justify-content:space-between;align-items:center}
+.chat-list-item .preview{font-size:10px;color:var(--muted);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chat-list-item .time{font-size:9px;color:var(--muted);margin-top:3px}
+.unread-badge{background:#ff4444;color:#fff;padding:2px 7px;border-radius:20px;font-size:9px;font-weight:800}
+#chatBox{background:#0a0d24;border:1px solid #00e5ff40;border-radius:14px;display:none;flex-direction:column;height:500px;overflow:hidden}
+#chatBoxHeader{padding:12px 16px;background:linear-gradient(90deg,#00c6ff,#7c3aed);display:flex;justify-content:space-between;align-items:center}
+#chatMessages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;background:#0a0d24}
+#chatInput{display:flex;gap:6px;padding:10px;border-top:1px solid #1e2450;background:#0c102d}
+#chatInput input{flex:1;padding:10px 14px;border-radius:20px;border:1px solid #232a5a;background:#131740;color:#fff;outline:none;font-size:12px}
+#chatInput button{padding:10px 16px;border-radius:20px;border:none;background:var(--primary);color:#000;font-weight:800;cursor:pointer}
+.msg{max-width:82%;padding:9px 12px;border-radius:12px;font-size:12px;line-height:1.5;word-wrap:break-word;white-space:pre-wrap}
+.msg.admin{background:linear-gradient(90deg,#00c6ff,#7c3aed);align-self:flex-end;color:#fff}
+.msg.user{background:#1a1f4a;border:1px solid #2a3366;align-self:flex-start;color:#fff}
+.msg img{max-width:100%;border-radius:8px;margin-top:4px}
+
+/* ===== CUSTOMERS ===== */
+.cust-row{display:flex;justify-content:space-between;align-items:center;background:#0f1333;border:1px solid #232a5a;border-radius:10px;padding:11px;margin-bottom:8px;font-size:11px}
+.cust-row b{font-size:12px}
+
+/* ===== BRANDING PREVIEW ===== */
+.brand-preview{background:linear-gradient(135deg,#1a1f4a,#0f1333);border:1px solid #232a5a;border-radius:12px;padding:16px;display:flex;gap:14px;align-items:center;margin-bottom:14px}
+.brand-preview img{width:50px;height:50px;border-radius:50%;border:2px solid var(--primary);object-fit:cover;background:#111}
+.brand-preview b{font-size:14px}
+.brand-preview small{color:var(--muted);font-size:10px;display:block}
+.banner-preview{background:#0f1333;border:1px dashed #232a5a;border-radius:12px;height:120px;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:14px;background-size:cover;background-position:center}
+.upload-btn{background:#1a1f4a;border:1px solid #2a3366;color:#fff;padding:10px 16px;border-radius:10px;font-size:11px;font-weight:800;cursor:pointer;display:inline-block}
+
+/* ===== TOAST ===== */
+#admToast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;padding:12px 22px;border-radius:30px;font-weight:800;font-size:12px;z-index:9999;transition:0.3s;box-shadow:0 0 30px #00e5ff80}
+#admToast.show{transform:translateX(-50%) translateY(0)}
+
+/* ===== LOCK ===== */
 #adminLock{position:fixed;inset:0;background:rgba(6,10,35,0.98);z-index:9999;display:none;justify-content:center;align-items:center;padding:20px;text-align:center}
-#adminLock .box{max-width:400px;background:linear-gradient(180deg,#151a48,#0c102d);border:2px solid #ff4444;border-radius:20px;padding:24px}
-#adminLock h1{font-size:22px;font-weight:900;color:#ff4444;margin-bottom:8px}
-#adminLock p{font-size:12px;color:#aab0d0;line-height:1.6;margin-bottom:16px}
-.stat-box{background:linear-gradient(135deg,#1a1f6b,#2a1a6b);border:1px solid #00d4ff;border-radius:12px;padding:12px;text-align:center}
-.stat-box .lbl{font-size:10px;color:#aab0d0;text-transform:uppercase}
-.stat-box .val{font-size:18px;font-weight:900;color:#00ff88;margin-top:4px}
+#adminLock .box{max-width:400px;background:linear-gradient(180deg,#151a48,#0c102d);border:2px solid #ff4444;border-radius:20px;padding:26px}
+#adminLock h1{font-size:22px;font-weight:900;color:#ff4444;margin:8px 0}
+#adminLock p{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:16px}
+
+/* ===== OVERLAY ===== */
+#sbOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:99;backdrop-filter:blur(4px)}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:900px){
+  #adminSidebar{transform:translateX(-100%)}
+  #adminSidebar.open{transform:translateX(0)}
+  #adminMain{margin-left:0}
+  .hamburger{display:block}
+  .header-search{display:none}
+  .stats-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:500px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .stat-card .val{font-size:18px}
+}
 </style>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -52,11 +176,8 @@ const auth = getAuth(app);
 window.wafaDB=db; window.wafaRef=ref; window.wafaSet=set; window.wafaOnValue=onValue; window.wafaGet=get; window.wafaUpdate=update; window.wafaRemove=remove;
 window.wafaAuth=auth; window.wafaSignOut=signOut;
 
-// ===== WEBHOOK (CHAT SUDAH TIDAK PAKAI WEBHOOK) =====
 window.WEBHOOK_ORDER_DONE = "https://discord.com/api/webhooks/1553277385795829770/1qR8RlkR5Lo5u2R1kyR1U2qWeM_5a-1M3WEMR34R2vPfN-I2vPfR7YvR7YvR7YvR7";
 window.WEBHOOK_DOMPET_DONE = "https://discord.com/api/webhooks/1553275385666478120/snanzgqdkgovJomulzBGLueWdWX7Bnhp0ekS2reNuS8mLrPHLEMTrVS6nuMnE0t_0aXB";
-
-// ===== ADMIN UID WHITELIST =====
 window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
 </script>
 </head>
@@ -67,194 +188,476 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
     <div style="font-size:50px">🚫</div>
     <h1>AKSES DITOLAK</h1>
     <p>Halaman ini cuma buat <b>Admin WafaStoreOnly</b>.<br><br>Login pakai akun yang bener dulu ya.</p>
-    <button onclick="window.location.href='index.html'" style="width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;font-weight:900;font-size:14px;cursor:pointer">Balik ke Beranda</button>
+    <button onclick="window.location.href='index.html'" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px">Balik ke Beranda</button>
   </div>
 </div>
 
-<div id="wsContent">
-<div class="ws-section">
-  <div style="display:flex;justify-content:space-between;align-items:center">
-    <div>
-      <div style="font-weight:900;font-size:20px">Admin Panel 🛡️</div>
-      <p style="font-size:11px;color:#aab0d0;margin-top:4px">Kelola order, top up dompet, & chat user</p>
+<div id="sbOverlay" onclick="closeSidebar()"></div>
+
+<aside id="adminSidebar">
+  <div class="sb-logo">
+    <img id="sbLogo" src="./logo.png" alt="logo">
+    <div class="sb-logo-info">
+      <b id="sbBrandName">WafaStoreOnly</b>
+      <small>Admin Panel v2</small>
     </div>
   </div>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px">
-    <div class="stat-box"><div class="lbl">Order Aktif</div><div class="val" id="statOrder">0</div></div>
-    <div class="stat-box"><div class="lbl">Top Up Pending</div><div class="val" id="statTopup">0</div></div>
-    <div class="stat-box"><div class="lbl">Chat User</div><div class="val" id="statChat">0</div></div>
-    <div class="stat-box"><div class="lbl">Revenue Hari Ini</div><div class="val" id="statToday">Rp0</div></div>
-  </div>
-
-  <div class="tab-bar">
-    <div class="tab-btn active" onclick="switchTab('orders', this)">📦 Order Robux</div>
-    <div class="tab-btn" onclick="switchTab('topup', this)">💰 Top Up Dompet</div>
-    <div class="tab-btn" onclick="switchTab('chat', this)">💬 Chat User</div>
-  </div>
-
-  <div id="tab-orders" style="display:block">
-    <div id="listOrders" style="margin-top:12px"></div>
-  </div>
-
-  <div id="tab-topup" style="display:none">
-    <div id="listTopup" style="margin-top:12px"></div>
-  </div>
-
-  <div id="tab-chat" style="display:none">
-    <div id="listChat" style="margin-top:12px"></div>
-    <div id="adminChatBox" style="display:none">
-      <div id="adminChatHeader">
-        <div style="font-weight:800;font-size:12px" id="adminChatName">Chat User</div>
-        <div style="cursor:pointer;font-size:18px" onclick="closeAdminChat()">✕</div>
-      </div>
-      <div id="adminChatMessages"></div>
-      <div id="adminChatInput">
-        <input id="adminChatText" placeholder="Ketik balasan..." onkeypress="if(event.key==='Enter')kirimBalasan()">
-        <button onclick="kirimBalasan()">➤</button>
-      </div>
+  <div class="sb-section">
+    <div class="sb-section-title">Menu Utama</div>
+    <div class="sb-menu-item active" data-menu="dashboard" onclick="switchPage('dashboard')">
+      <span class="icon">📊</span> Dashboard
+    </div>
+    <div class="sb-menu-item" data-menu="orders" onclick="switchPage('orders')">
+      <span class="icon">📦</span> Orders
+    </div>
+    <div class="sb-menu-item" data-menu="topup" onclick="switchPage('topup')">
+      <span class="icon">💰</span> Top Up Dompet
+    </div>
+    <div class="sb-menu-item" data-menu="chat" onclick="switchPage('chat')">
+      <span class="icon">💬</span> Chat / CS
+    </div>
+    <div class="sb-menu-item" data-menu="customers" onclick="switchPage('customers')">
+      <span class="icon">👥</span> Customers
     </div>
   </div>
 
-</div>
-</div>
-<script src="./sidebar.js"></script>
+  <div class="sb-section">
+    <div class="sb-section-title">Kustomisasi</div>
+    <div class="sb-menu-item" data-menu="branding" onclick="switchPage('branding')">
+      <span class="icon">🎨</span> Branding
+    </div>
+    <div class="sb-menu-item" data-menu="announcement" onclick="switchPage('announcement')">
+      <span class="icon">📢</span> Announcement
+    </div>
+    <div class="sb-menu-item" data-menu="theme" onclick="switchPage('theme')">
+      <span class="icon">🌈</span> Theme
+    </div>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-title">Sistem</div>
+    <div class="sb-menu-item" data-menu="settings" onclick="switchPage('settings')">
+      <span class="icon">⚙️</span> Settings
+    </div>
+    <div class="sb-menu-item" onclick="window.location.href='index.html'">
+      <span class="icon">🌐</span> Lihat Website
+    </div>
+  </div>
+
+  <div class="sb-footer">
+    <div class="sb-user">
+      <b id="sbUserName">Loading...</b>
+      <small id="sbUserEmail">-</small>
+    </div>
+    <button class="sb-logout" onclick="logoutAdmin()">🚪 Logout</button>
+  </div>
+</aside>
+
+<main id="adminMain">
+  <header class="admin-header">
+    <div class="hamburger" onclick="toggleSidebar()">☰</div>
+    <div class="header-search">
+      <input type="text" id="globalSearch" placeholder="🔍 Cari order, customer, chat...">
+    </div>
+    <div class="header-right">
+      <div class="header-user" id="headerUserName">👤 Admin</div>
+    </div>
+  </header>
+
+  <div class="admin-content">
+
+    <!-- PAGE: DASHBOARD -->
+    <div class="page" id="page-dashboard">
+      <div class="page-title">📊 Dashboard</div>
+      <div class="page-sub">Ringkasan aktivitas WafaStoreOnly</div>
+
+      <div class="stats-grid">
+        <div class="stat-card blue"><div class="lbl">Total Order</div><div class="val" id="stTotalOrder">0</div><div class="icon">📦</div></div>
+        <div class="stat-card yellow"><div class="lbl">Order Aktif</div><div class="val" id="stOrderAktif">0</div><div class="icon">⚡</div></div>
+        <div class="stat-card"><div class="lbl">Revenue Hari Ini</div><div class="val" id="stRevenueToday">Rp0</div><div class="icon">💵</div></div>
+        <div class="stat-card purple"><div class="lbl">Total User</div><div class="val" id="stTotalUser">0</div><div class="icon">👥</div></div>
+        <div class="stat-card yellow"><div class="lbl">Topup Pending</div><div class="val" id="stTopupPending">0</div><div class="icon">💰</div></div>
+        <div class="stat-card blue"><div class="lbl">Chat User</div><div class="val" id="stChatUser">0</div><div class="icon">💬</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> Order Terbaru</div>
+        <div id="dashboardRecentOrders"></div>
+      </div>
+    </div>
+
+    <!-- PAGE: ORDERS -->
+    <div class="page" id="page-orders" style="display:none">
+      <div class="page-title">📦 Orders</div>
+      <div class="page-sub">Kelola semua order Robux</div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> Semua Order</div>
+        <div id="listOrders"></div>
+      </div>
+    </div>
+
+    <!-- PAGE: TOPUP -->
+    <div class="page" id="page-topup" style="display:none">
+      <div class="page-title">💰 Top Up Dompet</div>
+      <div class="page-sub">Approve top up user</div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> Top Up Requests</div>
+        <div id="listTopup"></div>
+      </div>
+    </div>
+
+    <!-- PAGE: CHAT -->
+    <div class="page" id="page-chat" style="display:none">
+      <div class="page-title">💬 Chat / CS</div>
+      <div class="page-sub">Bales chat dari user</div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> Chat Masuk</div>
+        <div id="listChat"></div>
+        <div id="chatBox">
+          <div id="chatBoxHeader">
+            <div style="font-weight:800;font-size:13px" id="chatBoxName">Chat</div>
+            <div style="cursor:pointer;font-size:18px" onclick="closeChat()">✕</div>
+          </div>
+          <div id="chatMessages"></div>
+          <div id="chatInput">
+            <input id="chatText" placeholder="Ketik balasan..." onkeypress="if(event.key==='Enter')sendReply()">
+            <button onclick="sendReply()">➤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: CUSTOMERS -->
+    <div class="page" id="page-customers" style="display:none">
+      <div class="page-title">👥 Customers</div>
+      <div class="page-sub">List semua user + edit saldo</div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> Daftar User</div>
+        <div id="listCustomers"></div>
+      </div>
+    </div>
+
+    <!-- PAGE: BRANDING -->
+    <div class="page" id="page-branding" style="display:none">
+      <div class="page-title">🎨 Branding</div>
+      <div class="page-sub">Atur logo, nama brand, & banner web</div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> Brand Identity</div>
+        <div class="brand-preview">
+          <img id="previewLogo" src="./logo.png" alt="logo">
+          <div>
+            <b id="previewBrandName">WafaStoreOnly</b>
+            <small id="previewTagline">Top Up Robux Cepat & Aman</small>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Nama Brand</label>
+          <input id="inputBrandName" placeholder="WafaStoreOnly">
+        </div>
+        <div class="input-group">
+          <label>Tagline</label>
+          <input id="inputTagline" placeholder="Top Up Robux Cepat & Aman">
+        </div>
+        <div class="input-group">
+          <label>Logo (max 500KB)</label>
+          <input type="file" id="inputLogoFile" accept="image/*" style="display:none" onchange="uploadLogo(this)">
+          <label for="inputLogoFile" class="upload-btn">📸 Upload Logo Baru</label>
+          <span style="font-size:10px;color:var(--muted);margin-left:10px" id="logoFileName">Belum ada file</span>
+        </div>
+        <button class="btn btn-success" onclick="saveBranding()">💾 Simpan Branding</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> Banner Home</div>
+        <div class="banner-preview" id="bannerPreview">Belum ada banner</div>
+        <div class="input-group">
+          <label>Banner Image (max 500KB)</label>
+          <input type="file" id="inputBannerFile" accept="image/*" style="display:none" onchange="uploadBanner(this)">
+          <label for="inputBannerFile" class="upload-btn">🖼️ Upload Banner Baru</label>
+          <span style="font-size:10px;color:var(--muted);margin-left:10px" id="bannerFileName">Belum ada file</span>
+        </div>
+        <button class="btn btn-success" onclick="saveBanner()">💾 Simpan Banner</button>
+      </div>
+    </div>
+
+    <!-- PAGE: ANNOUNCEMENT -->
+    <div class="page" id="page-announcement" style="display:none">
+      <div class="page-title">📢 Announcement</div>
+      <div class="page-sub">Atur pemberitahuan di beranda web</div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> Edit Announcement</div>
+        <div class="input-group">
+          <label>Status Announcement</label>
+          <select id="inputAnnActive">
+            <option value="true">✅ Aktif (muncul di beranda)</option>
+            <option value="false">❌ Nonaktif</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Judul</label>
+          <input id="inputAnnTitle" placeholder="📢 SELAMAT DATANG DI WAFASTOREONLY">
+        </div>
+        <div class="input-group">
+          <label>Isi Pesan</label>
+          <textarea id="inputAnnText" placeholder="Top up game favorit kamu dengan proses kilat!"></textarea>
+        </div>
+        <button class="btn btn-success" onclick="saveAnnouncement()">💾 Simpan Announcement</button>
+      </div>
+    </div>
+
+    <!-- PAGE: THEME -->
+    <div class="page" id="page-theme" style="display:none">
+      <div class="page-title">🌈 Theme</div>
+      <div class="page-sub">Ganti warna utama web</div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> Color Picker</div>
+        <div class="input-group">
+          <label>Warna Primary (biru neon)</label>
+          <input type="color" id="inputPrimary" value="#00e5ff" style="height:50px;cursor:pointer">
+        </div>
+        <div class="input-group">
+          <label>Warna Accent (ungu)</label>
+          <input type="color" id="inputAccent" value="#7c3aed" style="height:50px;cursor:pointer">
+        </div>
+        <div style="background:linear-gradient(90deg,var(--primary),var(--accent));height:60px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;margin-bottom:14px" id="themePreview">Preview Warna</div>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-success" onclick="saveTheme()">💾 Simpan Theme</button>
+          <button class="btn btn-grey" onclick="resetTheme()">🔄 Reset Default</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: SETTINGS -->
+    <div class="page" id="page-settings" style="display:none">
+      <div class="page-title">⚙️ Settings</div>
+      <div class="page-sub">Pengaturan admin panel</div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> Akun Admin</div>
+        <div class="input-group">
+          <label>Email</label>
+          <input id="setEmail" disabled>
+        </div>
+        <div class="input-group">
+          <label>UID</label>
+          <input id="setUid" disabled>
+        </div>
+        <button class="btn btn-danger" onclick="logoutAdmin()">🚪 Logout Akun</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot"></span> Info Sistem</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          <b style="color:#fff">Web URL:</b> <a href="https://wafastoreonly-official.vercel.app" style="color:var(--primary)" target="_blank">wafastoreonly-official.vercel.app</a><br>
+          <b style="color:#fff">Firebase:</b> wafastoreonly<br>
+          <b style="color:#fff">Version:</b> Admin Panel v2.0<br>
+          <b style="color:#fff">Admin UID:</b> 5jLY5Gaf...7v12
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<div id="admToast"></div>
 <script>
 function sensorEmail(e){if(!e||!e.includes('@'))return'****';let [a,b]=e.split('@');return a.slice(0,3)+'****@'+b}
 function sensorUid(u){if(!u)return'****';return u.slice(0,6)+'...'+u.slice(-4)}
 
-// ===== ADMIN CHECK =====
-let isAdmin = false;
-function showLock(){
-  document.getElementById('adminLock').style.display='flex';
-  document.getElementById('wsContent').style.display='none';
+// ===== SIDEBAR TOGGLE =====
+function toggleSidebar(){
+  document.getElementById('adminSidebar').classList.toggle('open');
+  document.getElementById('sbOverlay').style.display = document.getElementById('adminSidebar').classList.contains('open')?'block':'none';
 }
+function closeSidebar(){
+  document.getElementById('adminSidebar').classList.remove('open');
+  document.getElementById('sbOverlay').style.display='none';
+}
+
+// ===== ADMIN CHECK =====
 window.wafaAuth.onAuthStateChanged((user)=>{
-  console.log('🔐 Auth state:', user ? user.uid : 'not logged in');
   if(user && window.ADMIN_UIDS.includes(user.uid)){
-    isAdmin = true;
-    initAdmin();
-  } else if(user){
-    console.log('❌ Bukan admin. UID:', user.uid);
-    showLock();
+    initAdmin(user);
   } else {
-    console.log('❌ Belum login');
-    showLock();
+    document.getElementById('adminLock').style.display='flex';
+    document.getElementById('adminSidebar').style.display='none';
+    document.getElementById('adminMain').style.display='none';
   }
 });
 
-// ===== INIT ADMIN =====
-function initAdmin(){
-  console.log('✅ Admin logged in:', window.wafaAuth.currentUser.uid);
-  if(typeof wsSetActive==='function') wsSetActive('admin');
-  if(typeof wsSetTitle==='function') wsSetTitle('🛡️ Admin Panel');
+function initAdmin(user){
+  document.getElementById('sbUserName').innerText = user.displayName || user.email.split('@')[0];
+  document.getElementById('sbUserEmail').innerText = user.email;
+  document.getElementById('headerUserName').innerText = '👤 ' + (user.displayName || 'Admin');
+  document.getElementById('setEmail').value = user.email;
+  document.getElementById('setUid').value = user.uid;
+  document.getElementById('sbLogo').src = user.photoURL || './logo.png';
+
+  loadDashboard();
   loadOrders();
   loadTopups();
   loadChats();
+  loadCustomers();
+  loadBranding();
+  loadAnnouncement();
+  loadTheme();
+
   setTimeout(handleUrlAction, 1000);
 }
 
-// ===== HANDLE ACTION DARI URL DISCORD =====
+// ===== PAGE SWITCH =====
+function switchPage(menu){
+  document.querySelectorAll('.page').forEach(p=>p.style.display='none');
+  document.getElementById('page-'+menu).style.display='block';
+  document.querySelectorAll('.sb-menu-item').forEach(i=>i.classList.remove('active'));
+  const el = document.querySelector(`.sb-menu-item[data-menu="${menu}"]`);
+  if(el) el.classList.add('active');
+  closeSidebar();
+}
+
+// ===== TOAST =====
+function toast(msg){
+  let t = document.getElementById('admToast');
+  t.innerText = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+// ===== LOGOUT =====
+function logoutAdmin(){
+  if(!confirm('Logout dari admin panel?')) return;
+  localStorage.removeItem('wafa_uid');
+  window.wafaAuth.signOut().then(()=>{ location.href='login.html'; }).catch(()=>{ location.href='login.html'; });
+}
+
+// ===== HANDLE ACTION URL DISCORD =====
 async function handleUrlAction(){
   const urlParams = new URLSearchParams(window.location.search);
   const actionId = urlParams.get('id');
   const action = urlParams.get('action');
   if(!actionId || !action) return;
-
-  console.log('🎯 Action from URL:', action, 'for ID:', actionId);
   const idNum = parseInt(actionId);
-
   if(action === 'selesai'){
-    if(!confirm(`✅ Konfirmasi SELESAI untuk Order #${actionId.slice(-6)}?\n\nStatus order di web user bakal langsung berubah jadi SELESAI + muncul popup terima kasih.`)){ 
-      window.history.replaceState({}, '', 'admin.html');
-      return; 
-    }
-    try{
+    if(confirm(`✅ Konfirmasi SELESAI untuk Order #${actionId.slice(-6)}?`)){
       await prosesSelesai(idNum);
-      alert(`✅ Order #${actionId.slice(-6)} BERHASIL DISELESAIKAN!\n\nUser bakal dapet notif terima kasih di web mereka.`);
-    }catch(e){
-      alert('❌ Gagal: '+e.message);
+      toast('✅ Order diselesaikan!');
     }
   } else if(action === 'batal'){
-    const alasan = prompt(`❌ Alasan BATALKAN Order #${actionId.slice(-6)}?`, 'Dibatalkan admin');
-    if(alasan === null){ 
-      window.history.replaceState({}, '', 'admin.html');
-      return; 
-    }
-    await prosesBatal(idNum, alasan || 'Dibatalkan admin');
-    alert('❌ Order dibatalkan!');
+    const alasan = prompt('Alasan batal?', 'Dibatalkan admin');
+    if(alasan !== null){ await prosesBatal(idNum, alasan); toast('❌ Order dibatalkan'); }
   }
   window.history.replaceState({}, '', 'admin.html');
 }
 
-// ===== TAB SWITCH =====
-function switchTab(tab, el){
-  document.querySelectorAll('.tab-btn').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('tab-orders').style.display = tab==='orders'?'block':'none';
-  document.getElementById('tab-topup').style.display = tab==='topup'?'block':'none';
-  document.getElementById('tab-chat').style.display = tab==='chat'?'block':'none';
+// ===== DASHBOARD =====
+function loadDashboard(){
+  // Orders
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'orders'), (snap)=>{
+    const data = snap.val() || {};
+    const orders = Object.values(data);
+    let aktif = 0, totalOrder = orders.length, revenueToday = 0;
+    const today = new Date().toLocaleDateString('id-ID');
+    orders.forEach(o=>{
+      if(o.status === 'verifikasi' || o.status === 'proses') aktif++;
+      if(o.date && o.date.includes(today.split('/')[0])) revenueToday += (o.total || 0);
+    });
+    document.getElementById('stTotalOrder').innerText = totalOrder;
+    document.getElementById('stOrderAktif').innerText = aktif;
+    document.getElementById('stRevenueToday').innerText = 'Rp' + revenueToday.toLocaleString('id-ID');
+
+    // Recent orders (5 terbaru)
+    const recent = orders.sort((a,b)=>b.id-a.id).slice(0,5);
+    const el = document.getElementById('dashboardRecentOrders');
+    el.innerHTML = '';
+    if(recent.length === 0){ el.innerHTML = '<div style="color:#5a638a;font-size:12px;text-align:center;padding:20px">Belum ada order</div>'; return; }
+    recent.forEach(o=>{
+      const color = o.status=='verifikasi'?'#ffcc00':o.status=='proses'?'#00e5ff':o.status=='selesai'?'#00ff88':'#ff4444';
+      const cls = o.status=='verifikasi'?'verif':o.status=='proses'?'proses':o.status=='selesai'?'done':'batal';
+      const d = document.createElement('div');
+      d.className = 'item-card ' + cls;
+      d.innerHTML = `
+        <div class="item-head">
+          <b>📦 #${o.id.toString().slice(-6)}</b>
+          <span class="badge ${cls}">${(o.status||'').toUpperCase()}</span>
+        </div>
+        <div class="item-body">
+          Username: <b>${o.username||'-'}</b> • ${o.jumlah||0} Robux<br>
+          Total: <b style="color:#00ff88">Rp${(o.total||0).toLocaleString('id-ID')}</b> • ${o.date||'-'}
+        </div>
+      `;
+      el.appendChild(d);
+    });
+  });
+
+  // Users
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'users'), (snap)=>{
+    const data = snap.val() || {};
+    document.getElementById('stTotalUser').innerText = Object.keys(data).length;
+  });
+
+  // Topup pending
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'topup_saldo'), (snap)=>{
+    const data = snap.val() || {};
+    const pending = Object.values(data).filter(t=>t.status === 'verifikasi' || t.status === 'pending').length;
+    document.getElementById('stTopupPending').innerText = pending;
+  });
+
+  // Chats
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'chats'), (snap)=>{
+    const data = snap.val() || {};
+    document.getElementById('stChatUser').innerText = Object.keys(data).length;
+  });
 }
 
-// ===== LOAD ORDERS =====
+// ===== ORDERS =====
 function loadOrders(){
   const list = document.getElementById('listOrders');
   window.wafaOnValue(window.wafaRef(window.wafaDB, 'orders'), (snap)=>{
     const data = snap.val();
     list.innerHTML = '';
-    if(!data){ list.innerHTML = '<div class="admin-card" style="text-align:center;color:#5a638a">📦 Belum ada order</div>'; updateStats(0, null, null, 0); return; }
+    if(!data){ list.innerHTML = '<div style="text-align:center;color:#5a638a;padding:20px">📦 Belum ada order</div>'; return; }
     const orders = Object.values(data).sort((a,b)=>b.id-a.id);
-    let aktif = 0;
-    let totalHariIni = 0;
-    const today = new Date().toLocaleDateString('id-ID');
-    orders.forEach(o=>{
-      if(o.status === 'verifikasi' || o.status === 'proses') aktif++;
-      if(o.date && o.date.includes(today.split('/')[0])) totalHariIni += (o.total || 0);
-    });
-    updateStats(aktif, null, null, totalHariIni);
-    
     orders.slice(0, 50).forEach(o=>{
-      const color = o.status=='verifikasi'?'#ffcc00':o.status=='proses'?'#00e5ff':o.status=='selesai'?'#00ff88':'#ff4444';
+      const cls = o.status=='verifikasi'?'verif':o.status=='proses'?'proses':o.status=='selesai'?'done':'batal';
       const card = document.createElement('div');
-      card.className = 'admin-card';
-      card.style.borderColor = color;
+      card.className = 'item-card ' + cls;
       let extra = '';
       if(o.method == 'gamepass' && o.gamepassLink) extra += `<br>🔗 Gamepass: <b style="word-break:break-all">${o.gamepassLink}</b>`;
       if(o.method == 'gift' && o.item) extra += `<br>🎁 Item: <b>${o.item}</b>`;
-      if(o.metodeBayar == 'saldo') extra += `<br>💳 <b style="color:#00ff88">Dibayar via Saldo Web</b>`;
-      
-      let buktiBtn = o.bukti ? `<button class="btn-sm btn-proses" onclick="lihatBukti('${o.id}')">🖼️ Lihat Bukti</button>` : '';
+      if(o.metodeBayar == 'saldo') extra += `<br>💳 <b style="color:#00ff88">Via Saldo Web</b>`;
+
+      let buktiBtn = o.bukti ? `<button class="btn btn-primary btn-sm" onclick="lihatBukti('${o.id}')">🖼️ Bukti</button>` : '';
       let actionBtns = '';
-      if(o.status === 'verifikasi' || o.status === 'proses') {
-        actionBtns = `<button class="btn-sm btn-done" onclick="prosesSelesai(${o.id})">✅ KONFIRMASI SELESAI</button>
-                      <button class="btn-sm btn-batal" onclick="prosesBatal(${o.id}, 'Dibatalkan admin')">❌ BATALKAN</button>`;
+      if(o.status === 'verifikasi' || o.status === 'proses'){
+        actionBtns = `<button class="btn btn-success btn-sm" onclick="prosesSelesai(${o.id})">✅ SELESAI</button>
+                      <button class="btn btn-danger btn-sm" onclick="prosesBatal(${o.id}, 'Dibatalkan admin')">❌ BATAL</button>`;
       } else {
-        actionBtns = `<button class="btn-sm btn-batal" onclick="hapusOrder(${o.id})">🗑️ Hapus</button>`;
+        actionBtns = `<button class="btn btn-danger btn-sm" onclick="hapusOrder(${o.id})">🗑️ Hapus</button>`;
       }
-      
+
       card.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div class="item-head">
           <div>
-            <h3>📦 Order #${o.id.toString().slice(-6)}</h3>
-            <div class="order-info">
-              Username: <b>${o.username||'-'}</b><br>
-              Jumlah: <b>${o.jumlah||0} Robux</b> | Total: <b style="color:#00ff88">Rp${(o.total||0).toLocaleString('id-ID')}</b><br>
-              Metode: <b>${o.method||'-'}</b><br>
-              Buyer: <b>${sensorEmail(o.email||'-')}</b> (${o.nickname||'-'})<br>
-              UID: <b style="font-size:10px">${sensorUid(o.uid)}</b><br>
-              📅 ${o.date||'-'}${extra}
-            </div>
+            <b>📦 Order #${o.id.toString().slice(-6)}</b>
+            <div style="font-size:10px;color:#5a638a;margin-top:3px">${o.date||'-'}</div>
           </div>
-          <span style="background:${color};color:#000;padding:4px 10px;border-radius:20px;font-size:9px;font-weight:800;white-space:nowrap">${(o.status||'').toUpperCase()}</span>
+          <span class="badge ${cls}">${(o.status||'').toUpperCase()}</span>
         </div>
-        <div style="margin-top:10px">${buktiBtn}${actionBtns}</div>
+        <div class="item-body">
+          👤 <b>${o.username||'-'}</b> • 📊 <b>${o.jumlah||0} Robux</b><br>
+          💰 <b style="color:#00ff88">Rp${(o.total||0).toLocaleString('id-ID')}</b> • 🔧 ${o.method||'-'}<br>
+          📧 <b>${sensorEmail(o.email||'-')}</b> (${o.nickname||'-'})${extra}
+        </div>
+        <div class="item-actions">${buktiBtn}${actionBtns}</div>
       `;
       list.appendChild(card);
     });
   });
 }
 
-// ===== LIHAT BUKTI ORDER =====
 window.lihatBukti = async (id)=>{
   const snap = await window.wafaGet(window.wafaRef(window.wafaDB, 'orders/'+id));
   const o = snap.val();
@@ -263,81 +666,69 @@ window.lihatBukti = async (id)=>{
   w.document.write(`<html><head><title>Bukti TF</title><style>body{margin:0;background:#000;display:flex;justify-content:center;align-items:center;min-height:100vh}img{max-width:100%;max-height:100vh}</style></head><body><img src="${o.bukti}"></body></html>`);
 };
 
-// ===== PROSES SELESAI =====
 window.prosesSelesai = async (id)=>{
   try{
-    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'orders/'+id), { status: 'selesai', selesaiAt: Date.now() });
+    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'orders/'+id), { status:'selesai', selesaiAt:Date.now() });
     const snap = await window.wafaGet(window.wafaRef(window.wafaDB, 'orders/'+id));
     const o = snap.val();
     if(window.WEBHOOK_ORDER_DONE){
-      fetch(window.WEBHOOK_ORDER_DONE, {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ content: `✅ **ORDER SELESAI**\nID: #${id.toString().slice(-6)}\nBuyer: ${sensorEmail(o.email||'-')}\nUsername: ${o.username}\nJumlah: ${o.jumlah} Robux\nTotal: Rp${(o.total||0).toLocaleString('id-ID')}` })
-      }).catch(e=>console.log('Discord err:', e));
+      fetch(window.WEBHOOK_ORDER_DONE, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ content:`✅ **ORDER SELESAI**\nID: #${id.toString().slice(-6)}\nBuyer: ${sensorEmail(o.email||'-')}\nUsername: ${o.username}\nJumlah: ${o.jumlah} Robux` }) }).catch(()=>{});
     }
+    toast('✅ Order diselesaikan!');
   }catch(e){ alert('Gagal: '+e.message); }
 };
 
-// ===== PROSES BATAL =====
 window.prosesBatal = async (id, alasan)=>{
   try{
-    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'orders/'+id), { status: 'batal', batalReason: alasan, batalAt: Date.now() });
+    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'orders/'+id), { status:'batal', batalReason:alasan, batalAt:Date.now() });
+    toast('❌ Order dibatalkan');
   }catch(e){ alert('Gagal: '+e.message); }
 };
 
-// ===== HAPUS ORDER =====
 window.hapusOrder = async (id)=>{
   if(!confirm('Hapus order #'+id.toString().slice(-6)+'?')) return;
-  try{
-    await window.wafaRemove(window.wafaRef(window.wafaDB, 'orders/'+id));
-  }catch(e){ alert('Gagal: '+e.message); }
+  try{ await window.wafaRemove(window.wafaRef(window.wafaDB, 'orders/'+id)); toast('🗑️ Order dihapus'); }catch(e){ alert('Gagal: '+e.message); }
 };
 
-// ===== LOAD TOPUP DOMPET =====
+// ===== TOPUP DOMPET =====
 function loadTopups(){
   const list = document.getElementById('listTopup');
   window.wafaOnValue(window.wafaRef(window.wafaDB, 'topup_saldo'), (snap)=>{
     const data = snap.val();
     list.innerHTML = '';
-    if(!data){ list.innerHTML = '<div class="admin-card" style="text-align:center;color:#5a638a">💰 Belum ada top up</div>'; updateStats(null, 0, null, null); return; }
+    if(!data){ list.innerHTML = '<div style="text-align:center;color:#5a638a;padding:20px">💰 Belum ada top up</div>'; return; }
     const topups = Object.values(data).sort((a,b)=>b.id-a.id);
-    let pending = topups.filter(t=>t.status === 'verifikasi' || t.status === 'pending').length;
-    updateStats(null, pending, null, null);
-    
     topups.slice(0, 50).forEach(t=>{
-      const color = t.status=='selesai'?'#00ff88':t.status=='batal'?'#ff4444':'#ffcc00';
+      const cls = t.status=='selesai'?'done':t.status=='batal'?'batal':'verif';
       const card = document.createElement('div');
-      card.className = 'admin-card';
-      card.style.borderColor = color;
-      let buktiBtn = t.bukti ? `<button class="btn-sm btn-proses" onclick="lihatBuktiTopup('${t.id}')">🖼️ Lihat Bukti</button>` : '';
+      card.className = 'item-card ' + cls;
+      let buktiBtn = t.bukti ? `<button class="btn btn-primary btn-sm" onclick="lihatBuktiTopup('${t.id}')">🖼️ Bukti</button>` : '';
       let actionBtns = '';
       if(t.status === 'verifikasi' || t.status === 'pending'){
-        actionBtns = `<button class="btn-sm btn-done" onclick="approveTopup(${t.id})">✅ APPROVE - TAMBAH SALDO</button>
-                      <button class="btn-sm btn-batal" onclick="rejectTopup(${t.id})">❌ TOLAK</button>`;
+        actionBtns = `<button class="btn btn-success btn-sm" onclick="approveTopup(${t.id})">✅ APPROVE</button>
+                      <button class="btn btn-danger btn-sm" onclick="rejectTopup(${t.id})">❌ TOLAK</button>`;
       } else {
-        actionBtns = `<button class="btn-sm btn-batal" onclick="hapusTopup(${t.id})">🗑️ Hapus</button>`;
+        actionBtns = `<button class="btn btn-danger btn-sm" onclick="hapusTopup(${t.id})">🗑️ Hapus</button>`;
       }
       card.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div class="item-head">
           <div>
-            <h3>💰 Top Up #${t.id.toString().slice(-6)}</h3>
-            <div class="order-info">
-              Nominal: <b style="color:#00ff88">Rp${(t.nominal||t.jumlah||0).toLocaleString('id-ID')}</b><br>
-              User: <b>${sensorEmail(t.email||'-')}</b> (${t.nickname||'-'})<br>
-              UID: <b style="font-size:10px">${sensorUid(t.uid)}</b><br>
-              📅 ${t.date||'-'}
-            </div>
+            <b>💰 Top Up #${t.id.toString().slice(-6)}</b>
+            <div style="font-size:10px;color:#5a638a;margin-top:3px">${t.date||'-'}</div>
           </div>
-          <span style="background:${color};color:#000;padding:4px 10px;border-radius:20px;font-size:9px;font-weight:800;white-space:nowrap">${(t.status||'pending').toUpperCase()}</span>
+          <span class="badge ${cls}">${(t.status||'pending').toUpperCase()}</span>
         </div>
-        <div style="margin-top:10px">${buktiBtn}${actionBtns}</div>
+        <div class="item-body">
+          Nominal: <b style="color:#00ff88">Rp${(t.nominal||t.jumlah||0).toLocaleString('id-ID')}</b><br>
+          User: <b>${sensorEmail(t.email||'-')}</b> (${t.nickname||'-'})
+        </div>
+        <div class="item-actions">${buktiBtn}${actionBtns}</div>
       `;
       list.appendChild(card);
     });
   });
 }
 
-// ===== LIHAT BUKTI TOPUP =====
 window.lihatBuktiTopup = async (id)=>{
   const snap = await window.wafaGet(window.wafaRef(window.wafaDB, 'topup_saldo/'+id));
   const t = snap.val();
@@ -346,109 +737,96 @@ window.lihatBuktiTopup = async (id)=>{
   w.document.write(`<html><head><title>Bukti TF</title><style>body{margin:0;background:#000;display:flex;justify-content:center;align-items:center;min-height:100vh}img{max-width:100%;max-height:100vh}</style></head><body><img src="${t.bukti}"></body></html>`);
 };
 
-// ===== APPROVE TOPUP (TAMBAH SALDO OTOMATIS) =====
 window.approveTopup = async (id)=>{
   if(!confirm('✅ APPROVE top up ini?\n\nSaldo user bakal otomatis ditambah.')) return;
   try{
     const snap = await window.wafaGet(window.wafaRef(window.wafaDB, 'topup_saldo/'+id));
     const t = snap.val();
-    if(!t){ alert('Data ga ketemu'); return; }
     const nominal = t.nominal || t.jumlah || 0;
     const userSnap = await window.wafaGet(window.wafaRef(window.wafaDB, 'users/'+t.uid+'/saldo'));
     const saldoLama = userSnap.val() || 0;
     const saldoBaru = saldoLama + nominal;
     await window.wafaUpdate(window.wafaRef(window.wafaDB, 'users/'+t.uid), { saldo: saldoBaru });
-    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'topup_saldo/'+id), { status: 'selesai', approvedAt: Date.now() });
+    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'topup_saldo/'+id), { status:'selesai', approvedAt:Date.now() });
     if(window.WEBHOOK_DOMPET_DONE){
-      fetch(window.WEBHOOK_DOMPET_DONE, {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ content: `✅ **TOP UP DOMPET BERHASIL**\nID: #${id.toString().slice(-6)}\nUser: ${sensorEmail(t.email||'-')} (${t.nickname||'-'})\nNominal: Rp${nominal.toLocaleString('id-ID')}\nSaldo sekarang: Rp${saldoBaru.toLocaleString('id-ID')}` })
-      }).catch(e=>console.log('Discord err:', e));
+      fetch(window.WEBHOOK_DOMPET_DONE, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ content:`✅ **TOP UP BERHASIL**\nID: #${id.toString().slice(-6)}\nUser: ${sensorEmail(t.email||'-')}\nNominal: Rp${nominal.toLocaleString('id-ID')}\nSaldo sekarang: Rp${saldoBaru.toLocaleString('id-ID')}` }) }).catch(()=>{});
     }
-    alert(`✅ Saldo Rp${nominal.toLocaleString('id-ID')} berhasil ditambah!`);
-  }catch(e){ alert('Gagal approve: '+e.message); }
+    toast(`✅ Saldo Rp${nominal.toLocaleString('id-ID')} ditambah!`);
+  }catch(e){ alert('Gagal: '+e.message); }
 };
 
-// ===== REJECT TOPUP =====
 window.rejectTopup = async (id)=>{
   const alasan = prompt('Alasan tolak?', 'Bukti tidak valid');
   if(alasan === null) return;
-  try{
-    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'topup_saldo/'+id), { status: 'batal', batalReason: alasan });
-  }catch(e){ alert('Gagal: '+e.message); }
+  try{ await window.wafaUpdate(window.wafaRef(window.wafaDB, 'topup_saldo/'+id), { status:'batal', batalReason:alasan }); toast('❌ Top up ditolak'); }catch(e){ alert('Gagal: '+e.message); }
 };
 
-// ===== HAPUS TOPUP =====
 window.hapusTopup = async (id)=>{
   if(!confirm('Hapus top up #'+id.toString().slice(-6)+'?')) return;
-  try{
-    await window.wafaRemove(window.wafaRef(window.wafaDB, 'topup_saldo/'+id));
-  }catch(e){ alert('Gagal: '+e.message); }
+  try{ await window.wafaRemove(window.wafaRef(window.wafaDB, 'topup_saldo/'+id)); toast('🗑️ Dihapus'); }catch(e){ alert('Gagal: '+e.message); }
 };
-
-// ===== LOAD CHATS =====
+</script>
+<script>
+// ===== CHAT =====
 let currentChatUid = null;
 let chatUnsubscribe = null;
+
 function loadChats(){
   const list = document.getElementById('listChat');
   window.wafaOnValue(window.wafaRef(window.wafaDB, 'chats'), (snap)=>{
     const data = snap.val();
     list.innerHTML = '';
-    if(!data){ list.innerHTML = '<div class="admin-card" style="text-align:center;color:#5a638a">💬 Belum ada chat</div>'; updateStats(null, null, 0, null); return; }
+    if(!data){ list.innerHTML = '<div style="text-align:center;color:#5a638a;padding:20px">💬 Belum ada chat</div>'; return; }
     const uids = Object.keys(data);
-    let totalChat = uids.length;
-    updateStats(null, null, totalChat, null);
-    
     const sorted = uids.map(uid=>{
       const msgs = Object.values(data[uid] || {}).sort((a,b)=>(b.time||0)-(a.time||0));
       const last = msgs[0] || {};
-      const unreadCount = msgs.filter(m=>m.from === 'user' && !m.read).length;
-      return { uid, last, unreadCount, msgCount: msgs.length };
+      const unread = msgs.filter(m=>m.from === 'user' && !m.read).length;
+      return { uid, last, unread, count: msgs.length };
     }).sort((a,b)=>(b.last.time||0)-(a.last.time||0));
-    
+
     sorted.forEach(item=>{
       const card = document.createElement('div');
       card.className = 'chat-list-item';
-      card.onclick = ()=>bukaChat(item.uid);
+      card.onclick = ()=>openChat(item.uid);
       const time = item.last.time ? new Date(item.last.time).toLocaleString('id-ID', {hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit'}) : '-';
       const preview = item.last.image ? '📸 Gambar' : (item.last.text || '(kosong)');
       card.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div class="name">👤 ${item.last.nickname || sensorEmail(item.last.email || '-')}</div>
-          ${item.unreadCount > 0 ? `<span class="badge-unread">${item.unreadCount}</span>` : ''}
+        <div class="name">
+          <span>👤 ${item.last.nickname || sensorEmail(item.last.email || '-')}</span>
+          ${item.unread > 0 ? `<span class="unread-badge">${item.unread}</span>` : ''}
         </div>
         <div class="preview">${preview}</div>
-        <div class="time">${time} • ${item.msgCount} pesan</div>
+        <div class="time">${time} • ${item.count} pesan</div>
       `;
       list.appendChild(card);
     });
   });
 }
 
-// ===== BUKA CHAT =====
-window.bukaChat = async (uid)=>{
+window.openChat = async (uid)=>{
   currentChatUid = uid;
-  document.getElementById('adminChatBox').style.display = 'flex';
   document.getElementById('listChat').style.display = 'none';
-  
+  document.getElementById('chatBox').style.display = 'flex';
+
   const userSnap = await window.wafaGet(window.wafaRef(window.wafaDB, 'users/'+uid));
   const u = userSnap.val() || {};
-  document.getElementById('adminChatName').innerText = `${u.nickname || 'User'} (${sensorEmail(u.email||'-')})`;
-  
+  document.getElementById('chatBoxName').innerText = `${u.nickname || 'User'} (${sensorEmail(u.email||'-')})`;
+
   if(chatUnsubscribe) chatUnsubscribe();
   chatUnsubscribe = window.wafaOnValue(window.wafaRef(window.wafaDB, 'chats/'+uid), (snap)=>{
     const data = snap.val() || {};
     const msgs = Object.entries(data).map(([k,v])=>({...v, _id:k})).sort((a,b)=>(a.time||0)-(b.time||0));
-    const c = document.getElementById('adminChatMessages');
+    const c = document.getElementById('chatMessages');
     c.innerHTML = '';
     if(msgs.length === 0){
-      c.innerHTML = '<div class="msg bot">Belum ada pesan</div>';
+      c.innerHTML = '<div style="color:#5a638a;font-size:12px;text-align:center;padding:20px">Belum ada pesan</div>';
     } else {
       msgs.forEach(m=>{
         const d = document.createElement('div');
-        d.className = 'msg ' + (m.from === 'admin' ? 'user' : 'bot');
+        d.className = 'msg ' + (m.from === 'admin' ? 'admin' : 'user');
         if(m.image){
-          d.innerHTML = `<img src="${m.image}" style="max-width:100%;border-radius:8px">`;
+          d.innerHTML = `<img src="${m.image}">`;
           if(m.text) d.innerHTML = m.text + '<br>' + d.innerHTML;
         } else {
           d.innerText = m.text || '';
@@ -460,41 +838,223 @@ window.bukaChat = async (uid)=>{
   });
 };
 
-// ===== TUTUP CHAT =====
-window.closeAdminChat = ()=>{
+window.closeChat = ()=>{
   currentChatUid = null;
   if(chatUnsubscribe){ chatUnsubscribe(); chatUnsubscribe = null; }
-  document.getElementById('adminChatBox').style.display = 'none';
+  document.getElementById('chatBox').style.display = 'none';
   document.getElementById('listChat').style.display = 'block';
 };
 
-// ===== KIRIM BALASAN (TANPA NOTIF DISCORD) =====
-window.kirimBalasan = async ()=>{
+window.sendReply = async ()=>{
   if(!currentChatUid) return;
-  const inp = document.getElementById('adminChatText');
+  const inp = document.getElementById('chatText');
   const t = inp.value.trim();
   if(!t) return;
-  
   const msgId = Date.now() + '_' + Math.random().toString(36).slice(2,7);
-  const msgData = {
-    from: 'admin',
-    text: t,
-    time: Date.now(),
-    read: true
-  };
   try{
-    await window.wafaSet(window.wafaRef(window.wafaDB, 'chats/'+currentChatUid+'/'+msgId), msgData);
+    await window.wafaSet(window.wafaRef(window.wafaDB, 'chats/'+currentChatUid+'/'+msgId), {
+      from: 'admin',
+      text: t,
+      time: Date.now(),
+      read: true
+    });
     inp.value = '';
   }catch(e){ alert('Gagal kirim: '+e.message); }
 };
 
-// ===== UPDATE STATISTIK =====
-function updateStats(order, topup, chat, revenue){
-  if(order !== null && order !== undefined) document.getElementById('statOrder').innerText = order;
-  if(topup !== null && topup !== undefined) document.getElementById('statTopup').innerText = topup;
-  if(chat !== null && chat !== undefined) document.getElementById('statChat').innerText = chat;
-  if(revenue !== null && revenue !== undefined) document.getElementById('statToday').innerText = 'Rp' + revenue.toLocaleString('id-ID');
+// ===== CUSTOMERS =====
+function loadCustomers(){
+  const list = document.getElementById('listCustomers');
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'users'), (snap)=>{
+    const data = snap.val();
+    list.innerHTML = '';
+    if(!data){ list.innerHTML = '<div style="text-align:center;color:#5a638a;padding:20px">👥 Belum ada user</div>'; return; }
+    const users = Object.entries(data).map(([uid, u])=>({...u, uid}));
+    users.forEach(u=>{
+      const row = document.createElement('div');
+      row.className = 'cust-row';
+      row.innerHTML = `
+        <div>
+          <b>${u.nickname || u.name || 'User'}</b><br>
+          <span style="font-size:10px;color:#8d94b8">${sensorEmail(u.email||'-')} • ${sensorUid(u.uid)}</span>
+        </div>
+        <div style="text-align:right">
+          <b style="color:#00ff88">Rp${(u.saldo||0).toLocaleString('id-ID')}</b><br>
+          <button class="btn btn-primary btn-sm" onclick="editSaldo('${u.uid}', ${u.saldo||0})" style="margin-top:4px">💰 Edit</button>
+        </div>
+      `;
+      list.appendChild(row);
+    });
+  });
 }
+
+window.editSaldo = async (uid, saldoLama)=>{
+  const input = prompt(`Edit saldo user.\n\nSaldo sekarang: Rp${saldoLama.toLocaleString('id-ID')}\n\nMasukkan saldo baru:`, saldoLama);
+  if(input === null) return;
+  const saldoBaru = parseInt(input) || 0;
+  if(saldoBaru < 0){ alert('Saldo ga boleh negatif'); return; }
+  try{
+    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'users/'+uid), { saldo: saldoBaru });
+    toast(`✅ Saldo diupdate: Rp${saldoBaru.toLocaleString('id-ID')}`);
+  }catch(e){ alert('Gagal: '+e.message); }
+};
+
+// ===== SETTINGS =====
+// (Email & UID udah di-set di initAdmin)
+// Fungsi logout ada di atas (logoutAdmin)
+</script>
+<script>
+// ===== BRANDING =====
+let logoBase64 = null;
+let bannerBase64 = null;
+
+function loadBranding(){
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/branding'), (snap)=>{
+    const d = snap.val();
+    if(!d) return;
+    if(d.brandName){
+      document.getElementById('inputBrandName').value = d.brandName;
+      document.getElementById('previewBrandName').innerText = d.brandName;
+      document.getElementById('sbBrandName').innerText = d.brandName;
+    }
+    if(d.tagline){
+      document.getElementById('inputTagline').value = d.tagline;
+      document.getElementById('previewTagline').innerText = d.tagline;
+    }
+    if(d.logo){
+      document.getElementById('previewLogo').src = d.logo;
+      document.getElementById('sbLogo').src = d.logo;
+    }
+    if(d.banner){
+      document.getElementById('bannerPreview').style.backgroundImage = `url('${d.banner}')`;
+      document.getElementById('bannerPreview').innerText = '';
+    }
+  });
+}
+
+window.uploadLogo = (input)=>{
+  const file = input.files[0];
+  if(!file) return;
+  if(file.size > 500*1024){ alert('❌ Logo max 500KB'); input.value=''; return; }
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    logoBase64 = e.target.result;
+    document.getElementById('previewLogo').src = logoBase64;
+    document.getElementById('sbLogo').src = logoBase64;
+    document.getElementById('logoFileName').innerText = '✅ ' + file.name;
+  };
+  reader.readAsDataURL(file);
+};
+
+window.uploadBanner = (input)=>{
+  const file = input.files[0];
+  if(!file) return;
+  if(file.size > 500*1024){ alert('❌ Banner max 500KB'); input.value=''; return; }
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    bannerBase64 = e.target.result;
+    document.getElementById('bannerPreview').style.backgroundImage = `url('${bannerBase64}')`;
+    document.getElementById('bannerPreview').innerText = '';
+    document.getElementById('bannerFileName').innerText = '✅ ' + file.name;
+  };
+  reader.readAsDataURL(file);
+};
+
+window.saveBranding = async ()=>{
+  const brandName = document.getElementById('inputBrandName').value.trim();
+  const tagline = document.getElementById('inputTagline').value.trim();
+  if(!brandName){ alert('Isi nama brand dulu!'); return; }
+  try{
+    const data = { brandName, tagline, updatedAt: Date.now() };
+    if(logoBase64) data.logo = logoBase64;
+    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'settings/branding'), data);
+    logoBase64 = null;
+    toast('✅ Branding disimpan!');
+  }catch(e){ alert('Gagal: '+e.message); }
+};
+
+window.saveBanner = async ()=>{
+  if(!bannerBase64){ alert('Upload banner dulu!'); return; }
+  try{
+    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'settings/branding'), { banner: bannerBase64, updatedAt: Date.now() });
+    bannerBase64 = null;
+    toast('✅ Banner disimpan!');
+  }catch(e){ alert('Gagal: '+e.message); }
+};
+
+// ===== ANNOUNCEMENT =====
+function loadAnnouncement(){
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/announcement'), (snap)=>{
+    const d = snap.val();
+    if(!d) return;
+    document.getElementById('inputAnnActive').value = d.active === false ? 'false' : 'true';
+    if(d.title) document.getElementById('inputAnnTitle').value = d.title;
+    if(d.text) document.getElementById('inputAnnText').value = d.text;
+  });
+}
+
+window.saveAnnouncement = async ()=>{
+  const active = document.getElementById('inputAnnActive').value === 'true';
+  const title = document.getElementById('inputAnnTitle').value.trim();
+  const text = document.getElementById('inputAnnText').value.trim();
+  if(!title || !text){ alert('Isi judul & isi pesan dulu!'); return; }
+  try{
+    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'settings/announcement'), { active, title, text, updatedAt: Date.now() });
+    toast('✅ Announcement disimpan!');
+  }catch(e){ alert('Gagal: '+e.message); }
+};
+
+// ===== THEME =====
+function loadTheme(){
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/theme'), (snap)=>{
+    const d = snap.val();
+    if(!d) return;
+    if(d.primary){ document.getElementById('inputPrimary').value = d.primary; }
+    if(d.accent){ document.getElementById('inputAccent').value = d.accent; }
+    updateThemePreview();
+  });
+
+  document.getElementById('inputPrimary').addEventListener('input', updateThemePreview);
+  document.getElementById('inputAccent').addEventListener('input', updateThemePreview);
+}
+
+function updateThemePreview(){
+  const p = document.getElementById('inputPrimary').value;
+  const a = document.getElementById('inputAccent').value;
+  const el = document.getElementById('themePreview');
+  el.style.background = `linear-gradient(90deg, ${p}, ${a})`;
+  el.innerText = `Preview: ${p} → ${a}`;
+}
+
+window.saveTheme = async ()=>{
+  const primary = document.getElementById('inputPrimary').value;
+  const accent = document.getElementById('inputAccent').value;
+  try{
+    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'settings/theme'), { primary, accent, updatedAt: Date.now() });
+    toast('✅ Theme disimpan! Refresh web user untuk lihat hasilnya.');
+  }catch(e){ alert('Gagal: '+e.message); }
+};
+
+window.resetTheme = async ()=>{
+  if(!confirm('Reset warna ke default (biru neon + ungu)?')) return;
+  document.getElementById('inputPrimary').value = '#00e5ff';
+  document.getElementById('inputAccent').value = '#7c3aed';
+  updateThemePreview();
+  try{
+    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'settings/theme'), { primary: '#00e5ff', accent: '#7c3aed', updatedAt: Date.now() });
+    toast('✅ Theme direset ke default');
+  }catch(e){ alert('Gagal: '+e.message); }
+};
+
+// ===== GLOBAL SEARCH =====
+document.getElementById('globalSearch')?.addEventListener('input', (e)=>{
+  const q = e.target.value.toLowerCase().trim();
+  if(!q){ return; }
+  document.querySelectorAll('.item-card, .cust-row, .chat-list-item').forEach(el=>{
+    const txt = el.innerText.toLowerCase();
+    el.style.display = txt.includes(q) ? '' : 'none';
+  });
+});
 </script>
 </body>
 </html>
