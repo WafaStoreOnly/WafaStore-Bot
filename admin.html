@@ -193,53 +193,27 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
 
   <div class="sb-section">
     <div class="sb-section-title">Menu Utama</div>
-    <div class="sb-menu-item active" data-menu="dashboard" onclick="switchPage('dashboard')">
-      <span class="icon">📊</span> Dashboard
-    </div>
-    <div class="sb-menu-item" data-menu="orders" onclick="switchPage('orders')">
-      <span class="icon">📦</span> Orders
-    </div>
-    <div class="sb-menu-item" data-menu="topup" onclick="switchPage('topup')">
-      <span class="icon">💰</span> Top Up Dompet
-    </div>
-    <div class="sb-menu-item" data-menu="chat" onclick="switchPage('chat')">
-      <span class="icon">💬</span> Chat / CS
-    </div>
-    <div class="sb-menu-item" data-menu="customers" onclick="switchPage('customers')">
-      <span class="icon">👥</span> Customers
-    </div>
+    <div class="sb-menu-item active" data-menu="dashboard" onclick="switchPage('dashboard')"><span class="icon">📊</span> Dashboard</div>
+    <div class="sb-menu-item" data-menu="orders" onclick="switchPage('orders')"><span class="icon">📦</span> Orders</div>
+    <div class="sb-menu-item" data-menu="topup" onclick="switchPage('topup')"><span class="icon">💰</span> Top Up Dompet</div>
+    <div class="sb-menu-item" data-menu="chat" onclick="switchPage('chat')"><span class="icon">💬</span> Chat / CS</div>
+    <div class="sb-menu-item" data-menu="customers" onclick="switchPage('customers')"><span class="icon">👥</span> Customers</div>
   </div>
 
   <div class="sb-section">
     <div class="sb-section-title">Kustomisasi</div>
-    <div class="sb-menu-item" data-menu="branding" onclick="switchPage('branding')">
-      <span class="icon">🎨</span> Branding
-    </div>
-    <div class="sb-menu-item" data-menu="games" onclick="switchPage('games')">
-      <span class="icon">🎮</span> Game Icons
-    </div>
-    <div class="sb-menu-item" data-menu="welcome" onclick="switchPage('welcome')">
-      <span class="icon">🏠</span> Welcome Box
-    </div>
-    <div class="sb-menu-item" data-menu="syarat" onclick="switchPage('syarat')">
-      <span class="icon">📋</span> Syarat & Ketentuan
-    </div>
-    <div class="sb-menu-item" data-menu="announcement" onclick="switchPage('announcement')">
-      <span class="icon">📢</span> Announcement
-    </div>
-    <div class="sb-menu-item" data-menu="theme" onclick="switchPage('theme')">
-      <span class="icon">🌈</span> Theme
-    </div>
+    <div class="sb-menu-item" data-menu="branding" onclick="switchPage('branding')"><span class="icon">🎨</span> Branding</div>
+    <div class="sb-menu-item" data-menu="games" onclick="switchPage('games')"><span class="icon">🎮</span> Game Icons</div>
+    <div class="sb-menu-item" data-menu="welcome" onclick="switchPage('welcome')"><span class="icon">🏠</span> Welcome Box</div>
+    <div class="sb-menu-item" data-menu="syarat" onclick="switchPage('syarat')"><span class="icon">📋</span> Syarat & Ketentuan</div>
+    <div class="sb-menu-item" data-menu="announcement" onclick="switchPage('announcement')"><span class="icon">📢</span> Announcement</div>
+    <div class="sb-menu-item" data-menu="theme" onclick="switchPage('theme')"><span class="icon">🌈</span> Theme</div>
   </div>
 
   <div class="sb-section">
     <div class="sb-section-title">Sistem</div>
-    <div class="sb-menu-item" data-menu="settings" onclick="switchPage('settings')">
-      <span class="icon">⚙️</span> Settings
-    </div>
-    <div class="sb-menu-item" onclick="window.location.href='index.html'">
-      <span class="icon">🌐</span> Lihat Website
-    </div>
+    <div class="sb-menu-item" data-menu="settings" onclick="switchPage('settings')"><span class="icon">⚙️</span> Settings</div>
+    <div class="sb-menu-item" onclick="window.location.href='index.html'"><span class="icon">🌐</span> Lihat Website</div>
   </div>
 
   <div class="sb-footer">
@@ -254,12 +228,8 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
 <main id="adminMain">
   <header class="admin-header">
     <div class="hamburger" onclick="toggleSidebar()">☰</div>
-    <div class="header-search">
-      <input type="text" id="globalSearch" placeholder="Cari order, customer, chat...">
-    </div>
-    <div class="header-right">
-      <div class="header-user" id="headerUserName">👤 Admin</div>
-    </div>
+    <div class="header-search"><input type="text" id="globalSearch" placeholder="Cari order, customer, chat..."></div>
+    <div class="header-right"><div class="header-user" id="headerUserName">👤 Admin</div></div>
   </header>
 
   <div class="admin-content">
@@ -284,19 +254,13 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
     <div class="page" id="page-orders" style="display:none">
       <div class="page-title">Orders</div>
       <div class="page-sub">Kelola semua order Robux</div>
-      <div class="card">
-        <div class="card-title">Semua Order</div>
-        <div id="listOrders"></div>
-      </div>
+      <div class="card"><div class="card-title">Semua Order</div><div id="listOrders"></div></div>
     </div>
 
     <div class="page" id="page-topup" style="display:none">
       <div class="page-title">Top Up Dompet</div>
       <div class="page-sub">Approve top up user</div>
-      <div class="card">
-        <div class="card-title">Top Up Requests</div>
-        <div id="listTopup"></div>
-      </div>
+      <div class="card"><div class="card-title">Top Up Requests</div><div id="listTopup"></div></div>
     </div>
 
     <div class="page" id="page-chat" style="display:none">
@@ -322,10 +286,7 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
     <div class="page" id="page-customers" style="display:none">
       <div class="page-title">Customers</div>
       <div class="page-sub">List semua user + edit saldo</div>
-      <div class="card">
-        <div class="card-title">Daftar User</div>
-        <div id="listCustomers"></div>
-      </div>
+      <div class="card"><div class="card-title">Daftar User</div><div id="listCustomers"></div></div>
     </div>
 
     <div class="page" id="page-branding" style="display:none">
@@ -335,10 +296,7 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
         <div class="card-title">Brand Identity</div>
         <div class="brand-preview">
           <img id="previewLogo" src="./logo.png" alt="logo">
-          <div>
-            <b id="previewBrandName">WafaStoreOnly</b>
-            <small id="previewTagline">Top Up Robux Cepat & Aman</small>
-          </div>
+          <div><b id="previewBrandName">WafaStoreOnly</b><small id="previewTagline">Top Up Robux Cepat & Aman</small></div>
         </div>
         <div class="input-group"><label>Nama Brand</label><input id="inputBrandName" placeholder="WafaStoreOnly"></div>
         <div class="input-group"><label>Tagline</label><input id="inputTagline" placeholder="Top Up Robux Cepat & Aman"></div>
@@ -380,10 +338,7 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
         <div class="card-title">Pengaturan Welcome</div>
         <div class="input-group">
           <label>Status</label>
-          <select id="welcomeActive">
-            <option value="true">Aktif (muncul di beranda)</option>
-            <option value="false">Nonaktif</option>
-          </select>
+          <select id="welcomeActive"><option value="true">Aktif (muncul di beranda)</option><option value="false">Nonaktif</option></select>
         </div>
         <div class="input-group"><label>Judul</label><input id="welcomeTitle" placeholder="WELCOME TO WAFASTOREONLY"></div>
         <div class="input-group">
@@ -412,56 +367,26 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
 
     <div class="page" id="page-syarat" style="display:none">
       <div class="page-title">Syarat & Ketentuan</div>
-      <div class="page-sub">Edit syarat tiap metode top up. 1 baris = 1 syarat. Item terakhir otomatis hijau.</div>
-
+      <div class="page-sub">Edit syarat tiap metode top up. 1 baris = 1 syarat.</div>
       <div class="card">
         <div class="card-title">Via Username</div>
-        <div class="input-group">
-          <label>Status</label>
-          <select id="syaratActiveUsername">
-            <option value="true">Tampil</option>
-            <option value="false">Sembunyikan</option>
-          </select>
-        </div>
+        <div class="input-group"><label>Status</label><select id="syaratActiveUsername"><option value="true">Tampil</option><option value="false">Sembunyikan</option></select></div>
         <div class="input-group"><label>Judul</label><input id="syaratTitleUsername" placeholder="SYARAT ROBUX VIA USERNAME"></div>
-        <div class="input-group">
-          <label>Daftar Syarat (1 baris = 1 syarat)</label>
-          <textarea id="syaratItemsUsername" style="min-height:130px" placeholder="Proses kilat 5-10 menit&#10;Pastikan username benar&#10;Pastikan 2FA aktif&#10;Umur 18+"></textarea>
-        </div>
+        <div class="input-group"><label>Daftar Syarat</label><textarea id="syaratItemsUsername" style="min-height:130px" placeholder="Proses kilat 5-10 menit&#10;Pastikan username benar"></textarea></div>
         <button class="btn btn-success" onclick="saveSyarat('username')">💾 Simpan Username</button>
       </div>
-
       <div class="card">
         <div class="card-title">Via Gamepass</div>
-        <div class="input-group">
-          <label>Status</label>
-          <select id="syaratActiveGamepass">
-            <option value="true">Tampil</option>
-            <option value="false">Sembunyikan</option>
-          </select>
-        </div>
+        <div class="input-group"><label>Status</label><select id="syaratActiveGamepass"><option value="true">Tampil</option><option value="false">Sembunyikan</option></select></div>
         <div class="input-group"><label>Judul</label><input id="syaratTitleGamepass" placeholder="SYARAT ROBUX VIA GAMEPASS"></div>
-        <div class="input-group">
-          <label>Daftar Syarat</label>
-          <textarea id="syaratItemsGamepass" style="min-height:130px" placeholder="Proses ± 5-7 hari&#10;Username harus benar&#10;Gamepass harus publik&#10;Setting gamepass sesuai"></textarea>
-        </div>
+        <div class="input-group"><label>Daftar Syarat</label><textarea id="syaratItemsGamepass" style="min-height:130px" placeholder="Proses ± 5-7 hari&#10;Username harus benar"></textarea></div>
         <button class="btn btn-success" onclick="saveSyarat('gamepass')">💾 Simpan Gamepass</button>
       </div>
-
       <div class="card">
         <div class="card-title">Via Gift In Game</div>
-        <div class="input-group">
-          <label>Status</label>
-          <select id="syaratActiveGift">
-            <option value="true">Tampil</option>
-            <option value="false">Sembunyikan</option>
-          </select>
-        </div>
+        <div class="input-group"><label>Status</label><select id="syaratActiveGift"><option value="true">Tampil</option><option value="false">Sembunyikan</option></select></div>
         <div class="input-group"><label>Judul</label><input id="syaratTitleGift" placeholder="SYARAT ROBUX VIA GIFT IN GAME"></div>
-        <div class="input-group">
-          <label>Daftar Syarat</label>
-          <textarea id="syaratItemsGift" style="min-height:130px" placeholder="Stand by di server map&#10;Username benar&#10;Nama item sesuai&#10;Jumlah robux sesuai"></textarea>
-        </div>
+        <div class="input-group"><label>Daftar Syarat</label><textarea id="syaratItemsGift" style="min-height:130px" placeholder="Stand by di server map&#10;Username benar"></textarea></div>
         <button class="btn btn-success" onclick="saveSyarat('gift')">💾 Simpan Gift</button>
       </div>
     </div>
@@ -471,16 +396,8 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
       <div class="page-sub">Atur pemberitahuan di beranda web</div>
       <div class="card">
         <div class="card-title">Status Announcement</div>
-        <div class="input-group">
-          <label>Status</label>
-          <select id="inputAnnActive">
-            <option value="true">Aktif (muncul di beranda)</option>
-            <option value="false">Nonaktif</option>
-          </select>
-        </div>
-        <div style="font-size:12px;color:#8a8a8a;line-height:1.7;background:#141414;border:1px solid #2a2a2a;border-radius:10px;padding:14px;margin-bottom:14px">
-          ℹ️ Announcement di beranda udah <b style="color:#e8e8e8">step-by-step hardcoded</b>. Menu ini cuma buat on/off aja.
-        </div>
+        <div class="input-group"><label>Status</label><select id="inputAnnActive"><option value="true">Aktif</option><option value="false">Nonaktif</option></select></div>
+        <div style="font-size:12px;color:#8a8a8a;line-height:1.7;background:#141414;border:1px solid #2a2a2a;border-radius:10px;padding:14px;margin-bottom:14px">ℹ️ Announcement di beranda udah <b style="color:#e8e8e8">hardcoded</b> step-by-step.</div>
         <button class="btn btn-success" onclick="saveAnnouncement()">💾 Simpan Status</button>
       </div>
     </div>
@@ -514,8 +431,7 @@ window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
         <div style="font-size:13px;color:#a8a8a8;line-height:1.9">
           <b style="color:#e8e8e8">Web URL:</b> <a href="https://wafastoreonly-official.vercel.app" style="color:#4a90e2" target="_blank">wafastoreonly-official.vercel.app</a><br>
           <b style="color:#e8e8e8">Firebase:</b> wafastoreonly<br>
-          <b style="color:#e8e8e8">Version:</b> Admin Panel v3.1<br>
-          <b style="color:#e8e8e8">Admin UID:</b> 5jLY5Gaf...7v12
+          <b style="color:#e8e8e8">Version:</b> Admin Panel v3.2
         </div>
       </div>
     </div>
@@ -742,17 +658,54 @@ window.lihatBukti = async (id)=>{
   w.document.write(`<html><head><title>Bukti TF</title><style>body{margin:0;background:#000;display:flex;justify-content:center;align-items:center;min-height:100vh}img{max-width:100%;max-height:100vh}</style></head><body><img src="${o.bukti}"></body></html>`);
 };
 
+// ✅ PROSES SELESAI DENGAN LOGS
 window.prosesSelesai = async (id)=>{
   try{
     await window.wafaUpdate(window.wafaRef(window.wafaDB, 'orders/'+id), { status:'selesai', selesaiAt:Date.now() });
     const snap = await window.wafaGet(window.wafaRef(window.wafaDB, 'orders/'+id));
     const o = snap.val();
+
+    // Simpan ke logs (buat feed publik di web user)
+    const logData = {
+      id: id,
+      nickname: o.nickname || 'User',
+      username: o.username || '-',
+      jumlah: o.jumlah || 0,
+      date: o.date || '-',
+      selesaiAt: Date.now()
+    };
+    await window.wafaSet(window.wafaRef(window.wafaDB, 'logs/'+id), logData);
+
+    // Auto-hapus log > 7 hari
+    cleanupOldLogs();
+
+    // Discord notif
     if(window.WEBHOOK_ORDER_DONE){
-      fetch(window.WEBHOOK_ORDER_DONE, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ content:`✅ **ORDER SELESAI**\nID: #${id.toString().slice(-6)}\nBuyer: ${sensorEmail(o.email||'-')}\nUsername: ${o.username}\nJumlah: ${o.jumlah} Robux` }) }).catch(()=>{});
+      fetch(window.WEBHOOK_ORDER_DONE, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          content: `✅ **ORDER SELESAI**\n\n📦 Order #${id.toString().slice(-6)}\n👤 Buyer: **${o.nickname || 'User'}**\n📊 Jumlah: **${o.jumlah} Robux**\n💰 Total: Rp${(o.total||0).toLocaleString('id-ID')}\n🕐 Selesai: ${new Date().toLocaleString('id-ID')}\n📧 Email: ${sensorEmail(o.email||'-')}`
+        })
+      }).catch(()=>{});
     }
     toast('✅ Order diselesaikan!');
   }catch(e){ alert('Gagal: '+e.message); }
 };
+
+// Auto-hapus logs > 7 hari
+async function cleanupOldLogs(){
+  try{
+    const snap = await window.wafaGet(window.wafaRef(window.wafaDB, 'logs'));
+    const data = snap.val();
+    if(!data) return;
+    const sevenDaysAgo = Date.now() - (7 * 24 * 60 * 60 * 1000);
+    Object.entries(data).forEach(([key, log])=>{
+      if(log.selesaiAt && log.selesaiAt < sevenDaysAgo){
+        window.wafaRemove(window.wafaRef(window.wafaDB, 'logs/'+key));
+      }
+    });
+  }catch(e){ console.log('Cleanup error:', e); }
+}
 
 window.prosesBatal = async (id, alasan)=>{
   try{
@@ -842,7 +795,7 @@ window.hapusTopup = async (id)=>{
   try{ await window.wafaRemove(window.wafaRef(window.wafaDB, 'topup_saldo/'+id)); toast('🗑️ Dihapus'); }catch(e){ alert('Gagal: '+e.message); }
 };
 </script>
-
+  
 <script>
 // ===== CHAT =====
 let currentChatUid = null;
@@ -861,7 +814,6 @@ function loadChats(){
       const unread = msgs.filter(m=>m.from === 'user' && !m.read).length;
       return { uid, last, unread, count: msgs.length };
     }).sort((a,b)=>(b.last.time||0)-(a.last.time||0));
-
     sorted.forEach(item=>{
       const card = document.createElement('div');
       card.className = 'chat-list-item';
@@ -885,11 +837,9 @@ window.openChat = async (uid)=>{
   currentChatUid = uid;
   document.getElementById('listChat').style.display = 'none';
   document.getElementById('chatBox').style.display = 'flex';
-
   const userSnap = await window.wafaGet(window.wafaRef(window.wafaDB, 'users/'+uid));
   const u = userSnap.val() || {};
   document.getElementById('chatBoxName').innerText = `${u.nickname || 'User'} (${sensorEmail(u.email||'-')})`;
-
   if(chatUnsubscribe) chatUnsubscribe();
   chatUnsubscribe = window.wafaOnValue(window.wafaRef(window.wafaDB, 'chats/'+uid), (snap)=>{
     const data = snap.val() || {};
@@ -930,10 +880,7 @@ window.sendReply = async ()=>{
   const msgId = Date.now() + '_' + Math.random().toString(36).slice(2,7);
   try{
     await window.wafaSet(window.wafaRef(window.wafaDB, 'chats/'+currentChatUid+'/'+msgId), {
-      from: 'admin',
-      text: t,
-      time: Date.now(),
-      read: true
+      from: 'admin', text: t, time: Date.now(), read: true
     });
     inp.value = '';
   }catch(e){ alert('Gagal kirim: '+e.message); }
@@ -1056,12 +1003,12 @@ window.saveBanner = async ()=>{
 
 // ===== GAME ICONS =====
 const GAME_LIST = [
-  { key: 'roblox', name: 'Roblox', defaultLogo: './roblox.png', active: true, info: 'Klik buat top up Robux' },
-  { key: 'mlbb', name: 'Mobile Legends', defaultLogo: './mlbb.png', active: false, info: 'Coming soon' },
-  { key: 'pubg', name: 'PUBG Mobile', defaultLogo: './pubg.png', active: false, info: 'Coming soon' },
-  { key: 'ff', name: 'Free Fire', defaultLogo: './ff.png', active: false, info: 'Coming soon' },
-  { key: 'genshin', name: 'Genshin Impact', defaultLogo: './genshin.png', active: false, info: 'Coming soon' },
-  { key: 'valorant', name: 'Valorant', defaultLogo: './valorant.png', active: false, info: 'Coming soon' }
+  { key: 'roblox', name: 'Roblox', defaultLogo: './roblox.png', active: true },
+  { key: 'mlbb', name: 'Mobile Legends', defaultLogo: './mlbb.png', active: false },
+  { key: 'pubg', name: 'PUBG Mobile', defaultLogo: './pubg.png', active: false },
+  { key: 'ff', name: 'Free Fire', defaultLogo: './ff.png', active: false },
+  { key: 'genshin', name: 'Genshin Impact', defaultLogo: './genshin.png', active: false },
+  { key: 'valorant', name: 'Valorant', defaultLogo: './valorant.png', active: false }
 ];
 
 function loadGames(){
@@ -1074,13 +1021,11 @@ function loadGames(){
 function renderGameGrid(data){
   const grid = document.getElementById('gameGrid');
   grid.innerHTML = '';
-
   GAME_LIST.forEach(g=>{
     const saved = data[g.key] || {};
     const logo = saved.logo || g.defaultLogo;
     const name = saved.name || g.name;
     const isActive = saved.active !== undefined ? saved.active : g.active;
-
     const card = document.createElement('div');
     card.className = 'game-card ' + (isActive ? 'active' : 'inactive');
     card.innerHTML = `
@@ -1151,7 +1096,6 @@ function loadWelcome(){
     if(d.tagline){ document.getElementById('welcomeTagline').value = d.tagline; updateWelcomePreview(); }
     if(d.message){ document.getElementById('welcomeMessage').value = d.message; updateWelcomePreview(); }
   });
-
   ['welcomeTitle','welcomeTagline','welcomeMessage'].forEach(id=>{
     document.getElementById(id)?.addEventListener('input', updateWelcomePreview);
   });
@@ -1237,7 +1181,6 @@ function loadTheme(){
     if(d.accent){ document.getElementById('inputAccent').value = d.accent; }
     updateThemePreview();
   });
-
   document.getElementById('inputPrimary').addEventListener('input', updateThemePreview);
   document.getElementById('inputAccent').addEventListener('input', updateThemePreview);
 }
