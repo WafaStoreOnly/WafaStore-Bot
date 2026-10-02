@@ -66,7 +66,6 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
 <script>
 function sensorEmail(e){if(!e||!e.includes('@'))return'****';let [a,b]=e.split('@');return a.slice(0,3)+'****@'+b}
 
-// ===== CEK BUKTI (VERSI LONGGAR - ANTI FALSE POSITIVE) =====
 async function cekBuktiValid(file){
   let loading=document.createElement('div');
   loading.id='loadingDetect';
@@ -87,28 +86,22 @@ async function cekBuktiValid(file){
     let lower=text.toLowerCase();
     let lowerNoSpace=lower.replace(/\s/g,'');
 
-    // Log debug ke console (buat cek kalau ada masalah)
     console.log('=== OCR DEBUG ===');
     console.log('TEXT ASLI:', text);
-    console.log('LOWER:', lower);
 
     let blacklist=['kontol','memek','ngentot','anjing','babi','bangsat','tolol','goblok','asu','jancok','fuck','shit','peler','itil','jembut'];
     if(blacklist.some(k=>lower.includes(k))){ document.getElementById('loadingDetect').remove(); return {valid:false,reason:`❌ FOTO DITOLAK! Ada kata kasar!`}; }
 
     document.getElementById('cek-status').innerText='3/4 Cek penerima...';
 
-    // Ganti huruf O/o jadi 0, buang semua non-angka
     let angkaSaja = lowerNoSpace.replace(/o/g,'0').replace(/[^0-9]/g,'');
-    // Ambil semua huruf aja
     let teksSaja = lower.replace(/[^a-z]/g,'');
 
-    // Cek potongan angka kunci (DANA/GoPay/Seabank)
     let ciriAngka = [
       '0838627','838627','386277','862776','627767','277679',
       '9011627','011627','116276','162765','627654','276546',
       '0838','6277','1627','6546'
     ];
-    // Cek potongan nama (Wafa/awa/AWA_NEWSTREAM/dll)
     let ciriNama = [
       'wafa','awa','abiwafa','newstream','wafastore','killua','abiw',
       'wafaali','abiwafaali','abiwa','store'
@@ -133,7 +126,6 @@ async function cekBuktiValid(file){
   }catch(e){ let l=document.getElementById('loadingDetect');if(l)l.remove(); return {valid:false,reason:`❌ Gagal baca: ${e.message}`}; }
 }
 
-// ===== PAKET CEPAT =====
 const listDompet=[10000,20000,50000,100000,200000,500000];
 function renderDompet(){
   let g=document.getElementById('gridDompet');g.innerHTML='';
@@ -147,7 +139,6 @@ function renderDompet(){
 }
 function calcDompet(){let j=parseInt(document.getElementById('nominalDompet').value)||0;document.getElementById('totalDompet').innerText=`Total bayar: Rp${j.toLocaleString('id-ID')}`;}
 
-// ===== BUKA APP DANA/GOPAY/SEABANK =====
 function bayarViaApp(app, nomor){
   navigator.clipboard.writeText(nomor).then(()=>{
     if(typeof wsToast==='function') wsToast(`✅ Nomor ${nomor} disalin!`);
@@ -167,7 +158,6 @@ function bayarViaApp(app, nomor){
   }, 500);
 }
 
-// ===== UPLOAD BUKTI TF + KIRIM KE FIREBASE =====
 async function uploadBuktiDompet(){
   let nominal=parseInt(document.getElementById('nominalDompet').value)||0;
   if(nominal<10000){alert('Minimal top up Rp10.000 bos!');return;}
@@ -182,30 +172,20 @@ async function uploadBuktiDompet(){
       let userData=JSON.parse(localStorage.getItem('wafa_user')||'{}');
       const dataId = Date.now();
       const data = {
-        id: dataId,
-        uid: uid,
-        nominal: nominal,
-        jumlah: nominal,
+        id: dataId, uid: uid, nominal: nominal, jumlah: nominal,
         date: new Date().toLocaleString('id-ID'),
-        bukti: r.result,
-        status: 'verifikasi',
-        nickname: userData.nickname||'-',
-        email: userData.email||'-'
+        bukti: r.result, status: 'verifikasi',
+        nickname: userData.nickname||'-', email: userData.email||'-'
       };
-      // SIMPAN KE FIREBASE (topup_saldo)
       try{
-        if(window.wafaDB){
-          await window.wafaSet(window.wafaRef(window.wafaDB, 'topup_saldo/'+dataId), data);
-        }
+        if(window.wafaDB){ await window.wafaSet(window.wafaRef(window.wafaDB, 'topup_saldo/'+dataId), data); }
       }catch(err){ console.log('Firebase error:', err); alert('❌ Gagal simpan ke server: '+err.message); return; }
 
-      // SIMPAN LOCALSTORAGE
       let riwayat=JSON.parse(localStorage.getItem('wafa_dompet')||'[]');
       riwayat.unshift(data);
       localStorage.setItem('wafa_dompet',JSON.stringify(riwayat));
       renderRiwayat();
 
-      // KIRIM KE DISCORD
       let emailSensor=sensorEmail(userData.email||'-');
       const text=`💰 **TOP UP DOMPET BARU!**\nID: #${dataId.toString().slice(-6)}\nNominal: Rp${nominal.toLocaleString('id-ID')}\nBuyer: ${emailSensor} (${userData.nickname||'-'})\nUID: ${uid}\nTanggal: ${data.date}\n\n🤖 AUTO DETECT: NSFW Aman ✅, Penerima Valid ✅`;
       try{
@@ -236,7 +216,6 @@ function renderRiwayat(){
   });
 }
 
-// ===== LOAD USER (pakai Firebase SDK) =====
 async function loadUser(){
   try{
     let uid=localStorage.getItem('wafa_uid');
@@ -253,7 +232,6 @@ async function loadUser(){
   }catch(e){ console.log('loadUser error:', e); }
 }
 
-// ===== FIREBASE LISTENER =====
 function attachDompetListener(){
   try{
     if(!window.wafaDB || !window.wafaOnValue) return;
