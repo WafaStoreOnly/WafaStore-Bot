@@ -344,7 +344,7 @@ function saveOrder(data){
   return data.id;
 }
 
-// ===== DISCORD: 2 PESAN (FORMAT ORDER + GAMBAR & TOMBOL) =====
+// ===== DISCORD: 2 PESAN =====
 function sendDiscordWithBukti(o, dataUrl, judul){
   const baseUrl = "https://wafastoreonly-official.vercel.app/";
   const selesaiUrl = `${baseUrl}admin.html?id=${o.id}&action=selesai`;
@@ -766,6 +766,91 @@ function addBotMsg(txt){
 // ===== INIT =====
 renderUsername(); renderGamepass(); checkExpired();
 (function initListeners(){ let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]'); orders.forEach(o=>attachFirebaseListener(o.id)); })();
+
+// ===== LOAD SETTINGS DARI FIREBASE (BRANDING, ANNOUNCEMENT, THEME) =====
+function applyTheme(primary, accent){
+  if(!primary) primary = '#00e5ff';
+  if(!accent) accent = '#7c3aed';
+  document.documentElement.style.setProperty('--primary', primary);
+  document.documentElement.style.setProperty('--accent', accent);
+  document.documentElement.style.setProperty('--killua-primary', primary);
+  document.documentElement.style.setProperty('--killua-accent', accent);
+}
+
+function loadSettingsFirebase(){
+  if(!window.wafaDB || !window.wafaRef || !window.wafaOnValue){
+    setTimeout(loadSettingsFirebase, 500);
+    return;
+  }
+
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/branding'), (snap)=>{
+    const d = snap.val();
+    if(!d) return;
+    if(d.logo){
+      const sbLogo = document.querySelector('.ws-logo img');
+      if(sbLogo) sbLogo.src = d.logo;
+      const fav = document.querySelector('link[rel="icon"]') || document.createElement('link');
+      fav.rel = 'icon';
+      fav.href = d.logo;
+      document.head.appendChild(fav);
+    }
+    if(d.brandName){
+      const brandEl = document.querySelector('.ws-logo span');
+      if(brandEl) brandEl.innerText = d.brandName;
+      const headerTitle = document.getElementById('wsPageTitle');
+      if(headerTitle && !headerTitle.dataset.locked) headerTitle.innerText = d.brandName + ' ⚡';
+      document.title = d.brandName + ' x Killua - OFFICIAL';
+    }
+    if(d.banner){
+      const heroBanner = document.querySelector('#homePage .banner');
+      if(heroBanner){
+        heroBanner.style.backgroundImage = `linear-gradient(rgba(6,10,35,0.55),rgba(6,10,35,0.85)), url('${d.banner}')`;
+        heroBanner.style.backgroundSize = 'cover';
+        heroBanner.style.backgroundPosition = 'center';
+      }
+    }
+  });
+
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/announcement'), (snap)=>{
+    const d = snap.val();
+    if(!d) return;
+    const annBanner = document.getElementById('annBanner');
+    if(!annBanner) return;
+    if(d.active === false){
+      annBanner.style.display = 'none';
+      return;
+    }
+    annBanner.style.display = 'flex';
+    if(d.title){
+      const titleEl = annBanner.querySelector('div[style*="font-weight:900"]');
+      if(titleEl) titleEl.innerText = d.title;
+    }
+    if(d.text){
+      const textEl = annBanner.querySelector('div[style*="font-size:11px"]');
+      if(textEl) textEl.innerHTML = d.text;
+    }
+  });
+
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/theme'), (snap)=>{
+    const d = snap.val();
+    if(!d) return;
+    applyTheme(d.primary, d.accent);
+    if(d.primary && d.accent){
+      document.querySelectorAll('.btn-primary').forEach(b=>{
+        b.style.background = `linear-gradient(90deg, ${d.primary}, ${d.accent})`;
+      });
+      document.querySelectorAll('.saldo-box').forEach(b=>{
+        b.style.background = `linear-gradient(135deg, ${d.primary}, ${d.accent})`;
+      });
+    }
+  });
+}
+
+if(document.readyState === 'complete'){
+  loadSettingsFirebase();
+} else {
+  window.addEventListener('load', loadSettingsFirebase);
+}
 </script>
 <script src="./fix-games.js"></script>
 </body>
