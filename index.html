@@ -23,16 +23,14 @@
 .hero-btn-primary:hover{background:#e8e8e8}
 .hero-btn-secondary{background:transparent;color:#fff;border:1px solid #3a3a3a}
 .hero-btn-secondary:hover{background:#1a1a1a}
-
-/* FEATURE CARDS */
+/* FEATURE */
 .feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
 .feature-card{background:#141414;border:1px solid #2a2a2a;border-radius:12px;padding:16px;transition:0.15s}
 .feature-card:hover{border-color:#3a3a3a}
 .feature-label{font-size:9px;color:#5a5a5a;letter-spacing:1.5px;font-weight:800;text-transform:uppercase;margin-bottom:8px}
 .feature-title{font-size:13px;font-weight:700;color:#e8e8e8;margin-bottom:4px}
 .feature-desc{font-size:11px;color:#8a8a8a;line-height:1.5}
-
-/* WELCOME BOX */
+/* WELCOME */
 .welcome-box{position:relative;margin-top:12px;padding:24px 20px;background:#141414;border:1px solid #2a2a2a;border-radius:14px;text-align:center;overflow:hidden;display:none}
 .welcome-box::before,.welcome-box::after{content:'';position:absolute;width:14px;height:14px;border:1.5px solid #4a90e2}
 .welcome-box::before{top:10px;left:10px;border-right:none;border-bottom:none}
@@ -41,8 +39,7 @@
 .welcome-tagline{font-size:11px;color:#8a8a8a;letter-spacing:3px;line-height:1.8;position:relative;z-index:2;text-transform:uppercase}
 .welcome-msg{margin-top:16px;font-size:11px;color:#a8a8a8;line-height:1.7;position:relative;z-index:2;font-family:'Courier New',monospace;white-space:pre-wrap}
 .welcome-msg b{color:#fff;font-weight:700}
-
-/* ANNOUNCEMENT STEP */
+/* ANNOUNCEMENT */
 .ann-box{background:#141414;border:1px solid #2a2a2a;border-radius:14px;padding:18px;margin-top:14px}
 .ann-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .ann-head-icon{font-size:22px}
@@ -57,7 +54,6 @@
 .ann-step-title{font-size:12px;font-weight:700;color:#e8e8e8;margin-bottom:3px}
 .ann-step-desc{font-size:11px;color:#8a8a8a;line-height:1.5}
 .ann-step-desc b{color:#e8e8e8}
-
 /* SYARAT */
 .syarat-box-modern{background:#141414;border:1px solid #2a2a2a;border-radius:14px;padding:16px;margin-top:16px}
 .syarat-title{font-weight:800;font-size:12px;color:#e8e8e8;margin-bottom:14px;letter-spacing:0.5px}
@@ -66,8 +62,7 @@
 .syarat-num{width:20px;height:20px;background:#1a1a1a;border:1px solid #3a3a3a;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:10px;color:#e8e8e8;flex-shrink:0;margin-top:1px}
 .syarat-item.green{border-left-color:#4ade80}
 .syarat-item.green .syarat-num{border-color:#4ade80;color:#4ade80}
-
-/* PANDUAN CEPAT */
+/* PANDUAN */
 .panduan-title{font-weight:800;font-size:15px;color:#e8e8e8;display:flex;align-items:center;gap:8px;margin:22px 0 12px}
 .panduan-item{background:#141414;border:1px solid #2a2a2a;border-radius:12px;padding:14px;display:flex;gap:12px;align-items:center;cursor:pointer;transition:0.15s;margin-bottom:10px}
 .panduan-item:hover{border-color:#3a3a3a;background:#1a1a1a}
@@ -76,12 +71,20 @@
 .panduan-info b{font-size:13px;color:#e8e8e8;display:block;margin-bottom:2px}
 .panduan-info span{font-size:11px;color:#8a8a8a;line-height:1.5;display:block}
 .panduan-arrow{color:#5a5a5a;font-size:16px}
-
-/* QRIS DOWNLOAD BADGE */
+/* ORDER LOGS */
+.log-item{background:#141414;border:1px solid #2a2a2a;border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;transition:0.15s}
+.log-item:hover{border-color:#3a3a3a}
+.log-item .check{width:32px;height:32px;background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.log-item .info{flex:1;min-width:0}
+.log-item .info b{font-size:13px;color:#e8e8e8;display:block;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.log-item .info span{font-size:10px;color:#5a5a5a;display:block;margin-top:2px}
+.log-item .right{text-align:right;flex-shrink:0}
+.log-item .right b{font-size:13px;color:#4ade80;font-weight:700;display:block}
+.log-item .right small{font-size:10px;color:#5a5a5a;display:block;margin-top:2px}
+/* QRIS */
 .qris-wrap{position:relative;cursor:pointer;background:#141414;border:1px solid #2a2a2a;border-radius:14px;overflow:hidden;text-align:center}
 .qris-wrap img{width:100%;display:block}
 .qris-badge{position:absolute;top:12px;right:12px;background:rgba(10,10,10,0.9);border:1px solid #3a3a3a;color:#e8e8e8;padding:6px 12px;border-radius:20px;font-size:10px;font-weight:700;backdrop-filter:blur(8px)}
-
 @media (max-width:768px){
   .feature-grid{grid-template-columns:1fr 1fr}
   .hero-title{font-size:32px;letter-spacing:-1px}
@@ -114,7 +117,6 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
 
 <div id="homePage" class="ws-section">
 
-  <!-- HERO BANNER -->
   <div class="hero-banner">
     <div class="hero-bg" id="heroBg" style="background-image:url('./killua-bg.webp')"></div>
     <div class="hero-overlay"></div>
@@ -129,7 +131,6 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
     </div>
   </div>
 
-  <!-- FEATURE CARDS -->
   <div class="feature-grid">
     <div class="feature-card">
       <div class="feature-label">Mode</div>
@@ -153,7 +154,6 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
     </div>
   </div>
 
-  <!-- WELCOME BOX -->
   <div class="welcome-box" id="welcomeBox">
     <div class="welcome-title" id="welcomeTitle">WELCOME TO WAFASTOREONLY</div>
     <div class="welcome-tagline" id="welcomeTagline">WHERE LEGENDS CREATE & EMPIRES RISE</div>
@@ -161,7 +161,6 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
 Selamat datang di rumah baru kalian.</div>
   </div>
 
-  <!-- ANNOUNCEMENT -->
   <div class="ann-box" id="annBanner">
     <div class="ann-head">
       <div class="ann-head-icon">📢</div>
@@ -170,7 +169,6 @@ Selamat datang di rumah baru kalian.</div>
         <div class="ann-head-sub">Ikuti langkah-langkah dibawah ya</div>
       </div>
     </div>
-
     <div class="ann-step">
       <div class="ann-step-num">1</div>
       <div>
@@ -178,7 +176,6 @@ Selamat datang di rumah baru kalian.</div>
         <div class="ann-step-desc">Klik menu <b>Top Up Game</b> di sidebar, terus pilih game yang mau di top up.</div>
       </div>
     </div>
-
     <div class="ann-step">
       <div class="ann-step-num">2</div>
       <div>
@@ -186,7 +183,6 @@ Selamat datang di rumah baru kalian.</div>
         <div class="ann-step-desc">Masukkan username Roblox & pilih paket. Mulai <b>100 - 10.000 Robux</b>.</div>
       </div>
     </div>
-
     <div class="ann-step">
       <div class="ann-step-num">3</div>
       <div>
@@ -194,7 +190,6 @@ Selamat datang di rumah baru kalian.</div>
         <div class="ann-step-desc">Pilih metode: <b>QRIS / DANA / GoPay / Seabank</b>. Bayar sesuai total.</div>
       </div>
     </div>
-
     <div class="ann-step green">
       <div class="ann-step-num">4</div>
       <div>
@@ -202,7 +197,6 @@ Selamat datang di rumah baru kalian.</div>
         <div class="ann-step-desc">Upload bukti TF yang jelas. Robux masuk <b>5-30 menit</b> otomatis.</div>
       </div>
     </div>
-
     <div class="ann-step warn">
       <div class="ann-step-num">!</div>
       <div>
@@ -212,7 +206,6 @@ Selamat datang di rumah baru kalian.</div>
     </div>
   </div>
 
-  <!-- PANDUAN CEPAT -->
   <div class="panduan-title">🗺️ Panduan Cepat</div>
 
   <div class="panduan-item" onclick="openRoblox()">
@@ -260,6 +253,11 @@ Selamat datang di rumah baru kalian.</div>
     <div class="panduan-arrow">→</div>
   </div>
 
+  <div class="panduan-title" id="logs" style="margin-top:28px">📢 Order Terbaru Selesai</div>
+  <div id="recentLogs" style="display:grid;gap:8px;margin-bottom:20px">
+    <div style="text-align:center;color:#5a5a5a;font-size:12px;padding:20px">Loading...</div>
+  </div>
+
 </div>
 
 <div id="robloxPage" class="ws-section" style="display:none">
@@ -276,10 +274,8 @@ Selamat datang di rumah baru kalian.</div>
     <div class="input-group"><label>Username Roblox</label><input id="uRbx" placeholder="Masukkan username"></div>
     <div class="input-group"><label>Jumlah Robux (Rp160/robux)</label><input id="cRbx" type="number" placeholder="Contoh: 1000" oninput="calcUsername()"></div>
     <div class="total-box" id="tRbx">Total: 0 Robux = Rp0</div>
-
     <div style="font-weight:700;font-size:13px;margin:20px 0 10px;color:#e8e8e8">Pilih Paket</div>
     <div class="grid-robux" id="gridUsername"></div>
-
     <div class="syarat-box-modern" id="syaratUsername">
       <div class="syarat-title" id="syaratTitleUsername">📌 SYARAT & KETENTUAN — VIA USERNAME</div>
       <div id="syaratItemsUsername">
@@ -297,10 +293,8 @@ Selamat datang di rumah baru kalian.</div>
     <div class="input-group"><label>Jumlah Robux (Rp140/robux)</label><input id="cRbx2" type="number" placeholder="Contoh: 1000" oninput="calcGamepass()"></div>
     <div class="input-group"><label>Link Gamepass</label><input id="gamepassLink" placeholder="https://www.roblox.com/game-pass/xxxxxxx"></div>
     <div class="total-box" id="tRbx2">Total: 0 Robux = Rp0<br>Setting Gamepass: 0 Robux</div>
-
     <div style="font-weight:700;font-size:13px;margin:20px 0 10px;color:#e8e8e8">Pilih Paket</div>
     <div class="grid-robux" id="gridGamepass"></div>
-
     <div class="syarat-box-modern" id="syaratGamepass">
       <div class="syarat-title" id="syaratTitleGamepass">📌 SYARAT & KETENTUAN — VIA GAMEPASS</div>
       <div id="syaratItemsGamepass">
@@ -318,7 +312,6 @@ Selamat datang di rumah baru kalian.</div>
     <div class="input-group"><label>Jumlah Robux Item</label><input id="cGift" type="number" placeholder="Contoh: 445" oninput="calcGift()"></div>
     <div class="input-group"><label>Link Private Server</label><input id="privateServerLink" placeholder="https://www.roblox.com/games/xxxxx"></div>
     <div class="total-box" id="tGift">Total: 0 Robux × Rp95 = Rp0<br>Item: -</div>
-
     <div class="syarat-box-modern" id="syaratGift">
       <div class="syarat-title" id="syaratTitleGift">📌 SYARAT & KETENTUAN — GIFT IN GAME</div>
       <div id="syaratItemsGift">
@@ -336,9 +329,7 @@ Selamat datang di rumah baru kalian.</div>
 <div id="paymentPage" class="ws-section" style="display:none">
   <div style="color:#8a8a8a;font-size:12px;margin:10px 0;cursor:pointer" onclick="backToRoblox()">← Kembali</div>
   <div style="font-weight:800;font-size:18px;margin-top:8px">Pembayaran</div>
-
   <div style="background:#141414;border:1px solid #2a2a2a;border-radius:12px;padding:16px;margin-top:16px;font-size:13px;line-height:1.8" id="orderSummary"></div>
-
   <div style="margin-top:20px;font-weight:700;font-size:13px;color:#a8a8a8">Total yang wajib dibayar</div>
   <div style="background:#141414;border:1px solid #2a2a2a;border-radius:12px;padding:18px;margin-top:8px;text-align:center;font-size:28px;font-weight:900;color:#4ade80" id="wajibBayar">Rp0</div>
 
@@ -428,6 +419,14 @@ Selamat datang di rumah baru kalian.</div>
 <script src="./sidebar.js"></script>
 <script>
 function sensorEmail(e){if(!e||!e.includes('@'))return'****';let [a,b]=e.split('@');return a.slice(0,3)+'****@'+b}
+
+// ===== SENSOR USERNAME ROBLOX (BUAT FEED PUBLIK) =====
+function sensorUsernameRbx(u){
+  if(!u || u === '-') return '-';
+  if(u.length <= 3) return u[0] + '***';
+  if(u.length <= 6) return u.slice(0, 2) + '***' + u.slice(-1);
+  return u.slice(0, 3) + '****' + u.slice(-3);
+}
 
 // ===== CEK BUKTI TF =====
 async function cekBuktiValid(file){
@@ -541,7 +540,7 @@ function saveOrder(data){
   return data.id;
 }
 
-// ===== DISCORD: 2 PESAN =====
+// ===== DISCORD =====
 function sendDiscordWithBukti(o, dataUrl, judul){
   const baseUrl = "https://wafastoreonly-official.vercel.app/";
   const selesaiUrl = `${baseUrl}admin.html?id=${o.id}&action=selesai`;
@@ -899,7 +898,7 @@ function buatPesananDanUpload(){
   toggleLayanan();
 }
 
-// ===== CHAT REAL-TIME =====
+// ===== CHAT =====
 let chatUnsubscribe = null;
 function toggleLayanan(){
   let b=document.getElementById('layananBox');
@@ -1033,10 +1032,63 @@ function loadSettingsFirebase(){
   });
 }
 
+// ===== LOAD ORDER LOGS (FEED PUBLIK) =====
+function getTimeAgo(ts){
+  if(!ts) return '-';
+  const diff = Date.now() - ts;
+  const mins = Math.floor(diff / 60000);
+  if(mins < 1) return 'Baru aja';
+  if(mins < 60) return mins + ' menit lalu';
+  const hours = Math.floor(mins / 60);
+  if(hours < 24) return hours + ' jam lalu';
+  const days = Math.floor(hours / 24);
+  return days + ' hari lalu';
+}
+
+function loadRecentLogs(){
+  if(!window.wafaDB || !window.wafaRef || !window.wafaOnValue){
+    setTimeout(loadRecentLogs, 500);
+    return;
+  }
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'logs'), (snap)=>{
+    const data = snap.val() || {};
+    const logs = Object.values(data).sort((a,b)=>(b.selesaiAt||0)-(a.selesaiAt||0)).slice(0,10);
+    const el = document.getElementById('recentLogs');
+    if(!el) return;
+    if(logs.length === 0){
+      el.innerHTML = '<div style="text-align:center;color:#5a5a5a;font-size:12px;padding:20px">Belum ada order selesai</div>';
+      return;
+    }
+    el.innerHTML = '';
+    logs.forEach(log=>{
+      const timeAgo = getTimeAgo(log.selesaiAt);
+      const sensorRbx = sensorUsernameRbx(log.username);
+      const div = document.createElement('div');
+      div.className = 'log-item';
+      div.innerHTML = `
+        <div class="check">✅</div>
+        <div class="info">
+          <b>${log.nickname || 'User'}</b>
+          <span>@${sensorRbx}</span>
+        </div>
+        <div class="right">
+          <b>${log.jumlah} Robux</b>
+          <small>${timeAgo}</small>
+        </div>
+      `;
+      el.appendChild(div);
+    });
+  });
+}
+
 if(document.readyState === 'complete'){
   loadSettingsFirebase();
+  loadRecentLogs();
 } else {
-  window.addEventListener('load', loadSettingsFirebase);
+  window.addEventListener('load', ()=>{
+    loadSettingsFirebase();
+    loadRecentLogs();
+  });
 }
 </script>
 <script src="./fix-games.js"></script>
