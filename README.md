@@ -1,1 +1,1 @@
-# WafaStore-Bot
+# WafaStoreOnly-Web
