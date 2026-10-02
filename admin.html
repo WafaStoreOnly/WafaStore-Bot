@@ -1,94 +1,490 @@
 <!DOCTYPE html>
-<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Admin - WafaStoreOnly</title>
-<style>*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}body{background:#060a23;color:#fff;padding:16px}.card{background:#121631;border:1px solid #232a5a;border-radius:14px;padding:16px;margin-bottom:12px}.btn{padding:10px 14px;border:none;border-radius:8px;font-weight:800;cursor:pointer;margin-right:6px}.btn-proses{background:#00c6ff;color:#fff}.btn-done{background:#00ff88;color:#000}.btn-batal{background:#ff3b3b;color:#fff}</style></head>
-<body>
-<h2>Admin Panel WafaStoreOnly x Killua ⚡</h2><div id="status" style="margin:10px 0;color:#00ff88"></div><div id="list"></div>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin Panel - WafaStoreOnly</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./sidebar.css">
+<style>
+.tab-bar{display:flex;gap:8px;margin-top:12px;overflow-x:auto;padding-bottom:4px}
+.tab-btn{padding:10px 16px;border-radius:20px;font-size:11px;font-weight:800;border:1px solid #2a3366;background:#141936;white-space:nowrap;cursor:pointer;color:#aab0d0}
+.tab-btn.active{background:linear-gradient(90deg,#00c6ff,#7c3aed);border-color:#00d4ff;color:#fff;box-shadow:0 0 15px #00e5ff60}
+.admin-card{background:#121631;border:1px solid #232a5a;border-radius:14px;padding:14px;margin-top:10px}
+.admin-card h3{font-size:13px;font-weight:800;margin-bottom:8px}
+.order-info{font-size:11px;color:#aab0d0;line-height:1.7}
+.order-info b{color:#fff}
+.btn-sm{padding:8px 12px;border-radius:8px;border:none;font-weight:800;cursor:pointer;font-size:11px;margin-right:6px;margin-top:6px}
+.btn-proses{background:#00c6ff;color:#fff}
+.btn-done{background:#00ff88;color:#000}
+.btn-batal{background:#ff4444;color:#fff}
+.chat-list-item{background:#141936;border:1px solid #2a3366;border-radius:12px;padding:12px;margin-top:8px;cursor:pointer;transition:0.2s}
+.chat-list-item:hover{background:#1a1f4a;border-color:#00e5ff}
+.chat-list-item .name{font-weight:800;font-size:13px}
+.chat-list-item .preview{font-size:11px;color:#8d94b8;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chat-list-item .time{font-size:9px;color:#5a638a}
+.badge-unread{background:#ff4444;color:#fff;padding:2px 8px;border-radius:20px;font-size:9px;font-weight:800}
+#adminChatBox{background:#0a0d24;border:1px solid #00e5ff40;border-radius:12px;margin-top:12px;display:flex;flex-direction:column;height:400px}
+#adminChatHeader{padding:10px 14px;background:linear-gradient(90deg,#00c6ff,#7c3aed);display:flex;justify-content:space-between;align-items:center}
+#adminChatMessages{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+#adminChatInput{display:flex;gap:6px;padding:10px;border-top:1px solid #1e2450}
+#adminChatInput input{flex:1;padding:10px;border-radius:20px;font-size:12px}
+#adminChatInput button{padding:10px 14px;border-radius:20px;border:none;background:#00e5ff;color:#000;font-weight:800}
+.msg{max-width:82%;padding:10px 12px;border-radius:12px;font-size:12px;line-height:1.5;white-space:pre-wrap}
+.msg.bot{background:#1a1f4a;border:1px solid #2a3366;align-self:flex-start}
+.msg.user{background:linear-gradient(90deg,#00c6ff,#7c3aed);align-self:flex-end}
+#adminLock{position:fixed;inset:0;background:rgba(6,10,35,0.98);z-index:9999;display:none;justify-content:center;align-items:center;padding:20px;text-align:center}
+#adminLock .box{max-width:400px;background:linear-gradient(180deg,#151a48,#0c102d);border:2px solid #ff4444;border-radius:20px;padding:24px}
+#adminLock h1{font-size:22px;font-weight:900;color:#ff4444;margin-bottom:8px}
+#adminLock p{font-size:12px;color:#aab0d0;line-height:1.6;margin-bottom:16px}
+.stat-box{background:linear-gradient(135deg,#1a1f6b,#2a1a6b);border:1px solid #00d4ff;border-radius:12px;padding:12px;text-align:center}
+.stat-box .lbl{font-size:10px;color:#aab0d0;text-transform:uppercase}
+.stat-box .val{font-size:18px;font-weight:900;color:#00ff88;margin-top:4px}
+</style>
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {getDatabase,ref,onValue,get,update} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-const firebaseConfig={apiKey:"AIzaSyDTkQVpME0XRQmk9Jo7eDQuf0OFY8stm_8",authDomain:"wafastoreonly.firebaseapp.com",databaseURL:"https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"wafastoreonly",appId:"1:208012194307:web:551a540b0151333da69436"};
-const app=initializeApp(firebaseConfig);const db=getDatabase(app);
-// 4 WEBHOOK LU
-const WEBHOOK_PROSES_ROBUX="https://discord.com/api/webhooks/1553218744803917856/QNkR8RlkR5Lo5u2R1kyR1U2qWeM_5a-1M3WEMR34R2vPfN-I2vPfR7YvR7YvR7YvR7";
-const WEBHOOK_TOPUP_DONE="https://discord.com/api/webhooks/1553277385795829770/1qR8RlkR5Lo5u2R1kyR1U2qWeM_5a-1M3WEMR34R2vPfN-I2vPfR7YvR7YvR7YvR7";
-const WEBHOOK_PROSES_DOMPET="https://discord.com/api/webhooks/1553275076332359782/Ndn9EePBTCJe7EWV4esTErBZZwrLGbBMj9kybncr8urHVnq4-ydeCWxl4Dp7kQgC9O64";
-const WEBHOOK_DOMPET_DONE="https://discord.com/api/webhooks/1553275385666478120/snanzgqdkgovJomulzBGLueWdWX7Bnhp0ekS2reNuS8mLrPHLEMTrVS6nuMnE0t_0aXB";
-// SENSOR
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, set, onValue, get, update, remove, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+const firebaseConfig = { apiKey: "AIzaSyDTkQVpME0XRQmk9Jo7eDQuf0OFY8stm_8", authDomain: "wafastoreonly.firebaseapp.com", databaseURL: "https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "wafastoreonly", storageBucket: "wafastoreonly.firebasestorage.app", messagingSenderId: "208012194307", appId: "1:208012194307:web:551a540b0151333da69436" };
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth(app);
+window.wafaDB=db; window.wafaRef=ref; window.wafaSet=set; window.wafaOnValue=onValue; window.wafaGet=get; window.wafaUpdate=update; window.wafaRemove=remove;
+window.wafaAuth=auth; window.wafaSignOut=signOut;
+
+// ===== WEBHOOK (CHAT SUDAH TIDAK PAKAI WEBHOOK) =====
+window.WEBHOOK_ORDER_DONE = "https://discord.com/api/webhooks/1553277385795829770/1qR8RlkR5Lo5u2R1kyR1U2qWeM_5a-1M3WEMR34R2vPfN-I2vPfR7YvR7YvR7YvR7";
+window.WEBHOOK_DOMPET_DONE = "https://discord.com/api/webhooks/1553275385666478120/snanzgqdkgovJomulzBGLueWdWX7Bnhp0ekS2reNuS8mLrPHLEMTrVS6nuMnE0t_0aXB";
+
+// ===== ADMIN UID WHITELIST =====
+window.ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
+</script>
+</head>
+<body>
+
+<div id="adminLock">
+  <div class="box">
+    <div style="font-size:50px">🚫</div>
+    <h1>AKSES DITOLAK</h1>
+    <p>Halaman ini cuma buat <b>Admin WafaStoreOnly</b>.<br><br>Login pakai akun yang bener dulu ya.</p>
+    <button onclick="window.location.href='index.html'" style="width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;font-weight:900;font-size:14px;cursor:pointer">Balik ke Beranda</button>
+  </div>
+</div>
+
+<div id="wsContent">
+<div class="ws-section">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <div style="font-weight:900;font-size:20px">Admin Panel 🛡️</div>
+      <p style="font-size:11px;color:#aab0d0;margin-top:4px">Kelola order, top up dompet, & chat user</p>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px">
+    <div class="stat-box"><div class="lbl">Order Aktif</div><div class="val" id="statOrder">0</div></div>
+    <div class="stat-box"><div class="lbl">Top Up Pending</div><div class="val" id="statTopup">0</div></div>
+    <div class="stat-box"><div class="lbl">Chat User</div><div class="val" id="statChat">0</div></div>
+    <div class="stat-box"><div class="lbl">Revenue Hari Ini</div><div class="val" id="statToday">Rp0</div></div>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tab-btn active" onclick="switchTab('orders', this)">📦 Order Robux</div>
+    <div class="tab-btn" onclick="switchTab('topup', this)">💰 Top Up Dompet</div>
+    <div class="tab-btn" onclick="switchTab('chat', this)">💬 Chat User</div>
+  </div>
+
+  <div id="tab-orders" style="display:block">
+    <div id="listOrders" style="margin-top:12px"></div>
+  </div>
+
+  <div id="tab-topup" style="display:none">
+    <div id="listTopup" style="margin-top:12px"></div>
+  </div>
+
+  <div id="tab-chat" style="display:none">
+    <div id="listChat" style="margin-top:12px"></div>
+    <div id="adminChatBox" style="display:none">
+      <div id="adminChatHeader">
+        <div style="font-weight:800;font-size:12px" id="adminChatName">Chat User</div>
+        <div style="cursor:pointer;font-size:18px" onclick="closeAdminChat()">✕</div>
+      </div>
+      <div id="adminChatMessages"></div>
+      <div id="adminChatInput">
+        <input id="adminChatText" placeholder="Ketik balasan..." onkeypress="if(event.key==='Enter')kirimBalasan()">
+        <button onclick="kirimBalasan()">➤</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+<script src="./sidebar.js"></script>
+<script>
 function sensorEmail(e){if(!e||!e.includes('@'))return'****';let [a,b]=e.split('@');return a.slice(0,3)+'****@'+b}
-function sensorNomor(n){if(!n)return'****';let s=n.toString();if(s.length<7)return'****';return s.slice(0,4)+'****'+s.slice(-3)}
+function sensorUid(u){if(!u)return'****';return u.slice(0,6)+'...'+u.slice(-4)}
 
-let urlParams=new URLSearchParams(window.location.search);
-let actionId=urlParams.get('id');
-let actionType=urlParams.get('type');
-let action=urlParams.get('action');
-
-async function handleAction(){
-  if(!actionId||!actionType||!action)return;
-  document.getElementById('status').innerText='Memproses ID #'+actionId+' '+action+'...';
-  let path=actionType=='topup_saldo'?'topup_saldo/'+actionId:'orders/'+actionId;
-  let snap=await get(ref(db,path));
-  if(!snap.exists()){document.getElementById('status').innerText='Data tidak ditemukan!';return}
-  let data=snap.val();
-  if(action=='proses'){await update(ref(db,path),{status:'proses'});document.getElementById('status').innerText='✅ Status jadi PROSES #'+actionId;}
-  if(action=='selesai'){
-    if(actionType=='topup_saldo'){
-      await update(ref(db,path),{status:'selesai'});
-      let saldoSnap=await get(ref(db,'users/'+data.uid+'/saldo'));let saldoLama=saldoSnap.val()||0;
-      await update(ref(db,'users/'+data.uid),{saldo:saldoLama+data.jumlah});
-      // KIRIM KE CHANNEL DONE PAKE SENSOR
-      await fetch(WEBHOOK_DOMPET_DONE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:`✅ **TOP UP DOMPET SELESAI - SALDO MASUK**\nID: #${actionId.toString().slice(-6)}\nUser: ${sensorEmail(data.email)} (${data.nickname||'-'})\nNominal: Rp${data.jumlah.toLocaleString('id-ID')}\nMethod: ${data.method}\nSaldo otomatis masuk!`})});
-      document.getElementById('status').innerText='✅ Saldo Rp'+data.jumlah.toLocaleString('id-ID')+' masuk ke '+data.nickname;
-    }else{
-      await update(ref(db,path),{status:'selesai'});
-      await fetch(WEBHOOK_TOPUP_DONE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:`✅ **ORDER ROBUX SELESAI**\nID: #${actionId.toString().slice(-6)}\nBuyer: ${sensorEmail(data.email)} (${data.nickname||'-'})\nRoblox: ${data.username}\nJumlah: ${data.jumlah} Robux\nTotal: Rp${(data.total||0).toLocaleString('id-ID')}`})});
-      document.getElementById('status').innerText='✅ Robux selesai #'+actionId;
-    }
+// ===== ADMIN CHECK =====
+let isAdmin = false;
+function showLock(){
+  document.getElementById('adminLock').style.display='flex';
+  document.getElementById('wsContent').style.display='none';
+}
+window.wafaAuth.onAuthStateChanged((user)=>{
+  if(user && window.ADMIN_UIDS.includes(user.uid)){
+    isAdmin = true;
+    initAdmin();
+  } else {
+    showLock();
   }
-  if(action=='batal'){await update(ref(db,path),{status:'batal'});document.getElementById('status').innerText='❌ Dibatalkan #'+actionId;}
-}
-handleAction();
+});
 
-function render(){
-  let listDiv=document.getElementById('list');listDiv.innerHTML='<h3>Semua Pesanan Terbaru:</h3>';
-  onValue(ref(db,'orders'),(s)=>{
-    let data=s.val();if(!data)return;
-    Object.values(data).reverse().forEach(o=>{
-      let div=document.createElement('div');div.className='card';
-      div.innerHTML=`<b>ROBUX #${o.id.toString().slice(-6)}</b> - ${o.status}<br>Username: ${o.username}<br>Email: ${o.email} (${o.nickname||'-'})<br>Jumlah: ${o.jumlah} Robux - Rp${(o.total||0).toLocaleString('id-ID')}<br><small>${o.date}</small><br><br>
-      <button class="btn btn-proses" onclick="updateStatus('orders/${o.id}','proses')">PROSES</button>
-      <button class="btn btn-done" onclick="konfirmasiRobux('${o.id}')">KONFIRMASI</button>
-      <button class="btn btn-batal" onclick="updateStatus('orders/${o.id}','batal')">BATAL</button>`;
-      listDiv.appendChild(div);
+// ===== INIT ADMIN =====
+function initAdmin(){
+  console.log('✅ Admin logged in:', window.wafaAuth.currentUser.uid);
+  loadOrders();
+  loadTopups();
+  loadChats();
+  handleUrlAction();
+}
+
+// ===== HANDLE ACTION DARI URL DISCORD =====
+async function handleUrlAction(){
+  const urlParams = new URLSearchParams(window.location.search);
+  const actionId = urlParams.get('id');
+  const action = urlParams.get('action');
+  if(!actionId || !action) return;
+
+  console.log('🎯 Action from URL:', action, 'for ID:', actionId);
+  const idNum = parseInt(actionId);
+
+  if(action === 'selesai'){
+    if(!confirm(`✅ Konfirmasi SELESAI untuk Order #${actionId.slice(-6)}?`)){ 
+      window.history.replaceState({}, '', 'admin.html');
+      return; 
+    }
+    await prosesSelesai(idNum);
+    alert('✅ Order ditandai SELESAI!');
+  } else if(action === 'batal'){
+    const alasan = prompt(`❌ Alasan BATALKAN Order #${actionId.slice(-6)}?`, 'Dibatalkan admin');
+    if(alasan === null){ 
+      window.history.replaceState({}, '', 'admin.html');
+      return; 
+    }
+    await prosesBatal(idNum, alasan || 'Dibatalkan admin');
+    alert('❌ Order dibatalkan!');
+  }
+  window.history.replaceState({}, '', 'admin.html');
+}
+
+// ===== TAB SWITCH =====
+function switchTab(tab, el){
+  document.querySelectorAll('.tab-btn').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-orders').style.display = tab==='orders'?'block':'none';
+  document.getElementById('tab-topup').style.display = tab==='topup'?'block':'none';
+  document.getElementById('tab-chat').style.display = tab==='chat'?'block':'none';
+}
+
+// ===== LOAD ORDERS =====
+function loadOrders(){
+  const list = document.getElementById('listOrders');
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'orders'), (snap)=>{
+    const data = snap.val();
+    list.innerHTML = '';
+    if(!data){ list.innerHTML = '<div class="admin-card" style="text-align:center;color:#5a638a">📦 Belum ada order</div>'; updateStats(0, null, null, 0); return; }
+    const orders = Object.values(data).sort((a,b)=>b.id-a.id);
+    let aktif = 0;
+    let totalHariIni = 0;
+    const today = new Date().toLocaleDateString('id-ID');
+    orders.forEach(o=>{
+      if(o.status === 'verifikasi' || o.status === 'proses') aktif++;
+      if(o.date && o.date.includes(today.split('/')[0])) totalHariIni += (o.total || 0);
     });
-  });
-  onValue(ref(db,'topup_saldo'),(s)=>{
-    let data=s.val();if(!data)return;
-    Object.values(data).reverse().forEach(o=>{
-      let div=document.createElement('div');div.className='card';
-      div.innerHTML=`<b>DOMPET #${o.id.toString().slice(-6)}</b> - ${o.status}<br>Email: ${o.email} (${o.nickname||'-'})<br>Nominal: Rp${o.jumlah.toLocaleString('id-ID')} via ${o.method}<br><small>${o.date}</small><br><br>
-      <button class="btn btn-proses" onclick="updateStatus('topup_saldo/${o.id}','proses')">PROSES</button>
-      <button class="btn btn-done" onclick="konfirmasiDompet('${o.id}')">KONFIRMASI</button>
-      <button class="btn btn-batal" onclick="updateStatus('topup_saldo/${o.id}','batal')">BATAL</button>`;
-      listDiv.appendChild(div);
+    updateStats(aktif, null, null, totalHariIni);
+    
+    orders.slice(0, 50).forEach(o=>{
+      const color = o.status=='verifikasi'?'#ffcc00':o.status=='proses'?'#00e5ff':o.status=='selesai'?'#00ff88':'#ff4444';
+      const card = document.createElement('div');
+      card.className = 'admin-card';
+      card.style.borderColor = color;
+      let extra = '';
+      if(o.method == 'gamepass' && o.gamepassLink) extra += `<br>🔗 Gamepass: <b style="word-break:break-all">${o.gamepassLink}</b>`;
+      if(o.method == 'gift' && o.item) extra += `<br>🎁 Item: <b>${o.item}</b>`;
+      if(o.metodeBayar == 'saldo') extra += `<br>💳 <b style="color:#00ff88">Dibayar via Saldo Web</b>`;
+      
+      let buktiBtn = o.bukti ? `<button class="btn-sm btn-proses" onclick="lihatBukti('${o.id}')">🖼️ Lihat Bukti</button>` : '';
+      let actionBtns = '';
+      if(o.status === 'verifikasi' || o.status === 'proses') {
+        actionBtns = `<button class="btn-sm btn-done" onclick="prosesSelesai(${o.id})">✅ KONFIRMASI SELESAI</button>
+                      <button class="btn-sm btn-batal" onclick="prosesBatal(${o.id}, 'Dibatalkan admin')">❌ BATALKAN</button>`;
+      } else {
+        actionBtns = `<button class="btn-sm btn-batal" onclick="hapusOrder(${o.id})">🗑️ Hapus</button>`;
+      }
+      
+      card.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <h3>📦 Order #${o.id.toString().slice(-6)}</h3>
+            <div class="order-info">
+              Username: <b>${o.username||'-'}</b><br>
+              Jumlah: <b>${o.jumlah||0} Robux</b> | Total: <b style="color:#00ff88">Rp${(o.total||0).toLocaleString('id-ID')}</b><br>
+              Metode: <b>${o.method||'-'}</b><br>
+              Buyer: <b>${sensorEmail(o.email||'-')}</b> (${o.nickname||'-'})<br>
+              UID: <b style="font-size:10px">${sensorUid(o.uid)}</b><br>
+              📅 ${o.date||'-'}${extra}
+            </div>
+          </div>
+          <span style="background:${color};color:#000;padding:4px 10px;border-radius:20px;font-size:9px;font-weight:800;white-space:nowrap">${(o.status||'').toUpperCase()}</span>
+        </div>
+        <div style="margin-top:10px">${buktiBtn}${actionBtns}</div>
+      `;
+      list.appendChild(card);
     });
   });
 }
-window.updateStatus=async(path,st)=>{await update(ref(db,path),{status:st});alert('Status jadi '+st)};
-window.konfirmasiDompet=async(id)=>{
-  let snap=await get(ref(db,'topup_saldo/'+id));let data=snap.val();
-  let saldoSnap=await get(ref(db,'users/'+data.uid+'/saldo'));let saldoLama=saldoSnap.val()||0;
-  await update(ref(db,'users/'+data.uid),{saldo:saldoLama+data.jumlah});
-  await update(ref(db,'topup_saldo/'+id),{status:'selesai'});
-  await fetch(WEBHOOK_DOMPET_DONE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:`✅ **TOP UP DOMPET SELESAI**\nID: #${id.toString().slice(-6)}\nUser: ${sensorEmail(data.email)} (${data.nickname||'-'})\nNominal: Rp${data.jumlah.toLocaleString('id-ID')}\nMethod: ${data.method}`})});
-  alert('Saldo masuk bos!');
+
+// ===== LIHAT BUKTI ORDER =====
+window.lihatBukti = async (id)=>{
+  const snap = await window.wafaGet(window.wafaRef(window.wafaDB, 'orders/'+id));
+  const o = snap.val();
+  if(!o || !o.bukti){ alert('Bukti tidak ada'); return; }
+  const w = window.open('');
+  w.document.write(`<html><head><title>Bukti TF</title><style>body{margin:0;background:#000;display:flex;justify-content:center;align-items:center;min-height:100vh}img{max-width:100%;max-height:100vh}</style></head><body><img src="${o.bukti}"></body></html>`);
 };
-window.konfirmasiRobux=async(id)=>{
-  let snap=await get(ref(db,'orders/'+id));let data=snap.val();
-  await update(ref(db,'orders/'+id),{status:'selesai'});
-  await fetch(WEBHOOK_TOPUP_DONE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:`✅ **ROBUX SELESAI**\nID: #${id.toString().slice(-6)}\nBuyer: ${sensorEmail(data.email)} (${data.nickname||'-'})\nRoblox: ${data.username}\nJumlah: ${data.jumlah} Robux`})});
-  alert('Robux selesai bos!');
+
+// ===== PROSES SELESAI =====
+window.prosesSelesai = async (id)=>{
+  try{
+    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'orders/'+id), { status: 'selesai', selesaiAt: Date.now() });
+    const snap = await window.wafaGet(window.wafaRef(window.wafaDB, 'orders/'+id));
+    const o = snap.val();
+    if(window.WEBHOOK_ORDER_DONE){
+      fetch(window.WEBHOOK_ORDER_DONE, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ content: `✅ **ORDER SELESAI**\nID: #${id.toString().slice(-6)}\nBuyer: ${sensorEmail(o.email||'-')}\nUsername: ${o.username}\nJumlah: ${o.jumlah} Robux\nTotal: Rp${(o.total||0).toLocaleString('id-ID')}` })
+      }).catch(e=>console.log('Discord err:', e));
+    }
+  }catch(e){ alert('Gagal: '+e.message); }
 };
-render();
+
+// ===== PROSES BATAL =====
+window.prosesBatal = async (id, alasan)=>{
+  try{
+    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'orders/'+id), { status: 'batal', batalReason: alasan, batalAt: Date.now() });
+  }catch(e){ alert('Gagal: '+e.message); }
+};
+
+// ===== HAPUS ORDER =====
+window.hapusOrder = async (id)=>{
+  if(!confirm('Hapus order #'+id.toString().slice(-6)+'?')) return;
+  try{
+    await window.wafaRemove(window.wafaRef(window.wafaDB, 'orders/'+id));
+  }catch(e){ alert('Gagal: '+e.message); }
+};
+
+// ===== LOAD TOPUP DOMPET =====
+function loadTopups(){
+  const list = document.getElementById('listTopup');
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'topup_saldo'), (snap)=>{
+    const data = snap.val();
+    list.innerHTML = '';
+    if(!data){ list.innerHTML = '<div class="admin-card" style="text-align:center;color:#5a638a">💰 Belum ada top up</div>'; updateStats(null, 0, null, null); return; }
+    const topups = Object.values(data).sort((a,b)=>b.id-a.id);
+    let pending = topups.filter(t=>t.status === 'verifikasi' || t.status === 'pending').length;
+    updateStats(null, pending, null, null);
+    
+    topups.slice(0, 50).forEach(t=>{
+      const color = t.status=='selesai'?'#00ff88':t.status=='batal'?'#ff4444':'#ffcc00';
+      const card = document.createElement('div');
+      card.className = 'admin-card';
+      card.style.borderColor = color;
+      let buktiBtn = t.bukti ? `<button class="btn-sm btn-proses" onclick="lihatBuktiTopup('${t.id}')">🖼️ Lihat Bukti</button>` : '';
+      let actionBtns = '';
+      if(t.status === 'verifikasi' || t.status === 'pending'){
+        actionBtns = `<button class="btn-sm btn-done" onclick="approveTopup(${t.id})">✅ APPROVE - TAMBAH SALDO</button>
+                      <button class="btn-sm btn-batal" onclick="rejectTopup(${t.id})">❌ TOLAK</button>`;
+      } else {
+        actionBtns = `<button class="btn-sm btn-batal" onclick="hapusTopup(${t.id})">🗑️ Hapus</button>`;
+      }
+      card.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <h3>💰 Top Up #${t.id.toString().slice(-6)}</h3>
+            <div class="order-info">
+              Nominal: <b style="color:#00ff88">Rp${(t.nominal||t.jumlah||0).toLocaleString('id-ID')}</b><br>
+              User: <b>${sensorEmail(t.email||'-')}</b> (${t.nickname||'-'})<br>
+              UID: <b style="font-size:10px">${sensorUid(t.uid)}</b><br>
+              📅 ${t.date||'-'}
+            </div>
+          </div>
+          <span style="background:${color};color:#000;padding:4px 10px;border-radius:20px;font-size:9px;font-weight:800;white-space:nowrap">${(t.status||'pending').toUpperCase()}</span>
+        </div>
+        <div style="margin-top:10px">${buktiBtn}${actionBtns}</div>
+      `;
+      list.appendChild(card);
+    });
+  });
+}
+
+// ===== LIHAT BUKTI TOPUP =====
+window.lihatBuktiTopup = async (id)=>{
+  const snap = await window.wafaGet(window.wafaRef(window.wafaDB, 'topup_saldo/'+id));
+  const t = snap.val();
+  if(!t || !t.bukti){ alert('Bukti tidak ada'); return; }
+  const w = window.open('');
+  w.document.write(`<html><head><title>Bukti TF</title><style>body{margin:0;background:#000;display:flex;justify-content:center;align-items:center;min-height:100vh}img{max-width:100%;max-height:100vh}</style></head><body><img src="${t.bukti}"></body></html>`);
+};
+
+// ===== APPROVE TOPUP (TAMBAH SALDO OTOMATIS) =====
+window.approveTopup = async (id)=>{
+  if(!confirm('✅ APPROVE top up ini?\n\nSaldo user bakal otomatis ditambah.')) return;
+  try{
+    const snap = await window.wafaGet(window.wafaRef(window.wafaDB, 'topup_saldo/'+id));
+    const t = snap.val();
+    if(!t){ alert('Data ga ketemu'); return; }
+    const nominal = t.nominal || t.jumlah || 0;
+    const userSnap = await window.wafaGet(window.wafaRef(window.wafaDB, 'users/'+t.uid+'/saldo'));
+    const saldoLama = userSnap.val() || 0;
+    const saldoBaru = saldoLama + nominal;
+    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'users/'+t.uid), { saldo: saldoBaru });
+    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'topup_saldo/'+id), { status: 'selesai', approvedAt: Date.now() });
+    if(window.WEBHOOK_DOMPET_DONE){
+      fetch(window.WEBHOOK_DOMPET_DONE, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ content: `✅ **TOP UP DOMPET BERHASIL**\nID: #${id.toString().slice(-6)}\nUser: ${sensorEmail(t.email||'-')} (${t.nickname||'-'})\nNominal: Rp${nominal.toLocaleString('id-ID')}\nSaldo sekarang: Rp${saldoBaru.toLocaleString('id-ID')}` })
+      }).catch(e=>console.log('Discord err:', e));
+    }
+    alert(`✅ Saldo Rp${nominal.toLocaleString('id-ID')} berhasil ditambah!`);
+  }catch(e){ alert('Gagal approve: '+e.message); }
+};
+
+// ===== REJECT TOPUP =====
+window.rejectTopup = async (id)=>{
+  const alasan = prompt('Alasan tolak?', 'Bukti tidak valid');
+  if(alasan === null) return;
+  try{
+    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'topup_saldo/'+id), { status: 'batal', batalReason: alasan });
+  }catch(e){ alert('Gagal: '+e.message); }
+};
+
+// ===== HAPUS TOPUP =====
+window.hapusTopup = async (id)=>{
+  if(!confirm('Hapus top up #'+id.toString().slice(-6)+'?')) return;
+  try{
+    await window.wafaRemove(window.wafaRef(window.wafaDB, 'topup_saldo/'+id));
+  }catch(e){ alert('Gagal: '+e.message); }
+};
+
+// ===== LOAD CHATS =====
+let currentChatUid = null;
+let chatUnsubscribe = null;
+function loadChats(){
+  const list = document.getElementById('listChat');
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'chats'), (snap)=>{
+    const data = snap.val();
+    list.innerHTML = '';
+    if(!data){ list.innerHTML = '<div class="admin-card" style="text-align:center;color:#5a638a">💬 Belum ada chat</div>'; updateStats(null, null, 0, null); return; }
+    const uids = Object.keys(data);
+    let totalChat = uids.length;
+    updateStats(null, null, totalChat, null);
+    
+    const sorted = uids.map(uid=>{
+      const msgs = Object.values(data[uid] || {}).sort((a,b)=>(b.time||0)-(a.time||0));
+      const last = msgs[0] || {};
+      const unreadCount = msgs.filter(m=>m.from === 'user' && !m.read).length;
+      return { uid, last, unreadCount, msgCount: msgs.length };
+    }).sort((a,b)=>(b.last.time||0)-(a.last.time||0));
+    
+    sorted.forEach(item=>{
+      const card = document.createElement('div');
+      card.className = 'chat-list-item';
+      card.onclick = ()=>bukaChat(item.uid);
+      const time = item.last.time ? new Date(item.last.time).toLocaleString('id-ID', {hour:'2-digit', minute:'2-digit', day:'2-digit', month:'2-digit'}) : '-';
+      const preview = item.last.image ? '📸 Gambar' : (item.last.text || '(kosong)');
+      card.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="name">👤 ${item.last.nickname || sensorEmail(item.last.email || '-')}</div>
+          ${item.unreadCount > 0 ? `<span class="badge-unread">${item.unreadCount}</span>` : ''}
+        </div>
+        <div class="preview">${preview}</div>
+        <div class="time">${time} • ${item.msgCount} pesan</div>
+      `;
+      list.appendChild(card);
+    });
+  });
+}
+
+// ===== BUKA CHAT =====
+window.bukaChat = async (uid)=>{
+  currentChatUid = uid;
+  document.getElementById('adminChatBox').style.display = 'flex';
+  document.getElementById('listChat').style.display = 'none';
+  
+  const userSnap = await window.wafaGet(window.wafaRef(window.wafaDB, 'users/'+uid));
+  const u = userSnap.val() || {};
+  document.getElementById('adminChatName').innerText = `${u.nickname || 'User'} (${sensorEmail(u.email||'-')})`;
+  
+  if(chatUnsubscribe) chatUnsubscribe();
+  chatUnsubscribe = window.wafaOnValue(window.wafaRef(window.wafaDB, 'chats/'+uid), (snap)=>{
+    const data = snap.val() || {};
+    const msgs = Object.entries(data).map(([k,v])=>({...v, _id:k})).sort((a,b)=>(a.time||0)-(b.time||0));
+    const c = document.getElementById('adminChatMessages');
+    c.innerHTML = '';
+    if(msgs.length === 0){
+      c.innerHTML = '<div class="msg bot">Belum ada pesan</div>';
+    } else {
+      msgs.forEach(m=>{
+        const d = document.createElement('div');
+        d.className = 'msg ' + (m.from === 'admin' ? 'user' : 'bot');
+        if(m.image){
+          d.innerHTML = `<img src="${m.image}" style="max-width:100%;border-radius:8px">`;
+          if(m.text) d.innerHTML = m.text + '<br>' + d.innerHTML;
+        } else {
+          d.innerText = m.text || '';
+        }
+        c.appendChild(d);
+      });
+    }
+    c.scrollTop = c.scrollHeight;
+  });
+};
+
+// ===== TUTUP CHAT =====
+window.closeAdminChat = ()=>{
+  currentChatUid = null;
+  if(chatUnsubscribe){ chatUnsubscribe(); chatUnsubscribe = null; }
+  document.getElementById('adminChatBox').style.display = 'none';
+  document.getElementById('listChat').style.display = 'block';
+};
+
+// ===== KIRIM BALASAN (TANPA NOTIF DISCORD) =====
+window.kirimBalasan = async ()=>{
+  if(!currentChatUid) return;
+  const inp = document.getElementById('adminChatText');
+  const t = inp.value.trim();
+  if(!t) return;
+  
+  const msgId = Date.now() + '_' + Math.random().toString(36).slice(2,7);
+  const msgData = {
+    from: 'admin',
+    text: t,
+    time: Date.now(),
+    read: true
+  };
+  try{
+    await window.wafaSet(window.wafaRef(window.wafaDB, 'chats/'+currentChatUid+'/'+msgId), msgData);
+    inp.value = '';
+    // ✅ Chat murni di web - TIDAK ada notif Discord
+  }catch(e){ alert('Gagal kirim: '+e.message); }
+};
+
+// ===== UPDATE STATISTIK =====
+function updateStats(order, topup, chat, revenue){
+  if(order !== null && order !== undefined) document.getElementById('statOrder').innerText = order;
+  if(topup !== null && topup !== undefined) document.getElementById('statTopup').innerText = topup;
+  if(chat !== null && chat !== undefined) document.getElementById('statChat').innerText = chat;
+  if(revenue !== null && revenue !== undefined) document.getElementById('statToday').innerText = 'Rp' + revenue.toLocaleString('id-ID');
+}
 </script>
 </body>
 </html>
