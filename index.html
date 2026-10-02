@@ -169,7 +169,6 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
 
 </div>
 
-<!-- CHAT LAYANAN REAL-TIME -->
 <div id="layananBtn" onclick="toggleLayanan()">💬</div>
 <div id="layananBox">
   <div id="layananHeader">
@@ -189,26 +188,22 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
 <script>
 function sensorEmail(e){if(!e||!e.includes('@'))return'****';let [a,b]=e.split('@');return a.slice(0,3)+'****@'+b}
 
-// ===== CEK BUKTI (TANPA NSFWJS - CUMA TESSERACT) =====
+// ===== CEK BUKTI - TANPA NSFWJS, TANPA BLACKLIST KATA KASAR =====
 async function cekBuktiValid(file){
   let loading=document.createElement('div');
   loading.id='loadingDetect';
   loading.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;justify-content:center;align-items:center;flex-direction:column;color:#fff;font-weight:800;text-align:center;padding:20px';
-  loading.innerHTML='<div style="font-size:50px">🔍</div><div style="margin-top:10px">CEK BUKTI TF...</div><div id="cek-status" style="font-size:12px;color:#00e5ff;margin-top:8px">1/3...</div>';
+  loading.innerHTML='<div style="font-size:50px">🔍</div><div style="margin-top:10px">CEK BUKTI TF...</div><div id="cek-status" style="font-size:12px;color:#00e5ff;margin-top:8px">1/2...</div>';
   document.body.appendChild(loading);
   try{
-    document.getElementById('cek-status').innerText='1/3 Baca bukti...';
+    document.getElementById('cek-status').innerText='1/2 Baca bukti...';
     let {data:{text}}=await Tesseract.recognize(file,'ind+eng');
     let lower=text.toLowerCase();
     let lowerNoSpace=lower.replace(/\s/g,'');
-
     console.log('=== OCR DEBUG ===');
     console.log('TEXT:', text);
 
-    let blacklist=['kontol','memek','ngentot','anjing','babi','bangsat','tolol','goblok','asu','jancok','fuck','shit','peler','itil','jembut'];
-    if(blacklist.some(k=>lower.includes(k))){ document.getElementById('loadingDetect').remove(); return {valid:false,reason:`❌ FOTO DITOLAK! Ada kata kasar!`}; }
-
-    document.getElementById('cek-status').innerText='2/3 Cek penerima...';
+    document.getElementById('cek-status').innerText='2/2 Cek penerima...';
     let angkaSaja = lowerNoSpace.replace(/o/g,'0').replace(/[^0-9]/g,'');
     let teksSaja = lower.replace(/[^a-z]/g,'');
     let ciriAngka = ['0838627','838627','386277','862776','627767','277679','9011627','011627','116276','162765','627654','276546','0838','6277','1627','6546'];
@@ -219,7 +214,6 @@ async function cekBuktiValid(file){
     console.log('isAngka:', isAngka, '| isNama:', isNama, '| isQris:', isQris);
     if(!isAngka && !isNama && !isQris){ document.getElementById('loadingDetect').remove(); return {valid:false,reason:`❌ SALAH TUJUAN!\n\nSistem ga nemu nomor/nama WafaStoreOnly di bukti TF.\n\nPastikan screenshot keliatan:\n• Nomor 083862776790 / 901162765462\n• ATAU nama AWA_NEWSTREAM / Wafa\n• ATAU logo QRIS`}; }
 
-    document.getElementById('cek-status').innerText='3/3 Selesai...';
     document.getElementById('loadingDetect').remove();
     return {valid:true};
   }catch(e){ let l=document.getElementById('loadingDetect');if(l)l.remove(); return {valid:false,reason:`❌ Gagal baca: ${e.message}`}; }
@@ -283,13 +277,14 @@ function sendDiscordWithBukti(o, dataUrl, judul){
   });
 }
 
-// ===== AUTO BATAL 10 MENIT =====
+// ===== AUTO BATAL 10 MENIT (CUMA KALAU BELUM UPLOAD BUKTI) =====
 function getSisaWaktu(expiry){let sisa=expiry-Date.now();if(sisa<=0)return"00:00";let m=Math.floor(sisa/60000);let s=Math.floor((sisa%60000)/1000);return `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;}
 function checkExpired(){
   let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
   let changed=false; let now=Date.now();
   orders.forEach(o=>{
-    if(o.status=='verifikasi' && o.expiry && now>o.expiry){
+    // Cuma batalin kalau BELUM upload bukti
+    if(o.status=='verifikasi' && o.expiry && now>o.expiry && !o.bukti){
       o.status='batal'; o.batalReason='timeout'; changed=true;
       setTimeout(()=>{ addBotMsg(`❌ Pesanan #${o.id.toString().slice(-6)} dibatalkan karena timeout 10 menit!\n\nSilakan order kembali 🙏`); },500);
       try{
@@ -314,7 +309,8 @@ function renderPesanan(){
     d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)}</b><span style="background:${color};color:#000;padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800">${label}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date}</div><div style="font-size:12px;margin-top:10px">Username: <b>${o.username}</b><br>Jumlah: <b>${o.jumlah} Robux</b><br>Total: <b style="color:#00ff88">Rp${o.total.toLocaleString('id-ID')}</b></div><button class="btn btn-yellow" style="margin-top:12px" onclick="uploadBukti(${o.id})">📤 Upload Bukti TF</button>`;
   } else {
     let msgTimeout = isTimeout? `<div style="background:#ff444420;border:1px solid #ff4444;padding:8px;border-radius:8px;margin-top:10px;font-size:11px">❌ Transaksi dibatalkan karena timeout 10 menit! Order kembali 🙏</div>` : '';
-    d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)}</b><span style="background:${color};color:#fff;padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800">${label}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date}</div><div style="font-size:12px;margin-top:10px">Username: <b>${o.username}</b><br>Jumlah: <b>${o.jumlah} Robux</b><br>Total: <b>Rp${o.total.toLocaleString('id-ID')}</b></div>${msgTimeout}`;
+    let viaSaldo = o.metodeBayar=='saldo'? `<div style="background:#00ff8820;border:1px solid #00ff88;padding:8px;border-radius:8px;margin-top:10px;font-size:11px;color:#00ff88">💳 Dibayar via Saldo Web ✅</div>` : '';
+    d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)}</b><span style="background:${color};color:#fff;padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800">${label}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date}</div><div style="font-size:12px;margin-top:10px">Username: <b>${o.username}</b><br>Jumlah: <b>${o.jumlah} Robux</b><br>Total: <b>Rp${o.total.toLocaleString('id-ID')}</b></div>${viaSaldo}${msgTimeout}`;
   }
   list.appendChild(d);
  });
@@ -324,22 +320,53 @@ async function uploadBukti(id){
   let oCheck=orders.find(x=>x.id==id);
   if(!oCheck){alert('Pesanan tidak ditemukan!');return;}
   if(oCheck.status=='batal'){alert(`❌ Transaksi dibatalkan! Order kembali 🙏`);renderPesanan();return;}
-  if(oCheck.expiry && Date.now()>oCheck.expiry){alert(`❌ Waktu habis!`);checkExpired();return;}
+  if(oCheck.expiry && Date.now()>oCheck.expiry && !oCheck.bukti){alert(`❌ Waktu habis!`);checkExpired();return;}
   let input=document.createElement('input');input.type='file';input.accept='image/*';
   input.onchange=async e=>{
     let file=e.target.files[0]; if(!file) return;
     let cek=await cekBuktiValid(file);
     if(!cek.valid){alert(cek.reason);return;}
     let r=new FileReader();
-    r.onload=()=>{
+    r.onload=async ()=>{
       let orders2=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
       let o=orders2.find(x=>x.id==id); if(!o) return;
       if(o.status=='batal'){alert('❌ Sudah dibatalkan!');return;}
-      o.bukti=r.result; localStorage.setItem('wafa_orders',JSON.stringify(orders2)); renderPesanan();
-      addBotMsg(`✅ Bukti TF #${id.toString().slice(-6)} valid! Admin cek mutasi ya 🥰`);
+      o.bukti=r.result;
+      o.status='proses';
+      o.expiry=null;
+      localStorage.setItem('wafa_orders',JSON.stringify(orders2));
+      renderPesanan();
+      try{
+        if(window.wafaDB){ await window.wafaUpdate(window.wafaRef(window.wafaDB, 'orders/'+id), {status:'proses', bukti:r.result, expiry:null}); }
+      }catch(e){ console.log('Update FB error:', e); }
+      addBotMsg(`✅ Bukti TF #${id.toString().slice(-6)} valid!\n\n⚡ Pesanan kamu LANGSUNG DIPROSES!\n\nAdmin sedang cek mutasi, tunggu ya 🥰`);
       sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF MASUK! [VALID ✅]**`);
     }; r.readAsDataURL(file);
   }; input.click();
+}
+async function uploadBuktiFromChat(input){
+  let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
+  if(orders.length==0){alert('Buat pesanan dulu!');input.value='';return;}
+  let o=orders[0];
+  if(o.status=='batal'){alert(`❌ Transaksi dibatalkan!`);input.value='';renderPesanan();return;}
+  if(o.expiry && Date.now()>o.expiry && !o.bukti){checkExpired();input.value='';return;}
+  let file=input.files[0]; if(!file) return;
+  let cek=await cekBuktiValid(file);
+  if(!cek.valid){alert(cek.reason);input.value='';return;}
+  let r=new FileReader();
+  r.onload=async ()=>{
+    o.bukti=r.result;
+    o.status='proses';
+    o.expiry=null;
+    orders[0]=o;
+    localStorage.setItem('wafa_orders',JSON.stringify(orders));
+    renderPesanan();
+    try{
+      if(window.wafaDB){ await window.wafaUpdate(window.wafaRef(window.wafaDB, 'orders/'+o.id), {status:'proses', bukti:r.result, expiry:null}); }
+    }catch(e){ console.log('Update FB error:', e); }
+    addBotMsg(`✅ Bukti TF #${o.id.toString().slice(-6)} valid!\n\n⚡ Pesanan kamu LANGSUNG DIPROSES!`);
+    sendDiscordWithBukti(o, r.result, `💸 **BUKTI TF VIA CHAT! [VALID]**`);
+  }; r.readAsDataURL(file); input.value='';
 }
 
 setInterval(checkExpired,5000);
@@ -389,6 +416,8 @@ async function loadSaldoUser(){
     }
   }catch(e){ console.log('loadSaldo error:', e); }
 }
+
+// ===== BAYAR PAKAI SALDO (DENGAN RINGKASAN LENGKAP) =====
 async function bayarDenganSaldo(){
   if(!lastOrderData) return;
   const uid=localStorage.getItem('wafa_uid');
@@ -399,12 +428,76 @@ async function bayarDenganSaldo(){
     const saldoBaru = saldo - lastOrderData.total;
     await window.wafaUpdate(window.wafaRef(window.wafaDB, 'users/' + uid), {saldo: saldoBaru});
     let newId = saveOrder({...lastOrderData, metodeBayar:'saldo', statusBayar:'lunas'});
-    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'orders/' + newId), {status:'proses', dibayarDariSaldo:true});
-    if(typeof wsToast==='function') wsToast('✅ Pembayaran sukses! Pesanan diproses');
+    await window.wafaUpdate(window.wafaRef(window.wafaDB, 'orders/' + newId), {status:'proses', dibayarDariSaldo:true, expiry:null});
+    
+    let userData = JSON.parse(localStorage.getItem('wafa_user')||'{}');
+    let emailSensor = sensorEmail(userData.email || '-');
+    let nickname = userData.nickname || '-';
+    let sisaSaldo = saldoBaru;
+    let orderIdShort = newId.toString().slice(-6);
+    let totalFormatted = lastOrderData.total.toLocaleString('id-ID');
+    let sisaSaldoFormatted = sisaSaldo.toLocaleString('id-ID');
+    let metode = lastOrderData.method || 'username';
+    let extraInfo = '';
+    if(metode === 'gamepass' && lastOrderData.gamepassLink){
+      extraInfo = `\n🔗 Link Gamepass: ${lastOrderData.gamepassLink}`;
+    } else if(metode === 'gift' && lastOrderData.item){
+      extraInfo = `\n🎁 Item: ${lastOrderData.item}`;
+      if(lastOrderData.privateServer) extraInfo += `\n🔗 Private Server: ${lastOrderData.privateServer}`;
+    }
+
+    let ringkasan = `✅ PEMBAYARAN BERHASIL!\n\n` +
+      `━━━━━━━━━━━━━━━━━━━━\n` +
+      `⚡ Pesanan #${orderIdShort} SEDANG DIPROSES\n` +
+      `━━━━━━━━━━━━━━━━━━━━\n\n` +
+      `💳 Transaksi via: SALDO WEB\n` +
+      `💰 Saldo terpotong: Rp${totalFormatted}\n` +
+      `💵 Sisa saldo kamu: Rp${sisaSaldoFormatted}\n\n` +
+      `📦 DETAIL ORDER:\n` +
+      `• Metode: ${metode.toUpperCase()}\n` +
+      `• Username Roblox: ${lastOrderData.username}\n` +
+      `• Jumlah: ${lastOrderData.jumlah} Robux\n` +
+      `• Total: Rp${totalFormatted}${extraInfo}\n\n` +
+      `👤 Buyer: ${emailSensor} (${nickname})\n` +
+      `📅 ${new Date().toLocaleString('id-ID')}\n\n` +
+      `━━━━━━━━━━━━━━━━━━━━\n` +
+      `⚡ Admin sedang proses order kamu!\n` +
+      `📦 Cek status di menu "Pesanan"\n` +
+      `━━━━━━━━━━━━━━━━━━━━\n\n` +
+      `Makasih udah order di WafaStoreOnly ⚡`;
+
+    showOrderSummary(ringkasan);
+    if(typeof addBotMsg === 'function') addBotMsg(ringkasan);
+    
+    if(window.DISCORD_URL){
+      fetch(window.DISCORD_URL+"?with_components=true", {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ content: `💰 **ORDER VIA SALDO - LUNAS!**\n\nID: #${orderIdShort}\nBuyer: ${emailSensor} (${nickname})\nUsername Roblox: ${lastOrderData.username}\nJumlah: ${lastOrderData.jumlah} Robux\nTotal: Rp${totalFormatted}\nSaldo sisa: Rp${sisaSaldoFormatted}\nMetode: Saldo Web\n\n✅ Otomatis DIPROSES (udah lunas)` })
+      });
+    }
     openPesanan();
-    addBotMsg(`⚡ Pesanan #${newId.toString().slice(-6)} dibayar pakai saldo! Status: DIPROSES ✅\n\nSaldo terpotong Rp${lastOrderData.total.toLocaleString('id-ID')}`);
   }catch(e){ alert('❌ Gagal bayar: '+e.message); }
 }
+
+function showOrderSummary(text){
+  let old = document.getElementById('orderSummaryModal');
+  if(old) old.remove();
+  let modal = document.createElement('div');
+  modal.id = 'orderSummaryModal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)';
+  modal.innerHTML = `
+    <div style="background:linear-gradient(180deg,#151a48,#0c102d);border:2px solid #00e5ff80;border-radius:20px;padding:20px;max-width:400px;width:100%;box-shadow:0 0 40px #00e5ff60;max-height:90vh;overflow-y:auto">
+      <div style="text-align:center;margin-bottom:14px">
+        <div style="font-size:50px">✅</div>
+        <div style="font-weight:900;font-size:16px;color:#00ff88;margin-top:6px">PEMBAYARAN SUKSES!</div>
+      </div>
+      <div style="background:#0a0d24;border:1px solid #00e5ff40;border-radius:12px;padding:14px;font-size:12px;line-height:1.7;white-space:pre-wrap;color:#fff;font-family:monospace">${text}</div>
+      <button onclick="document.getElementById('orderSummaryModal').remove()" style="width:100%;padding:14px;margin-top:14px;border-radius:12px;border:none;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;font-weight:900;font-size:14px;cursor:pointer">OKE, MANTAP! ⚡</button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
 function bayarViaApp(app, nomor){
   navigator.clipboard.writeText(nomor).then(()=>{
     if(typeof wsToast==='function') wsToast(`✅ Nomor ${nomor} disalin!`);
@@ -432,7 +525,7 @@ function buatPesananDanUpload(){
   toggleLayanan();
 }
 
-// ===== CHAT REAL-TIME (Firebase) =====
+// ===== CHAT REAL-TIME =====
 let chatUnsubscribe = null;
 function toggleLayanan(){
   let b=document.getElementById('layananBox');
@@ -447,10 +540,7 @@ function getChatRef(){
 }
 function loadChat(){
   const chatRef = getChatRef();
-  if(!chatRef){ 
-    document.getElementById('layananChat').innerHTML = '<div class="msg bot">⚠️ Login dulu buat chat admin</div>';
-    return;
-  }
+  if(!chatRef){ document.getElementById('layananChat').innerHTML = '<div class="msg bot">⚠️ Login dulu buat chat admin</div>'; return; }
   if(chatUnsubscribe) chatUnsubscribe();
   chatUnsubscribe = window.wafaOnValue(chatRef, (snap)=>{
     const data = snap.val() || {};
@@ -463,10 +553,11 @@ function loadChat(){
       list.forEach(m=>{
         const d = document.createElement('div');
         d.className = 'msg ' + (m.from === 'admin' ? 'bot' : 'user');
-        d.innerText = m.text;
         if(m.image){ 
-          d.innerHTML = `<div style="font-size:11px;opacity:0.7;margin-bottom:4px">📸 Bukti TF:</div><img src="${m.image}" style="max-width:100%;border-radius:8px;margin-top:4px">`; 
+          d.innerHTML = `<div style="font-size:11px;opacity:0.7;margin-bottom:4px">📸 Gambar:</div><img src="${m.image}" style="max-width:100%;border-radius:8px;margin-top:4px">`; 
           if(m.text) d.innerHTML = m.text + '<br>' + d.innerHTML;
+        } else {
+          d.innerText = m.text;
         }
         c.appendChild(d);
       });
@@ -482,18 +573,10 @@ async function sendLayanan(){
   const msgId = Date.now() + '_' + Math.random().toString(36).slice(2,7);
   const uid = localStorage.getItem('wafa_uid');
   let userData = JSON.parse(localStorage.getItem('wafa_user')||'{}');
-  const msgData = {
-    from: 'user',
-    text: t,
-    time: Date.now(),
-    uid: uid,
-    email: userData.email || '-',
-    nickname: userData.nickname || '-'
-  };
+  const msgData = { from: 'user', text: t, time: Date.now(), uid: uid, email: userData.email || '-', nickname: userData.nickname || '-' };
   try{
     await window.wafaSet(window.wafaRef(window.wafaDB, 'chats/' + uid + '/' + msgId), msgData);
     inp.value='';
-    // Notif Discord
     if(window.DISCORD_URL){
       fetch(window.DISCORD_URL+"?with_components=true", {
         method:'POST', headers:{'Content-Type':'application/json'},
@@ -513,16 +596,13 @@ async function uploadBuktiFromChat(input){
     const uid = localStorage.getItem('wafa_uid');
     let userData = JSON.parse(localStorage.getItem('wafa_user')||'{}');
     const msgId = Date.now() + '_' + Math.random().toString(36).slice(2,7);
-    const msgData = {
-      from: 'user', text: '', image: r.result, time: Date.now(),
-      uid: uid, email: userData.email || '-', nickname: userData.nickname || '-'
-    };
+    const msgData = { from: 'user', text: '', image: r.result, time: Date.now(), uid: uid, email: userData.email || '-', nickname: userData.nickname || '-' };
     try{
       await window.wafaSet(window.wafaRef(window.wafaDB, 'chats/' + uid + '/' + msgId), msgData);
       if(window.DISCORD_URL){
         fetch(window.DISCORD_URL+"?with_components=true", {
           method:'POST', headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({ content: `📸 **BUKTI TF VIA CHAT dari ${sensorEmail(userData.email||'-')}**\nBales di admin panel` })
+          body: JSON.stringify({ content: `📸 **GAMBAR VIA CHAT dari ${sensorEmail(userData.email||'-')}**\nBales di admin panel` })
         });
       }
     }catch(e){ alert('Gagal upload: '+e.message); }
