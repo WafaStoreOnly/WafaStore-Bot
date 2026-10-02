@@ -1,11 +1,11 @@
-// SIDEBAR WAFASTORE - AUTO INJECT
+// SIDEBAR WAFASTORE - AUTO INJECT WITH FIREBASE GAME ICONS
 (function(){
   const sidebarHTML = `
     <div id="wsOverlay" onclick="wsCloseSidebar()"></div>
     <aside id="wsSidebar">
       <div class="ws-logo">
-        <img src="./logo.png" alt="logo">
-        <span>WafaStoreOnly</span>
+        <img src="./logo.png" alt="logo" id="wsLogoImg">
+        <span id="wsBrandName">WafaStoreOnly</span>
       </div>
       <nav class="ws-menu">
         <div class="ws-item" id="wsMenuBeranda" onclick="wsOpen('beranda')">
@@ -16,12 +16,36 @@
           ⚡ <span>Top Up Game</span> <span class="arrow">▼</span>
         </div>
         <div class="ws-submenu" id="wsSubTopup">
-          <a onclick="wsGo('roblox')">🎮 Roblox <span style="margin-left:auto;font-size:9px;color:#00ff88">AKTIF</span></a>
-          <a class="soon" onclick="wsSoon('Mobile Legends')">⚔️ Mobile Legends</a>
-          <a class="soon" onclick="wsSoon('PUBG Mobile')">🔫 PUBG Mobile</a>
-          <a class="soon" onclick="wsSoon('Free Fire')">🔥 Free Fire</a>
-          <a class="soon" onclick="wsSoon('Genshin Impact')">✨ Genshin Impact</a>
-          <a class="soon" onclick="wsSoon('Valorant')">🎯 Valorant</a>
+          <a onclick="wsGo('roblox')" data-game-key="roblox">
+            <img class="ws-game-icon" data-game-icon="roblox" src="./roblox.png" alt="roblox" style="width:20px;height:20px;object-fit:contain;border-radius:4px">
+            <span data-game-name="roblox">Roblox</span>
+            <span class="ws-game-status" data-game-status="roblox" style="margin-left:auto;font-size:9px;color:#00ff88">AKTIF</span>
+          </a>
+          <a onclick="wsGo('mlbb')" data-game-key="mlbb">
+            <img class="ws-game-icon" data-game-icon="mlbb" src="./mlbb.png" alt="mlbb" style="width:20px;height:20px;object-fit:contain;border-radius:4px">
+            <span data-game-name="mlbb">Mobile Legends</span>
+            <span class="ws-game-status" data-game-status="mlbb" style="margin-left:auto;font-size:9px;color:#8d94b8">SOON</span>
+          </a>
+          <a onclick="wsGo('pubg')" data-game-key="pubg">
+            <img class="ws-game-icon" data-game-icon="pubg" src="./pubg.png" alt="pubg" style="width:20px;height:20px;object-fit:contain;border-radius:4px">
+            <span data-game-name="pubg">PUBG Mobile</span>
+            <span class="ws-game-status" data-game-status="pubg" style="margin-left:auto;font-size:9px;color:#8d94b8">SOON</span>
+          </a>
+          <a onclick="wsGo('ff')" data-game-key="ff">
+            <img class="ws-game-icon" data-game-icon="ff" src="./ff.png" alt="ff" style="width:20px;height:20px;object-fit:contain;border-radius:4px">
+            <span data-game-name="ff">Free Fire</span>
+            <span class="ws-game-status" data-game-status="ff" style="margin-left:auto;font-size:9px;color:#8d94b8">SOON</span>
+          </a>
+          <a onclick="wsGo('genshin')" data-game-key="genshin">
+            <img class="ws-game-icon" data-game-icon="genshin" src="./genshin.png" alt="genshin" style="width:20px;height:20px;object-fit:contain;border-radius:4px">
+            <span data-game-name="genshin">Genshin Impact</span>
+            <span class="ws-game-status" data-game-status="genshin" style="margin-left:auto;font-size:9px;color:#8d94b8">SOON</span>
+          </a>
+          <a onclick="wsGo('valorant')" data-game-key="valorant">
+            <img class="ws-game-icon" data-game-icon="valorant" src="./valorant.png" alt="valorant" style="width:20px;height:20px;object-fit:contain;border-radius:4px">
+            <span data-game-name="valorant">Valorant</span>
+            <span class="ws-game-status" data-game-status="valorant" style="margin-left:auto;font-size:9px;color:#8d94b8">SOON</span>
+          </a>
         </div>
 
         <div class="ws-item" id="wsMenuPesanan" onclick="wsOpen('pesanan')">
@@ -91,6 +115,17 @@ function wsGo(page){
   if(page === 'roblox'){
     if(typeof openRoblox === 'function') openRoblox();
     else window.location.href = 'index.html#roblox';
+  } else {
+    // Game lain: cek status aktif/nonaktif
+    const statusEl = document.querySelector(`[data-game-status="${page}"]`);
+    const gameName = document.querySelector(`[data-game-name="${page}"]`);
+    const nameText = gameName ? gameName.innerText : page;
+    if(statusEl && statusEl.innerText.trim() === 'SOON'){
+      alert(`⚡ Layanan ${nameText} sedang diproses.\n\nTunggu update dari admin ya! 🙏`);
+    } else {
+      // Kalau aktif, tetap arahin ke halaman default (karena cuma Roblox yang siap)
+      alert(`⚡ Layanan ${nameText} sedang diproses.\n\nTunggu update dari admin ya! 🙏`);
+    }
   }
 }
 function wsOpen(page){
@@ -135,6 +170,7 @@ function wsToast(msg){
 // UID ADMIN
 const ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
 
+// ===== LOAD USER INFO =====
 async function wsLoadUser(){
   try{
     if(!window.wafaDB || !window.wafaRef || !window.wafaGet){
@@ -167,19 +203,109 @@ async function wsLoadUser(){
   }catch(e){ console.log('wsLoadUser error:', e); }
 }
 
-if(window.wafaDB){
-  window.addEventListener('load', wsLoadUser);
+// ===== LOAD BRANDING (logo + nama brand) =====
+function wsLoadBranding(){
+  try{
+    if(!window.wafaDB || !window.wafaRef || !window.wafaOnValue){
+      setTimeout(wsLoadBranding, 500);
+      return;
+    }
+    window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/branding'), (snap)=>{
+      const d = snap.val();
+      if(!d) return;
+      if(d.logo){
+        const logoImg = document.getElementById('wsLogoImg');
+        if(logoImg) logoImg.src = d.logo;
+        // Favicon
+        const fav = document.querySelector('link[rel="icon"]') || document.createElement('link');
+        fav.rel = 'icon'; fav.href = d.logo;
+        document.head.appendChild(fav);
+      }
+      if(d.brandName){
+        const brandEl = document.getElementById('wsBrandName');
+        if(brandEl) brandEl.innerText = d.brandName;
+        const titleEl = document.getElementById('wsPageTitle');
+        if(titleEl) titleEl.innerText = d.brandName + ' ⚡';
+      }
+    });
+  }catch(e){ console.log('wsLoadBranding error:', e); }
+}
+
+// ===== LOAD GAME ICONS + NAMA + STATUS =====
+function wsLoadGames(){
+  try{
+    if(!window.wafaDB || !window.wafaRef || !window.wafaOnValue){
+      setTimeout(wsLoadGames, 500);
+      return;
+    }
+    window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/games'), (snap)=>{
+      const data = snap.val() || {};
+      Object.keys(data).forEach(key=>{
+        const g = data[key] || {};
+        
+        // Update icon
+        if(g.logo){
+          document.querySelectorAll(`[data-game-icon="${key}"]`).forEach(img=>{
+            img.src = g.logo;
+          });
+        }
+        
+        // Update nama
+        if(g.name){
+          document.querySelectorAll(`[data-game-name="${key}"]`).forEach(el=>{
+            el.innerText = g.name;
+          });
+        }
+        
+        // Update status
+        const statusEl = document.querySelector(`[data-game-status="${key}"]`);
+        if(statusEl){
+          const isActive = g.active === true;
+          if(isActive){
+            statusEl.innerText = 'AKTIF';
+            statusEl.style.color = '#00ff88';
+          } else {
+            statusEl.innerText = 'SOON';
+            statusEl.style.color = '#8d94b8';
+          }
+        }
+      });
+    });
+  }catch(e){ console.log('wsLoadGames error:', e); }
+}
+
+// ===== LOAD THEME (warna) =====
+function wsLoadTheme(){
+  try{
+    if(!window.wafaDB || !window.wafaRef || !window.wafaOnValue){
+      setTimeout(wsLoadTheme, 500);
+      return;
+    }
+    window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/theme'), (snap)=>{
+      const d = snap.val();
+      if(!d) return;
+      if(d.primary){
+        document.documentElement.style.setProperty('--primary', d.primary);
+        document.documentElement.style.setProperty('--killua-primary', d.primary);
+      }
+      if(d.accent){
+        document.documentElement.style.setProperty('--accent', d.accent);
+        document.documentElement.style.setProperty('--killua-accent', d.accent);
+      }
+    });
+  }catch(e){ console.log('wsLoadTheme error:', e); }
+}
+
+// ===== INIT =====
+function wsInitAll(){
+  wsLoadUser();
+  wsLoadBranding();
+  wsLoadGames();
+  wsLoadTheme();
+}
+
+if(document.readyState === 'complete'){
+  wsInitAll();
 } else {
-  let attempts = 0;
-  const iv = setInterval(()=>{
-    attempts++;
-    if(window.wafaDB){
-      clearInterval(iv);
-      wsLoadUser();
-    }
-    if(attempts > 20){
-      clearInterval(iv);
-      console.warn('Firebase SDK tidak terdeteksi setelah 10 detik');
-    }
-  }, 500);
+  window.addEventListener('load', wsInitAll);
 }
