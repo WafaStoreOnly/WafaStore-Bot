@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Dompet - WafaStoreOnly x Killua</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/nsfwjs@4.2.0/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <link rel="stylesheet" href="./sidebar.css">
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -63,7 +66,7 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
 <script>
 function sensorEmail(e){if(!e||!e.includes('@'))return'****';let [a,b]=e.split('@');return a.slice(0,3)+'****@'+b}
 
-// ===== CEK BUKTI (VERSI LONGGAR) =====
+// ===== CEK BUKTI (VERSI LONGGAR - ANTI FALSE POSITIVE) =====
 async function cekBuktiValid(file){
   let loading=document.createElement('div');
   loading.id='loadingDetect';
@@ -84,16 +87,45 @@ async function cekBuktiValid(file){
     let lower=text.toLowerCase();
     let lowerNoSpace=lower.replace(/\s/g,'');
 
+    // Log debug ke console (buat cek kalau ada masalah)
+    console.log('=== OCR DEBUG ===');
+    console.log('TEXT ASLI:', text);
+    console.log('LOWER:', lower);
+
     let blacklist=['kontol','memek','ngentot','anjing','babi','bangsat','tolol','goblok','asu','jancok','fuck','shit','peler','itil','jembut'];
     if(blacklist.some(k=>lower.includes(k))){ document.getElementById('loadingDetect').remove(); return {valid:false,reason:`❌ FOTO DITOLAK! Ada kata kasar!`}; }
 
     document.getElementById('cek-status').innerText='3/4 Cek penerima...';
-    let validNumbers=['083862776790','83862776790','901162765462','901162','162765','0838'];
-    let validNames=['wafastoreonly','awa_newstream','abiwafaali','abi wafa ali','wafa','awa','newstream'];
-    let isMyNumber = validNumbers.some(no => lowerNoSpace.includes(no));
-    let isMyName = validNames.some(nm => lower.includes(nm));
-    let isQris = lower.includes('qris');
-    if(!isMyNumber && !isMyName && !isQris){ document.getElementById('loadingDetect').remove(); return {valid:false,reason:`❌ SALAH TUJUAN!\n\nBukti TF harus ke:\n• 083862776790 (DANA/GoPay)\n• 901162765462 (Seabank)\n• AWA_NEWSTREAM (QRIS)`}; }
+
+    // Ganti huruf O/o jadi 0, buang semua non-angka
+    let angkaSaja = lowerNoSpace.replace(/o/g,'0').replace(/[^0-9]/g,'');
+    // Ambil semua huruf aja
+    let teksSaja = lower.replace(/[^a-z]/g,'');
+
+    // Cek potongan angka kunci (DANA/GoPay/Seabank)
+    let ciriAngka = [
+      '0838627','838627','386277','862776','627767','277679',
+      '9011627','011627','116276','162765','627654','276546',
+      '0838','6277','1627','6546'
+    ];
+    // Cek potongan nama (Wafa/awa/AWA_NEWSTREAM/dll)
+    let ciriNama = [
+      'wafa','awa','abiwafa','newstream','wafastore','killua','abiw',
+      'wafaali','abiwafaali','abiwa','store'
+    ];
+
+    let isAngka = ciriAngka.some(x => angkaSaja.includes(x));
+    let isNama = ciriNama.some(x => teksSaja.includes(x));
+    let isQris = lower.includes('qris') || lower.includes('qr ');
+
+    console.log('angkaSaja:', angkaSaja);
+    console.log('teksSaja:', teksSaja);
+    console.log('isAngka:', isAngka, '| isNama:', isNama, '| isQris:', isQris);
+
+    if(!isAngka && !isNama && !isQris){
+      document.getElementById('loadingDetect').remove();
+      return {valid:false,reason:`❌ SALAH TUJUAN!\n\nSistem ga nemu nomor/nama WafaStoreOnly di bukti TF.\n\nPastikan screenshot keliatan:\n• Nomor 083862776790 / 901162765462\n• ATAU nama AWA_NEWSTREAM / Wafa\n• ATAU logo QRIS`};
+    }
 
     document.getElementById('cek-status').innerText='4/4 Selesai...';
     document.getElementById('loadingDetect').remove();
@@ -167,7 +199,7 @@ async function uploadBuktiDompet(){
         }
       }catch(err){ console.log('Firebase error:', err); alert('❌ Gagal simpan ke server: '+err.message); return; }
 
-      // SIMPAN LOCALSTORAGE (biar ada riwayat lokal)
+      // SIMPAN LOCALSTORAGE
       let riwayat=JSON.parse(localStorage.getItem('wafa_dompet')||'[]');
       riwayat.unshift(data);
       localStorage.setItem('wafa_dompet',JSON.stringify(riwayat));
@@ -221,20 +253,16 @@ async function loadUser(){
   }catch(e){ console.log('loadUser error:', e); }
 }
 
-// ===== FIREBASE LISTENER (real-time saldo & riwayat) =====
+// ===== FIREBASE LISTENER =====
 function attachDompetListener(){
   try{
     if(!window.wafaDB || !window.wafaOnValue) return;
     const uid = localStorage.getItem('wafa_uid');
     if(!uid) return;
-    // listen ke user (untuk saldo)
     window.wafaOnValue(window.wafaRef(window.wafaDB, 'users/' + uid), (snap)=>{
       const data = snap.val();
-      if(data){
-        document.getElementById('saldoText').innerText = `Rp${(data.saldo||0).toLocaleString('id-ID')}`;
-      }
+      if(data){ document.getElementById('saldoText').innerText = `Rp${(data.saldo||0).toLocaleString('id-ID')}`; }
     });
-    // listen ke riwayat topup milik user ini
     window.wafaOnValue(window.wafaRef(window.wafaDB, 'topup_saldo'), (snap)=>{
       const all = snap.val();
       if(!all) return;
@@ -254,7 +282,6 @@ function attachDompetListener(){
   }catch(e){ console.log('listener error:', e); }
 }
 
-// ===== INIT =====
 renderDompet();
 renderRiwayat();
 loadUser();
