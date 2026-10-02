@@ -3,18 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WafaStoreOnly x Killua - OFFICIAL</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<title>WafaStoreOnly - Top Up Robux Cepat & Aman</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <link rel="stylesheet" href="./sidebar.css">
 <style>
-.syarat-box-modern{background:#0f1333;border:1px solid #2a3366;border-radius:14px;padding:14px;margin-top:16px}
-.syarat-title{font-weight:900;font-size:12px;color:#00e5ff;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.syarat-item{display:flex;gap:10px;align-items:flex-start;background:#0a0d24;border-radius:8px;padding:9px 11px;margin-bottom:6px;border-left:3px solid #00c6ff;font-size:11px;color:#d0d4e8;line-height:1.5}
+/* HERO */
+.hero-banner{position:relative;border-radius:18px;overflow:hidden;background:#141414;border:1px solid #2a2a2a;min-height:300px;display:flex;align-items:center;margin-top:8px}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center right;opacity:0.55}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,#0a0a0a 10%,rgba(10,10,10,0.6) 50%,rgba(10,10,10,0.1) 100%)}
+.hero-content{position:relative;z-index:2;padding:32px 28px;max-width:560px}
+.hero-badge{display:inline-block;background:#1a1a1a;border:1px solid #2a2a2a;padding:6px 14px;border-radius:20px;font-size:10px;font-weight:700;color:#a8a8a8;letter-spacing:1px;margin-bottom:16px;text-transform:uppercase}
+.hero-badge::before{content:'●';color:#4ade80;margin-right:6px;font-size:8px}
+.hero-title{font-size:42px;font-weight:900;line-height:1.05;letter-spacing:-1.5px;color:#fff;margin-bottom:12px}
+.hero-sub{font-size:13px;color:#a8a8a8;line-height:1.6;margin-bottom:22px;max-width:420px}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+.hero-btn{padding:12px 24px;border-radius:10px;border:none;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;transition:0.15s;display:inline-flex;align-items:center;gap:6px}
+.hero-btn-primary{background:#fff;color:#000}
+.hero-btn-primary:hover{background:#e8e8e8}
+.hero-btn-secondary{background:transparent;color:#fff;border:1px solid #3a3a3a}
+.hero-btn-secondary:hover{background:#1a1a1a}
+
+/* FEATURE CARDS */
+.feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.feature-card{background:#141414;border:1px solid #2a2a2a;border-radius:12px;padding:16px;transition:0.15s}
+.feature-card:hover{border-color:#3a3a3a}
+.feature-label{font-size:9px;color:#5a5a5a;letter-spacing:1.5px;font-weight:800;text-transform:uppercase;margin-bottom:8px}
+.feature-title{font-size:13px;font-weight:700;color:#e8e8e8;margin-bottom:4px}
+.feature-desc{font-size:11px;color:#8a8a8a;line-height:1.5}
+
+/* WELCOME BOX */
+.welcome-box{position:relative;margin-top:12px;padding:24px 20px;background:#141414;border:1px solid #2a2a2a;border-radius:14px;text-align:center;overflow:hidden;display:none}
+.welcome-box::before,.welcome-box::after{content:'';position:absolute;width:14px;height:14px;border:1.5px solid #4a90e2}
+.welcome-box::before{top:10px;left:10px;border-right:none;border-bottom:none}
+.welcome-box::after{top:10px;right:10px;border-left:none;border-bottom:none}
+.welcome-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:5px;color:#fff;margin-bottom:10px;position:relative;z-index:2}
+.welcome-tagline{font-size:11px;color:#8a8a8a;letter-spacing:3px;line-height:1.8;position:relative;z-index:2;text-transform:uppercase}
+.welcome-msg{margin-top:16px;font-size:11px;color:#a8a8a8;line-height:1.7;position:relative;z-index:2;font-family:'Courier New',monospace;white-space:pre-wrap}
+.welcome-msg b{color:#fff;font-weight:700}
+
+/* ANNOUNCEMENT STEP */
+.ann-box{background:#141414;border:1px solid #2a2a2a;border-radius:14px;padding:18px;margin-top:14px}
+.ann-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.ann-head-icon{font-size:22px}
+.ann-head-title{font-size:14px;font-weight:800;color:#e8e8e8}
+.ann-head-sub{font-size:10px;color:#5a5a5a;margin-top:2px}
+.ann-step{background:#0a0a0a;border:1px solid #2a2a2a;border-left:3px solid #4a90e2;border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start}
+.ann-step.green{border-left-color:#4ade80}
+.ann-step.warn{border-left-color:#fbbf24;background:rgba(251,191,36,0.05)}
+.ann-step-num{width:26px;height:26px;background:#1a1a1a;border:1px solid #3a3a3a;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#e8e8e8;flex-shrink:0}
+.ann-step.green .ann-step-num{border-color:#4ade80;color:#4ade80}
+.ann-step.warn .ann-step-num{border-color:#fbbf24;color:#fbbf24}
+.ann-step-title{font-size:12px;font-weight:700;color:#e8e8e8;margin-bottom:3px}
+.ann-step-desc{font-size:11px;color:#8a8a8a;line-height:1.5}
+.ann-step-desc b{color:#e8e8e8}
+
+/* SYARAT */
+.syarat-box-modern{background:#141414;border:1px solid #2a2a2a;border-radius:14px;padding:16px;margin-top:16px}
+.syarat-title{font-weight:800;font-size:12px;color:#e8e8e8;margin-bottom:14px;letter-spacing:0.5px}
+.syarat-item{display:flex;gap:10px;align-items:flex-start;background:#0a0a0a;border-radius:8px;padding:10px 12px;margin-bottom:6px;border-left:2px solid #4a90e2;font-size:12px;color:#a8a8a8;line-height:1.5}
 .syarat-item:last-child{margin-bottom:0}
-.syarat-num{width:20px;height:20px;background:linear-gradient(135deg,#00c6ff,#0088cc);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:10px;color:#fff;flex-shrink:0;margin-top:1px}
-.syarat-item.green{border-left-color:#00ff88}
-.syarat-item.green .syarat-num{background:linear-gradient(135deg,#00ff88,#00c96b);color:#000}
+.syarat-num{width:20px;height:20px;background:#1a1a1a;border:1px solid #3a3a3a;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:10px;color:#e8e8e8;flex-shrink:0;margin-top:1px}
+.syarat-item.green{border-left-color:#4ade80}
+.syarat-item.green .syarat-num{border-color:#4ade80;color:#4ade80}
+
+/* PANDUAN CEPAT */
+.panduan-title{font-weight:800;font-size:15px;color:#e8e8e8;display:flex;align-items:center;gap:8px;margin:22px 0 12px}
+.panduan-item{background:#141414;border:1px solid #2a2a2a;border-radius:12px;padding:14px;display:flex;gap:12px;align-items:center;cursor:pointer;transition:0.15s;margin-bottom:10px}
+.panduan-item:hover{border-color:#3a3a3a;background:#1a1a1a}
+.panduan-icon{width:42px;height:42px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.panduan-info{flex:1}
+.panduan-info b{font-size:13px;color:#e8e8e8;display:block;margin-bottom:2px}
+.panduan-info span{font-size:11px;color:#8a8a8a;line-height:1.5;display:block}
+.panduan-arrow{color:#5a5a5a;font-size:16px}
+
+/* QRIS DOWNLOAD BADGE */
+.qris-wrap{position:relative;cursor:pointer;background:#141414;border:1px solid #2a2a2a;border-radius:14px;overflow:hidden;text-align:center}
+.qris-wrap img{width:100%;display:block}
+.qris-badge{position:absolute;top:12px;right:12px;background:rgba(10,10,10,0.9);border:1px solid #3a3a3a;color:#e8e8e8;padding:6px 12px;border-radius:20px;font-size:10px;font-weight:700;backdrop-filter:blur(8px)}
+
+@media (max-width:768px){
+  .feature-grid{grid-template-columns:1fr 1fr}
+  .hero-title{font-size:32px;letter-spacing:-1px}
+  .hero-content{padding:24px 20px}
+  .hero-banner{min-height:280px}
+}
+@media (max-width:480px){
+  .hero-title{font-size:28px}
+  .hero-sub{font-size:12px}
+}
 </style>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -37,123 +114,158 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
 
 <div id="homePage" class="ws-section">
 
-  <div id="annBanner" style="margin-top:12px;background:linear-gradient(135deg,#00c6ff15,#7c3aed15);border:2px solid #00e5ff60;border-radius:16px;padding:16px;box-shadow:0 0 30px #00e5ff30">
-
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-      <div style="font-size:24px">📢</div>
-      <div style="flex:1">
-        <div style="font-weight:900;font-size:14px;color:#00e5ff" id="annTitle">CARA ORDER DI WAFASTOREONLY</div>
-        <div style="font-size:10px;color:#8d94b8;margin-top:2px">Ikuti langkah-langkah dibawah ya ⚡</div>
-      </div>
-    </div>
-
-    <div style="background:#0a0d24;border:1px solid #232a5a;border-left:4px solid #00c6ff;border-radius:10px;padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start">
-      <div style="width:28px;height:28px;background:linear-gradient(135deg,#00c6ff,#0088cc);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff;flex-shrink:0">1</div>
-      <div style="flex:1">
-        <div style="font-weight:800;font-size:12px;color:#00c6ff;margin-bottom:3px">Buka Menu ⚡ Top Up Game</div>
-        <div style="font-size:11px;color:#aab0d0;line-height:1.5">Klik menu <b style="color:#fff">⚡ Top Up Game</b> di sidebar kiri, terus pilih game yang mau di top up.</div>
-      </div>
-    </div>
-
-    <div style="background:#0a0d24;border:1px solid #232a5a;border-left:4px solid #00c6ff;border-radius:10px;padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start">
-      <div style="width:28px;height:28px;background:linear-gradient(135deg,#00c6ff,#0088cc);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff;flex-shrink:0">2</div>
-      <div style="flex:1">
-        <div style="font-weight:800;font-size:12px;color:#00c6ff;margin-bottom:3px">Pilih Nominal Robux</div>
-        <div style="font-size:11px;color:#aab0d0;line-height:1.5">Masukkan username Roblox & pilih paket. Mulai <b style="color:#fff">100 - 10.000 Robux</b>.</div>
-      </div>
-    </div>
-
-    <div style="background:#0a0d24;border:1px solid #232a5a;border-left:4px solid #00c6ff;border-radius:10px;padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start">
-      <div style="width:28px;height:28px;background:linear-gradient(135deg,#00c6ff,#0088cc);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#fff;flex-shrink:0">3</div>
-      <div style="flex:1">
-        <div style="font-weight:800;font-size:12px;color:#00c6ff;margin-bottom:3px">Pilih Payment & Bayar</div>
-        <div style="font-size:11px;color:#aab0d0;line-height:1.5">Pilih metode: <b style="color:#fff">QRIS / DANA / GoPay / Seabank</b>. Bayar sesuai total, <b style="color:#ff8888">jangan kurang!</b></div>
-      </div>
-    </div>
-
-    <div style="background:#0a0d24;border:1px solid #232a5a;border-left:4px solid #00ff88;border-radius:10px;padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start">
-      <div style="width:28px;height:28px;background:linear-gradient(135deg,#00ff88,#00c96b);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:#000;flex-shrink:0">4</div>
-      <div style="flex:1">
-        <div style="font-weight:800;font-size:12px;color:#00ff88;margin-bottom:3px">Upload Bukti & Tunggu</div>
-        <div style="font-size:11px;color:#aab0d0;line-height:1.5">Upload bukti TF yang jelas. Robux masuk <b style="color:#fff">5-30 menit</b> otomatis. Jangan logout Roblox!</div>
-      </div>
-    </div>
-
-    <div style="background:#ff444415;border:1px solid #ff444460;border-radius:10px;padding:12px;display:flex;gap:10px;align-items:flex-start">
-      <div style="font-size:18px;line-height:1.2">⚠️</div>
-      <div style="flex:1">
-        <div style="font-weight:800;font-size:12px;color:#ff6a6a;margin-bottom:3px">PENTING!</div>
-        <div style="font-size:11px;color:#d0d4e8;line-height:1.5">Salah username = Robux hilang! Pastikan akun tidak private & join group WafaStoreOnly jika disuruh.</div>
-      </div>
-    </div>
-
-  </div>
-
-  <div style="margin-top:16px">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-      <div style="font-size:18px">🗺️</div>
-      <div style="font-weight:900;font-size:15px">Panduan Cepat</div>
-    </div>
-
-    <div style="display:grid;gap:10px">
-      <div onclick="openRoblox()" style="background:#121631;border:1px solid #2a3366;border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center;cursor:pointer">
-        <div style="width:46px;height:46px;background:linear-gradient(135deg,#00c6ff,#7c3aed);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 15px #00e5ff60">⚡</div>
-        <div style="flex:1">
-          <div style="font-weight:800;font-size:13px;color:#00e5ff">Mau Top Up Game?</div>
-          <div style="font-size:11px;color:#aab0d0;line-height:1.5;margin-top:2px">Klik menu <b style="color:#fff">⚡ Top Up Game</b> di sidebar, pilih game & paket, bayar pakai DANA/GoPay/QRIS.</div>
-        </div>
-        <div style="font-size:18px;color:#00e5ff">→</div>
-      </div>
-
-      <div onclick="window.location.href='dompet.html'" style="background:#121631;border:1px solid #2a3366;border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center;cursor:pointer">
-        <div style="width:46px;height:46px;background:linear-gradient(135deg,#00ff88,#00c6ff);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 15px #00ff8860">💰</div>
-        <div style="flex:1">
-          <div style="font-weight:800;font-size:13px;color:#00ff88">Mau Isi Saldo Web?</div>
-          <div style="font-size:11px;color:#aab0d0;line-height:1.5;margin-top:2px">Klik menu <b style="color:#fff">👛 Dompet</b>, isi nominal, transfer ke rekening, upload bukti TF.</div>
-        </div>
-        <div style="font-size:18px;color:#00ff88">→</div>
-      </div>
-
-      <div onclick="openPesanan()" style="background:#121631;border:1px solid #2a3366;border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center;cursor:pointer">
-        <div style="width:46px;height:46px;background:linear-gradient(135deg,#ffcc00,#ff8800);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 15px #ffcc0060">📦</div>
-        <div style="flex:1">
-          <div style="font-weight:800;font-size:13px;color:#ffcc00">Mau Cek Pesanan?</div>
-          <div style="font-size:11px;color:#aab0d0;line-height:1.5;margin-top:2px">Klik menu <b style="color:#fff">📦 Pesanan</b> buat liat status order kamu.</div>
-        </div>
-        <div style="font-size:18px;color:#ffcc00">→</div>
-      </div>
-
-      <div onclick="toggleLayanan()" style="background:#121631;border:1px solid #2a3366;border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center;cursor:pointer">
-        <div style="width:46px;height:46px;background:linear-gradient(135deg,#ff4444,#ff6a6a);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 15px #ff444460">💬</div>
-        <div style="flex:1">
-          <div style="font-weight:800;font-size:13px;color:#ff6a6a">Butuh Bantuan Admin?</div>
-          <div style="font-size:11px;color:#aab0d0;line-height:1.5;margin-top:2px">Klik tombol <b style="color:#fff">💬 di kanan bawah</b> buat chat langsung sama admin.</div>
-        </div>
-        <div style="font-size:18px;color:#ff6a6a">→</div>
-      </div>
-
-      <div onclick="window.location.href='profil.html'" style="background:#121631;border:1px solid #2a3366;border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center;cursor:pointer">
-        <div style="width:46px;height:46px;background:linear-gradient(135deg,#8b5cf6,#7c3aed);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 15px #8b5cf660">👤</div>
-        <div style="flex:1">
-          <div style="font-weight:800;font-size:13px;color:#a78bfa">Edit Profil Kamu</div>
-          <div style="font-size:11px;color:#aab0d0;line-height:1.5;margin-top:2px">Klik menu <b style="color:#fff">👤 Profil</b> buat ganti nama, foto, & kelola akun.</div>
-        </div>
-        <div style="font-size:18px;color:#a78bfa">→</div>
+  <!-- HERO BANNER -->
+  <div class="hero-banner">
+    <div class="hero-bg" id="heroBg" style="background-image:url('./killua-bg.webp')"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Manual Order Mode • Owner Controlled</div>
+      <h1 class="hero-title">Top Up Robux<br>Cepat & Aman</h1>
+      <p class="hero-sub">Pesan Robux dengan proses mudah dan status order real-time.</p>
+      <div class="hero-btns">
+        <button class="hero-btn hero-btn-primary" onclick="openRoblox()">Mulai Top Up →</button>
+        <button class="hero-btn hero-btn-secondary" onclick="openPesanan()">Cek Pesanan</button>
       </div>
     </div>
   </div>
 
-  <div class="banner" style="background:radial-gradient(circle at top,rgba(0,229,255,0.18),transparent 70%);padding:32px 16px 24px;border-radius:20px;border:1px solid #1e2450;margin-top:20px">
-    <h1 style="font-family:'Bebas Neue';font-size:38px;line-height:0.95;letter-spacing:1px;font-style:italic;text-shadow:0 0 20px #00e5ff">TOP UP GAME<br>FAVORIT KAMU<br>DI WAFASTOREONLY</h1>
-    <p style="font-size:12px;color:#aab0d0;margin-top:10px;line-height:1.5">⚡ Killua Edition • Aman • 24/7 • Godspeed • Auto Batal 10 Menit • Anti Porn ✅</p>
-    <button class="btn btn-primary" style="width:auto;padding:12px 22px;border-radius:30px;font-size:13px;margin-top:16px" onclick="openRoblox()">⚡ Mulai Top Up Sekarang</button>
+  <!-- FEATURE CARDS -->
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-label">Mode</div>
+      <div class="feature-title">Manual Control</div>
+      <div class="feature-desc">Order diproses Owner</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-label">Checkout</div>
+      <div class="feature-title">Fast & Simple</div>
+      <div class="feature-desc">Isi form dalam hitungan detik</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-label">Tracking</div>
+      <div class="feature-title">Real-time Status</div>
+      <div class="feature-desc">Pantau dengan Order ID</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-label">Support</div>
+      <div class="feature-title">Official CS</div>
+      <div class="feature-desc">Terhubung ke channel Owner</div>
+    </div>
+  </div>
+
+  <!-- WELCOME BOX -->
+  <div class="welcome-box" id="welcomeBox">
+    <div class="welcome-title" id="welcomeTitle">WELCOME TO WAFASTOREONLY</div>
+    <div class="welcome-tagline" id="welcomeTagline">WHERE LEGENDS CREATE & EMPIRES RISE</div>
+    <div class="welcome-msg" id="welcomeMsg">Halo Survivors!
+Selamat datang di rumah baru kalian.</div>
+  </div>
+
+  <!-- ANNOUNCEMENT -->
+  <div class="ann-box" id="annBanner">
+    <div class="ann-head">
+      <div class="ann-head-icon">📢</div>
+      <div>
+        <div class="ann-head-title" id="annTitle">CARA ORDER DI WAFASTOREONLY</div>
+        <div class="ann-head-sub">Ikuti langkah-langkah dibawah ya</div>
+      </div>
+    </div>
+
+    <div class="ann-step">
+      <div class="ann-step-num">1</div>
+      <div>
+        <div class="ann-step-title">Buka Menu Top Up Game</div>
+        <div class="ann-step-desc">Klik menu <b>Top Up Game</b> di sidebar, terus pilih game yang mau di top up.</div>
+      </div>
+    </div>
+
+    <div class="ann-step">
+      <div class="ann-step-num">2</div>
+      <div>
+        <div class="ann-step-title">Pilih Nominal Robux</div>
+        <div class="ann-step-desc">Masukkan username Roblox & pilih paket. Mulai <b>100 - 10.000 Robux</b>.</div>
+      </div>
+    </div>
+
+    <div class="ann-step">
+      <div class="ann-step-num">3</div>
+      <div>
+        <div class="ann-step-title">Pilih Payment & Bayar</div>
+        <div class="ann-step-desc">Pilih metode: <b>QRIS / DANA / GoPay / Seabank</b>. Bayar sesuai total.</div>
+      </div>
+    </div>
+
+    <div class="ann-step green">
+      <div class="ann-step-num">4</div>
+      <div>
+        <div class="ann-step-title">Upload Bukti & Tunggu</div>
+        <div class="ann-step-desc">Upload bukti TF yang jelas. Robux masuk <b>5-30 menit</b> otomatis.</div>
+      </div>
+    </div>
+
+    <div class="ann-step warn">
+      <div class="ann-step-num">!</div>
+      <div>
+        <div class="ann-step-title">Penting!</div>
+        <div class="ann-step-desc">Salah username = Robux hilang. Pastikan akun tidak private & join group WafaStoreOnly jika disuruh.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANDUAN CEPAT -->
+  <div class="panduan-title">🗺️ Panduan Cepat</div>
+
+  <div class="panduan-item" onclick="openRoblox()">
+    <div class="panduan-icon">⚡</div>
+    <div class="panduan-info">
+      <b>Mau Top Up Game?</b>
+      <span>Klik menu Top Up Game di sidebar, pilih game & paket.</span>
+    </div>
+    <div class="panduan-arrow">→</div>
+  </div>
+
+  <div class="panduan-item" onclick="window.location.href='dompet.html'">
+    <div class="panduan-icon">💰</div>
+    <div class="panduan-info">
+      <b>Mau Isi Saldo Web?</b>
+      <span>Klik menu Dompet, isi nominal, transfer & upload bukti TF.</span>
+    </div>
+    <div class="panduan-arrow">→</div>
+  </div>
+
+  <div class="panduan-item" onclick="openPesanan()">
+    <div class="panduan-icon">📦</div>
+    <div class="panduan-info">
+      <b>Mau Cek Pesanan?</b>
+      <span>Klik menu Pesanan buat liat status order kamu.</span>
+    </div>
+    <div class="panduan-arrow">→</div>
+  </div>
+
+  <div class="panduan-item" onclick="toggleLayanan()">
+    <div class="panduan-icon">💬</div>
+    <div class="panduan-info">
+      <b>Butuh Bantuan Admin?</b>
+      <span>Klik tombol chat di kanan bawah.</span>
+    </div>
+    <div class="panduan-arrow">→</div>
+  </div>
+
+  <div class="panduan-item" onclick="window.location.href='profil.html'">
+    <div class="panduan-icon">👤</div>
+    <div class="panduan-info">
+      <b>Edit Profil Kamu</b>
+      <span>Klik menu Profil buat ganti nama, foto, & kelola akun.</span>
+    </div>
+    <div class="panduan-arrow">→</div>
   </div>
 
 </div>
 
 <div id="robloxPage" class="ws-section" style="display:none">
-  <div style="color:#00d4ff;font-size:12px;margin:10px 0;cursor:pointer" onclick="goHome()">← Kembali</div>
-  <div style="font-weight:800;font-size:16px">Roblox - Top Up Robux ⚡ Killua</div>
+  <div style="color:#8a8a8a;font-size:12px;margin:10px 0;cursor:pointer" onclick="goHome()">← Kembali</div>
+  <div style="font-weight:800;font-size:18px;margin-top:8px">Roblox — Top Up Robux</div>
+
   <div class="method-tabs">
     <div class="tab active" onclick="switchMethod('username',this)">Via Username</div>
     <div class="tab" onclick="switchMethod('gamepass',this)">Via Gamepass</div>
@@ -161,63 +273,76 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
   </div>
 
   <div id="m-username">
-    <div class="input-group"><label>Username Roblox:</label><input id="uRbx" placeholder="SANTRI_PRIDE"></div>
-    <div class="input-group"><label>Mau Berapa robux? (160/robux)</label><input id="cRbx" type="number" placeholder="Contoh: 10000" oninput="calcUsername()"></div>
-    <div class="total-box" id="tRbx">Total: 0 robux = Rp0</div>
-    <div style="font-weight:800;font-size:13px;margin:18px 0 10px">Pilih Paket Via Username - 160/robux</div>
+    <div class="input-group"><label>Username Roblox</label><input id="uRbx" placeholder="Masukkan username"></div>
+    <div class="input-group"><label>Jumlah Robux (Rp160/robux)</label><input id="cRbx" type="number" placeholder="Contoh: 1000" oninput="calcUsername()"></div>
+    <div class="total-box" id="tRbx">Total: 0 Robux = Rp0</div>
+
+    <div style="font-weight:700;font-size:13px;margin:20px 0 10px;color:#e8e8e8">Pilih Paket</div>
     <div class="grid-robux" id="gridUsername"></div>
-    <div class="syarat-box-modern">
-      <div class="syarat-title">📌 SYARAT ROBUX VIA USERNAME</div>
-      <div class="syarat-item"><div class="syarat-num">1</div><div>Proses kilat <b style="color:#00ff88">5-10 menit</b> ✅</div></div>
-      <div class="syarat-item"><div class="syarat-num">2</div><div>Pastikan <b style="color:#00ff88">username benar</b> (kesalahan input di luar tanggung jawab kami) ✅</div></div>
-      <div class="syarat-item"><div class="syarat-num">3</div><div>Pastikan <b style="color:#00ff88">2FA aktif</b> di akun Roblox ✅</div></div>
-      <div class="syarat-item"><div class="syarat-num">4</div><div>Pastikan akun <b style="color:#00ff88">tidak limit</b> (bisa cek dulu) ✅</div></div>
-      <div class="syarat-item green"><div class="syarat-num">5</div><div>Umur <b style="color:#00ff88">18+</b> (kalau di bawah, pakai akun orang tua) ✅</div></div>
+
+    <div class="syarat-box-modern" id="syaratUsername">
+      <div class="syarat-title" id="syaratTitleUsername">📌 SYARAT & KETENTUAN — VIA USERNAME</div>
+      <div id="syaratItemsUsername">
+        <div class="syarat-item"><div class="syarat-num">1</div><div>Proses kilat 5-10 menit</div></div>
+        <div class="syarat-item"><div class="syarat-num">2</div><div>Pastikan username benar</div></div>
+        <div class="syarat-item"><div class="syarat-num">3</div><div>Pastikan 2FA aktif</div></div>
+        <div class="syarat-item"><div class="syarat-num">4</div><div>Pastikan akun tidak limit</div></div>
+        <div class="syarat-item green"><div class="syarat-num">5</div><div>Umur 18+</div></div>
+      </div>
     </div>
   </div>
 
   <div id="m-gamepass" style="display:none">
-    <div class="input-group"><label>Username Roblox:</label><input id="uRbx2" placeholder="username roblox"></div>
-    <div class="input-group"><label>Mau Berapa robux? (140/robux)</label><input id="cRbx2" type="number" placeholder="Contoh: 1000" oninput="calcGamepass()"></div>
-    <div class="input-group"><label>Link Gamepass:</label><input id="gamepassLink" placeholder="https://www.roblox.com/game-pass/xxxxxxx/nama"></div>
-    <div class="total-box" id="tRbx2">Total: 0 robux = Rp0<br>Setting Gamepass: 0 robux</div>
-    <div style="font-weight:800;font-size:13px;margin:18px 0 10px">Pilih Paket Via Gamepass - 140/robux</div>
+    <div class="input-group"><label>Username Roblox</label><input id="uRbx2" placeholder="Masukkan username"></div>
+    <div class="input-group"><label>Jumlah Robux (Rp140/robux)</label><input id="cRbx2" type="number" placeholder="Contoh: 1000" oninput="calcGamepass()"></div>
+    <div class="input-group"><label>Link Gamepass</label><input id="gamepassLink" placeholder="https://www.roblox.com/game-pass/xxxxxxx"></div>
+    <div class="total-box" id="tRbx2">Total: 0 Robux = Rp0<br>Setting Gamepass: 0 Robux</div>
+
+    <div style="font-weight:700;font-size:13px;margin:20px 0 10px;color:#e8e8e8">Pilih Paket</div>
     <div class="grid-robux" id="gridGamepass"></div>
-    <div class="syarat-box-modern">
-      <div class="syarat-title">📌 SYARAT ROBUX VIA GAMEPASS</div>
-      <div class="syarat-item"><div class="syarat-num">1</div><div>Proses <b style="color:#ffcc00">± 5-7 hari</b> (sabar ya) ✅</div></div>
-      <div class="syarat-item"><div class="syarat-num">2</div><div>Pastikan <b style="color:#00ff88">username benar</b> ✅</div></div>
-      <div class="syarat-item"><div class="syarat-num">3</div><div>Gamepass harus <b style="color:#00ff88">publik</b> (bukan private) ✅</div></div>
-      <div class="syarat-item green"><div class="syarat-num">4</div><div>Setting gamepass harus <b style="color:#00ff88">sesuai</b> dengan jumlah yang diminta ✅</div></div>
+
+    <div class="syarat-box-modern" id="syaratGamepass">
+      <div class="syarat-title" id="syaratTitleGamepass">📌 SYARAT & KETENTUAN — VIA GAMEPASS</div>
+      <div id="syaratItemsGamepass">
+        <div class="syarat-item"><div class="syarat-num">1</div><div>Proses ± 5-7 hari</div></div>
+        <div class="syarat-item"><div class="syarat-num">2</div><div>Pastikan username benar</div></div>
+        <div class="syarat-item"><div class="syarat-num">3</div><div>Gamepass harus publik</div></div>
+        <div class="syarat-item green"><div class="syarat-num">4</div><div>Setting gamepass sesuai</div></div>
+      </div>
     </div>
   </div>
 
   <div id="m-gift" style="display:none">
-    <div class="input-group"><label>Username Roblox:</label><input id="uRbx3" placeholder="username roblox"></div>
-    <div class="input-group"><label>Nama Item yang mau di Gift:</label><input id="giftItem" placeholder="Contoh: VIP, Gamepass"></div>
-    <div class="input-group"><label>Jumlah Robux yang dibutuhkan Item:</label><input id="cGift" type="number" placeholder="Contoh: 445" oninput="calcGift()"></div>
-    <div class="input-group"><label>Link Private Server:</label><input id="privateServerLink" placeholder="https://www.roblox.com/games/xxxxx/private-server"></div>
-    <div class="total-box" id="tGift">Total: 0 robux x Rp95 = Rp0<br>Item: -</div>
-    <div class="syarat-box-modern">
-      <div class="syarat-title">📌 SYARAT ROBUX VIA GIFT IN GAME</div>
-      <div class="syarat-item"><div class="syarat-num">1</div><div>Wajib <b style="color:#00ff88">stand by</b> di server map ✅</div></div>
-      <div class="syarat-item"><div class="syarat-num">2</div><div>Pastikan <b style="color:#00ff88">username benar</b> ✅</div></div>
-      <div class="syarat-item"><div class="syarat-num">3</div><div>Nama item <b style="color:#00ff88">sesuai</b> dengan yang ada di game ✅</div></div>
-      <div class="syarat-item green"><div class="syarat-num">4</div><div>Jumlah robux <b style="color:#00ff88">sesuai</b> dengan yang ada di map ✅</div></div>
+    <div class="input-group"><label>Username Roblox</label><input id="uRbx3" placeholder="Masukkan username"></div>
+    <div class="input-group"><label>Nama Item</label><input id="giftItem" placeholder="Contoh: VIP Gamepass"></div>
+    <div class="input-group"><label>Jumlah Robux Item</label><input id="cGift" type="number" placeholder="Contoh: 445" oninput="calcGift()"></div>
+    <div class="input-group"><label>Link Private Server</label><input id="privateServerLink" placeholder="https://www.roblox.com/games/xxxxx"></div>
+    <div class="total-box" id="tGift">Total: 0 Robux × Rp95 = Rp0<br>Item: -</div>
+
+    <div class="syarat-box-modern" id="syaratGift">
+      <div class="syarat-title" id="syaratTitleGift">📌 SYARAT & KETENTUAN — GIFT IN GAME</div>
+      <div id="syaratItemsGift">
+        <div class="syarat-item"><div class="syarat-num">1</div><div>Wajib stand by di server map</div></div>
+        <div class="syarat-item"><div class="syarat-num">2</div><div>Pastikan username benar</div></div>
+        <div class="syarat-item"><div class="syarat-num">3</div><div>Nama item sesuai</div></div>
+        <div class="syarat-item green"><div class="syarat-num">4</div><div>Jumlah Robux sesuai map</div></div>
+      </div>
     </div>
   </div>
 
-  <button class="btn btn-primary" style="margin-top:20px;font-size:14px;padding:15px" onclick="goToPayment()">LANJUT PEMBAYARAN →</button>
+  <button class="btn btn-primary" style="margin-top:20px;padding:15px" onclick="goToPayment()">Lanjut Pembayaran →</button>
 </div>
 
 <div id="paymentPage" class="ws-section" style="display:none">
-  <div style="color:#00d4ff;font-size:12px;margin:10px 0;cursor:pointer" onclick="backToRoblox()">← Kembali ke Pesanan</div>
-  <div style="font-weight:900;font-size:20px">Cara Pembayaran ⚡ Killua</div>
-  <div style="background:#121631;border:1px dashed #00d4ff;border-radius:12px;padding:14px;margin-top:14px;font-size:12px;line-height:1.8" id="orderSummary"></div>
-  <div style="margin-top:18px;font-weight:800;font-size:14px">Jumlah Yang Wajib Dibayar</div>
-  <div style="background:linear-gradient(135deg,#1a1f6b,#2a1a6b);border:2px solid #00d4ff;border-radius:12px;padding:14px;margin-top:8px;text-align:center;font-size:24px;font-weight:900;color:#00ff88" id="wajibBayar">Rp0</div>
+  <div style="color:#8a8a8a;font-size:12px;margin:10px 0;cursor:pointer" onclick="backToRoblox()">← Kembali</div>
+  <div style="font-weight:800;font-size:18px;margin-top:8px">Pembayaran</div>
 
-  <div style="margin-top:18px;font-weight:800;font-size:14px">Pilih Metode Pembayaran</div>
+  <div style="background:#141414;border:1px solid #2a2a2a;border-radius:12px;padding:16px;margin-top:16px;font-size:13px;line-height:1.8" id="orderSummary"></div>
+
+  <div style="margin-top:20px;font-weight:700;font-size:13px;color:#a8a8a8">Total yang wajib dibayar</div>
+  <div style="background:#141414;border:1px solid #2a2a2a;border-radius:12px;padding:18px;margin-top:8px;text-align:center;font-size:28px;font-weight:900;color:#4ade80" id="wajibBayar">Rp0</div>
+
+  <div style="margin-top:20px;font-weight:700;font-size:13px;color:#e8e8e8">Metode Pembayaran</div>
   <div class="method-tabs">
     <div class="tab active" id="tabSaldo" onclick="pilihBayar('saldo',this)">💰 Saldo Web</div>
     <div class="tab" id="tabDana" onclick="pilihBayar('dana',this)">DANA</div>
@@ -228,20 +353,20 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
 
   <div id="pay-saldo" style="margin-top:14px">
     <div class="pay-card">
-      <div style="font-size:36px">💰</div>
+      <div style="width:44px;height:44px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px">💰</div>
       <div style="flex:1">
-        <div style="font-size:13px;font-weight:800">Saldo Dompet Kamu</div>
-        <div style="font-size:18px;font-weight:900;color:#00ff88" id="saldoNow">Rp0</div>
+        <div style="font-size:13px;font-weight:700;color:#e8e8e8">Saldo Dompet Kamu</div>
+        <div style="font-size:18px;font-weight:800;color:#4ade80;margin-top:2px" id="saldoNow">Rp0</div>
       </div>
     </div>
-    <div id="saldoInfo" style="margin-top:12px;font-size:12px;padding:12px;border-radius:10px;background:#131740;border:1px dashed #00d4ff;text-align:center">Cek saldo...</div>
+    <div id="saldoInfo" style="margin-top:12px;font-size:12px;padding:14px;border-radius:10px;background:#141414;border:1px solid #2a2a2a;text-align:center;color:#a8a8a8">Cek saldo...</div>
     <button class="btn btn-primary" id="btnBayarSaldo" onclick="bayarDenganSaldo()">💰 Bayar Pakai Saldo</button>
   </div>
 
   <div id="pay-dana" style="margin-top:14px;display:none">
     <div class="pay-card">
       <img class="logo-pay" src="./dana.png" alt="DANA">
-      <div style="flex:1"><div style="font-size:13px;font-weight:800">DANA</div><div style="font-size:12px">083862776790</div></div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#e8e8e8">DANA</div><div style="font-size:12px;color:#8a8a8a;margin-top:2px">083862776790</div></div>
     </div>
     <button class="btn btn-primary" onclick="bayarViaApp('dana','083862776790')">📱 Buka App DANA + Salin Nomor</button>
   </div>
@@ -249,7 +374,7 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
   <div id="pay-gopay" style="margin-top:14px;display:none">
     <div class="pay-card">
       <img class="logo-pay" src="./gopay.png" alt="GoPay">
-      <div style="flex:1"><div style="font-size:13px;font-weight:800">GOPAY</div><div style="font-size:12px">083862776790</div></div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#e8e8e8">GOPAY</div><div style="font-size:12px;color:#8a8a8a;margin-top:2px">083862776790</div></div>
     </div>
     <button class="btn btn-primary" onclick="bayarViaApp('gopay','083862776790')">📱 Buka App GoPay + Salin Nomor</button>
   </div>
@@ -257,17 +382,17 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
   <div id="pay-seabank" style="margin-top:14px;display:none">
     <div class="pay-card">
       <img class="logo-pay" src="./seabank.png" alt="Seabank">
-      <div style="flex:1"><div style="font-size:13px;font-weight:800">SEABANK</div><div style="font-size:12px">901162765462</div></div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700;color:#e8e8e8">SEABANK</div><div style="font-size:12px;color:#8a8a8a;margin-top:2px">901162765462</div></div>
     </div>
     <button class="btn btn-primary" onclick="bayarViaApp('seabank','901162765462')">📋 Salin Nomor Seabank</button>
   </div>
 
   <div id="pay-qris" style="margin-top:14px;display:none">
-    <div style="background:rgba(18,22,49,0.95);border:2px solid #00e5ff;border-radius:16px;overflow:hidden;text-align:center;box-shadow:0 0 30px #00e5ff40;position:relative;cursor:pointer" onclick="downloadQRIS()">
-      <img id="qrisImage" src="./qris-killua-final.jpg" style="width:100%;display:block">
-      <div style="position:absolute;top:10px;right:10px;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;padding:6px 12px;border-radius:20px;font-size:10px;font-weight:800;box-shadow:0 0 15px #00e5ff80">📥 Klik buat Download</div>
+    <div class="qris-wrap" onclick="downloadQRIS()">
+      <img id="qrisImage" src="./qris-killua-final.jpg" alt="QRIS">
+      <div class="qris-badge">📥 Klik buat download</div>
     </div>
-    <div style="font-size:10px;color:#00e5ff;margin-top:6px;text-align:center">QRIS: AWA_NEWSTREAM / WafaStoreOnly ✅</div>
+    <div style="font-size:10px;color:#8a8a8a;margin-top:8px;text-align:center">QRIS: AWA_NEWSTREAM / WafaStoreOnly</div>
     <button class="btn btn-primary" style="margin-top:12px" onclick="downloadQRIS()">📥 Download QRIS</button>
   </div>
 
@@ -275,9 +400,12 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
 </div>
 
 <div id="pesananPage" class="ws-section" style="display:none">
-  <div style="font-weight:900;font-size:20px">Pesanan Saya ⚡</div>
+  <div style="font-weight:800;font-size:18px">Pesanan Saya</div>
   <div id="listPesanan" style="margin-top:16px"></div>
-  <div id="emptyPesanan" style="text-align:center;margin-top:40px;color:#5a638a"><div style="font-size:40px">📦</div><div style="font-size:13px;margin-top:8px">Belum ada pesanan</div></div>
+  <div id="emptyPesanan" style="text-align:center;margin-top:60px;color:#5a5a5a">
+    <div style="font-size:48px;opacity:0.5">📦</div>
+    <div style="font-size:13px;margin-top:12px">Belum ada pesanan</div>
+  </div>
 </div>
 
 </div>
@@ -285,19 +413,18 @@ onAuthStateChanged(auth, (user)=>{ if(user && !localStorage.getItem('wafa_uid'))
 <div id="layananBtn" onclick="toggleLayanan()">💬</div>
 <div id="layananBox">
   <div id="layananHeader">
-    <div><b style="font-size:13px">Chat Admin ⚡</b><div style="font-size:10px;opacity:0.8">Balasan real-time dari admin</div></div>
-    <div style="cursor:pointer" onclick="toggleLayanan()">✕</div>
+    <div><b style="font-size:13px;color:#e8e8e8">Chat Admin</b><div style="font-size:10px;color:#8a8a8a;margin-top:2px">Balasan real-time</div></div>
+    <div style="cursor:pointer;font-size:18px;color:#8a8a8a" onclick="toggleLayanan()">✕</div>
   </div>
   <div id="layananChat"></div>
   <div id="layananInput">
     <input id="layananText" placeholder="Ketik pesan..." onkeypress="if(event.key==='Enter')sendLayanan()">
-    <button onclick="document.getElementById('buktiChat').click()" style="background:#ffcc00" title="Kirim gambar">📤</button>
+    <button onclick="document.getElementById('buktiChat').click()" style="background:#fbbf24;color:#000">📤</button>
     <input type="file" id="buktiChat" accept="image/*" style="display:none" onchange="uploadBuktiFromChat(this)">
     <button onclick="sendLayanan()">➤</button>
   </div>
 </div>
 
-  
 <script src="./sidebar.js"></script>
 <script>
 function sensorEmail(e){if(!e||!e.includes('@'))return'****';let [a,b]=e.split('@');return a.slice(0,3)+'****@'+b}
@@ -307,7 +434,7 @@ async function cekBuktiValid(file){
   let loading=document.createElement('div');
   loading.id='loadingDetect';
   loading.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;display:flex;justify-content:center;align-items:center;flex-direction:column;color:#fff;font-weight:800;text-align:center;padding:20px';
-  loading.innerHTML='<div style="font-size:50px">🔍</div><div style="margin-top:10px">CEK BUKTI TF...</div><div id="cek-status" style="font-size:12px;color:#00e5ff;margin-top:8px">1/2...</div>';
+  loading.innerHTML='<div style="font-size:50px">🔍</div><div style="margin-top:10px">CEK BUKTI TF...</div><div id="cek-status" style="font-size:12px;color:#4a90e2;margin-top:8px">1/2...</div>';
   document.body.appendChild(loading);
   try{
     document.getElementById('cek-status').innerText='1/2 Baca bukti...';
@@ -337,20 +464,44 @@ async function cekBuktiValid(file){
 let currentMethod='username';
 const listUsername=[100,200,300,400,500,1000,1500,2000,3000,4000,5000,10000];
 const listGamepass=[100,200,300,400,500,1000,1500,2000,3000,4000,5000,10000];
-function renderUsername(){let g=document.getElementById('gridUsername');g.innerHTML='';listUsername.forEach(j=>{let d=document.createElement('div');d.style.cssText='background:#141936;border:1px solid #2a3366;border-radius:14px;padding:14px;text-align:center;cursor:pointer';d.innerHTML=`<div style="font-weight:800">${j} robux</div><div style="font-size:11px;color:#6b7394;text-decoration:line-through">Rp${(j*180).toLocaleString('id-ID')}</div><div style="font-size:14px;color:#00ff88;font-weight:900">Rp${(j*160).toLocaleString('id-ID')}</div>`;d.onclick=()=>{document.getElementById('cRbx').value=j;calcUsername()};g.appendChild(d)})}
-function calcUsername(){let j=parseInt(document.getElementById('cRbx').value)||0;document.getElementById('tRbx').innerText=`Total: ${j} robux = Rp${(j*160).toLocaleString('id-ID')}`;}
-function renderGamepass(){let g=document.getElementById('gridGamepass');g.innerHTML='';listGamepass.forEach(j=>{let d=document.createElement('div');d.style.cssText='background:#141936;border:1px solid #2a3366;border-radius:14px;padding:14px;text-align:center;cursor:pointer';d.innerHTML=`<div style="font-weight:800">${j} robux</div><div style="font-size:11px;color:#6b7394;text-decoration:line-through">Rp${(j*155).toLocaleString('id-ID')}</div><div style="font-size:14px;color:#00ff88;font-weight:900">Rp${(j*140).toLocaleString('id-ID')}</div>`;d.onclick=()=>{document.getElementById('cRbx2').value=j;calcGamepass()};g.appendChild(d)})}
-function calcGamepass(){let j=parseInt(document.getElementById('cRbx2').value)||0;let tot=j*140;let set=Math.ceil(j/0.7);document.getElementById('tRbx2').innerHTML=`Total: ${j} robux = Rp${tot.toLocaleString('id-ID')}<br>Setting Gamepass: ${set} robux`;}
-function calcGift(){let j=parseInt(document.getElementById('cGift').value)||0;let it=document.getElementById('giftItem').value||'-';let tot=j*95;document.getElementById('tGift').innerHTML=`Total: ${j} robux x Rp95 = Rp${tot.toLocaleString('id-ID')}<br>Item: ${it}`;}
+
+function renderUsername(){
+  let g=document.getElementById('gridUsername');g.innerHTML='';
+  listUsername.forEach(j=>{
+    let d=document.createElement('div');
+    d.style.cssText='background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:14px;text-align:center;cursor:pointer;transition:0.15s';
+    d.onmouseenter=()=>d.style.borderColor='#4a90e2';
+    d.onmouseleave=()=>d.style.borderColor='#2a2a2a';
+    d.innerHTML=`<div style="font-weight:700;font-size:13px;color:#e8e8e8">${j} Robux</div><div style="font-size:10px;color:#5a5a5a;text-decoration:line-through;margin-top:2px">Rp${(j*180).toLocaleString('id-ID')}</div><div style="font-size:14px;color:#4ade80;font-weight:800;margin-top:4px">Rp${(j*160).toLocaleString('id-ID')}</div>`;
+    d.onclick=()=>{document.getElementById('cRbx').value=j;calcUsername()};
+    g.appendChild(d);
+  });
+}
+function calcUsername(){let j=parseInt(document.getElementById('cRbx').value)||0;document.getElementById('tRbx').innerText=`Total: ${j} Robux = Rp${(j*160).toLocaleString('id-ID')}`;}
+
+function renderGamepass(){
+  let g=document.getElementById('gridGamepass');g.innerHTML='';
+  listGamepass.forEach(j=>{
+    let d=document.createElement('div');
+    d.style.cssText='background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:14px;text-align:center;cursor:pointer;transition:0.15s';
+    d.onmouseenter=()=>d.style.borderColor='#4a90e2';
+    d.onmouseleave=()=>d.style.borderColor='#2a2a2a';
+    d.innerHTML=`<div style="font-weight:700;font-size:13px;color:#e8e8e8">${j} Robux</div><div style="font-size:10px;color:#5a5a5a;text-decoration:line-through;margin-top:2px">Rp${(j*155).toLocaleString('id-ID')}</div><div style="font-size:14px;color:#4ade80;font-weight:800;margin-top:4px">Rp${(j*140).toLocaleString('id-ID')}</div>`;
+    d.onclick=()=>{document.getElementById('cRbx2').value=j;calcGamepass()};
+    g.appendChild(d);
+  });
+}
+function calcGamepass(){let j=parseInt(document.getElementById('cRbx2').value)||0;let tot=j*140;let set=Math.ceil(j/0.7);document.getElementById('tRbx2').innerHTML=`Total: ${j} Robux = Rp${tot.toLocaleString('id-ID')}<br>Setting Gamepass: ${set} Robux`;}
+function calcGift(){let j=parseInt(document.getElementById('cGift').value)||0;let it=document.getElementById('giftItem').value||'-';let tot=j*95;document.getElementById('tGift').innerHTML=`Total: ${j} Robux × Rp95 = Rp${tot.toLocaleString('id-ID')}<br>Item: ${it}`;}
 document.getElementById('giftItem')?.addEventListener('input',calcGift);
 
 // ===== NAVIGASI =====
 function hideAll(){ ['homePage','robloxPage','paymentPage','pesananPage'].forEach(id=>{const el=document.getElementById(id); if(el) el.style.display='none';}); }
 function openRoblox(){ hideAll(); document.getElementById('robloxPage').style.display='block'; if(typeof wsSetTitle==='function') wsSetTitle('⚡ Top Up Roblox'); if(typeof wsSetActive==='function') wsSetActive(''); renderUsername(); renderGamepass(); }
-function goHome(){ hideAll(); document.getElementById('homePage').style.display='block'; if(typeof wsSetTitle==='function') wsSetTitle('WafaStoreOnly ⚡'); if(typeof wsSetActive==='function') wsSetActive('beranda'); }
+function goHome(){ hideAll(); document.getElementById('homePage').style.display='block'; if(typeof wsSetTitle==='function') wsSetTitle('WafaStoreOnly'); if(typeof wsSetActive==='function') wsSetActive('beranda'); }
 function backToRoblox(){ hideAll(); document.getElementById('robloxPage').style.display='block'; }
 function openPesanan(){ hideAll(); document.getElementById('pesananPage').style.display='block'; if(typeof wsSetTitle==='function') wsSetTitle('📦 Pesanan Saya'); if(typeof wsSetActive==='function') wsSetActive('pesanan'); renderPesanan(); }
-function switchMethod(m,el){currentMethod=m;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.getElementById('m-username').style.display=m=='username'?'block':'none';document.getElementById('m-gamepass').style.display=m=='gamepass'?'block':'none';document.getElementById('m-gift').style.display=m=='gift'?'block':'none';}
+function switchMethod(m,el){currentMethod=m;document.querySelectorAll('.method-tabs .tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.getElementById('m-username').style.display=m=='username'?'block':'none';document.getElementById('m-gamepass').style.display=m=='gamepass'?'block':'none';document.getElementById('m-gift').style.display=m=='gift'?'block':'none';}
 
 // ===== FIREBASE LISTENER =====
 function attachFirebaseListener(orderId){
@@ -402,7 +553,7 @@ function sendDiscordWithBukti(o, dataUrl, judul){
   
   const embedData = {
     title: `📦 Order #${o.id.toString().slice(-6)}`,
-    color: 0x00e5ff,
+    color: 0x4a90e2,
     fields: [
       { name: "👤 Username Roblox", value: String(o.username || '-'), inline: true },
       { name: "📊 Jumlah", value: `${o.jumlah} Robux`, inline: true },
@@ -459,6 +610,7 @@ function checkExpired(){
   });
   if(changed){ localStorage.setItem('wafa_orders',JSON.stringify(orders)); if(document.getElementById('pesananPage').style.display=='block') renderPesanan(); }
 }
+
 function renderPesanan(){
  let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
  let list=document.getElementById('listPesanan'); let empty=document.getElementById('emptyPesanan');
@@ -466,20 +618,21 @@ function renderPesanan(){
  empty.style.display='none';list.innerHTML='';
  orders.forEach(o=>{
   let isTimeout = o.status=='batal' && o.batalReason=='timeout';
-  let color=o.status=='verifikasi'?'#ffcc00':o.status=='proses'?'#00e5ff':o.status=='selesai'?'#00ff88':'#ff4444';
-  let label=o.status=='verifikasi'?`Menunggu Bukti ⏰ ${o.expiry?getSisaWaktu(o.expiry):'10:00'}`:o.status=='proses'?'Diproses ⚡':o.status=='selesai'?'Selesai ✅': isTimeout? 'Batal ⏰ Timeout' : 'Batal ❌';
-  let d=document.createElement('div');d.className='order-card';d.style.borderColor=color;
+  let color=o.status=='verifikasi'?'#fbbf24':o.status=='proses'?'#4a90e2':o.status=='selesai'?'#4ade80':'#ef4444';
+  let label=o.status=='verifikasi'?`Menunggu Bukti · ${o.expiry?getSisaWaktu(o.expiry):'10:00'}`:o.status=='proses'?'Diproses':o.status=='selesai'?'Selesai': isTimeout? 'Batal (Timeout)' : 'Batal';
+  let d=document.createElement('div');d.className='order-card';d.style.borderColor=color+'60';
   if(o.status=='verifikasi'){
-    d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)}</b><span style="background:${color};color:#000;padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800">${label}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date}</div><div style="font-size:12px;margin-top:10px">Username: <b>${o.username}</b><br>Jumlah: <b>${o.jumlah} Robux</b><br>Total: <b style="color:#00ff88">Rp${o.total.toLocaleString('id-ID')}</b></div><button class="btn btn-yellow" style="margin-top:12px" onclick="uploadBukti(${o.id})">📤 Upload Bukti TF</button>`;
+    d.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:14px;color:#e8e8e8">#${o.id.toString().slice(-6)}</b><span style="background:${color}20;color:${color};border:1px solid ${color}60;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700">${label}</span></div><div style="font-size:11px;color:#5a5a5a;margin-top:6px">${o.date}</div><div style="font-size:12px;color:#a8a8a8;margin-top:12px;line-height:1.7">Username: <b style="color:#e8e8e8">${o.username}</b><br>Jumlah: <b style="color:#e8e8e8">${o.jumlah} Robux</b><br>Total: <b style="color:#4ade80">Rp${o.total.toLocaleString('id-ID')}</b></div><button class="btn btn-yellow" style="margin-top:14px" onclick="uploadBukti(${o.id})">📤 Upload Bukti TF</button>`;
   } else {
-    let msgTimeout = isTimeout? `<div style="background:#ff444420;border:1px solid #ff4444;padding:8px;border-radius:8px;margin-top:10px;font-size:11px">❌ Transaksi dibatalkan karena timeout 10 menit! Order kembali 🙏</div>` : '';
-    let msgBatal = (o.status=='batal' && !isTimeout)? `<div style="background:#ff444420;border:1px solid #ff4444;padding:8px;border-radius:8px;margin-top:10px;font-size:11px">❌ Dibatalkan admin: ${o.batalReason||'Dibatalkan'}</div>` : '';
-    let viaSaldo = o.metodeBayar=='saldo'? `<div style="background:#00ff8820;border:1px solid #00ff88;padding:8px;border-radius:8px;margin-top:10px;font-size:11px;color:#00ff88">💳 Dibayar via Saldo Web ✅</div>` : '';
-    d.innerHTML=`<div style="display:flex;justify-content:space-between"><b>#${o.id.toString().slice(-6)}</b><span style="background:${color};color:#fff;padding:4px 8px;border-radius:20px;font-size:9px;font-weight:800">${label}</span></div><div style="font-size:11px;color:#aab0d0;margin-top:6px">${o.date}</div><div style="font-size:12px;margin-top:10px">Username: <b>${o.username}</b><br>Jumlah: <b>${o.jumlah} Robux</b><br>Total: <b>Rp${o.total.toLocaleString('id-ID')}</b></div>${viaSaldo}${msgTimeout}${msgBatal}`;
+    let msgTimeout = isTimeout? `<div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.3);padding:10px;border-radius:8px;margin-top:12px;font-size:11px;color:#ef4444">Transaksi dibatalkan karena timeout. Order kembali ya.</div>` : '';
+    let msgBatal = (o.status=='batal' && !isTimeout)? `<div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.3);padding:10px;border-radius:8px;margin-top:12px;font-size:11px;color:#ef4444">Dibatalkan admin: ${o.batalReason||'-'}</div>` : '';
+    let viaSaldo = o.metodeBayar=='saldo'? `<div style="background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.3);padding:10px;border-radius:8px;margin-top:12px;font-size:11px;color:#4ade80">💳 Dibayar via Saldo Web</div>` : '';
+    d.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:14px;color:#e8e8e8">#${o.id.toString().slice(-6)}</b><span style="background:${color}20;color:${color};border:1px solid ${color}60;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700">${label}</span></div><div style="font-size:11px;color:#5a5a5a;margin-top:6px">${o.date}</div><div style="font-size:12px;color:#a8a8a8;margin-top:12px;line-height:1.7">Username: <b style="color:#e8e8e8">${o.username}</b><br>Jumlah: <b style="color:#e8e8e8">${o.jumlah} Robux</b><br>Total: <b style="color:#e8e8e8">Rp${o.total.toLocaleString('id-ID')}</b></div>${viaSaldo}${msgTimeout}${msgBatal}`;
   }
   list.appendChild(d);
  });
 }
+
 async function uploadBukti(id){
   let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
   let oCheck=orders.find(x=>x.id==id);
@@ -509,6 +662,7 @@ async function uploadBukti(id){
     }; r.readAsDataURL(file);
   }; input.click();
 }
+
 async function uploadBuktiFromChat(input){
   let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
   if(orders.length==0){alert('Buat pesanan dulu!');input.value='';return;}
@@ -536,7 +690,6 @@ async function uploadBuktiFromChat(input){
 
 setInterval(checkExpired,5000);
 setInterval(()=>{if(document.getElementById('pesananPage').style.display=='block')renderPesanan();},1000);
-
   
 // ===== PEMBAYARAN =====
 let lastOrderData = null;
@@ -544,9 +697,9 @@ let metodeBayar = 'saldo';
 
 function goToPayment(){
  let summary='',total=0,u,j,it,set,privateLink='',gpassLink='';
- if(currentMethod=='username'){u=document.getElementById('uRbx').value||'-';j=parseInt(document.getElementById('cRbx').value)||0;total=j*160;if(!j){alert('Isi jumlah dulu');return;}summary=`<b>RINGKASAN ORDER</b><br>Via: Username<br>Username: <b>${u}</b><br>Jumlah: <b>${j} Robux</b><br>Total: <b>Rp${total.toLocaleString('id-ID')}</b>`;}
- else if(currentMethod=='gamepass'){u=document.getElementById('uRbx2').value||'-';j=parseInt(document.getElementById('cRbx2').value)||0;gpassLink=document.getElementById('gamepassLink').value||'-';total=j*140;set=Math.ceil(j/0.7);if(!j){alert('Isi jumlah dulu');return;}summary=`<b>RINGKASAN ORDER</b><br>Via: Gamepass<br>Username: <b>${u}</b><br>Link Gamepass: <b style="word-break:break-all">${gpassLink}</b><br>Jumlah: <b>${j} Robux</b><br>Setting: <b>${set}</b><br>Total: <b>Rp${total.toLocaleString('id-ID')}</b>`;}
- else{u=document.getElementById('uRbx3').value||'-';it=document.getElementById('giftItem').value||'-';privateLink=document.getElementById('privateServerLink').value||'-';j=parseInt(document.getElementById('cGift').value)||0;total=j*95;if(!j){alert('Isi jumlah dulu');return;}summary=`<b>RINGKASAN ORDER</b><br>Via: Gift In Game<br>Username: <b>${u}</b><br>Item: <b>${it}</b><br>Private Server: <b style="word-break:break-all">${privateLink}</b><br>Robux: <b>${j}</b><br>Total: <b>Rp${total.toLocaleString('id-ID')}</b>`;}
+ if(currentMethod=='username'){u=document.getElementById('uRbx').value||'-';j=parseInt(document.getElementById('cRbx').value)||0;total=j*160;if(!j){alert('Isi jumlah dulu');return;}summary=`<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8a8a8a">Via</span><b>Username</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8a8a8a">Username</span><b>${u}</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8a8a8a">Jumlah</span><b>${j} Robux</b></div><div style="display:flex;justify-content:space-between"><span style="color:#8a8a8a">Total</span><b style="color:#4ade80">Rp${total.toLocaleString('id-ID')}</b></div>`;}
+ else if(currentMethod=='gamepass'){u=document.getElementById('uRbx2').value||'-';j=parseInt(document.getElementById('cRbx2').value)||0;gpassLink=document.getElementById('gamepassLink').value||'-';total=j*140;set=Math.ceil(j/0.7);if(!j){alert('Isi jumlah dulu');return;}summary=`<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8a8a8a">Via</span><b>Gamepass</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8a8a8a">Username</span><b>${u}</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8a8a8a">Link</span><b style="word-break:break-all;font-size:11px">${gpassLink}</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8a8a8a">Jumlah</span><b>${j} Robux</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8a8a8a">Setting</span><b>${set} Robux</b></div><div style="display:flex;justify-content:space-between"><span style="color:#8a8a8a">Total</span><b style="color:#4ade80">Rp${total.toLocaleString('id-ID')}</b></div>`;}
+ else{u=document.getElementById('uRbx3').value||'-';it=document.getElementById('giftItem').value||'-';privateLink=document.getElementById('privateServerLink').value||'-';j=parseInt(document.getElementById('cGift').value)||0;total=j*95;if(!j){alert('Isi jumlah dulu');return;}summary=`<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8a8a8a">Via</span><b>Gift In Game</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8a8a8a">Username</span><b>${u}</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8a8a8a">Item</span><b>${it}</b></div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8a8a8a">Private Server</span><b style="font-size:11px;word-break:break-all">${privateLink}</b></div><div style="display:flex;justify-content:space-between"><span style="color:#8a8a8a">Total</span><b style="color:#4ade80">Rp${total.toLocaleString('id-ID')}</b></div>`;}
 
  lastOrderData = {username:u,method:currentMethod,jumlah:j,total:total,item:it||'',setting:set||'',privateServer:privateLink||'',gamepassLink:gpassLink||''};
  document.getElementById('orderSummary').innerHTML=summary;
@@ -573,11 +726,11 @@ async function loadSaldoUser(){
     const info=document.getElementById('saldoInfo');
     const btn=document.getElementById('btnBayarSaldo');
     if(lastOrderData && saldo >= lastOrderData.total){
-      info.innerHTML=`✅ Saldo cukup! Sisa setelah bayar: <b style="color:#00ff88">Rp${(saldo-lastOrderData.total).toLocaleString('id-ID')}</b>`;
+      info.innerHTML=`✅ Saldo cukup. Sisa setelah bayar: <b style="color:#4ade80">Rp${(saldo-lastOrderData.total).toLocaleString('id-ID')}</b>`;
       btn.disabled=false; btn.style.opacity=1;
     } else {
       const kurang = lastOrderData? lastOrderData.total - saldo : 0;
-      info.innerHTML=`❌ Saldo kurang <b style="color:#ff6a6a">Rp${kurang.toLocaleString('id-ID')}</b><br><span style="font-size:10px;color:#8d94b8">Top up dompet dulu di halaman Dompet</span>`;
+      info.innerHTML=`❌ Saldo kurang <b style="color:#ef4444">Rp${kurang.toLocaleString('id-ID')}</b><br><span style="font-size:10px;color:#5a5a5a">Top up dompet dulu di halaman Dompet</span>`;
       btn.disabled=true; btn.style.opacity=0.5;
     }
   }catch(e){ console.log('loadSaldo error:', e); }
@@ -625,15 +778,15 @@ function showOrderSummary(text){
   if(old) old.remove();
   let modal = document.createElement('div');
   modal.id = 'orderSummaryModal';
-  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)';
   modal.innerHTML = `
-    <div style="background:linear-gradient(180deg,#151a48,#0c102d);border:2px solid #00e5ff80;border-radius:20px;padding:20px;max-width:400px;width:100%;box-shadow:0 0 40px #00e5ff60;max-height:90vh;overflow-y:auto">
-      <div style="text-align:center;margin-bottom:14px">
-        <div style="font-size:50px">✅</div>
-        <div style="font-weight:900;font-size:16px;color:#00ff88;margin-top:6px">PEMBAYARAN SUKSES!</div>
+    <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:18px;padding:22px;max-width:400px;width:100%;max-height:90vh;overflow-y:auto">
+      <div style="text-align:center;margin-bottom:16px">
+        <div style="font-size:48px;line-height:1">✅</div>
+        <div style="font-weight:800;font-size:15px;color:#4ade80;margin-top:8px">PEMBAYARAN SUKSES</div>
       </div>
-      <div style="background:#0a0d24;border:1px solid #00e5ff40;border-radius:12px;padding:14px;font-size:12px;line-height:1.7;white-space:pre-wrap;color:#fff;font-family:monospace">${text}</div>
-      <button onclick="document.getElementById('orderSummaryModal').remove()" style="width:100%;padding:14px;margin-top:14px;border-radius:12px;border:none;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;font-weight:900;font-size:14px;cursor:pointer">OKE, MANTAP! ⚡</button>
+      <div style="background:#0a0a0a;border:1px solid #2a2a2a;border-radius:10px;padding:14px;font-size:12px;line-height:1.7;white-space:pre-wrap;color:#a8a8a8;font-family:monospace">${text}</div>
+      <button onclick="document.getElementById('orderSummaryModal').remove()" style="width:100%;padding:14px;margin-top:14px;border-radius:10px;border:none;background:#4a90e2;color:#fff;font-weight:700;font-size:13px;cursor:pointer">OKE, MANTAP</button>
     </div>
   `;
   document.body.appendChild(modal);
@@ -644,41 +797,36 @@ function showThankYouPopup(o){
   if(old) old.remove();
   let modal = document.createElement('div');
   modal.id = 'thankYouModal';
-  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)';
   let orderId = o.id.toString().slice(-6);
   let total = (o.total||0).toLocaleString('id-ID');
   modal.innerHTML = `
-    <style>
-      @keyframes popIn { 0%{transform:scale(0.5);opacity:0} 70%{transform:scale(1.05)} 100%{transform:scale(1);opacity:1} }
-      @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
-      @keyframes shine { 0%{background-position:-200% center} 100%{background-position:200% center} }
-    </style>
-    <div style="animation:popIn 0.5s ease-out;background:linear-gradient(180deg,#151a48,#0c102d);border:2px solid #00e5ff80;border-radius:24px;padding:26px 22px;max-width:400px;width:100%;box-shadow:0 0 60px #00e5ff60;max-height:92vh;overflow-y:auto;text-align:center">
-      <div style="font-size:70px;line-height:1;margin-bottom:8px;animation:pulse 1.5s infinite">✅</div>
-      <h1 style="background:linear-gradient(90deg,#00e5ff,#8b5cf6,#00e5ff);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 3s linear infinite;font-weight:900;font-size:24px;margin-bottom:6px">TRANSAKSI SUKSES!</h1>
-      <div style="font-size:11px;color:#8d94b8;margin-bottom:18px">🎉 Pesanan kamu udah selesai diproses</div>
-      <div style="background:#0a0d24;border:1px solid #00e5ff40;border-radius:14px;padding:14px;text-align:left;font-size:12px;line-height:1.8;color:#fff;margin-bottom:16px">
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8d94b8">📦 Order ID</span><b>#${orderId}</b></div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8d94b8">👤 Username</span><b>${o.username || '-'}</b></div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8d94b8">🎮 Jumlah</span><b>${o.jumlah} Robux</b></div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:#8d94b8">💰 Total</span><b style="color:#00ff88">Rp${total}</b></div>
-        <div style="display:flex;justify-content:space-between"><span style="color:#8d94b8">📅 Tanggal</span><b style="font-size:11px">${o.date || '-'}</b></div>
+    <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:20px;padding:24px;max-width:400px;width:100%;max-height:92vh;overflow-y:auto;text-align:center">
+      <div style="font-size:60px;line-height:1">✅</div>
+      <h1 style="font-weight:800;font-size:20px;color:#4ade80;margin:10px 0 6px">TRANSAKSI SUKSES</h1>
+      <div style="font-size:12px;color:#8a8a8a;margin-bottom:20px">Pesanan kamu udah selesai diproses</div>
+      <div style="background:#0a0a0a;border:1px solid #2a2a2a;border-radius:12px;padding:16px;text-align:left;font-size:12px;line-height:1.9;color:#a8a8a8;margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span>Order ID</span><b style="color:#e8e8e8">#${orderId}</b></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span>Username</span><b style="color:#e8e8e8">${o.username || '-'}</b></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span>Jumlah</span><b style="color:#e8e8e8">${o.jumlah} Robux</b></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px"><span>Total</span><b style="color:#4ade80">Rp${total}</b></div>
+        <div style="display:flex;justify-content:space-between"><span>Tanggal</span><b style="font-size:11px;color:#e8e8e8">${o.date || '-'}</b></div>
       </div>
-      <div style="background:linear-gradient(135deg,#00c6ff15,#7c3aed15);border:1px dashed #00e5ff60;border-radius:14px;padding:14px;margin-bottom:16px">
-        <div style="font-size:14px;font-weight:800;color:#00e5ff;margin-bottom:6px">💚 TERIMA KASIH!</div>
-        <div style="font-size:11px;color:#aab0d0;line-height:1.7">Makasih udah percaya sama <b style="color:#00e5ff">WafaStoreOnly</b> ⚡<br>Semoga Robux-nya berguna & happy gaming! 🎮<br><br><b style="color:#00ff88">Jangan lupa order lagi ya!</b> 🥰</div>
+      <div style="background:#0a0a0a;border:1px solid #2a2a2a;border-radius:12px;padding:16px;margin-bottom:16px;text-align:left">
+        <div style="font-size:13px;font-weight:700;color:#e8e8e8;margin-bottom:6px">💚 Terima kasih!</div>
+        <div style="font-size:11px;color:#8a8a8a;line-height:1.7">Makasih udah percaya sama <b style="color:#e8e8e8">WafaStoreOnly</b>.<br>Semoga Robux-nya berguna & happy gaming!<br><br><b style="color:#4ade80">Jangan lupa order lagi ya!</b></div>
       </div>
-      <div style="margin-bottom:16px">
-        <div style="font-size:11px;color:#8d94b8;margin-bottom:6px">Gimana pelayanan kami?</div>
-        <div style="font-size:24px;letter-spacing:4px" id="ratingStars">
-          <span style="cursor:pointer;opacity:0.4" data-star="1" onclick="kirimRating(this,'${orderId}')">⭐</span>
-          <span style="cursor:pointer;opacity:0.4" data-star="2" onclick="kirimRating(this,'${orderId}')">⭐</span>
-          <span style="cursor:pointer;opacity:0.4" data-star="3" onclick="kirimRating(this,'${orderId}')">⭐</span>
-          <span style="cursor:pointer;opacity:0.4" data-star="4" onclick="kirimRating(this,'${orderId}')">⭐</span>
-          <span style="cursor:pointer;opacity:0.4" data-star="5" onclick="kirimRating(this,'${orderId}')">⭐</span>
+      <div style="margin-bottom:18px">
+        <div style="font-size:11px;color:#8a8a8a;margin-bottom:8px">Gimana pelayanan kami?</div>
+        <div style="font-size:24px;letter-spacing:6px" id="ratingStars">
+          <span style="cursor:pointer;opacity:0.3" data-star="1" onclick="kirimRating(this,'${orderId}')">⭐</span>
+          <span style="cursor:pointer;opacity:0.3" data-star="2" onclick="kirimRating(this,'${orderId}')">⭐</span>
+          <span style="cursor:pointer;opacity:0.3" data-star="3" onclick="kirimRating(this,'${orderId}')">⭐</span>
+          <span style="cursor:pointer;opacity:0.3" data-star="4" onclick="kirimRating(this,'${orderId}')">⭐</span>
+          <span style="cursor:pointer;opacity:0.3" data-star="5" onclick="kirimRating(this,'${orderId}')">⭐</span>
         </div>
       </div>
-      <button onclick="document.getElementById('thankYouModal').remove()" style="width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(90deg,#00c6ff,#7c3aed);color:#fff;font-weight:900;font-size:13px;cursor:pointer;box-shadow:0 0 20px #7c3aed60">OKE, MAKASIH! ⚡</button>
+      <button onclick="document.getElementById('thankYouModal').remove()" style="width:100%;padding:14px;border-radius:10px;border:none;background:#4a90e2;color:#fff;font-weight:700;font-size:13px;cursor:pointer">Oke, Makasih!</button>
     </div>
   `;
   document.body.appendChild(modal);
@@ -689,7 +837,7 @@ function kirimRating(el, orderId){
   if(!star) return;
   let parent = el.parentElement;
   Array.from(parent.children).forEach((s, i)=>{
-    s.style.opacity = i < star ? '1' : '0.4';
+    s.style.opacity = i < star ? '1' : '0.3';
   });
   setTimeout(()=>{
     if(window.DISCORD_URL){
@@ -773,7 +921,7 @@ function loadChat(){
     const list = Object.entries(data).map(([k,v])=>({...v, _id:k})).sort((a,b)=>a.time - b.time);
     const c = document.getElementById('layananChat');
     if(list.length === 0){
-      c.innerHTML = '<div class="msg bot">Halo! Saya admin WafaStoreOnly ⚡<br><br>Ada yang bisa dibantu? Order? Top up? Tanya aja 🥰</div>';
+      c.innerHTML = '<div class="msg bot">Halo! Saya admin WafaStoreOnly.<br><br>Ada yang bisa dibantu? Order? Top up? Tanya aja 🥰</div>';
     } else {
       c.innerHTML = '';
       list.forEach(m=>{
@@ -815,21 +963,13 @@ renderUsername(); renderGamepass(); checkExpired();
 (function initListeners(){ let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]'); orders.forEach(o=>attachFirebaseListener(o.id)); })();
 
 // ===== LOAD SETTINGS FIREBASE =====
-function applyTheme(primary, accent){
-  if(!primary) primary = '#00e5ff';
-  if(!accent) accent = '#7c3aed';
-  document.documentElement.style.setProperty('--primary', primary);
-  document.documentElement.style.setProperty('--accent', accent);
-  document.documentElement.style.setProperty('--killua-primary', primary);
-  document.documentElement.style.setProperty('--killua-accent', accent);
-}
-
 function loadSettingsFirebase(){
   if(!window.wafaDB || !window.wafaRef || !window.wafaOnValue){
     setTimeout(loadSettingsFirebase, 500);
     return;
   }
 
+  // BRANDING
   window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/branding'), (snap)=>{
     const d = snap.val();
     if(!d) return;
@@ -843,30 +983,53 @@ function loadSettingsFirebase(){
     if(d.brandName){
       const brandEl = document.querySelector('.ws-logo span');
       if(brandEl) brandEl.innerText = d.brandName;
-      document.title = d.brandName + ' x Killua - OFFICIAL';
+      document.title = d.brandName + ' - Top Up Robux Cepat & Aman';
     }
     if(d.banner){
-      const heroBanner = document.querySelector('#homePage .banner');
-      if(heroBanner){
-        heroBanner.style.backgroundImage = `linear-gradient(rgba(6,10,35,0.55),rgba(6,10,35,0.85)), url('${d.banner}')`;
-        heroBanner.style.backgroundSize = 'cover';
-        heroBanner.style.backgroundPosition = 'center';
-      }
+      const heroBg = document.getElementById('heroBg');
+      if(heroBg) heroBg.style.backgroundImage = `url('${d.banner}')`;
     }
   });
 
-  window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/theme'), (snap)=>{
+  // WELCOME BOX
+  window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/welcome'), (snap)=>{
     const d = snap.val();
-    if(!d) return;
-    applyTheme(d.primary, d.accent);
-    if(d.primary && d.accent){
-      document.querySelectorAll('.btn-primary').forEach(b=>{
-        b.style.background = `linear-gradient(90deg, ${d.primary}, ${d.accent})`;
-      });
-      document.querySelectorAll('.saldo-box').forEach(b=>{
-        b.style.background = `linear-gradient(135deg, ${d.primary}, ${d.accent})`;
-      });
-    }
+    const box = document.getElementById('welcomeBox');
+    if(!box) return;
+    if(!d || d.active === false){ box.style.display = 'none'; return; }
+    box.style.display = 'block';
+    if(d.title) document.getElementById('welcomeTitle').innerHTML = d.title;
+    if(d.tagline) document.getElementById('welcomeTagline').innerHTML = d.tagline;
+    if(d.message) document.getElementById('welcomeMsg').innerHTML = d.message;
+  });
+
+  // SYARAT
+  const syaratCfg = [
+    { key: 'username', boxId: 'syaratUsername', titleId: 'syaratTitleUsername', itemsId: 'syaratItemsUsername' },
+    { key: 'gamepass', boxId: 'syaratGamepass', titleId: 'syaratTitleGamepass', itemsId: 'syaratItemsGamepass' },
+    { key: 'gift', boxId: 'syaratGift', titleId: 'syaratTitleGift', itemsId: 'syaratItemsGift' }
+  ];
+  syaratCfg.forEach(cfg=>{
+    window.wafaOnValue(window.wafaRef(window.wafaDB, 'settings/syarat/' + cfg.key), (snap)=>{
+      const d = snap.val();
+      const box = document.getElementById(cfg.boxId);
+      if(!box || !d) return;
+      if(d.active === false){ box.style.display = 'none'; return; }
+      box.style.display = 'block';
+      if(d.title) document.getElementById(cfg.titleId).innerHTML = '📌 ' + d.title;
+      if(d.items){
+        const items = d.items.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        const container = document.getElementById(cfg.itemsId);
+        container.innerHTML = '';
+        items.forEach((text, idx)=>{
+          const isLast = idx === items.length - 1;
+          const div = document.createElement('div');
+          div.className = 'syarat-item' + (isLast ? ' green' : '');
+          div.innerHTML = `<div class="syarat-num">${idx + 1}</div><div>${text}</div>`;
+          container.appendChild(div);
+        });
+      }
+    });
   });
 }
 
