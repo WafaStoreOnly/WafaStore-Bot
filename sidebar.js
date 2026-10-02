@@ -31,6 +31,10 @@
         <div class="ws-item" onclick="wsOpen('profil')">
           👤 <span>Profil</span>
         </div>
+
+        <div class="ws-item" id="wsMenuAdmin" style="display:none" onclick="wsOpen('admin')">
+          🛡️ <span>Admin Panel</span>
+        </div>
       </nav>
 
       <div class="ws-userbox">
@@ -50,9 +54,7 @@
     </header>
   `;
 
-  // Inject sidebar + overlay ke body
   document.body.insertAdjacentHTML('afterbegin', sidebarHTML);
-  // Inject header di dalam konten
   const content = document.getElementById('wsContent');
   if(content){
     content.insertAdjacentHTML('afterbegin', headerHTML);
@@ -96,6 +98,8 @@ function wsOpen(page){
     window.location.href = 'dompet.html';
   } else if(page === 'profil'){
     window.location.href = 'profil.html';
+  } else if(page === 'admin'){
+    window.location.href = 'admin.html';
   }
 }
 function wsSetActive(menu){
@@ -119,15 +123,26 @@ function wsToast(msg){
   clearTimeout(t._timer);
   t._timer = setTimeout(()=>t.classList.remove('show'), 2500);
 }
-// Load user info
+
+// UID ADMIN - GANTI KALAU ADA ADMIN BARU
+const ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
+
+// Load user info pakai Firebase SDK (bukan fetch)
 async function wsLoadUser(){
   try{
+    if(!window.wafaDB || !window.wafaRef || !window.wafaGet){
+      console.warn('Firebase SDK belum ready, coba lagi nanti');
+      setTimeout(wsLoadUser, 500);
+      return;
+    }
     const uid = localStorage.getItem('wafa_uid');
     if(!uid) return;
-    const res = await fetch(`https://wafastoreonly-default-rtdb.asia-southeast1.firebasedatabase.app/users/${uid}.json`);
-    const data = await res.json();
+
+    const snap = await window.wafaGet(window.wafaRef(window.wafaDB, 'users/' + uid));
+    const data = snap.val();
+
     if(data){
-      const name = data.nickname || data.email || 'User';
+      const name = data.nickname || data.name || data.email || 'User';
       const email = data.email || '-';
       const el1 = document.getElementById('wsUserName');
       const el2 = document.getElementById('wsUserEmail');
@@ -136,6 +151,33 @@ async function wsLoadUser(){
       if(el2) el2.innerText = email.length > 20 ? email.slice(0,18)+'...' : email;
       if(el3) el3.innerText = '👤 ' + name.slice(0,12);
     }
-  }catch(e){}
+
+    // Tampilkan menu admin kalau uid termasuk admin
+    if(ADMIN_UIDS.includes(uid)){
+      const adminMenu = document.getElementById('wsMenuAdmin');
+      if(adminMenu) adminMenu.style.display = 'flex';
+    }
+
+    // Simpan ke localStorage buat fallback
+    try{ localStorage.setItem('wafa_user', JSON.stringify({nickname:data.nickname||'',email:data.email||'',saldo:data.saldo||0})); }catch(e){}
+  }catch(e){ console.log('wsLoadUser error:', e); }
 }
-window.addEventListener('load', wsLoadUser);
+
+// Tunggu Firebase SDK siap, baru load
+if(window.wafaDB){
+  window.addEventListener('load', wsLoadUser);
+} else {
+  // Kalau sidebar.js di-load sebelum firebase module, tunggu sebentar
+  let attempts = 0;
+  const iv = setInterval(()=>{
+    attempts++;
+    if(window.wafaDB){
+      clearInterval(iv);
+      wsLoadUser();
+    }
+    if(attempts > 20){
+      clearInterval(iv);
+      console.warn('Firebase SDK tidak terdeteksi setelah 10 detik');
+    }
+  }, 500);
+}
