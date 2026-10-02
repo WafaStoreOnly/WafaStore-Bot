@@ -130,10 +130,15 @@ function showLock(){
   document.getElementById('wsContent').style.display='none';
 }
 window.wafaAuth.onAuthStateChanged((user)=>{
+  console.log('🔐 Auth state:', user ? user.uid : 'not logged in');
   if(user && window.ADMIN_UIDS.includes(user.uid)){
     isAdmin = true;
     initAdmin();
+  } else if(user){
+    console.log('❌ Bukan admin. UID:', user.uid);
+    showLock();
   } else {
+    console.log('❌ Belum login');
     showLock();
   }
 });
@@ -141,10 +146,12 @@ window.wafaAuth.onAuthStateChanged((user)=>{
 // ===== INIT ADMIN =====
 function initAdmin(){
   console.log('✅ Admin logged in:', window.wafaAuth.currentUser.uid);
+  if(typeof wsSetActive==='function') wsSetActive('admin');
+  if(typeof wsSetTitle==='function') wsSetTitle('🛡️ Admin Panel');
   loadOrders();
   loadTopups();
   loadChats();
-  handleUrlAction();
+  setTimeout(handleUrlAction, 1000);
 }
 
 // ===== HANDLE ACTION DARI URL DISCORD =====
@@ -158,12 +165,16 @@ async function handleUrlAction(){
   const idNum = parseInt(actionId);
 
   if(action === 'selesai'){
-    if(!confirm(`✅ Konfirmasi SELESAI untuk Order #${actionId.slice(-6)}?`)){ 
+    if(!confirm(`✅ Konfirmasi SELESAI untuk Order #${actionId.slice(-6)}?\n\nStatus order di web user bakal langsung berubah jadi SELESAI + muncul popup terima kasih.`)){ 
       window.history.replaceState({}, '', 'admin.html');
       return; 
     }
-    await prosesSelesai(idNum);
-    alert('✅ Order ditandai SELESAI!');
+    try{
+      await prosesSelesai(idNum);
+      alert(`✅ Order #${actionId.slice(-6)} BERHASIL DISELESAIKAN!\n\nUser bakal dapet notif terima kasih di web mereka.`);
+    }catch(e){
+      alert('❌ Gagal: '+e.message);
+    }
   } else if(action === 'batal'){
     const alasan = prompt(`❌ Alasan BATALKAN Order #${actionId.slice(-6)}?`, 'Dibatalkan admin');
     if(alasan === null){ 
@@ -474,7 +485,6 @@ window.kirimBalasan = async ()=>{
   try{
     await window.wafaSet(window.wafaRef(window.wafaDB, 'chats/'+currentChatUid+'/'+msgId), msgData);
     inp.value = '';
-    // ✅ Chat murni di web - TIDAK ada notif Discord
   }catch(e){ alert('Gagal kirim: '+e.message); }
 };
 
