@@ -255,6 +255,8 @@ function attachFirebaseListener(orderId){
     });
   }catch(e){}
 }
+
+// ===== SIMPAN ORDER (TANPA NOTIF DISCORD - notif cuma kalau udah TF) =====
 function saveOrder(data){
   let orders=JSON.parse(localStorage.getItem('wafa_orders')||'[]');
   data.id=Date.now(); data.date=new Date().toLocaleString('id-ID'); data.status='verifikasi'; data.bukti=''; data.expiry=Date.now()+(10*60*1000);
@@ -264,12 +266,12 @@ function saveOrder(data){
   attachFirebaseListener(data.id);
   try{
     if(window.wafaDB){ window.wafaSet(window.wafaRef(window.wafaDB,'orders/'+data.id), data); }
-    if(window.DISCORD_URL){ fetch(window.DISCORD_URL+"?with_components=true", { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ content:`🔥 **ORDER BARU**\nID: #${data.id.toString().slice(-6)}\nUsername: ${data.username}\nMethod: ${data.method}\nJumlah: ${data.jumlah} Robux\nTotal: Rp${data.total.toLocaleString('id-ID')}\nBuyer: ${sensorEmail(data.email||'-')}\n\n⏰ Menunggu bukti TF (10 menit)` }) }); }
+    // Notif Discord DIHAPUS - cuma muncul kalau user upload bukti TF
   }catch(e){}
   return data.id;
 }
 
-// ===== KIRIM KE DISCORD: 1 PESAN + EMBED + 2 TOMBOL =====
+// ===== KIRIM KE DISCORD: 2 PESAN (FORMAT ORDER + GAMBAR BUKTI & TOMBOL) =====
 function sendDiscordWithBukti(o, dataUrl, judul){
   const baseUrl = "https://wafastoreonly-official.vercel.app/";
   const selesaiUrl = `${baseUrl}admin.html?id=${o.id}&action=selesai`;
@@ -279,7 +281,8 @@ function sendDiscordWithBukti(o, dataUrl, judul){
   if(o.method == 'gamepass' && o.gamepassLink) extra = `\n🔗 **Link Gamepass:** ${o.gamepassLink}`;
   if(o.method == 'gift' && o.item){ extra = `\n🎁 **Item:** ${o.item}`; if(o.privateServer) extra += `\n🔗 **Private Server:** ${o.privateServer}`; }
   
-  const payload = {
+  // ===== PESAN 1: FORMAT ORDER (EMBED) =====
+  const payload1 = {
     content: `${judul}`,
     embeds: [{
       title: `📦 Order #${o.id.toString().slice(-6)}`,
@@ -293,28 +296,37 @@ function sendDiscordWithBukti(o, dataUrl, judul){
         { name: "🕐 Tanggal", value: o.date || '-', inline: true }
       ],
       description: extra || null,
-      image: { url: "attachment://bukti.jpg" },
       footer: { text: `UID: ${o.uid || '-'} • Status: OTOMATIS DIPROSES ⚡` },
       timestamp: new Date().toISOString()
-    }],
-    components: [{
-      type: 1,
-      components: [
-        { type: 2, style: 5, label: "✅ KONFIRMASI SELESAI", url: selesaiUrl },
-        { type: 2, style: 5, label: "❌ BATALKAN", url: batalUrl }
-      ]
     }]
   };
   
-  fetch(dataUrl).then(r=>r.blob()).then(blob=>{
-    let form = new FormData();
-    form.append('payload_json', JSON.stringify(payload));
-    form.append('files[0]', blob, 'bukti.jpg');
-    fetch(window.DISCORD_URL+"?with_components=true", { method:'POST', body: form })
-      .then(r=>r.text())
-      .then(t=>console.log('Discord response:', t))
-      .catch(e=>console.log('Discord error:', e));
-  });
+  fetch(window.DISCORD_URL+"?with_components=true", {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(payload1)
+  }).then(()=>{
+    // ===== PESAN 2: GAMBAR BUKTI TF + 2 TOMBOL =====
+    setTimeout(()=>{
+      fetch(dataUrl).then(r=>r.blob()).then(blob=>{
+        let form = new FormData();
+        form.append('payload_json', JSON.stringify({
+          content: `📸 **BUKTI TF - Order #${o.id.toString().slice(-6)}**`,
+          components: [{
+            type: 1,
+            components: [
+              { type: 2, style: 5, label: "✅ KONFIRMASI SELESAI", url: selesaiUrl },
+              { type: 2, style: 5, label: "❌ BATALKAN", url: batalUrl }
+            ]
+          }]
+        }));
+        form.append('files[0]', blob, `bukti-${o.id}.jpg`);
+        fetch(window.DISCORD_URL+"?with_components=true", { method:'POST', body: form })
+          .then(r=>r.text())
+          .then(t=>console.log('Discord response:', t))
+          .catch(e=>console.log('Discord error:', e));
+      });
+    }, 800);
+  }).catch(e=>console.log('Discord error:', e));
 }
 
 // ===== AUTO BATAL 10 MENIT =====
@@ -328,7 +340,6 @@ function checkExpired(){
       setTimeout(()=>{ addBotMsg(`❌ Pesanan #${o.id.toString().slice(-6)} dibatalkan karena timeout 10 menit!\n\nSilakan order kembali 🙏`); },500);
       try{
         if(window.wafaDB){ window.wafaSet(window.wafaRef(window.wafaDB,'orders/'+o.id), o); }
-        if(window.DISCORD_URL){ fetch(window.DISCORD_URL+"?with_components=true",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:`❌ **ORDER TIMEOUT** #${o.id.toString().slice(-6)}\nUsername: ${o.username}\nMelebihi 10 menit tanpa bukti`})}); }
       }catch(e){}
     }
   });
