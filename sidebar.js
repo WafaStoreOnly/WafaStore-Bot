@@ -8,6 +8,10 @@
         <span>WafaStoreOnly</span>
       </div>
       <nav class="ws-menu">
+        <div class="ws-item" id="wsMenuBeranda" onclick="wsOpen('beranda')">
+          🏠 <span>Beranda</span>
+        </div>
+
         <div class="ws-item" id="wsMenuTopup" onclick="wsToggleTopup(event)">
           ⚡ <span>Top Up Game</span> <span class="arrow">▼</span>
         </div>
@@ -20,15 +24,15 @@
           <a class="soon" onclick="wsSoon('Valorant')">🎯 Valorant</a>
         </div>
 
-        <div class="ws-item" onclick="wsOpen('pesanan')">
+        <div class="ws-item" id="wsMenuPesanan" onclick="wsOpen('pesanan')">
           📦 <span>Pesanan</span>
         </div>
 
-        <div class="ws-item" onclick="wsOpen('dompet')">
+        <div class="ws-item" id="wsMenuDompet" onclick="wsOpen('dompet')">
           👛 <span>Dompet</span>
         </div>
 
-        <div class="ws-item" onclick="wsOpen('profil')">
+        <div class="ws-item" id="wsMenuProfil" onclick="wsOpen('profil')">
           👤 <span>Profil</span>
         </div>
 
@@ -91,7 +95,10 @@ function wsGo(page){
 }
 function wsOpen(page){
   wsCloseSidebar();
-  if(page === 'pesanan'){
+  if(page === 'beranda'){
+    if(typeof goHome === 'function') goHome();
+    else window.location.href = 'index.html';
+  } else if(page === 'pesanan'){
     if(typeof openPesanan === 'function') openPesanan();
     else window.location.href = 'index.html#pesanan';
   } else if(page === 'dompet'){
@@ -104,8 +111,9 @@ function wsOpen(page){
 }
 function wsSetActive(menu){
   document.querySelectorAll('.ws-item').forEach(i=>i.classList.remove('active'));
-  const el = document.getElementById('wsMenu_' + menu);
-  if(el) el.classList.add('active');
+  const map = { 'beranda': 'wsMenuBeranda', 'pesanan': 'wsMenuPesanan', 'dompet': 'wsMenuDompet', 'profil': 'wsMenuProfil', 'admin': 'wsMenuAdmin' };
+  const id = map[menu];
+  if(id){ const el = document.getElementById(id); if(el) el.classList.add('active'); }
 }
 function wsSetTitle(txt){
   const el = document.getElementById('wsPageTitle');
@@ -124,14 +132,12 @@ function wsToast(msg){
   t._timer = setTimeout(()=>t.classList.remove('show'), 2500);
 }
 
-// UID ADMIN - GANTI KALAU ADA ADMIN BARU
+// UID ADMIN
 const ADMIN_UIDS = ['5jLY5Gafn7VJvEIarXxDyfMf7v12'];
 
-// Load user info pakai Firebase SDK (bukan fetch)
 async function wsLoadUser(){
   try{
     if(!window.wafaDB || !window.wafaRef || !window.wafaGet){
-      console.warn('Firebase SDK belum ready, coba lagi nanti');
       setTimeout(wsLoadUser, 500);
       return;
     }
@@ -152,22 +158,18 @@ async function wsLoadUser(){
       if(el3) el3.innerText = '👤 ' + name.slice(0,12);
     }
 
-    // Tampilkan menu admin kalau uid termasuk admin
     if(ADMIN_UIDS.includes(uid)){
       const adminMenu = document.getElementById('wsMenuAdmin');
       if(adminMenu) adminMenu.style.display = 'flex';
     }
 
-    // Simpan ke localStorage buat fallback
     try{ localStorage.setItem('wafa_user', JSON.stringify({nickname:data.nickname||'',email:data.email||'',saldo:data.saldo||0})); }catch(e){}
   }catch(e){ console.log('wsLoadUser error:', e); }
 }
 
-// Tunggu Firebase SDK siap, baru load
 if(window.wafaDB){
   window.addEventListener('load', wsLoadUser);
 } else {
-  // Kalau sidebar.js di-load sebelum firebase module, tunggu sebentar
   let attempts = 0;
   const iv = setInterval(()=>{
     attempts++;
